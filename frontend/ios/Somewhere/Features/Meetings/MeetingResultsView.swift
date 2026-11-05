@@ -11,12 +11,13 @@ struct MeetingResultsView: View {
                 DeferredPlaceholder { MeetingCardsSkeleton(label: "Загрузка встреч") }
             }
             if owner.page.error != nil {
-                StatusView(
-                    title: "Не удалось загрузить встречи",
-                    text: "Проверьте соединение и повторите запрос.", retry: owner.retry)
+                MeetingFailureView(
+                    title: owner.page.value == nil
+                        ? "Не удалось загрузить встречи" : "Не удалось обновить встречи",
+                    refresh: owner.page.value != nil, retry: owner.retry)
             }
             if owner.empty && owner.selection.display == .list {
-                EmptyMeetingsView(create: create)
+                EmptyMeetingsView(period: owner.selection.period, create: create)
             } else if owner.page.value != nil && owner.items.isEmpty {
                 Text(owner.emptyTitle).foregroundStyle(AppPalette.muted).padding(.vertical, 24)
             }

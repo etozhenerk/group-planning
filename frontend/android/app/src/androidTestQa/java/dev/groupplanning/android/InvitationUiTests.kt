@@ -165,7 +165,7 @@ class InvitationUiTests {
             assertClosed()
             fixture.screenshot("invitation-declined")
             compose.onNodeWithText("К моим встречам").performScrollTo().performClick()
-            fixture.waitText("С чего начнём?")
+            fixture.waitText("Нет предстоящих встреч")
         }
         fixture.launch("invite-rsvp-reentry", fixture.token).use {
             fixture.waitTag("rsvp-NotGoing")

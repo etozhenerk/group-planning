@@ -46,10 +46,10 @@ class DesignVisualUiTests {
             }
             compose.onNodeWithTag("home-navigation").assertExists()
             fixture.screenshot("design-list")
-            compose.onNodeWithText("Календарь").performClick()
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             fixture.waitTag("day-${fixture.designDate("dinner")}")
             fixture.screenshot("design-calendar")
-            compose.onNodeWithText("Список").performClick()
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             compose.onNodeWithTag("home-profile").performClick()
             fixture.waitText("sasha@example.com")
             fixture.screenshot("design-profile")

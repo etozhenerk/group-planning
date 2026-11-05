@@ -99,7 +99,7 @@ class EntryUiTests {
     @Test fun emptyListAndPersistentDraft() {
         launch("draft").use {
             waitFor("meetings-list")
-            waitText("С чего начнём?")
+            waitText("Нет предстоящих встреч")
             compose.onAllNodesWithText("Создать встречу").assertCountEquals(1)
             screenshot("empty")
             compose.onNodeWithText("Создать встречу").performClick()
@@ -112,7 +112,7 @@ class EntryUiTests {
             waitFor("meetings-list")
         }
         launch("draft").use {
-            waitText("С чего начнём?")
+            waitText("Нет предстоящих встреч")
             compose.onNodeWithText("Создать встречу").performClick()
             waitFor("create-form")
             compose.onNodeWithContentDescription("Название").assertTextContains("Настолки")
@@ -130,13 +130,13 @@ class EntryUiTests {
                 QaResponseGate.releaseListError()
                 check(click())
             }
-            waitText("С чего начнём?")
+            waitText("Нет предстоящих встреч")
         }
     }
 
     @Test fun lostCreateResponseRetriesSameMeeting() {
         launch("lost-create").use { activity ->
-            waitText("С чего начнём?")
+            waitText("Нет предстоящих встреч")
             compose.onNodeWithText("Создать встречу").performClick()
             waitFor("create-form")
             compose.onNodeWithTag("home-navigation").assertDoesNotExist()
@@ -201,7 +201,7 @@ class EntryUiTests {
                 screenshot("onboarding-last-large")
             }
             launch("empty").use {
-                waitText("С чего начнём?")
+                waitText("Нет предстоящих встреч")
                 compose.onNodeWithText("Создать встречу").performScrollTo().performClick()
                 waitFor("create-form")
                 compose.onNodeWithContentDescription("Дата").performScrollTo().performClick()

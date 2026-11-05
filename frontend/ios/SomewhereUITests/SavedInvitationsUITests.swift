@@ -44,7 +44,7 @@ final class SavedInvitationsUITests: XCTestCase {
         app.buttons["Приглашения"].tap()
         let card = app.buttons[cardID]
         XCTAssertTrue(card.waitForExistence(timeout: 10))
-        XCTAssertFalse(app.buttons["Календарь"].exists)
+        XCTAssertFalse(app.buttons["meeting-display-toggle"].exists)
         capture("ios-saved-invitations")
         card.tap()
         capture("ios-saved-invitation-open")
@@ -112,7 +112,7 @@ final class SavedInvitationsUITests: XCTestCase {
 
     func testEmptyTabKeepsCalendarSelection() {
         let app = launch("saved-empty")
-        app.buttons["Календарь"].tap()
+        app.buttons["meeting-display-toggle"].tap()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM"
         formatter.calendar = Calendar(identifier: .gregorian)

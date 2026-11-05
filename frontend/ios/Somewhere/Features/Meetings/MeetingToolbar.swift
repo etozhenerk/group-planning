@@ -4,16 +4,13 @@ struct MeetingToolbar: View {
     let owner: MeetingListOwner
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        HStack(alignment: .center, spacing: DesignTokens.spaceS12) {
             ViewThatFits(in: .horizontal) {
-                HStack(spacing: 23) { periods }
-                VStack(alignment: .leading, spacing: 12) { periods }
+                HStack(spacing: DesignTokens.spaceS20) { periods }
+                VStack(alignment: .leading, spacing: DesignTokens.spaceS0) { periods }
             }
-            HStack(spacing: 4) {
-                display("Список", symbol: "list.bullet", value: .list)
-                display("Календарь", symbol: "calendar", value: .calendar)
-            }
-            .padding(4).background(AppPalette.navigation, in: RoundedRectangle(cornerRadius: 12))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            displayToggle
         }
     }
 
@@ -27,14 +24,18 @@ struct MeetingToolbar: View {
             owner.select(period: value)
         } label: {
             HStack(spacing: 7) {
-                Text(value.title).designFont(14)
+                Text(value.title).designFont(DesignTokens.typographySizeSmall, weight: .medium)
                 if let count {
-                    Text(count, format: .number).designFont(12).foregroundStyle(
-                        AppPalette.muted)
+                    Text(count, format: .number).designFont(DesignTokens.typographySizeLabel)
+                        .foregroundStyle(
+                            AppPalette.muted)
                 }
             }
             .foregroundStyle(owner.selection.period == value ? AppPalette.text : AppPalette.muted)
-            .frame(minHeight: 23).padding(.vertical, 12).contentShape(Rectangle())
+            .padding(.top, DesignTokens.componentMobileMeetingsPeriodInsetTop)
+            .padding(.bottom, DesignTokens.componentMobileMeetingsPeriodInsetBottom)
+            .frame(minHeight: DesignTokens.componentMobileMeetingsPeriodMinimumHeight)
+            .contentShape(Rectangle())
             .overlay(alignment: .bottom) {
                 if owner.selection.period == value {
                     Capsule().fill(AppPalette.accent).frame(height: 2)
@@ -47,26 +48,23 @@ struct MeetingToolbar: View {
         .accessibilityIdentifier("period-" + value.rawValue)
     }
 
-    private func display(_ title: String, symbol: String, value: MeetingCalendarSelection.Display)
-        -> some View
-    {
-        Button {
-            owner.select(display: value)
+    private var displayToggle: some View {
+        let calendar = owner.selection.display == .calendar
+        return Button {
+            owner.select(display: calendar ? .list : .calendar)
         } label: {
-            HStack(spacing: 7) {
-                ExperienceIcon(kind: value == .list ? .list : .calendar)
-                Text(title)
-            }.designFont(13)
-                .padding(.horizontal, 13).frame(minHeight: 37)
-                .background(
-                    owner.selection.display == value
-                        ? AppPalette.selectedSegment : AppPalette.navigation,
-                    in: RoundedRectangle(cornerRadius: 9)
-                )
-                .foregroundStyle(
-                    owner.selection.display == value ? AppPalette.text : AppPalette.muted)
+            ExperienceIcon(
+                kind: calendar ? .list : .calendar,
+                size: DesignTokens.componentMobileMeetingsViewIconSize
+            )
+            .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
+            .foregroundStyle(AppPalette.muted)
+            .background(
+                AppPalette.navigation,
+                in: RoundedRectangle(cornerRadius: DesignTokens.radiusControl))
         }
-        .buttonStyle(.plain).accessibilityLabel(title)
-        .accessibilityAddTraits(owner.selection.display == value ? .isSelected : [])
+        .buttonStyle(.plain)
+        .accessibilityLabel(calendar ? "Показать список" : "Показать календарь")
+        .accessibilityIdentifier("meeting-display-toggle")
     }
 }

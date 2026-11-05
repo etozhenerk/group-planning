@@ -12,9 +12,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -27,7 +24,6 @@ import dev.groupplanning.android.data.repository.CalendarData
 import dev.groupplanning.android.state.CalendarSelection
 import dev.groupplanning.android.ui.components.ActionButton
 import dev.groupplanning.android.ui.components.ExperienceSkeleton
-import dev.groupplanning.android.ui.components.StatusPanel
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.LocalDate
@@ -48,17 +44,17 @@ internal fun MeetingListScreen(
     tabs: @Composable () -> Unit = {},
 ) {
     val scroll = rememberLazyListState()
-    val scrolled by remember {
-        derivedStateOf {
-            scroll.firstVisibleItemIndex > 0 || scroll.firstVisibleItemScrollOffset > 0
-        }
-    }
     val emptyAccount = data.counts?.total == 0
     val page = data.pageFor(selection.filter)
     val loading = stringResource(R.string.calendar_loading)
     Column(Modifier.fillMaxSize()) {
-        MeetingListHeading(selection.calendar || !emptyAccount, scrolled, create)
+        MeetingListHeading(selection.calendar || !emptyAccount, create)
         tabs()
+        androidx.compose.foundation.layout.Box(
+            Modifier.padding(horizontal = DesignTokens.spaceS20),
+        ) {
+            MeetingToolbar(selection, data.counts, change)
+        }
         LazyColumn(
             Modifier.weight(1f).fillMaxWidth().testTag("meetings-list"),
             state = scroll,
@@ -66,10 +62,10 @@ internal fun MeetingListScreen(
                 start = DesignTokens.spaceS20,
                 end = DesignTokens.spaceS20,
                 bottom = DesignTokens.spaceS24,
+                top = if (selection.calendar) DesignTokens.spaceS0 else DesignTokens.spaceS20,
             ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            item(key = "toolbar") { MeetingToolbar(selection, data.counts, change) }
             if (selection.calendar) {
                 item(key = "calendar") { MeetingCalendar(selection, data.days, change) }
             }
@@ -92,9 +88,17 @@ internal fun MeetingListScreen(
             }
             if (data.error != null) {
                 item(key = "error") {
-                    StatusPanel(
-                        stringResource(R.string.calendar_error),
-                        stringResource(R.string.calendar_retry_message),
+                    MeetingFailure(
+                        stringResource(
+                            if (page ==
+                                null
+                            ) {
+                                R.string.calendar_error
+                            } else {
+                                R.string.meetings_refresh_error
+                            },
+                        ),
+                        page != null,
                         refresh,
                     )
                 }
@@ -105,7 +109,7 @@ internal fun MeetingListScreen(
                 }
             }
             if (emptyAccount && !selection.calendar) {
-                item(key = "empty-account") { EmptyMeetings(create) }
+                item(key = "empty-account") { EmptyMeetings(selection.period, create) }
             } else if (!selection.calendar && page?.meetings?.isEmpty() == true) {
                 item(key = "empty-day") {
                     Text(

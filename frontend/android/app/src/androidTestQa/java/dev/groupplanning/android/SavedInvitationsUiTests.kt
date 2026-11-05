@@ -196,8 +196,8 @@ class SavedInvitationsUiTests {
 
     @Test fun emptyInvitationsPreserveCalendarDayAndSelectedTabAfterRecreation() {
         fixture.launch("saved-empty").use { activity ->
-            fixture.waitText("С чего начнём?")
-            compose.onNodeWithText("Календарь").performClick()
+            fixture.waitText("Нет предстоящих встреч")
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             val day = "day-${LocalDate.now().withDayOfMonth(15)}"
             fixture.waitTag(day)
             compose.onNodeWithTag(day).performClick()

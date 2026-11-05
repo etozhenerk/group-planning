@@ -51,7 +51,7 @@ class CalendarUiTests {
     @Test fun calendarAndListPreservePeriodDayAndBack() {
         fixture.launch("calendar").use { activity ->
             fixture.waitText("Киновечер")
-            compose.onNodeWithText("Календарь").performClick()
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             fixture.waitTag("day-2026-10-31")
             compose.onNodeWithTag("day-2026-10-31").assertIsSelected()
             screenshot("calendar-android")
@@ -76,9 +76,9 @@ class CalendarUiTests {
             compose.onNodeWithText("Прошедшие").performClick()
             fixture.waitTag("day-2026-09-20")
             compose.onNodeWithTag("day-2026-09-20").assertIsSelected()
-            compose.onNodeWithText("Список").performClick()
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             fixture.waitText("Прошлая встреча")
-            compose.onNodeWithText("Календарь").performClick()
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             fixture.waitTag("day-2026-09-20")
             compose.onNodeWithContentDescription("Следующий месяц").performClick()
             fixture.waitTag("day-2026-10-20")
@@ -112,8 +112,8 @@ class CalendarUiTests {
 
     @Test fun emptyCalendarKeepsOneFullWidthHeadingAndPrefillsDate() {
         fixture.launch("calendar-empty").use {
-            fixture.waitText("С чего начнём?")
-            compose.onNodeWithText("Календарь").performClick()
+            fixture.waitText("Нет предстоящих встреч")
+            compose.onNodeWithTag("meeting-display-toggle").performClick()
             fixture.waitTag("day-${LocalDate.now()}")
             val selected = LocalDate.now().withDayOfMonth(25)
             compose.onNodeWithTag("day-$selected").performClick()
@@ -151,9 +151,10 @@ class CalendarUiTests {
             fixture.shell("settings put system font_scale 1.8")
             fixture.launch("calendar-large").use {
                 fixture.waitText("Киновечер")
-                compose.onNodeWithText("Календарь").performClick()
+                compose.onNodeWithTag("meeting-display-toggle").performClick()
                 fixture.waitTag("day-2026-10-31")
-                for (label in listOf("Предстоящие", "Прошедшие", "Календарь")) {
+                compose.onNodeWithTag("meeting-display-toggle").assertIsDisplayed()
+                for (label in listOf("Предстоящие", "Прошедшие")) {
                     val layouts = mutableListOf<TextLayoutResult>()
                     compose.onNodeWithText(label, useUnmergedTree = true).performSemanticsAction(
                         SemanticsActions.GetTextLayoutResult,

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "kind": "limited independent checkpoint R2; no final design or QA acceptance",
+  "reviewer": "independent-meetings-web-checkpoint-r2-2026-11-05",
+  "reviewedAt": "2026-11-05T13:34:37.290Z",
+  "status": "targeted-checkpoint-pass",
+  "scope": "Only M1 past-empty320/390 Chromium+WebKit and previously blocked real unread count/realtime2→3/chat-read/reset on390 each engine. Earlier smoke not rerun or transferred to new hash.",
+  "candidate": {
+    "sourceHash": "65f832337bc439f91780f30937a43ba67df0fa637fb72a62bc827c8ed7e14354",
+    "artifactHash": "6379187b8ab3c463aaeaa4a3e58ddda487169216fca226d429c8f83fc5c489d8"
+  },
+  "findings": [],
+  "binding": {
+    "sourceUnchanged": true,
+    "artifactUnchanged": true,
+    "diskLiveFiles": 261,
+    "mismatches": 0
+  },
+  "checks": [
+    {
+      "id": "M1",
+      "status": "fixed in targeted scope",
+      "engines": [
+        "Chromium",
+        "WebKit"
+      ],
+      "widths": [
+        320,
+        390
+      ],
+      "observed": "Approved past-empty copy; no Create meeting action. Four actual captures and two unchanged raw references viewed. Motion/header/full manifest not accepted."
+    },
+    {
+      "id": "M2-unread",
+      "status": "previous environment block resolved; targeted pass",
+      "engines": [
+        "Chromium",
+        "WebKit"
+      ],
+      "width": 390,
+      "observed": "Real composer sends by another user produce API/UI unread2; third real POST while list stays active produces3 without reload. Card to chat triggers real PUT read-marker; sync and summary unread0, first_unread null, my_read_state6. Browser Back shows no unread footer."
+    }
+  ],
+  "notRepeated": "Earlier ready/long/error/calendar/Maybe/desktop smoke was not rerun or transferred to new hash. No full suites, matrix, packaging, final gates or checkboxes. Shared designInputHash may change for Android generation; this checkpoint binds frozen web source/artifact only.",
+  "evidence": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/checkpoint-probes.json",
+      "sha256": "3f12ddefef00d5d19628d2e007786f4b5ead08c89acc55fe2f08c3b8fe8b51e4"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-past-empty-320-actual.png",
+      "sha256": "f295272bf04d6d02cf67ae1efd661cf4da55b0c82ae85d6fa60e3f06640401ea"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-past-empty-320-reference.png",
+      "sha256": "4df8a2df5e3cf325bda976309b4a89e6e17108af9b0f610836644971c9f742e6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-past-empty-390-actual.png",
+      "sha256": "c8baa32f689c1cacbc9da78cecc53c743c3add78c6f4b1d607e3d32add7f70c8"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-past-empty-390-reference.png",
+      "sha256": "985d2d26090d1d1a6cc5efdc0f14ebd55cd5e2afb57eec0cb8dfa39938fb8810"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-unread-reset.png",
+      "sha256": "d11b4d72c17e1c189049c2a1319524305bf2b3282a640903a0a9819f2a4192a3"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-unread2.png",
+      "sha256": "88050e480c7addcd56acacd992a49411b2432564b4f70c3c49b4262c42bc05a6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/chromium-unread3.png",
+      "sha256": "bb7172ae672a35f444c6c8bb12d832707ce91e84dc9aca3a5925074c5b47d632"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/webkit-past-empty-320-actual.png",
+      "sha256": "5122e34a433b1e4f01525b6e663ea879f730f9520d80bad9cd50d3b44d8825e2"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/webkit-past-empty-390-actual.png",
+      "sha256": "3edce770bf9f128a1d02b4e00530dc7f570104dfd862a78a9bc6e28b849554fd"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/webkit-unread-reset.png",
+      "sha256": "4244bca88561f2f000b0a25523c0de140e1d68fa225c4500c752e81586e528d6"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/webkit-unread2.png",
+      "sha256": "db6437e01c205cd0269ac338296372dcfaa4aabef8cbb7b0679cd21709d92823"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/r2/webkit-unread3.png",
+      "sha256": "9a4a987e81d715e02886a060084a6b755f2c534f21d457e8fdcdd47a096d0b8e"
+    }
+  ]
+}

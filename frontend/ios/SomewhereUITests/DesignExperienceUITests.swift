@@ -36,10 +36,10 @@ final class DesignExperienceUITests: XCTestCase {
         reveal(app.buttons["meeting-card-deb00000-0000-4000-8000-000000000001"], app: app)
         XCTAssertTrue(app.images["meeting-cover"].firstMatch.waitForExistence(timeout: 10))
         capture("list")
-        app.buttons["Календарь"].tap()
+        app.buttons["meeting-display-toggle"].tap()
         _ = try NativeFixtureDates.selectCalendarDay("boardgame", app: app)
         capture("calendar")
-        app.buttons["Список"].tap()
+        app.buttons["meeting-display-toggle"].tap()
 
         app.buttons["home-tab-person.crop.circle"].tap()
         XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))

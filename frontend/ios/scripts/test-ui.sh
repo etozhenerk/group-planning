@@ -77,6 +77,7 @@ case "${1:-all}" in
     places) somewhere_filter=-only-testing:SomewhereUITests/PlacePollUITests; somewhere_scope=places ;;
     polls) somewhere_filter=-only-testing:SomewhereUITests/DatePollUITests; somewhere_scope=polls ;;
     calendar) somewhere_filter=-only-testing:SomewhereUITests/CalendarUITests; somewhere_scope=calendar ;;
+    calendar-large) somewhere_filter=-only-testing:SomewhereUITests/CalendarUITests/testCalendarLargeText; somewhere_scope=calendar ;;
     native-pdf-delayed) somewhere_filter=-only-testing:SomewhereUITests/NativePDFDelayedUITests; somewhere_scope=accessibility ;;
     native-vibe-delayed) somewhere_filter=-only-testing:SomewhereUITests/NativeVibeUploadUITests/testDelayedConfirmationKeepsVibePreviewUntilReleased; somewhere_scope=accessibility ;;
     native-vibe-upload) somewhere_filter=-only-testing:SomewhereUITests/NativeVibeUploadUITests/testConfirmedVibePhotoClosesPreviewAndAppearsOnce; somewhere_scope=accessibility ;;

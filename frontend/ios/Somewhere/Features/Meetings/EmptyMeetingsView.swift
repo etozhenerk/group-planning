@@ -1,18 +1,48 @@
 import SwiftUI
 
 struct EmptyMeetingsView: View {
+    var period: MeetingPeriod = .upcoming
     let create: () -> Void
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "sparkles").font(.largeTitle).foregroundStyle(AppPalette.accent)
-                .padding(20).background(AppPalette.surface, in: RoundedRectangle(cornerRadius: 24))
+        VStack(spacing: DesignTokens.spaceS0) {
+            Image(systemName: "calendar.badge.plus")
+                .font(.system(size: DesignTokens.componentMobileMeetingsEmptyGlyph))
+                .foregroundStyle(AppPalette.accent).padding(.bottom, DesignTokens.spaceS12)
                 .accessibilityHidden(true)
-            Text("С чего начнём?").font(.title2.bold())
-            Text("Создайте встречу и пригласите друзей по ссылке.").foregroundStyle(
-                AppPalette.muted
-            ).multilineTextAlignment(.center)
-            ActionButton(title: "Создать встречу", action: create)
+            Text(period == .past ? "Нет прошедших встреч" : "Нет предстоящих встреч")
+                .designTokenFont(
+                    DesignTokens.componentMobileStateTitleSize,
+                    weight: DesignTokens.componentMobileStateTitleWeight, relativeTo: .title2
+                )
+                .tracking(-DesignTokens.componentMobileStateTitleTracking)
+                .padding(.bottom, DesignTokens.spaceS10)
+            Text(
+                period == .past
+                    ? "Перейдите к предстоящим, чтобы посмотреть ближайшие планы."
+                    : "После создания встречи отправьте ссылку друзьям."
+            )
+            .designFont(DesignTokens.typographySizeButton).foregroundStyle(AppPalette.muted)
+            .padding(.bottom, DesignTokens.spaceS24)
+            if period != .past {
+                Button(action: create) {
+                    HStack(spacing: DesignTokens.spaceS8) {
+                        ExperienceIcon(
+                            kind: .plus, size: DesignTokens.componentMobileMeetingsCreateIconSize)
+                        Text("Создать встречу").designFont(
+                            DesignTokens.typographySizeSmall, weight: .semibold)
+                    }
+                    .padding(.horizontal, DesignTokens.componentMobileMeetingsEmptyActionInline)
+                    .frame(minHeight: DesignTokens.targetIos)
+                    .foregroundStyle(AppPalette.actionText)
+                    .background(
+                        AppPalette.action,
+                        in: RoundedRectangle(cornerRadius: DesignTokens.componentButtonRadius))
+                }.buttonStyle(.plain)
+            }
         }
-        .frame(maxWidth: .infinity).padding(.vertical, 44).accessibilityIdentifier("meetings-empty")
+        .multilineTextAlignment(.center).frame(maxWidth: .infinity)
+        .padding(.horizontal, DesignTokens.componentMobileMeetingsEmptyInset)
+        .padding(.top, DesignTokens.componentMobileMeetingsEmptyTop)
+        .accessibilityIdentifier("meetings-empty")
     }
 }

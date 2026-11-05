@@ -22,17 +22,16 @@ struct MeetingCardView: View {
                         )
                         .accessibilityLabel("Вы организатор").accessibilityHidden(false)
                     }
-                    if let count = meeting.unreadCount, count > .zero {
-                        Spacer(minLength: DesignTokens.spaceS8)
-                        ChatUnreadBadge(count: count)
-                    }
                 }
                 HStack(alignment: .top, spacing: 6) {
                     ExperienceIcon(kind: .pin, size: 15).padding(.top, 1)
                     Text(meeting.place ?? "Место пока не выбрано").designFont(12)
                         .lineSpacing(3).fixedSize(horizontal: false, vertical: true)
                 }.foregroundStyle(AppPalette.muted)
-                Spacer(minLength: 8)
+                if meeting.period == "past", let count = meeting.unreadCount, count > .zero {
+                    MeetingUnreadNotice(count: count).padding(.top, DesignTokens.spaceS12)
+                }
+                Spacer(minLength: DesignTokens.spaceS8)
             }.padding(.trailing, hasCover ? 112 : 0).padding(.horizontal, 17)
                 .padding(.top, 26).padding(.bottom, 29)
                 .frame(maxWidth: .infinity, minHeight: 145, alignment: .topLeading)
@@ -75,12 +74,11 @@ struct MeetingCardView: View {
                     }
                 }
                 .overlay(alignment: .bottomLeading) {
-                    if !hasAlbum {
-                        Text("✦").designFont(17).rotationEffect(.degrees(16))
-                            .foregroundStyle(
-                                Color(designHex: weekend ? 0xa5c5b7 : 0xbba9ca, opacity: 0.4)
-                            )
-                            .padding(.leading, 18).padding(.bottom, 11).accessibilityHidden(true)
+                    if meeting.period != "past", let count = meeting.unreadCount, count > .zero {
+                        MeetingUnreadNotice(count: count)
+                            .padding(.leading, DesignTokens.componentMobileUnreadInsetStart)
+                            .padding(.trailing, DesignTokens.componentMobileUnreadReserveEnd)
+                            .padding(.bottom, DesignTokens.componentMobileUnreadInsetBottom)
                     }
                 }
                 .overlay(alignment: .bottomTrailing) {

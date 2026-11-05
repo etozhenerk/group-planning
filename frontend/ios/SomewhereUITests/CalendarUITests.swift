@@ -15,13 +15,27 @@ final class CalendarUITests: XCTestCase {
         }
         ExperienceScreenshot.configure(app)
         app.launch()
-        XCTAssertTrue(app.buttons["Календарь"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["meeting-display-toggle"].waitForExistence(timeout: 15))
         return app
     }
 
     private func reveal(_ element: XCUIElement, _ app: XCUIApplication) {
+        let toggle = app.buttons["meeting-display-toggle"]
+        if element.exists && element.identifier == "meeting-display-toggle" && element.isHittable {
+            return
+        }
         for _ in 0..<7 {
-            if element.isHittable { return }
+            let navigation = app.buttons["home-tab-calendar"]
+            let lower = navigation.exists ? navigation.frame.minY - 16 : app.frame.maxY
+            let upper = toggle.exists ? toggle.frame.maxY : app.frame.minY
+            if element.exists {
+                let bounds = element.frame
+                if element.isHittable && bounds.minY >= upper && bounds.maxY <= lower { return }
+                if bounds.minY < upper {
+                    app.scrollViews.firstMatch.swipeDown()
+                    continue
+                }
+            }
             app.scrollViews.firstMatch.swipeUp()
         }
         XCTAssertTrue(element.isHittable)
@@ -43,13 +57,13 @@ final class CalendarUITests: XCTestCase {
         XCTAssertTrue(
             app.buttons["meeting-card-c1111111-1111-4111-8111-111111111111"].waitForExistence(
                 timeout: 5))
-        let toggle = app.buttons["Календарь"]
+        let toggle = app.buttons["meeting-display-toggle"]
         let origin = toggle.frame.origin
         for _ in 0..<3 {
             toggle.tap()
             XCTAssertEqual(toggle.frame.minY, origin.y, accuracy: 1)
             XCTAssertEqual(toggle.frame.minX, origin.x, accuracy: 1)
-            app.buttons["Список"].tap()
+            app.buttons["meeting-display-toggle"].tap()
             XCTAssertEqual(toggle.frame.minY, origin.y, accuracy: 1)
             XCTAssertEqual(toggle.frame.minX, origin.x, accuracy: 1)
         }
@@ -57,7 +71,7 @@ final class CalendarUITests: XCTestCase {
 
     func testCalendarSelectionHistoryBackAndToday() {
         let app = launch("calendar")
-        app.buttons["Календарь"].tap()
+        app.buttons["meeting-display-toggle"].tap()
         let selected = app.buttons["calendar-day-2026-10-31"]
         XCTAssertTrue(selected.waitForExistence(timeout: 10))
         let first = app.buttons["meeting-card-c1111111-1111-4111-8111-111111111111"]
@@ -95,7 +109,7 @@ final class CalendarUITests: XCTestCase {
 
     func testEmptyCalendarDatePrefillsCreation() {
         let app = launch("calendar-empty")
-        app.buttons["Календарь"].tap()
+        app.buttons["meeting-display-toggle"].tap()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM"
         formatter.calendar = Calendar(identifier: .gregorian)
@@ -109,9 +123,9 @@ final class CalendarUITests: XCTestCase {
         XCTAssertTrue(create.isHittable)
         top(app)
         capture("ios-calendar-controls-top")
-        let toggleY = app.buttons["Календарь"].frame.minY
+        let toggleY = app.buttons["meeting-display-toggle"].frame.minY
         app.scrollViews.firstMatch.swipeUp()
-        XCTAssertLessThan(app.buttons["Календарь"].frame.minY, toggleY)
+        XCTAssertEqual(app.buttons["meeting-display-toggle"].frame.minY, toggleY, accuracy: 1)
         capture("ios-calendar-empty")
         top(app)
         XCTAssertTrue(create.isHittable)
@@ -127,8 +141,8 @@ final class CalendarUITests: XCTestCase {
 
     func testCalendarLargeText() {
         let app = launch("calendar-large", large: true)
-        reveal(app.buttons["Календарь"], app)
-        app.buttons["Календарь"].tap()
+        reveal(app.buttons["meeting-display-toggle"], app)
+        app.buttons["meeting-display-toggle"].tap()
         let next = app.buttons["Следующий месяц"]
         reveal(next, app)
         XCTAssertGreaterThanOrEqual(next.frame.minX, app.frame.minX)
@@ -138,7 +152,17 @@ final class CalendarUITests: XCTestCase {
         reveal(cell, app)
         XCTAssertFalse(cell.label.isEmpty)
         XCTAssertGreaterThanOrEqual(cell.frame.width, 40)
-        cell.tap()
+        let bounds = cell.frame
+        let navigation = app.buttons["home-tab-calendar"].frame
+        let geometry = XCTAttachment(string: "cell=\(bounds), navigation=\(navigation)")
+        geometry.name = "calendar-large-tap-geometry"
+        geometry.lifetime = .keepAlways
+        add(geometry)
+        app.coordinate(withNormalizedOffset: .zero)
+            .withOffset(
+                CGVector(dx: bounds.midX - app.frame.minX, dy: bounds.midY - app.frame.minY)
+            )
+            .tap()
         let event = app.buttons["meeting-card-c1111111-1111-4111-8111-111111111111"]
         reveal(event, app)
         XCTAssertLessThanOrEqual(event.frame.maxX, app.frame.maxX)

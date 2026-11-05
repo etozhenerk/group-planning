@@ -28,18 +28,22 @@ export const HomeEmpty = ({ createPath, period = 'upcoming' }: HomeEmptyProps) =
       </h2>
       <p>
         {mobile
-          ? 'После создания встречи отправьте ссылку друзьям.'
+          ? period === 'past'
+            ? 'Перейдите к предстоящим, чтобы посмотреть ближайшие планы.'
+            : 'После создания встречи отправьте ссылку друзьям.'
           : 'Создайте встречу и пригласите друзей по ссылке.'}
       </p>
-      <Link className={styles.create} to={createPath}>
-        {mobile && (
-          <Plus
-            size={Number.parseFloat(designTokens.componentMobileMeetingsCreateIconSize)}
-            aria-hidden="true"
-          />
-        )}
-        Создать встречу
-      </Link>
+      {(!mobile || period !== 'past') && (
+        <Link className={styles.create} to={createPath}>
+          {mobile && (
+            <Plus
+              size={Number.parseFloat(designTokens.componentMobileMeetingsCreateIconSize)}
+              aria-hidden="true"
+            />
+          )}
+          Создать встречу
+        </Link>
+      )}
     </section>
   );
 };

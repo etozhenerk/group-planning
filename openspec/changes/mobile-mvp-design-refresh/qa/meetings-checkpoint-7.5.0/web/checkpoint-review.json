@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "kind": "targeted-independent-meetings-checkpoint; not final design/qa gate",
+  "reviewer": "independent-meetings-web-checkpoint-7.5-2026-11-05",
+  "reviewedAt": "2026-11-05T13:17:47.146955+00:00",
+  "status": "needs-one-fix; unread capability blocked",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/meetings-web.json",
+  "candidate": {
+    "sourceHash": "74a94afd5814204f195a1036b8848f42ec7125461f4022f6bf606af327f60152",
+    "artifactHash": "876d9f67aa3d3cb4c7619ca4537e22b31392dea237b22b610bfb0cacafd01b83",
+    "origin": "https://127.0.0.1:8891"
+  },
+  "sourceBefore": "74a94afd5814204f195a1036b8848f42ec7125461f4022f6bf606af327f60152",
+  "sourceAfter": "74a94afd5814204f195a1036b8848f42ec7125461f4022f6bf606af327f60152",
+  "sourceMatchesCandidate": true,
+  "findings": [
+    {
+      "id": "M1",
+      "priority": "P2",
+      "surface": "Мои встречи → Прошедшие → empty, mobile390",
+      "observed": "При нулевых прошедших показаны текст «После создания встречи отправьте ссылку друзьям.» и CTA «Создать встречу».",
+      "expected": "Принятый list-r3 для past-empty: «Перейдите к предстоящим, чтобы посмотреть ближайшие планы.»; создание внутри empty-состояния не показывается.",
+      "reason": "Вместо следующего шага для просмотра истории предлагается создание будущей встречи. Это наблюдаемое отклонение от согласованного состояния, не вкусовая редактура.",
+      "rule": "approved list-r3; product-copy-editor: empty объясняет следующий доступный шаг; ранее принятый текст переносится без нового решения.",
+      "implementationHint": "frontend/web/src/pages/meetings/ui/HomeEmpty/HomeEmpty.tsx: ветка mobile+past различает только заголовок, абзац и Link остаются upcoming. Проверить также calendar, если переиспользует HomeEmpty.",
+      "evidence": [
+        "past-empty-actual.png",
+        "past-empty-reference.png",
+        "followup.json"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "M2",
+      "status": "blocked-environment",
+      "surface": "unread/zero-unread live",
+      "observed": {
+        "protocol_version": 1,
+        "sync": false,
+        "read_state": false,
+        "realtime": false
+      },
+      "reason": "Стенд8891 имеет sync=false/read_state=false/realtime=false; list API не возвращает unread_count. Два реальных сообщения другого профиля созданы, но этот стенд не может подтвердить UI unread/99+/zero/read-back. Отсутствие unread здесь не записано как продуктовый дефект.",
+      "next": "Повторить только unread-сценарий на том же dist с включёнными CHAT_REALTIME/CHAT_READ_STATE после пакета правок; полная123-state матрица не требуется для checkpoint.",
+      "evidence": [
+        "followup.json",
+        "list-390-actual.png"
+      ]
+    }
+  ],
+  "observedWorking": [
+    "Chromium320/390:6реальных карточек, длинный title/place переносятся; document/scroll горизонтально не переполняются.",
+    "card→real chat→Back: offset659→659; периодPast/Upcoming работает и новый период начинается сверху.",
+    "Календарь:6→7Nov, одна настоящая встреча7Nov; day7 сохраняется через list switch return. Empty day5Nov доступен. WebKit390 также показал selected7Nov/agenda после рендера.",
+    "Ира:настоящий empty API; failed initial GET→accepted error→Retry вернул6карточек; failed refresh сохранил6карточек и отдельную ошибку.",
+    "Подтверждённый Maybe показан отдельной карточкой; открытие показывает Ваш ответ и реальные3RSVP-действия.",
+    "Desktop1100 spot:сохранены sidebar/two-column list без мобильного dock; новая desktop-композиция не использовалась как эталон."
+  ],
+  "probeNotes": [
+    "Initial seed first-attempt422 was QA helper using different idempotency key; fixed only driver and switched to fresh Катя/Олег. Failed original log retained; no product finding.",
+    "One WebKit immediate pre-render aria-pressed probe reads false; after-settle screenshot/path/agenda show7Nov correctly. Not a defect.",
+    "Raw list changes state to ready on period switch; proper past-empty reference was reselected with published demo postMessage, then captured unchanged.",
+    "Raw demo safe-area/header offsets and demo32 banner were not flagged as a blocking redesign requirement in this short scope."
+  ],
+  "evidence": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/calendar-day7-actual.png",
+      "sha256": "e461d5e1483fc55c6640f5692b4a362920a95583199ccc30544a03b2e1a56c6a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/calendar-day7-reference.png",
+      "sha256": "fc875e2b11245afce3357bd6654f7d40559c1b72ebd5dcd29b89245d4a9229fa"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/calendar-empty-day-actual.png",
+      "sha256": "386fe411029524a84c275fb2951a0f95eff0a22d917c6f3aefc467fd124461c0"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/calendar-switch-return-actual.png",
+      "sha256": "e461d5e1483fc55c6640f5692b4a362920a95583199ccc30544a03b2e1a56c6a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/desktop1100-spot-actual.png",
+      "sha256": "71a3b241e61ee52dd7cdfabbc5b2ddb307da841fb1569fc077260a191d2fa91e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-320-actual.png",
+      "sha256": "222429061acfa570e34ce7eed3f6cbeb40a47eeaf0f841056a3e378ec113b134"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-320-reference.png",
+      "sha256": "83664dd48e9571eb43ab5524d306c42adf7f2a0c8188f01b496e5e715eb37ffa"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-390-actual.png",
+      "sha256": "83ebb70435005bd8379d3dabedf646b2f9f61db02f14f524f2fba3e3cc6c2040"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-390-reference.png",
+      "sha256": "1580edc38224194d516443ca2a9d3e758d4dc0aacf92921f2869a6e23762cc8e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-back-actual.png",
+      "sha256": "a5c17be83cb7aff59dfbc443cd1c912a614fd66d71ff533f186962033624486b"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-empty-actual.png",
+      "sha256": "90ada8789bef55228c14dd609d976b93c56cd106857fbe051d1721a13b4dbdd1"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-empty-reference.png",
+      "sha256": "ac7737913d8a3100370dbca1fbdbf14c489d75c723786bc5070cdd25f4588411"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-error-actual.png",
+      "sha256": "84be1a19c9ed55bcd74b622bd99ba6a17c5602df64c98b1fa735a429a92630d5"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-error-reference.png",
+      "sha256": "2be92286563a83082e80702a1822b46e62c221950eab88dad831d1013e77fef8"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-error-retry-actual.png",
+      "sha256": "99300c8bab2d30a0693b1da3fba28135d409aa753471f06756a40f1ce652853d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-past-empty-actual.png",
+      "sha256": "f5a5c32301b0036edc1530a84a2a4b7799ad82f15c1cba3f4191ebb21929f79e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-refresh-error-actual.png",
+      "sha256": "cdbf2b84d5fc41494efb62be59dbd0ccc429f608a104b9d84629ae51e6aa1aed"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/list-refresh-error-reference.png",
+      "sha256": "55406a048335ee078904622bf698cabbd6cb99ed35b47c397996bcea7951b933"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/maybe-list-actual.png",
+      "sha256": "7939b4960e4bf8f44cc985d866b239f2c6836efc20875768561b30b437de7bea"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/maybe-list-reference.png",
+      "sha256": "35338df0c62ca827177230b25155054aa94d3b141165f665015638c7c9605a5f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/maybe-response-open-actual.png",
+      "sha256": "ba627d381fea9940ad5aa85c5f2a3d0441512525bdadd10aebe0433c04985e66"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/past-empty-actual.png",
+      "sha256": "f5a5c32301b0036edc1530a84a2a4b7799ad82f15c1cba3f4191ebb21929f79e"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/past-empty-reference.png",
+      "sha256": "bab213d6c36ec2d558141375cd2922a37a090e185a6400e522c988926768ab7a"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/webkit-calendar-actual.png",
+      "sha256": "dd20cb43b721b9c7cb65eddee88220a5e9fff8b0d855f0195a8143510fcb70f0"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/webkit-list-actual.png",
+      "sha256": "ba5a6205388dabd86deb18701bb18935469b0927965174169611bc944fcfe2e0"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/checkpoint-probes.json",
+      "sha256": "bcdc54f150213e04d2170b1cb4b4b115338bc02d75a0604ea9d0a2a268c6d55d"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/meetings-checkpoint-7.5.0/web/followup.json",
+      "sha256": "0c8b83d4876f6a9655a23911059b5b0d367a4b581929ccb0e3ed1177093ac388"
+    }
+  ],
+  "notPerformed": "No full123-state matrix, full suites, final gates, packaging, task/manifest/Git edits. Own loopback OAuth/memory fixtures only."
+}

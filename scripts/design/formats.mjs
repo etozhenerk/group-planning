@@ -93,8 +93,6 @@ export const renderTokens = (tokens, version) => {
     action_text: 'actionText',
     error: 'error',
     own_message: 'ownMessage',
-    selected_segment: 'selectedSegment',
-    navigation: 'navigation',
   };
   const colorFor = (name) =>
     hex(tokens.find((t) => t.path.join('.') === `color.${name}`).$value);

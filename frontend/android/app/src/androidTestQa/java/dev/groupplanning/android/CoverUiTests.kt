@@ -32,7 +32,7 @@ class CoverUiTests {
         fixture.configure()
     }
     private fun form() {
-        fixture.waitText("С чего начнём?")
+        fixture.waitText("Нет предстоящих встреч")
         compose.onNodeWithText("Создать встречу").performScrollTo().performClick()
         fixture.waitTag("create-form")
         compose.onNodeWithContentDescription("Название").performTextInput("Встреча с обложкой")

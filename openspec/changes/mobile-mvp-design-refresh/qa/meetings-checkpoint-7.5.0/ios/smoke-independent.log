@@ -1,0 +1,298 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData -resultBundlePath /private/tmp/meetings-checkpoint75-independent.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/MeetingsCheckpoint75Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+
+Writing result bundle at path:
+	/private/tmp/meetings-checkpoint75-independent.xcresult
+
+2026-11-05 16:34:25.914 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:34:27.341023+0300 SomewhereUITests-Runner[98869:19967900] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-05 16:34:30.298.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 16:34:30.299.
+Test Suite 'MeetingsCheckpoint75Tests' started at 2026-11-05 16:34:30.299.
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testAReadySingleToggleSelectionChatAndBack]' started.
+    t =     0.00s Start Test at 2026-11-05 16:34:30.301
+    t =     0.03s Set Up
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.05s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 16:34:30.435 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 16:34:30.436 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 16:34:30.485 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.76s         Setting up automation session
+objc[98869]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1080e8398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1081f4310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.20s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.70s Checking `Expect predicate `exists == 1` for object "meeting-display-toggle" Button`
+    t =     5.70s     Checking existence of `"meeting-display-toggle" Button`
+    t =     5.80s Get number of matches for: Elements matching predicate '"meeting-display-toggle" IN identifiers'
+    t =     5.83s Find the "meeting-display-toggle" Button
+    t =     6.93s Checking `Expect predicate `exists == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     6.93s     Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     7.07s Requesting snapshot of accessibility hierarchy for app with pid 99065
+    t =     7.23s Requesting snapshot of accessibility hierarchy for app with pid 99065
+    t =     7.68s Find the Window (First Match)
+    t =     7.81s Added attachment named 'meetings-ready-unread-footer'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-ready-unread-footer.png
+    t =     7.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.83s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     7.86s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-ready-unread-footer.json
+INDEPENDENT_MEETINGS_CAPTURE=ready-unread-footer
+    t =     7.91s Find the "meeting-display-toggle" Button
+    t =     7.94s Tap "meeting-display-toggle" Button
+    t =     7.94s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.94s     Find the "meeting-display-toggle" Button
+    t =     7.97s     Check for interrupting elements affecting "meeting-display-toggle" Button
+    t =     7.99s     Synthesize event
+    t =     8.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.34s Find the "meeting-display-toggle" Button
+    t =     8.39s Find the "meeting-display-toggle" Button
+    t =     8.44s Find the "meeting-display-toggle" Button
+    t =     9.58s Checking `Expect predicate `exists == 1` for object "calendar-day-2026-11-13" Button`
+    t =     9.58s     Checking existence of `"calendar-day-2026-11-13" Button`
+    t =     9.61s Tap "calendar-day-2026-11-13" Button
+    t =     9.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.61s     Find the "calendar-day-2026-11-13" Button
+    t =     9.64s     Check for interrupting elements affecting "calendar-day-2026-11-13" Button
+    t =     9.67s     Synthesize event
+    t =     9.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.04s Checking `Expect predicate `exists == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =    11.04s     Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =    11.19s Requesting snapshot of accessibility hierarchy for app with pid 99065
+    t =    11.37s Requesting snapshot of accessibility hierarchy for app with pid 99065
+    t =    11.82s Find the Window (First Match)
+    t =    11.93s Added attachment named 'meetings-calendar-selected-day'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-calendar-selected-day.png
+    t =    11.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-calendar-selected-day.json
+INDEPENDENT_MEETINGS_CAPTURE=calendar-selected-day
+    t =    12.01s Find the "meeting-card-deb00000-0000-4000-8000-000000000001" Button
+    t =    12.05s Tap "meeting-card-deb00000-0000-4000-8000-000000000001" Button
+    t =    12.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.06s     Find the "meeting-card-deb00000-0000-4000-8000-000000000001" Button
+    t =    12.08s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000001" Button
+    t =    12.11s     Synthesize event
+    t =    12.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.49s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    13.49s     Checking existence of `"feed-back" Button`
+    t =    13.50s     Capturing element debug description
+    t =    14.47s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    14.47s     Checking existence of `"feed-back" Button`
+    t =    14.49s     Capturing element debug description
+    t =    15.46s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    15.46s     Checking existence of `"feed-back" Button`
+    t =    15.47s     Capturing element debug description
+    t =    16.44s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    16.44s     Checking existence of `"feed-back" Button`
+    t =    16.45s     Capturing element debug description
+    t =    17.42s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    17.42s     Checking existence of `"feed-back" Button`
+    t =    17.44s     Capturing element debug description
+    t =    18.51s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    18.51s     Checking existence of `"feed-back" Button`
+    t =    18.52s     Capturing element debug description
+    t =    19.49s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    19.49s     Checking existence of `"feed-back" Button`
+    t =    19.50s     Capturing element debug description
+    t =    20.47s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    20.47s     Checking existence of `"feed-back" Button`
+    t =    20.48s     Capturing element debug description
+    t =    21.45s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    21.45s     Checking existence of `"feed-back" Button`
+    t =    21.47s     Capturing element debug description
+    t =    22.44s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    22.44s     Checking existence of `"feed-back" Button`
+    t =    22.46s     Capturing element debug description
+    t =    23.43s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    23.43s     Checking existence of `"feed-back" Button`
+    t =    23.45s     Capturing element debug description
+    t =    24.42s Checking `Expect predicate `exists == 1` for object "feed-back" Button`
+    t =    24.42s     Checking existence of `"feed-back" Button`
+    t =    24.44s     Capturing element debug description
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/MeetingsCheckpoint75Tests.swift:26: error: -[SomewhereUITests.MeetingsCheckpoint75Tests testAReadySingleToggleSelectionChatAndBack] : XCTAssertEqual failed: ("XCTWaiterResult(rawValue: 2)") is not equal to ("XCTWaiterResult(rawValue: 1)")
+    t =    24.61s Tear Down
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testAReadySingleToggleSelectionChatAndBack]' failed (24.847 seconds).
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testBLongEmptyAndPastEmpty]' started.
+    t =     0.00s Start Test at 2026-11-05 16:34:55.149
+    t =     0.03s Set Up
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/NativeChatCounterpart.swift:180: error: -[SomewhereUITests.MeetingsCheckpoint75Tests testBLongEmptyAndPastEmpty] : failed: caught error: "Error Domain=ChatFixtureHTTP Code=422 "(null)""
+    t =     0.10s Tear Down
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testBLongEmptyAndPastEmpty]' failed (0.110 seconds).
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testCInitialAndRefreshFailureRetry]' started.
+    t =     0.00s Start Test at 2026-11-05 16:34:55.259
+    t =     0.02s Set Up
+    t =     0.02s Open dev.groupplanning.ios.uitesthost
+    t =     0.02s     Launch dev.groupplanning.ios.uitesthost
+    t =     0.02s         Terminate dev.groupplanning.ios.uitesthost:99065
+2026-11-05 16:34:55.294 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:34:55.295 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:34:55.295 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:34:56.365 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 16:34:56.365 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 16:34:56.377 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     1.33s         Setting up automation session
+    t =     3.69s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.12s Checking `Expect predicate `exists == 1` for object "meeting-display-toggle" Button`
+    t =     6.12s     Checking existence of `"meeting-display-toggle" Button`
+    t =     7.29s Checking `Expect predicate `exists == 1` for object "Повторить загрузку" Button`
+    t =     7.29s     Checking existence of `"Повторить загрузку" Button`
+    t =     7.31s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     7.42s Requesting snapshot of accessibility hierarchy for app with pid 99514
+    t =     7.50s Requesting snapshot of accessibility hierarchy for app with pid 99514
+    t =     7.95s Find the Window (First Match)
+    t =     8.05s Added attachment named 'meetings-initial-load-error'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-initial-load-error.png
+    t =     8.05s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.07s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.08s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-initial-load-error.json
+INDEPENDENT_MEETINGS_CAPTURE=initial-load-error
+    t =     8.10s Tap "Повторить загрузку" Button
+    t =     8.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.10s     Find the "Повторить загрузку" Button
+    t =     8.12s     Check for interrupting elements affecting "meetings-error" Button
+    t =     8.14s     Synthesize event
+    t =     8.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.54s Checking `Expect predicate `exists == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     9.54s     Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =     9.58s Pressing Home button
+    t =    10.04s Open dev.groupplanning.ios.uitesthost
+    t =    10.04s     Activate dev.groupplanning.ios.uitesthost
+    t =    10.53s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.67s Checking `Expect predicate `exists == 1` for object "Повторить обновление" Button`
+    t =    11.67s     Checking existence of `"Повторить обновление" Button`
+    t =    11.70s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =    11.84s Requesting snapshot of accessibility hierarchy for app with pid 99514
+    t =    11.97s Requesting snapshot of accessibility hierarchy for app with pid 99514
+    t =    12.42s Find the Window (First Match)
+    t =    12.54s Added attachment named 'meetings-refresh-error-keeps-cards'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-refresh-error-keeps-cards.png
+    t =    12.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.56s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.58s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.60s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-refresh-error-keeps-cards.json
+INDEPENDENT_MEETINGS_CAPTURE=refresh-error-keeps-cards
+    t =    12.61s Tap "Повторить обновление" Button
+    t =    12.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.62s     Find the "Повторить обновление" Button
+    t =    12.64s     Check for interrupting elements affecting "meetings-error" Button
+    t =    12.67s     Synthesize event
+    t =    12.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.99s Checking `Expect predicate `exists == 0` for object "Повторить обновление" Button`
+    t =    13.99s     Checking existence of `"Повторить обновление" Button`
+    t =    14.02s Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000001" Button`
+    t =    14.16s Requesting snapshot of accessibility hierarchy for app with pid 99514
+    t =    14.29s Requesting snapshot of accessibility hierarchy for app with pid 99514
+    t =    14.74s Find the Window (First Match)
+    t =    14.86s Added attachment named 'meetings-refresh-retry-ready'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-refresh-retry-ready.png
+    t =    14.86s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.88s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.90s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.91s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-refresh-retry-ready.json
+INDEPENDENT_MEETINGS_CAPTURE=refresh-retry-ready
+    t =    14.93s Terminate dev.groupplanning.ios.uitesthost:99514
+2026-11-05 16:35:10.202 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:10.202 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:10.203 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    16.01s Tear Down
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testCInitialAndRefreshFailureRetry]' passed (16.046 seconds).
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testDBriefLargeAndNarrow]' started.
+    t =     0.00s Start Test at 2026-11-05 16:35:11.305
+    t =     0.02s Set Up
+    t =     0.02s Open dev.groupplanning.ios.uitesthost
+    t =     0.02s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 16:35:11.327 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 16:35:11.327 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 16:35:11.334 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.24s         Setting up automation session
+    t =     2.63s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.01s Checking `Expect predicate `exists == 1` for object "meeting-display-toggle" Button`
+    t =     5.01s     Checking existence of `"meeting-display-toggle" Button`
+    t =     5.09s Find the "meeting-display-toggle" Button
+    t =     5.26s Requesting snapshot of accessibility hierarchy for app with pid 99541
+    t =     5.39s Requesting snapshot of accessibility hierarchy for app with pid 99541
+    t =     5.84s Find the Window (First Match)
+    t =     5.95s Added attachment named 'meetings-large-text'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-large-text.png
+    t =     5.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-large-text.json
+INDEPENDENT_MEETINGS_CAPTURE=large-text
+    t =     6.02s Terminate dev.groupplanning.ios.uitesthost:99541
+2026-11-05 16:35:17.338 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:17.338 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:17.339 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     7.11s Open dev.groupplanning.ios.uitesthost
+    t =     7.11s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 16:35:18.416 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 16:35:18.416 xcodebuild[98833:19967584] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 16:35:18.423 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     7.33s         Setting up automation session
+    t =     9.69s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.15s Checking `Expect predicate `exists == 1` for object "meeting-display-toggle" Button`
+    t =    12.15s     Checking existence of `"meeting-display-toggle" Button`
+    t =    12.23s Find the "meeting-display-toggle" Button
+    t =    12.41s Requesting snapshot of accessibility hierarchy for app with pid 99570
+    t =    12.54s Requesting snapshot of accessibility hierarchy for app with pid 99570
+    t =    12.99s Find the Window (First Match)
+    t =    13.11s Added attachment named 'meetings-narrow-window'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-narrow-window.png
+    t =    13.11s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.13s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.14s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.16s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/EAE916E7-5B6A-4E18-82C2-40B5397F3504/tmp/somewhere-design-verification/meetings-narrow-window.json
+INDEPENDENT_MEETINGS_CAPTURE=narrow-window
+    t =    13.18s Terminate dev.groupplanning.ios.uitesthost:99570
+2026-11-05 16:35:24.493 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:24.493 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:24.494 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    14.24s Tear Down
+Test Case '-[SomewhereUITests.MeetingsCheckpoint75Tests testDBriefLargeAndNarrow]' passed (14.290 seconds).
+Test Suite 'MeetingsCheckpoint75Tests' failed at 2026-11-05 16:35:25.596.
+	 Executed 4 tests, with 2 failures (1 unexpected) in 55.293 (55.297) seconds
+Test Suite 'SomewhereUITests.xctest' failed at 2026-11-05 16:35:25.597.
+	 Executed 4 tests, with 2 failures (1 unexpected) in 55.293 (55.298) seconds
+Test Suite 'Selected tests' failed at 2026-11-05 16:35:25.597.
+	 Executed 4 tests, with 2 failures (1 unexpected) in 55.293 (55.299) seconds
+2026-11-05 16:35:25.631 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:25.632 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:25.632 xcodebuild[98833:19967584] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 16:35:25.898 xcodebuild[98833:19967584] [MT] IDETestOperationsObserverDebug: 60.028 elapsed -- Testing started completed.
+2026-11-05 16:35:25.898 xcodebuild[98833:19967584] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-05 16:35:25.898 xcodebuild[98833:19967584] [MT] IDETestOperationsObserverDebug: 60.028 sec, +60.028 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/meetings-checkpoint75-independent.xcresult
+
+Failing tests:
+	MeetingsCheckpoint75Tests.testAReadySingleToggleSelectionChatAndBack()
+	MeetingsCheckpoint75Tests.testBLongEmptyAndPastEmpty()
+
+** TEST EXECUTE FAILED **
+
+Testing started

@@ -36,7 +36,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
+import dev.groupplanning.android.data.api.models.MeetingPeriod
 import dev.groupplanning.android.data.api.models.MeetingSummary
+import dev.groupplanning.android.data.api.models.ServerCounter
 import dev.groupplanning.android.state.covers.CoverSource
 import dev.groupplanning.android.ui.components.AppIcon
 import dev.groupplanning.android.ui.components.LocalViewer
@@ -94,7 +96,6 @@ internal fun MeetingCard(
                         fontWeight = FontWeight.Bold,
                         color = Palette.text,
                     )
-                    UnreadBadge(meeting.unreadCount)
                     if (own) {
                         AppIcon(
                             R.drawable.ic_crown,
@@ -113,6 +114,12 @@ internal fun MeetingCard(
                         fontSize = 13.sp,
                         lineHeight = 18.85.sp,
                     )
+                }
+                if (!invitation && meeting.period == MeetingPeriod.Past) {
+                    meeting.unreadCount?.takeIf { it > ServerCounter.Zero }
+                        ?.let {
+                            MeetingUnreadNotice(it, Modifier.padding(top = DesignTokens.spaceS12))
+                        }
                 }
             }
         }
@@ -134,13 +141,18 @@ internal fun MeetingCard(
                 )
             }
         }
-        Text(
-            "✦",
-            Modifier.align(Alignment.BottomStart).offset(x = 18.dp, y = (-11).dp)
-                .rotate(16f),
-            fontSize = 17.sp,
-            color = accent,
-        )
+        if (!invitation && meeting.period != MeetingPeriod.Past) {
+            meeting.unreadCount?.takeIf { it > ServerCounter.Zero }?.let { count ->
+                MeetingUnreadNotice(
+                    count,
+                    Modifier.align(Alignment.BottomStart).padding(
+                        start = DesignTokens.componentMobileUnreadInsetStart,
+                        end = DesignTokens.componentMobileUnreadReserveEnd,
+                        bottom = DesignTokens.componentMobileUnreadInsetBottom,
+                    ),
+                )
+            }
+        }
         if (invitation) {
             inviter?.let {
                 Text(

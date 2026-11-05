@@ -9,8 +9,8 @@ struct MeetingCalendarView: View {
         VStack(alignment: .leading, spacing: 34) {
             MeetingCalendarGrid(owner: owner)
             if owner.month.error != nil {
-                StatusView(
-                    title: "Не удалось обновить календарь", text: "Попробуйте ещё раз.",
+                MeetingFailureView(
+                    title: "Не удалось обновить календарь", refresh: owner.month.value != nil,
                     retry: owner.retry)
             }
             UndatedMeetingsButton(owner: owner)

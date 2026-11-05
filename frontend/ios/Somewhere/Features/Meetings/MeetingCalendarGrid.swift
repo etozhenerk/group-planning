@@ -6,7 +6,6 @@ struct MeetingCalendarGrid: View {
     @AccessibilityFocusState private var accessibleDay: String?
     @FocusState private var focusedDay: String?
     @State private var focusRequest: UUID?
-    @ScaledMetric(relativeTo: .body) private var rowHeight = 42.0
     @ScaledMetric(relativeTo: .caption2) private var weekdaySize = 11.0
 
     var body: some View {
@@ -22,16 +21,18 @@ struct MeetingCalendarGrid: View {
                     controls
                 }
             }
-            .padding(.bottom, 17)
-            HStack(spacing: 4) {
+            HStack(spacing: DesignTokens.spaceS0) {
                 ForEach(["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"], id: \.self) { title in
                     Text(title).font(.system(size: min(weekdaySize, 16))).lineLimit(1)
                         .foregroundStyle(AppPalette.muted).frame(
                             maxWidth: .infinity)
                 }
-            }.frame(height: 18).padding(.bottom, 9).accessibilityHidden(true)
+            }.frame(height: 18).padding(.bottom, DesignTokens.spaceS4)
+                .accessibilityHidden(true)
             LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 7), spacing: 4
+                columns: Array(
+                    repeating: GridItem(.flexible(), spacing: DesignTokens.spaceS0), count: 7),
+                spacing: DesignTokens.spaceS0
             ) {
                 ForEach(visibleDays, id: \.self) { day in
                     CalendarDayCell(
@@ -41,7 +42,7 @@ struct MeetingCalendarGrid: View {
                         },
                         select: { owner.select(day: day) }
                     )
-                    .frame(minHeight: min(rowHeight, 64))
+                    .frame(minHeight: DesignTokens.targetIos)
                     .accessibilityFocused($accessibleDay, equals: day)
                     .focused($focusedDay, equals: day)
                 }
@@ -49,9 +50,7 @@ struct MeetingCalendarGrid: View {
             .id(String(owner.selection.day.prefix(7)))
             .transition(.opacity)
         }
-        .padding(.horizontal, 14).padding(.vertical, 17)
-        .background(Color(designHex: 0x2b2c32), in: RoundedRectangle(cornerRadius: 20))
-        .overlay { RoundedRectangle(cornerRadius: 20).stroke(.white.opacity(0.039), lineWidth: 1) }
+        .padding(.top, DesignTokens.spaceS8)
         .animation(
             reduceMotion ? nil : .easeOut(duration: 0.18),
             value: String(owner.selection.day.prefix(7))
@@ -74,7 +73,13 @@ struct MeetingCalendarGrid: View {
 
     private var monthTitle: some View {
         Text(CalendarDate.heading(owner.selection.day, format: "LLLL yyyy"))
-            .designFont(19, weight: .bold).accessibilityAddTraits(.isHeader)
+            .designFont(DesignTokens.componentMobileCalendarTitleSize, weight: .semibold)
+            .tracking(-DesignTokens.componentMobileCalendarTitleTracking)
+            .lineLimit(1).minimumScaleFactor(
+                DesignTokens.typographySizeCalendarTitleMobile
+                    / DesignTokens.componentMobileCalendarTitleSize
+            )
+            .accessibilityAddTraits(.isHeader)
             .accessibilityIdentifier("calendar-month")
     }
 
@@ -87,8 +92,9 @@ struct MeetingCalendarGrid: View {
                 focusRequest = UUID()
             }
             .designFont(11).padding(.horizontal, 9)
-            .frame(minHeight: 36).background(
-                .white.opacity(0.031), in: RoundedRectangle(cornerRadius: 9)
+            .frame(minHeight: DesignTokens.targetIos).foregroundStyle(AppPalette.accent).background(
+                AppPalette.surface,
+                in: RoundedRectangle(cornerRadius: DesignTokens.componentCalendarControlRadius)
             )
             .contentShape(Rectangle().inset(by: -4))
             monthButton("Предыдущий месяц", symbol: "chevron.left", offset: -1)
@@ -102,7 +108,7 @@ struct MeetingCalendarGrid: View {
                 day: CalendarDate.adding(owner.selection.day, component: .month, value: offset))
         } label: {
             ExperienceIcon(kind: .back, size: 18).rotationEffect(.degrees(offset > 0 ? 180 : 0))
-                .frame(width: 32, height: 36)
+                .frame(width: DesignTokens.targetIos, height: DesignTokens.targetIos)
                 .contentShape(Rectangle().inset(by: -6))
         }.accessibilityLabel(label)
     }

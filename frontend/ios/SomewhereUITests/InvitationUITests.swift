@@ -195,7 +195,7 @@ final class InvitationUITests: XCTestCase {
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
         app.buttons["К моим встречам"].tap()
-        XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Нет предстоящих встреч"].waitForExistence(timeout: 10))
     }
 
     func testLostRSVPResponseRetriesWithoutPrematureAccess() throws {

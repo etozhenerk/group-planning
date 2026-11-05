@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.data.api.models.CalendarDay
 import dev.groupplanning.android.state.CalendarSelection
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.time.DayOfWeek
 import java.time.format.TextStyle
@@ -28,8 +28,8 @@ internal fun CalendarGrid(
 ) {
     val scale = LocalDensity.current.fontScale
     val counts = days.associate { it.date to it.count }
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Row(Modifier.fillMaxWidth().padding(bottom = 9.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS0)) {
+        Row(Modifier.fillMaxWidth().padding(bottom = DesignTokens.spaceS4)) {
             DayOfWeek.entries.forEach { day ->
                 Text(
                     day.getDisplayName(TextStyle.SHORT, Locale.forLanguageTag("ru")),
@@ -42,8 +42,8 @@ internal fun CalendarGrid(
         }
         selection.grid.chunked(7).forEach { week ->
             Row(
-                Modifier.fillMaxWidth().height(42.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                Modifier.fillMaxWidth().height(DesignTokens.targetAndroid),
+                horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS0),
             ) {
                 week.forEach { day ->
                     CalendarDayCell(

@@ -166,7 +166,7 @@ final class EntryUITests: XCTestCase {
     }
     func testEmptyListHasOneCreateAction() {
         let app = launch("empty")
-        XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["Нет предстоящих встреч"].waitForExistence(timeout: 15))
         XCTAssertEqual(app.buttons.matching(identifier: "Создать встречу").count, 1)
         capture("empty-list", app)
     }
@@ -186,7 +186,7 @@ final class EntryUITests: XCTestCase {
         capture("list-error", app)
         try gate.release()
         app.buttons["Попробовать ещё раз"].tap()
-        XCTAssertTrue(app.staticTexts["С чего начнём?"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Нет предстоящих встреч"].waitForExistence(timeout: 10))
         capture("list-recovered", app)
     }
     func testCloseWarningAndDraftRestoration() {

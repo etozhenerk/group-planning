@@ -61,7 +61,7 @@ final class NativeNavigationUITests: XCTestCase {
 
     func testEdgeBackKeepsCalendarAndMessageDraft() throws {
         let app = ChatSheetTestSupport.launch()
-        app.buttons["Календарь"].tap()
+        app.buttons["meeting-display-toggle"].tap()
         let month = app.staticTexts["calendar-month"]
         XCTAssertTrue(month.waitForExistence(timeout: 10))
         let selectedDay = try NativeFixtureDates.selectCalendarDay("boardgame", app: app)
@@ -89,7 +89,7 @@ final class NativeNavigationUITests: XCTestCase {
         XCTAssertTrue(selectedDay.isSelected)
         XCTAssertTrue(app.buttons["period-upcoming"].isSelected)
         XCTAssertEqual(card.frame.minY, cardY, accuracy: 2)
-        XCTAssertTrue(app.buttons["Список"].exists)
+        XCTAssertTrue(app.buttons["meeting-display-toggle"].exists)
         ChatSheetTestSupport.openChat(app)
         XCTAssertEqual(input.value as? String, "Вернусь к этому сообщению")
         ExperienceScreenshot.save("native-edge-back-draft", test: self)

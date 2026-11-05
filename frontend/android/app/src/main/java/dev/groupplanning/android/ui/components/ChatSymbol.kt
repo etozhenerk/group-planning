@@ -2,6 +2,11 @@ package dev.groupplanning.android.ui.components
 
 // Geometry from the published chat prototype, in its original 24 × 24 viewport.
 internal enum class ChatSymbol(val path: String, val fillPath: String? = null) {
+    // Lucide MessageCircle, ISC; assets/licenses/lucide-react/LICENSE.txt.
+    Message(
+        "M2.992,16.342 a2,2 0,0 1,.094,1.167 l-1.065,3.29 a1,1 0,0 0,1.236,1.168 l3.413,-.998 a2,2 0,0 1,1.099,.092 a10,10 0,1 0,-4.777,-4.719",
+    ),
+
     // Lucide CloudOff and RotateCw, ISC; assets/licenses/lucide-react/LICENSE.txt.
     CloudOff(
         "M10.94,5.274 A7,7 0,0 1,15.71,10 h1.79 a4.5,4.5 0,0 1,4.222,6.057 M18.796,18.81 A4.5,4.5 0,0 1,17.5,19 H9 A7,7 0,0 1,5.79,5.78 M2,2 L22,22",
