@@ -19,6 +19,7 @@ export type PollCreateFormProps = {
   done: () => void;
   active?: boolean;
   onRegisterClose?: DraftExitRegistration | undefined;
+  onDiscard?: ((navigating: boolean) => void) | undefined;
   onModeChange?: ((title: string) => void) | undefined;
 };
 

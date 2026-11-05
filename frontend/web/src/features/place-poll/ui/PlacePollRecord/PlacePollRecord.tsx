@@ -7,6 +7,7 @@ export type PlacePollRecordProps = {
   id: string;
   session: Session;
   author: string;
+  authorAvatar?: string | null | undefined;
   occurredAt: string;
 };
 
@@ -15,6 +16,7 @@ export const PlacePollRecord = ({
   id,
   session,
   author,
+  authorAvatar,
   occurredAt,
 }: PlacePollRecordProps) => {
   const query = usePlacePoll(meeting, id, session.user.id);
@@ -29,8 +31,10 @@ export const PlacePollRecord = ({
       poll={query.data}
       session={session}
       author={author}
+      authorAvatar={authorAvatar}
       occurredAt={occurredAt}
       zone={details.data?.timezone ?? 'UTC'}
+      currentPlace={details.data?.place ?? null}
       pending={query.isPending}
       error={query.error}
       retry={() => void query.refetch()}

@@ -36,6 +36,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.components.RequiredFieldLabel
@@ -51,6 +53,13 @@ internal fun CreationTextField(
     minLines: Int = 1,
     required: Boolean = false,
     errorText: String? = null,
+    labelSize: TextUnit = DesignTokens.componentMobileCreationLabelSize.value.sp,
+    cornerRadius: Dp = DesignTokens.componentMobileCreationFieldRadius,
+    minimumHeight: Dp = if (minLines > 1) {
+        DesignTokens.spaceS40 * 2
+    } else {
+        DesignTokens.componentMobileCreationFieldHeight
+    },
     change: (String) -> Unit,
 ) {
     val bring = remember { BringIntoViewRequester() }
@@ -60,7 +69,7 @@ internal fun CreationTextField(
         if (focused) bring.bringIntoView()
     }
     val requiredHint = stringResource(R.string.required_field_hint)
-    val shape = RoundedCornerShape(DesignTokens.componentMobileCreationFieldRadius)
+    val shape = RoundedCornerShape(cornerRadius)
     val style =
         TextStyle(
             color = DesignTokens.colorText,
@@ -74,7 +83,7 @@ internal fun CreationTextField(
         RequiredFieldLabel(
             label,
             required,
-            fontSize = DesignTokens.componentMobileCreationLabelSize.value.sp,
+            fontSize = labelSize,
             color = DesignTokens.colorText,
             fontWeight = FontWeight.Medium,
         )
@@ -82,13 +91,7 @@ internal fun CreationTextField(
             value,
             change,
             modifier.onFocusChanged { focused = it.isFocused }.fillMaxWidth().heightIn(
-                min = if (minLines >
-                    1
-                ) {
-                    DesignTokens.spaceS40 * 2
-                } else {
-                    DesignTokens.componentMobileCreationFieldHeight
-                },
+                min = minimumHeight,
             )
                 .background(
                     if (errorText !=
@@ -111,7 +114,7 @@ internal fun CreationTextField(
                                 alpha = DesignTokens.componentMobileCreationInvalidRingOpacity,
                             ),
                             cornerRadius = CornerRadius(
-                                DesignTokens.componentMobileCreationFieldRadius.toPx(),
+                                cornerRadius.toPx(),
                             ),
                             style = Stroke(
                                 DesignTokens.componentMobileCreationInvalidRingWidth.toPx() * 2,

@@ -12,6 +12,7 @@ internal data class PlacePollState(
     val issue: PlacePollIssue? = null,
     val draft: PlacePollDraft? = null,
     val validation: String? = null,
+    val validationAttempt: Int = 0,
 ) {
     val editable: Boolean get() = !busy && pending == null
 }

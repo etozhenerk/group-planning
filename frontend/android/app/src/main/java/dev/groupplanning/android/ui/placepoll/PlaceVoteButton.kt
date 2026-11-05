@@ -40,7 +40,7 @@ internal fun PlaceVoteButton(
     val pendingLabel = stringResource(R.string.place_poll_saving)
     val ownLabel = stringResource(R.string.place_poll_own, label)
     val canVote = poll.canVote && poll.closesAt.instant.isAfter(Instant.now())
-    val selected = poll.myVote == answer
+    val selected = canVote && poll.myVote == answer
     val busy = state.busy && state.sendingAnswer == answer
     Surface(
         { vote(answer) },
@@ -57,9 +57,9 @@ internal fun PlaceVoteButton(
                 }
             },
         enabled = canVote && state.editable,
-        shape = RoundedCornerShape(DesignTokens.componentMobileChatInlineVoteRadius),
-        color = DesignTokens.colorRaised,
-        contentColor = DesignTokens.colorText,
+        shape = RoundedCornerShape(DesignTokens.radiusControl),
+        color = if (selected) DesignTokens.colorOwnMessage else DesignTokens.colorRaised,
+        contentColor = if (selected) DesignTokens.colorOwnText else DesignTokens.colorText,
         border = BorderStroke(
             DesignTokens.spaceS1,
             if (selected) DesignTokens.colorAccent else DesignTokens.colorBorderStrong,
@@ -67,33 +67,45 @@ internal fun PlaceVoteButton(
     ) {
         Row(
             Modifier.padding(
-                horizontal = DesignTokens.componentMobileChatInlineVoteInsetInline,
-                vertical = DesignTokens.componentMobileChatInlineVoteInsetBlock,
+                horizontal = DesignTokens.spaceS12,
+                vertical = DesignTokens.spaceS12,
             ),
             horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS8),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                label,
-                Modifier.weight(1f),
-                fontSize = DesignTokens.typographySizeSmall,
-                lineHeight =
-                DesignTokens.typographySizeSmall * DesignTokens.typographyLineHeightBody,
-            )
-            if (busy) {
-                CircularProgressIndicator(
-                    Modifier.size(DesignTokens.componentButtonIconSize),
-                    color = DesignTokens.colorAccent,
-                    strokeWidth = DesignTokens.spaceS2,
+            if (!canVote) {
+                Text(
+                    text,
+                    color = DesignTokens.colorMuted,
+                    fontSize = DesignTokens.typographySizeButton,
                 )
             } else {
                 Text(
-                    count.toString(),
-                    color = DesignTokens.colorMuted,
-                    fontSize = DesignTokens.typographySizeSmall,
+                    label,
+                    Modifier.weight(1f),
+                    fontSize = DesignTokens.typographySizeButton,
                     lineHeight =
-                    DesignTokens.typographySizeSmall * DesignTokens.typographyLineHeightBody,
+                    DesignTokens.typographySizeButton * DesignTokens.typographyLineHeightBody,
                 )
+                if (busy) {
+                    CircularProgressIndicator(
+                        Modifier.size(DesignTokens.componentButtonIconSize),
+                        color = if (selected) {
+                            DesignTokens.colorOwnText
+                        } else {
+                            DesignTokens.colorAccent
+                        },
+                        strokeWidth = DesignTokens.spaceS2,
+                    )
+                } else {
+                    Text(
+                        count.toString(),
+                        color = if (selected) DesignTokens.colorOwnText else DesignTokens.colorText,
+                        fontSize = DesignTokens.typographySizeButton,
+                        lineHeight =
+                        DesignTokens.typographySizeButton * DesignTokens.typographyLineHeightBody,
+                    )
+                }
             }
         }
     }

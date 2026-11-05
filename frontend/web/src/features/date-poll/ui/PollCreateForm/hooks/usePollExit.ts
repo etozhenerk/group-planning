@@ -8,18 +8,20 @@ export const usePollExit = (
   dirty: boolean,
   blocked: boolean,
 ) => {
-  const { onModeChange } = props;
+  const { onModeChange, active } = props;
   const exit = useDraftExit({
     active: mobile && props.active === true,
     dirty,
     blocked,
     register: props.onRegisterClose,
-    discard: props.done,
+    discard: props.onDiscard ?? props.done,
   });
 
   useEffect(() => {
-    onModeChange?.(exit.confirm ? 'Выйти без сохранения?' : 'Предложить дату');
-  }, [exit.confirm, onModeChange]);
+    if (active) {
+      onModeChange?.(exit.confirm ? 'Выйти без сохранения?' : 'Предложить дату');
+    }
+  }, [active, exit.confirm, onModeChange]);
 
   return exit;
 };

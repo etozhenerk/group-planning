@@ -1,75 +1,81 @@
-import { RequiredMark } from '@/shared/ui/RequiredMark';
-import { RequiredLegend } from '@/shared/ui/RequiredLegend';
-import { useFormViewport } from '@/shared/lib/form';
-import { useMobileLayout } from '@/shared/lib/media';
-import { PollDeadline } from '@/entities/meeting';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
+import type { DraftExitRegistration } from '@/shared/lib/form';
+import { ActionNotice } from '@/shared/ui/ActionNotice';
+import { DraftDiscard } from '@/shared/ui/DraftDiscard';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
-import { usePlaceForm } from '@/features/place-poll/model/usePlaceForm';
+import { PlaceFormBody } from '@/features/place-poll/ui/PlaceFormBody';
+import { usePlaceSurface } from '@/features/place-poll/ui/PlacePollForm/hooks/usePlaceSurface';
 import styles from '@/features/place-poll/ui/PlacePollForm/PlacePollForm.module.css';
 
-export type PlacePollFormProps = { meeting: Meeting; session: Session; done: () => void };
+export type PlacePollFormProps = {
+  meeting: Meeting;
+  session: Session;
+  done: () => void;
+  active?: boolean;
+  onRegisterClose?: DraftExitRegistration | undefined;
+  onDiscard?: ((navigating: boolean) => void) | undefined;
+  onModeChange?: ((title: string) => void) | undefined;
+};
 
-export const PlacePollForm = ({ meeting, session, done }: PlacePollFormProps) => {
-  const mobile = useMobileLayout();
-  const scroll = useFormViewport();
-  const form = usePlaceForm(meeting, session, done);
+export const PlacePollForm = (props: PlacePollFormProps) => {
+  const { mobile, form, scroll, formRef, exit } = usePlaceSurface(props);
+
+  if (exit.confirm) {
+    return (
+      <DraftDiscard
+        text="Место и пояснение не сохранятся."
+        stay={exit.stay}
+        leave={exit.leave}
+      />
+    );
+  }
+
+  const problem = mobile && Object.keys(form.errors).length ? '' : form.problem;
+  const title = form.uncertain
+    ? 'Повторить отправку'
+    : mobile && form.failed
+      ? 'Попробовать снова'
+      : 'Предложить место';
 
   return (
-    <form onSubmit={form.submit} className={styles.form} data-mobile={mobile}>
-      <div className={styles.body} ref={scroll.viewport} onScroll={scroll.update}>
-        <div ref={scroll.content}>
-          <RequiredLegend spaced />
-          <label className={styles.field}>
-            Новое место <RequiredMark />
-            <input
-              value={form.place}
-              onChange={(event) => form.setPlace(event.target.value)}
-              disabled={form.locked}
-              required
-            />
-          </label>
-          <label className={styles.field}>
-            Почему здесь
-            <textarea
-              value={form.explanation}
-              onChange={(event) => form.setExplanation(event.target.value)}
-              disabled={form.locked}
-              rows={3}
-              maxLength={2000}
-            />
-          </label>
-          <PollDeadline
-            value={form.deadline}
-            onChange={form.setDeadline}
-            zone={meeting.timezone}
-            choice={form.choice}
-            onChoice={form.setChoice}
-            ambiguous={form.problem.includes('дважды')}
-            disabled={form.locked}
-          />
-        </div>
-      </div>
+    <form
+      noValidate={mobile}
+      ref={formRef}
+      onSubmit={form.submit}
+      className={styles.form}
+      data-mobile={mobile}
+    >
+      <PlaceFormBody
+        mobile={mobile}
+        form={form}
+        scroll={scroll}
+        meeting={props.meeting}
+        classes={styles}
+      />
       <div className={styles.footer} data-sticky={scroll.overflow}>
-        {form.problem && (
-          <p role="alert" className={styles.error}>
-            {form.problem}
-          </p>
-        )}
+        {problem &&
+          (mobile ? (
+            <ActionNotice
+              title={form.uncertain ? 'Создание опроса не подтверждено' : problem}
+              text={
+                form.uncertain
+                  ? 'Повторите отправку — данные менять не нужно.'
+                  : 'Место и пояснение остались в форме.'
+              }
+            />
+          ) : (
+            <p role="alert" className={styles.error}>
+              {problem}
+            </p>
+          ))}
         <button
           type="submit"
           disabled={form.pending}
           aria-busy={form.pending}
-          aria-label={form.uncertain ? 'Повторить отправку' : 'Предложить место'}
+          aria-label={title}
         >
-          {form.pending ? (
-            <ButtonSpinner />
-          ) : form.uncertain ? (
-            'Повторить отправку'
-          ) : (
-            'Предложить место'
-          )}
+          {form.pending ? <ButtonSpinner /> : title}
         </button>
       </div>
     </form>

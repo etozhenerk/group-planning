@@ -12,6 +12,7 @@ export const PlaceRecord = ({ entry, session, id }: PlaceRecordProps) => (
       id={id}
       session={session}
       author={entry.actor.displayName}
+      authorAvatar={entry.actor.avatarUrl}
       occurredAt={entry.occurredAt}
     />
   </li>

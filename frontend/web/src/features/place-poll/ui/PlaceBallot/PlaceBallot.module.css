@@ -30,3 +30,24 @@
   color: var(--ds-color-error);
   font-size: var(--ds-typography-size-small);
 }
+
+.answers[data-mobile='true'] > * {
+  min-height: var(--ds-component-mobile-state-action-minimum-height);
+  padding: var(--ds-space-s12);
+  border-radius: var(--ds-radius-control);
+  font-size: var(--ds-typography-size-button);
+  line-height: var(--ds-typography-line-height-body);
+}
+
+.answers[data-mobile='true'] button span {
+  color: inherit;
+}
+
+.answers[data-mobile='true'] button[aria-pressed='true'] {
+  background: var(--ds-color-own-message);
+  color: var(--ds-color-own-text);
+}
+
+.answers[data-mobile='true'] > span {
+  color: var(--ds-color-muted);
+}

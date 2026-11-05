@@ -52,3 +52,43 @@
   font-size: var(--ds-typography-size-emoji-group-label);
   color: var(--ds-color-muted);
 }
+
+.card[data-mobile='true'] {
+  padding: var(--ds-space-s16);
+  border-radius: var(--ds-component-mobile-decision-card-radius);
+  background: var(--ds-color-surface);
+  border: var(--ds-space-s1) solid var(--ds-color-line);
+}
+
+.card[data-mobile='true'] .caption {
+  font-size: var(--ds-typography-size-label);
+  gap: var(--ds-space-s6);
+}
+
+.card[data-mobile='true'] h3 {
+  font-size: var(--ds-component-mobile-decision-card-title-size);
+  line-height: var(--ds-component-mobile-decision-card-title-line-height);
+  margin: var(--ds-space-s12) 0 var(--ds-space-s8);
+  font-weight: var(--ds-typography-weight-bold);
+}
+
+.card[data-mobile='true'] .explanation {
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-typography-line-height-body);
+  margin: 0 0 var(--ds-space-s20);
+}
+
+.card[data-mobile='true'] .footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-s4) var(--ds-space-s12);
+  justify-content: space-between;
+  margin-top: var(--ds-space-s16);
+  font-size: var(--ds-typography-size-label);
+}
+
+.result {
+  margin: var(--ds-component-mobile-form-section-gap) 0 0;
+  color: var(--ds-color-accent);
+  font-size: var(--ds-typography-size-caption);
+}

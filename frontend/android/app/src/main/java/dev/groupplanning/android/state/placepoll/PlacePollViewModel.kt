@@ -24,8 +24,9 @@ internal class PlacePollViewModel(
     scope: CoroutineScope,
     meeting: Meeting? = null,
 ) : ViewModel(scope) {
-    private val mutable =
-        MutableStateFlow(PlacePollState(draft = meeting?.let(PlacePollDraft::forMeeting)))
+    private val initialDraft = meeting?.let(PlacePollDraft::forMeeting)
+    private val mutable = MutableStateFlow(PlacePollState(draft = initialDraft))
+    val dirty: Boolean get() = state.value.draft != initialDraft
     val state = mutable.asStateFlow()
     private var stopped = false
     private var generation = 0
@@ -81,6 +82,7 @@ internal class PlacePollViewModel(
             return
         }
         val draft = state.value.draft ?: return
+        mutable.value = state.value.copy(validationAttempt = state.value.validationAttempt + 1)
         val place = draft.place.trim()
         if (place.codePointCount(0, place.length) !in 1..500) {
             mutable.value = state.value.copy(issue = PlacePollIssue.Place)

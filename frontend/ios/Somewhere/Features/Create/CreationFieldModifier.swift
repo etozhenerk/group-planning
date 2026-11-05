@@ -2,21 +2,23 @@ import SwiftUI
 
 struct CreationFieldModifier: ViewModifier {
     var invalid = false
+    var cornerRadius = DesignTokens.componentMobileCreationFieldRadius
+    var insetInline = DesignTokens.spaceS12 + DesignTokens.spaceS2
     func body(content: Content) -> some View {
         content.designFont(DesignTokens.typographySizeBody)
             .padding(.vertical, DesignTokens.spaceS12)
-            .padding(.horizontal, DesignTokens.spaceS12 + DesignTokens.spaceS2)
+            .padding(.horizontal, insetInline)
             .frame(
                 maxWidth: .infinity, minHeight: DesignTokens.componentMobileCreationFieldHeight,
                 alignment: .leading
             )
             .background(
                 DesignTokens.colorNavigation,
-                in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileCreationFieldRadius)
+                in: RoundedRectangle(cornerRadius: cornerRadius)
             )
             .background {
                 if invalid {
-                    RoundedRectangle(cornerRadius: DesignTokens.componentMobileCreationFieldRadius)
+                    RoundedRectangle(cornerRadius: cornerRadius)
                         .stroke(
                             DesignTokens.colorError.opacity(
                                 DesignTokens.componentMobileCreationInvalidRingOpacity),
@@ -26,7 +28,7 @@ struct CreationFieldModifier: ViewModifier {
                 }
             }
             .overlay {
-                RoundedRectangle(cornerRadius: DesignTokens.componentMobileCreationFieldRadius)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(
                         DesignTokens.colorError.opacity(
                             invalid ? DesignTokens.componentMobileCreationInvalidBackgroundMix : 0)
@@ -34,7 +36,7 @@ struct CreationFieldModifier: ViewModifier {
                     .allowsHitTesting(false)
             }
             .overlay {
-                RoundedRectangle(cornerRadius: DesignTokens.componentMobileCreationFieldRadius)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(
                         invalid
                             ? DesignTokens.colorError.opacity(

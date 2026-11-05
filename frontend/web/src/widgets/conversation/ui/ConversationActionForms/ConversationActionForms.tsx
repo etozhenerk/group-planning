@@ -1,4 +1,5 @@
 import type { DraftExitRegistration } from '@/shared/lib/form';
+import { useMobileLayout } from '@/shared/lib/media';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { PollCreateForm } from '@/features/date-poll';
@@ -30,27 +31,37 @@ export const ConversationActionForms = ({
   onModeChange,
 }: ConversationActionFormsProps) => {
   const { generation, complete } = useActionCompletion(kind, open, done);
+  const mobile = useMobileLayout();
 
   return (
     <>
       <div className={styles.form} hidden={kind !== 'date'}>
-        <PollCreateForm
-          key={generation.date}
-          meeting={meeting}
-          session={session}
-          done={() => complete('date')}
-          active={open && kind === 'date'}
-          onRegisterClose={registerClose}
-          onModeChange={onModeChange}
-        />
+        {(!mobile || kind === 'date') && (
+          <PollCreateForm
+            key={generation.date}
+            meeting={meeting}
+            session={session}
+            done={() => complete('date')}
+            onDiscard={(navigating) => complete('date', navigating)}
+            active={open && kind === 'date'}
+            onRegisterClose={registerClose}
+            onModeChange={onModeChange}
+          />
+        )}
       </div>
       <div className={styles.form} hidden={kind !== 'place'}>
-        <PlacePollForm
-          key={generation.place}
-          meeting={meeting}
-          session={session}
-          done={() => complete('place')}
-        />
+        {(!mobile || kind === 'place') && (
+          <PlacePollForm
+            key={generation.place}
+            meeting={meeting}
+            session={session}
+            done={() => complete('place')}
+            onDiscard={(navigating) => complete('place', navigating)}
+            active={open && kind === 'place'}
+            onRegisterClose={registerClose}
+            onModeChange={onModeChange}
+          />
+        )}
       </div>
       <div className={styles.form} hidden={kind !== 'task'}>
         <TaskForm

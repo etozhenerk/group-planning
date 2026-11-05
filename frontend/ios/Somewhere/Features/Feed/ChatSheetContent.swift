@@ -35,7 +35,7 @@ struct ChatSheetContent: View {
                         completed: {
                             owner.actionDrafts.clearPlace()
                             owner.reload()
-                        })
+                        }, discarded: { owner.actionDrafts.clearPlace() })
                 }
             case .preparation:
                 CreatePreparationTaskScreen(

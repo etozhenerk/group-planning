@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Temporal } from '@js-temporal/polyfill';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -14,6 +14,10 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
   const [place, setPlace] = useState('');
   const [explanation, setExplanation] = useState('');
   const [validation, setValidation] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [attempt, setAttempt] = useState(0);
+  const [saved, setSaved] = useState(false);
+  const notified = useRef(false);
   const [deadline, setDeadline] = useState(() =>
     Temporal.Now.zonedDateTimeISO(meeting.timezone)
       .add({ days: 1 })
@@ -22,6 +26,14 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
   );
 
   const [choice, setChoice] = useState<'' | 'earlier' | 'later'>('');
+  const currentDraft = JSON.stringify({ place, explanation, deadline, choice });
+  const [originalDraft] = useState(currentDraft);
+  useEffect(() => {
+    if (saved && !notified.current) {
+      notified.current = true;
+      done();
+    }
+  }, [saved, done]);
   const client = useQueryClient();
   const intent = useIntent();
   const access = useAccess(session.user.id, meeting.id);
@@ -38,7 +50,7 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
       void client.invalidateQueries({
         queryKey: ['private', session.user.id, meeting.id],
       });
-      done();
+      setSaved(true);
     },
     retry: false,
   });
@@ -59,11 +71,16 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
 
     change();
     setValidation('');
+    setErrors({});
     action.reset();
   };
 
   return {
     place,
+    errors,
+    attempt,
+    dirty: !saved && currentDraft !== originalDraft,
+    failed: !!action.error,
     setPlace: (value: string) => edit(() => setPlace(value)),
     explanation,
     setExplanation: (value: string) => edit(() => setExplanation(value)),
@@ -99,6 +116,8 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
       }
 
       setValidation('');
+      setErrors({});
+      setAttempt((value) => value + 1);
 
       try {
         const trimmed = place.trim();
@@ -127,9 +146,32 @@ export const usePlaceForm = (meeting: Meeting, session: Session, done: () => voi
           ...(explanation.trim() ? { explanation: explanation.trim() } : {}),
         });
       } catch (error) {
-        setValidation(
-          error instanceof Error ? error.message : 'Проверьте введённые данные.',
-        );
+        const text =
+          error instanceof Error ? error.message : 'Проверьте введённые данные.';
+
+        setValidation(text);
+        const field = text.includes('место')
+          ? 'place'
+          : text.includes('пояснение')
+            ? 'explanation'
+            : text.includes('дважды')
+              ? 'ambiguous'
+              : !deadline.split('T')[0] || text.includes('окончания позже')
+                ? 'date'
+                : 'time';
+
+        const fieldText =
+          field === 'place'
+            ? !place.trim()
+              ? 'Укажите новое место'
+              : [...place.trim()].length > 500
+                ? 'Сократите место до 500 символов'
+                : 'Предложите другое место'
+            : field === 'explanation'
+              ? 'Сократите пояснение до 2000 символов'
+              : text;
+
+        setErrors({ [field]: fieldText });
       }
     },
   };

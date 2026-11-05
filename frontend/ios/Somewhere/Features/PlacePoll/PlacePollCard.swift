@@ -17,25 +17,44 @@ struct PlacePollCard: View {
     }
 
     var body: some View {
-        ChatInlineCard {
-            ChatPollEyebrow(entry: entry, icon: "ChatPin")
+        ChatInlineCard(
+            inset: DesignTokens.spaceS16, radius: DesignTokens.componentMobileDecisionCardRadius
+        ) {
+            HStack(spacing: DesignTokens.spaceS8) {
+                ParticipantAvatar(
+                    user: entry.actor, size: DesignTokens.componentMobileAvatarSmallSize)
+                Text(entry.actor.displayName).designFont(DesignTokens.typographySizeCaption)
+                Spacer(minLength: DesignTokens.spaceS8)
+                Text(FeedPresentation.time(entry.occurredAt.date)).designFont(
+                    DesignTokens.typographySizeLabel
+                )
+                .foregroundStyle(DesignTokens.colorMuted)
+            }.padding(.bottom, DesignTokens.componentMobileFormSectionGap)
+            HStack(spacing: DesignTokens.spaceS6) {
+                ChatIcon(kind: .pin, size: DesignTokens.typographySizeButton)
+                Text("Опрос о месте")
+            }.designFont(DesignTokens.typographySizeLabel).foregroundStyle(DesignTokens.colorMuted)
             VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
                 if owner.current, let poll = owner.poll {
-                    Text(poll.place).designFont(DesignTokens.typographySizeBody, weight: .semibold)
-                        .padding(.bottom, DesignTokens.componentMobileChatInlineTitleAfterGap)
+                    if poll.state != "open" {
+                        Text(PlacePollCopy.status(poll, timezone: meeting.timezone))
+                            .designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                                DesignTokens.colorAccent
+                            )
+                            .padding(.bottom, DesignTokens.spaceS8)
+                    }
+                    Text(poll.place).designFont(
+                        DesignTokens.componentMobileDecisionCardTitleSize, weight: .bold
+                    )
+                    .padding(.bottom, DesignTokens.spaceS8)
                     if let explanation = poll.explanation, !explanation.isEmpty {
                         Text(explanation).designFont(DesignTokens.typographySizeSmall)
                             .foregroundStyle(DesignTokens.colorMuted)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.bottom, DesignTokens.spaceS12)
+                            .padding(.bottom, DesignTokens.spaceS20)
                     }
                     PlacePollBallot(owner: owner, poll: poll)
-                    Text(PlacePollCopy.status(poll, timezone: meeting.timezone))
-                        .designFont(
-                            DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2
-                        )
-                        .foregroundStyle(DesignTokens.colorMuted)
-                        .padding(.top, DesignTokens.componentMobileChatInlineFootGap)
+                    PlacePollFooter(poll: poll, meeting: meeting)
                 } else if owner.current && owner.problem == nil {
                     PlacePollLoading()
                 }

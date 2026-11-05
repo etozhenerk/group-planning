@@ -26,10 +26,10 @@ export const useActionCompletion = (
 
   return {
     generation,
-    complete: (form: 'date' | 'place' | 'task') => {
+    complete: (form: 'date' | 'place' | 'task', navigating = false) => {
       setCompleted((value) => (value.includes(form) ? value : [...value, form]));
 
-      if (open && kind === form) {
+      if (open && kind === form && !navigating) {
         done();
       }
     },

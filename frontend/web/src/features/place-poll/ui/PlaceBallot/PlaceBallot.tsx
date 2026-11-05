@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import type { PlacePoll, PlaceVote } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { ApiError } from '@/shared/api';
@@ -9,13 +10,14 @@ import styles from '@/features/place-poll/ui/PlaceBallot/PlaceBallot.module.css'
 export type PlaceBallotProps = { poll: PlacePoll; session: Session; now?: number };
 
 export const PlaceBallot = ({ poll, session, now = Date.now() }: PlaceBallotProps) => {
+  const mobile = useMobileLayout();
   const action = usePlaceVote(poll.meetingId, poll.id, session);
   const available = poll.canVote && Date.parse(poll.closesAt) > now;
   const conflict = action.error instanceof ApiError && action.error.status === 409;
 
   return (
     <div>
-      <div className={styles.answers}>
+      <div className={styles.answers} data-mobile={mobile}>
         {(['for', 'against'] as PlaceVote[]).map((answer) => {
           const label = answer === 'for' ? 'За' : 'Против';
           const count = answer === 'for' ? poll.votesFor : poll.votesAgainst;

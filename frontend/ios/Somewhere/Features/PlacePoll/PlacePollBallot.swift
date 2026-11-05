@@ -41,27 +41,42 @@ struct PlacePollBallot: View {
 
     private func answerLabel(_ value: String) -> some View {
         let busy = owner.busy && owner.sendingAnswer == value
+        let available = poll.canVote && poll.closesAt.date > Date()
+        let selected = available && poll.myVote == value
         return HStack(spacing: DesignTokens.spaceS8) {
-            Text(value == "for" ? "За" : "Против")
-            Spacer(minLength: DesignTokens.spaceS0)
-            Text(String(value == "for" ? poll.votesFor : poll.votesAgainst))
-                .foregroundStyle(DesignTokens.colorMuted).monospacedDigit()
+            if available {
+                Text(value == "for" ? "За" : "Против")
+                Spacer(minLength: DesignTokens.spaceS0)
+                Text(String(value == "for" ? poll.votesFor : poll.votesAgainst)).monospacedDigit()
+            } else {
+                Text(
+                    "\(value == "for" ? "За" : "Против") · \(value == "for" ? poll.votesFor : poll.votesAgainst)"
+                )
+                Spacer(minLength: DesignTokens.spaceS0)
+            }
         }
-        .designFont(DesignTokens.typographySizeSmall)
+        .designFont(DesignTokens.typographySizeButton)
         .opacity(busy ? 0 : 1)
-        .padding(.horizontal, DesignTokens.componentMobileChatInlineVoteInsetInline)
-        .padding(.vertical, DesignTokens.componentMobileChatInlineVoteInsetBlock)
-        .frame(maxWidth: .infinity, minHeight: DesignTokens.targetIos)
+        .padding(.horizontal, DesignTokens.spaceS12)
+        .padding(.vertical, DesignTokens.spaceS12)
+        .frame(maxWidth: .infinity, minHeight: DesignTokens.componentMobileSheetButtonHeight)
+        .foregroundStyle(
+            selected
+                ? DesignTokens.colorOwnText
+                : available ? DesignTokens.colorText : DesignTokens.colorMuted
+        )
         .background(
-            DesignTokens.colorRaised,
-            in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatInlineVoteRadius)
+            selected ? DesignTokens.colorOwnMessage : DesignTokens.colorRaised,
+            in: RoundedRectangle(cornerRadius: DesignTokens.radiusControl)
         )
         .overlay {
-            RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatInlineVoteRadius)
+            RoundedRectangle(cornerRadius: DesignTokens.radiusControl)
                 .strokeBorder(
-                    poll.myVote == value ? DesignTokens.colorAccent : DesignTokens.colorLine,
+                    selected ? DesignTokens.colorAccent : DesignTokens.colorBorderStrong,
                     lineWidth: DesignTokens.spaceS1)
-            if busy { ProgressView() }
+            if busy {
+                ProgressView().tint(selected ? DesignTokens.colorOwnText : DesignTokens.colorAccent)
+            }
         }
     }
 }

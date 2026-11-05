@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useBeforeUnload, useBlocker } from 'react-router';
 
 export type DraftExitRegistration = (handler: (() => boolean) | null) => void;
@@ -8,20 +8,35 @@ export const useDraftExit = (input: {
   dirty: boolean;
   blocked: boolean;
   register: DraftExitRegistration | undefined;
-  discard: () => void;
+  discard: (navigating: boolean) => void;
 }) => {
   const { active, dirty, blocked, register, discard } = input;
   const [confirm, setConfirm] = useState(false);
-  const blocker = useBlocker(active && (dirty || blocked));
+  const [discarding, setDiscarding] = useState(false);
+  const didDiscard = useRef(false);
+  const blocker = useBlocker(active && !discarding && (dirty || blocked));
+  useEffect(() => {
+    if (!discarding || didDiscard.current) {
+      return;
+    }
+
+    didDiscard.current = true;
+    const navigating = blocker.state === 'blocked';
+    discard(navigating);
+
+    if (blocker.state === 'blocked') {
+      blocker.proceed();
+    }
+  }, [discarding, blocker, discard]);
   useBeforeUnload(
     useCallback(
       (event: BeforeUnloadEvent) => {
-        if (active && (dirty || blocked)) {
+        if (active && !discarding && (dirty || blocked)) {
           event.preventDefault();
           event.returnValue = '';
         }
       },
-      [active, dirty, blocked],
+      [active, discarding, dirty, blocked],
     ),
   );
   useEffect(() => {
@@ -37,7 +52,7 @@ export const useDraftExit = (input: {
     }
 
     register?.(() => {
-      if (blocked) {
+      if (blocked || discarding) {
         return false;
       }
 
@@ -57,10 +72,10 @@ export const useDraftExit = (input: {
     });
 
     return () => register?.(null);
-  }, [active, dirty, blocked, confirm, register]);
+  }, [active, dirty, blocked, discarding, confirm, register]);
 
   return {
-    confirm: active && !blocked && (confirm || blocker.state === 'blocked'),
+    confirm: active && !blocked && (confirm || blocker.state === 'blocked' || discarding),
     stay: () => {
       setConfirm(false);
 
@@ -68,12 +83,6 @@ export const useDraftExit = (input: {
         blocker.reset();
       }
     },
-    leave: () => {
-      discard();
-
-      if (blocker.state === 'blocked') {
-        blocker.proceed();
-      }
-    },
+    leave: () => setDiscarding(true),
   };
 };
