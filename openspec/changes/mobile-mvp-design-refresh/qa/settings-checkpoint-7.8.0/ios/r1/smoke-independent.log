@@ -1,0 +1,494 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData -resultBundlePath /private/tmp/settings-checkpoint78-r1-independent.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual test-without-building "-only-testing:SomewhereUITests/SettingsCheckpoint78Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+
+Writing result bundle at path:
+	/private/tmp/settings-checkpoint78-r1-independent.xcresult
+
+2026-11-05 21:34:20.530 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:21.837597+0300 SomewhereUITests-Runner[70729:20679932] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-05 21:34:24.750.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 21:34:24.751.
+Test Suite 'SettingsCheckpoint78Tests' started at 2026-11-05 21:34:24.751.
+Test Case '-[SomewhereUITests.SettingsCheckpoint78Tests testAFormRequiredDirtyStayLeaveAndSave]' started.
+    t =     0.00s Start Test at 2026-11-05 21:34:24.754
+    t =     0.03s Set Up
+    t =     0.04s Open dev.groupplanning.ios.uitesthost
+    t =     0.04s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 21:34:24.850 xcodebuild[70694:20679662] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 21:34:24.850 xcodebuild[70694:20679662] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 21:34:24.883 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.52s         Setting up automation session
+objc[70729]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a3e8398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a950310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.02s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.43s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.50s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.50s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.61s Tap "period-upcoming" Button
+    t =     5.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.62s     Find the "period-upcoming" Button
+    t =     5.64s     Check for interrupting elements affecting "period-upcoming" Button
+    t =     5.67s     Synthesize event
+    t =     6.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.01s Find the "period-upcoming" Button
+    t =     6.04s Find the "period-past" Button
+    t =     6.07s Find the "home-tab-calendar" Button
+    t =     6.09s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.12s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.12s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.12s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.15s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     6.17s     Synthesize event
+    t =     6.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+INFO_AFTER_CARD_APP_STATE=4
+    t =     7.91s Checking `Expect predicate `exists == 1` for object "meeting-info-open" Button`
+    t =     7.91s     Checking existence of `"meeting-info-open" Button`
+    t =     7.95s Tap "meeting-info-open" Button
+    t =     7.95s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.95s     Find the "meeting-info-open" Button
+    t =     7.97s     Check for interrupting elements affecting "meeting-info-open" Button
+    t =     7.99s     Synthesize event
+    t =     8.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.83s Checking `Expect predicate `exists == 1` for object "meeting-info-header" StaticText`
+    t =     9.83s     Checking existence of `"meeting-info-header" StaticText`
+    t =    10.94s Checking `Expect predicate `exists == 1` for object "meeting-people-summary" Button`
+    t =    10.94s     Checking existence of `"meeting-people-summary" Button`
+    t =    10.97s Find the "meeting-info-header" StaticText
+    t =    11.00s Checking existence of `"meeting-info-share" Button`
+    t =    11.02s Find the "meeting-info-share" Button
+    t =    11.05s Checking existence of `"edit-meeting" Button`
+    t =    11.07s Find the "edit-meeting" Button
+    t =    11.10s Find the "edit-meeting" Button
+    t =    11.14s Tap "edit-meeting" Button
+    t =    11.14s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.14s     Find the "edit-meeting" Button
+    t =    11.17s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    11.19s     Synthesize event
+    t =    11.49s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.57s Checking `Expect predicate `exists == 1` for object "settings-header" StaticText`
+    t =    12.57s     Checking existence of `"settings-header" StaticText`
+    t =    13.72s Checking `Expect predicate `exists == 1` for object "settings-title" TextField`
+    t =    13.72s     Checking existence of `"settings-title" TextField`
+    t =    14.85s Checking `Expect predicate `exists == 1` for object "meeting-cover" Image`
+    t =    14.85s     Checking existence of `"meeting-cover" Image`
+    t =    14.91s Requesting snapshot of accessibility hierarchy for app with pid 70793
+    t =    15.08s Requesting snapshot of accessibility hierarchy for app with pid 70793
+    t =    16.13s Find the Window (First Match)
+    t =    16.29s Added attachment named 'settings78-normal-form'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2EED0F4E-C7D6-47B0-AE06-DA5195E89891/tmp/somewhere-design-verification/settings78-normal-form.png
+    t =    16.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.31s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.33s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2EED0F4E-C7D6-47B0-AE06-DA5195E89891/tmp/somewhere-design-verification/settings78-normal-form.json
+    t =    16.39s Checking existence of `"settings-title" TextField`
+    t =    16.42s Find the "settings-header" StaticText
+    t =    16.45s Find the "settings-save" Button
+    t =    16.48s Find the "settings-title" TextField
+    t =    16.51s Find the "settings-title" TextField
+    t =    16.54s Tap "settings-title" TextField
+    t =    16.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.55s     Find the "settings-title" TextField
+    t =    16.57s     Check for interrupting elements affecting "settings-title" TextField
+    t =    16.60s     Synthesize event
+    t =    16.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.99s Find the "settings-title" TextField
+    t =    18.06s Type '' into "settings-title" TextField
+    t =    18.06s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.36s     Find the "settings-title" TextField
+    t =    18.41s     Check for interrupting elements affecting "settings-title" TextField
+    t =    18.46s     Synthesize event
+    t =    18.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.99s Tap "action-keyboard-done" Button
+    t =    18.99s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.00s     Find the "action-keyboard-done" Button
+    t =    19.06s     Check for interrupting elements affecting "action-keyboard-done" Button
+    t =    19.10s     Synthesize event
+    t =    19.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.68s Tap "settings-save" Button
+    t =    19.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.68s     Find the "settings-save" Button
+    t =    19.72s     Check for interrupting elements affecting "settings-save" Button
+    t =    19.75s     Synthesize event
+    t =    20.06s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.14s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    21.14s     Checking existence of `"Введите название встречи" StaticText`
+    t =    21.19s     Capturing element debug description
+    t =    22.16s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    22.17s     Checking existence of `"Введите название встречи" StaticText`
+    t =    22.22s     Capturing element debug description
+    t =    23.08s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    23.08s     Checking existence of `"Введите название встречи" StaticText`
+    t =    23.12s     Capturing element debug description
+    t =    24.08s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    24.08s     Checking existence of `"Введите название встречи" StaticText`
+    t =    24.11s     Capturing element debug description
+    t =    25.08s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    25.08s     Checking existence of `"Введите название встречи" StaticText`
+    t =    25.14s     Capturing element debug description
+    t =    26.10s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    26.11s     Checking existence of `"Введите название встречи" StaticText`
+    t =    26.16s     Capturing element debug description
+    t =    27.13s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    27.13s     Checking existence of `"Введите название встречи" StaticText`
+    t =    27.19s     Capturing element debug description
+    t =    28.15s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    28.16s     Checking existence of `"Введите название встречи" StaticText`
+    t =    28.20s     Capturing element debug description
+    t =    29.17s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    29.17s     Checking existence of `"Введите название встречи" StaticText`
+    t =    29.20s     Capturing element debug description
+    t =    30.16s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    30.17s     Checking existence of `"Введите название встречи" StaticText`
+    t =    30.22s     Capturing element debug description
+    t =    31.07s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    31.07s     Checking existence of `"Введите название встречи" StaticText`
+    t =    31.11s     Capturing element debug description
+    t =    32.08s Checking `Expect predicate `exists == 1` for object "Введите название встречи" StaticText`
+    t =    32.08s     Checking existence of `"Введите название встречи" StaticText`
+    t =    32.14s     Capturing element debug description
+<unknown>:0: warning: -[SomewhereUITests.SettingsCheckpoint78Tests testAFormRequiredDirtyStayLeaveAndSave] : Invalid frame dimension (negative or non-finite).
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/SettingsCheckpoint78Tests.swift:14: error: -[SomewhereUITests.SettingsCheckpoint78Tests testAFormRequiredDirtyStayLeaveAndSave] : XCTAssertEqual failed: ("XCTWaiterResult(rawValue: 2)") is not equal to ("XCTWaiterResult(rawValue: 1)")
+    t =    32.45s Tear Down
+Test Case '-[SomewhereUITests.SettingsCheckpoint78Tests testAFormRequiredDirtyStayLeaveAndSave]' failed (32.506 seconds).
+2026-11-05 21:34:57.259789+0300 SomewhereUITests-Runner[70729:20679932] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-05 21:34:57.259933+0300 SomewhereUITests-Runner[70729:20680121] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-05 21:34:57.280 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:57.280 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:57.281 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:57.547 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:57.563 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:57.563 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:57.564 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:34:58.419389+0300 SomewhereUITests-Runner[71478:20682387] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-05 21:35:01.052.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 21:35:01.052.
+Test Suite 'SettingsCheckpoint78Tests' started at 2026-11-05 21:35:01.052.
+Test Case '-[SomewhereUITests.SettingsCheckpoint78Tests testBRealConflictReviewAndRebase]' started.
+    t =     0.00s Start Test at 2026-11-05 21:35:01.055
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 21:35:01.085 xcodebuild[70694:20679662] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 21:35:01.085 xcodebuild[70694:20679662] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 21:35:01.093 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.25s         Setting up automation session
+    t =     2.39s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     3.73s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     4.80s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     4.80s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     4.87s Tap "period-upcoming" Button
+    t =     4.87s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.87s     Find the "period-upcoming" Button
+    t =     4.90s     Check for interrupting elements affecting "period-upcoming" Button
+    t =     4.92s     Synthesize event
+    t =     5.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.26s Find the "period-upcoming" Button
+    t =     5.30s Find the "period-past" Button
+    t =     5.33s Find the "home-tab-calendar" Button
+    t =     5.35s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.38s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.38s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.41s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.43s     Synthesize event
+    t =     5.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+INFO_AFTER_CARD_APP_STATE=4
+    t =     7.16s Checking `Expect predicate `exists == 1` for object "meeting-info-open" Button`
+    t =     7.16s     Checking existence of `"meeting-info-open" Button`
+    t =     7.22s Tap "meeting-info-open" Button
+    t =     7.22s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.22s     Find the "meeting-info-open" Button
+    t =     7.25s     Check for interrupting elements affecting "meeting-info-open" Button
+    t =     7.27s     Synthesize event
+    t =     7.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.12s Checking `Expect predicate `exists == 1` for object "meeting-info-header" StaticText`
+    t =     9.12s     Checking existence of `"meeting-info-header" StaticText`
+    t =    10.23s Checking `Expect predicate `exists == 1` for object "meeting-people-summary" Button`
+    t =    10.23s     Checking existence of `"meeting-people-summary" Button`
+    t =    10.27s Find the "meeting-info-header" StaticText
+    t =    10.29s Checking existence of `"meeting-info-share" Button`
+    t =    10.32s Find the "meeting-info-share" Button
+    t =    10.34s Checking existence of `"edit-meeting" Button`
+    t =    10.37s Find the "edit-meeting" Button
+    t =    10.40s Find the "edit-meeting" Button
+    t =    10.43s Tap "edit-meeting" Button
+    t =    10.43s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.43s     Find the "edit-meeting" Button
+    t =    10.46s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    10.48s     Synthesize event
+    t =    10.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.85s Checking `Expect predicate `exists == 1` for object "settings-header" StaticText`
+    t =    11.85s     Checking existence of `"settings-header" StaticText`
+    t =    12.97s Checking `Expect predicate `exists == 1` for object "settings-title" TextField`
+    t =    12.97s     Checking existence of `"settings-title" TextField`
+    t =    13.00s Checking existence of `"settings-title" TextField`
+    t =    13.03s Find the "settings-header" StaticText
+    t =    13.06s Find the "settings-save" Button
+    t =    13.09s Find the "settings-title" TextField
+    t =    13.12s Find the "settings-title" TextField
+    t =    13.16s Tap "settings-title" TextField
+    t =    13.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.16s     Find the "settings-title" TextField
+    t =    13.19s     Check for interrupting elements affecting "settings-title" TextField
+    t =    13.22s     Synthesize event
+    t =    13.51s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.83s Find the "settings-title" TextField
+    t =    13.89s Type '' into "settings-title" TextField
+    t =    13.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.20s     Find the "settings-title" TextField
+    t =    14.25s     Check for interrupting elements affecting "settings-title" TextField
+    t =    14.29s     Synthesize event
+    t =    14.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.81s Type 'Мои правки при кон...' into "settings-title" TextField
+    t =    14.81s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.82s     Find the "settings-title" TextField
+    t =    14.87s     Check for interrupting elements affecting "settings-title" TextField
+    t =    14.91s     Synthesize event
+    t =    15.52s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.53s Tap "action-keyboard-done" Button
+    t =    15.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.53s     Find the "action-keyboard-done" Button
+    t =    15.58s     Check for interrupting elements affecting "action-keyboard-done" Button
+    t =    15.62s     Synthesize event
+    t =    15.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.SettingsCheckpoint78Tests testBRealConflictReviewAndRebase] : Invalid frame dimension (negative or non-finite).
+    t =    16.37s Tap "settings-save" Button
+    t =    16.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.37s     Find the "settings-save" Button
+    t =    16.41s     Check for interrupting elements affecting "settings-save" Button
+    t =    16.45s     Synthesize event
+    t =    16.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+objc[71478]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x109e14398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a20c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =    17.82s Checking `Expect predicate `exists == 1` for object "Встреча изменилась" StaticText`
+    t =    17.82s     Checking existence of `"Встреча изменилась" StaticText`
+    t =    17.86s Requesting snapshot of accessibility hierarchy for app with pid 71488
+    t =    18.04s Requesting snapshot of accessibility hierarchy for app with pid 71488
+    t =    19.10s Find the Window (First Match)
+    t =    19.22s Added attachment named 'settings78-conflict-notice'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2EED0F4E-C7D6-47B0-AE06-DA5195E89891/tmp/somewhere-design-verification/settings78-conflict-notice.png
+    t =    19.22s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.27s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.29s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2EED0F4E-C7D6-47B0-AE06-DA5195E89891/tmp/somewhere-design-verification/settings78-conflict-notice.json
+    t =    19.33s Tap "settings-reload" Button
+    t =    19.33s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.33s     Find the "settings-reload" Button
+    t =    19.37s     Check for interrupting elements affecting "settings-reload" Button
+    t =    19.40s     Synthesize event
+    t =    19.70s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.76s Checking `Expect predicate `exists == 1` for object "Сейчас во встрече" StaticText`
+    t =    20.76s     Checking existence of `"Сейчас во встрече" StaticText`
+    t =    21.84s Checking `Expect predicate `exists == 1` for object "Заголовок другого устройства" StaticText`
+    t =    21.85s     Checking existence of `"Заголовок другого устройства" StaticText`
+    t =    21.87s Requesting snapshot of accessibility hierarchy for app with pid 71488
+    t =    22.00s Requesting snapshot of accessibility hierarchy for app with pid 71488
+    t =    23.04s Find the Window (First Match)
+    t =    23.17s Added attachment named 'settings78-conflict-review-separate-content'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2EED0F4E-C7D6-47B0-AE06-DA5195E89891/tmp/somewhere-design-verification/settings78-conflict-review-separate-content.png
+    t =    23.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.20s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/2EED0F4E-C7D6-47B0-AE06-DA5195E89891/tmp/somewhere-design-verification/settings78-conflict-review-separate-content.json
+    t =    23.23s Tap "Продолжить с моими правками" Button
+    t =    23.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.24s     Find the "Продолжить с моими правками" Button
+    t =    23.26s     Check for interrupting elements affecting "Продолжить с моими правками" Button
+    t =    23.28s     Synthesize event
+    t =    23.58s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    24.65s Checking `Expect predicate `exists == 1` for object "settings-title" TextField`
+    t =    24.65s     Checking existence of `"settings-title" TextField`
+    t =    24.69s Find the "settings-title" TextField
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/SettingsCheckpoint78Tests.swift:147: error: -[SomewhereUITests.SettingsCheckpoint78Tests testBRealConflictReviewAndRebase] : XCTAssertEqual failed: ("Optional("Мои правки при конфликтеНастолки у Саши")") is not equal to ("Optional("Мои правки при конфликте")")
+    t =    24.73s Tear Down
+Test Case '-[SomewhereUITests.SettingsCheckpoint78Tests testBRealConflictReviewAndRebase]' failed (24.788 seconds).
+2026-11-05 21:35:25.843473+0300 SomewhereUITests-Runner[71478:20682387] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-05 21:35:25.843658+0300 SomewhereUITests-Runner[71478:20682414] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-05 21:35:25.858 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:25.858 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:25.858 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:26.124 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:26.138 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:26.139 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:26.139 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:27.031180+0300 SomewhereUITests-Runner[72181:20684332] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-05 21:35:30.947.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 21:35:30.947.
+Test Suite 'SettingsCheckpoint78Tests' started at 2026-11-05 21:35:30.947.
+Test Case '-[SomewhereUITests.SettingsCheckpoint78Tests testCNarrowIMEAndUnknownSameIntentRetry]' started.
+    t =     0.00s Start Test at 2026-11-05 21:35:30.950
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-05 21:35:30.983 xcodebuild[70694:20679662] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-05 21:35:30.983 xcodebuild[70694:20679662] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-05 21:35:30.991 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.24s         Setting up automation session
+objc[72181]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1053d0398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1088c0310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.50s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     3.93s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.00s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.00s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.09s Tap "period-upcoming" Button
+    t =     5.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.09s     Find the "period-upcoming" Button
+    t =     5.12s     Check for interrupting elements affecting "period-upcoming" Button
+    t =     5.14s     Synthesize event
+    t =     5.47s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.48s Find the "period-upcoming" Button
+    t =     5.52s Find the "period-past" Button
+    t =     5.55s Find the "home-tab-calendar" Button
+    t =     5.58s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     5.60s Find the Window (First Match)
+    t =     5.61s Find the Window (First Match)
+    t =     5.61s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 371.0) for 0.4 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 171.0) with velocity of 250.00 pixels per second, and then hold for 1.0 seconds 
+    t =     5.61s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.62s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.63s     Check for interrupting elements affecting "somewhere QA" Application
+    t =     5.65s     Synthesize event
+    t =     5.66s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.67s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.69s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.73s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.20s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.20s Find the "period-upcoming" Button
+    t =     8.23s Find the "period-past" Button
+    t =     8.25s Find the "home-tab-calendar" Button
+    t =     8.28s Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.30s Tap "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.31s     Find the "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.33s     Check for interrupting elements affecting "meeting-card-deb00000-0000-4000-8000-000000000002" Button
+    t =     8.35s     Synthesize event
+    t =     8.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+INFO_AFTER_CARD_APP_STATE=4
+    t =    10.08s Checking `Expect predicate `exists == 1` for object "meeting-info-open" Button`
+    t =    10.09s     Checking existence of `"meeting-info-open" Button`
+    t =    10.15s Tap "meeting-info-open" Button
+    t =    10.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.15s     Find the "meeting-info-open" Button
+    t =    10.18s     Check for interrupting elements affecting "meeting-info-open" Button
+    t =    10.20s     Synthesize event
+    t =    10.22s         Scroll element to visible
+    t =    10.22s         Find the "meeting-info-open" Button
+    t =    10.26s         Computed hit point {-1, -1} after scrolling to visible
+    t =    10.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.10s Checking `Expect predicate `exists == 1` for object "meeting-info-header" StaticText`
+    t =    12.10s     Checking existence of `"meeting-info-header" StaticText`
+    t =    13.22s Checking `Expect predicate `exists == 1` for object "meeting-people-summary" Button`
+    t =    13.22s     Checking existence of `"meeting-people-summary" Button`
+    t =    13.25s Find the "meeting-info-header" StaticText
+    t =    13.28s Checking existence of `"meeting-info-share" Button`
+    t =    13.30s Find the "meeting-info-share" Button
+    t =    13.32s Checking existence of `"edit-meeting" Button`
+    t =    13.35s Find the "edit-meeting" Button
+    t =    13.38s Find the "edit-meeting" Button
+    t =    13.41s Tap "edit-meeting" Button
+    t =    13.41s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.41s     Find the "edit-meeting" Button
+    t =    13.43s     Check for interrupting elements affecting "edit-meeting" Button
+    t =    13.46s     Synthesize event
+    t =    13.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.83s Checking `Expect predicate `exists == 1` for object "settings-header" StaticText`
+    t =    14.83s     Checking existence of `"settings-header" StaticText`
+    t =    15.97s Checking `Expect predicate `exists == 1` for object "settings-title" TextField`
+    t =    15.97s     Checking existence of `"settings-title" TextField`
+    t =    16.00s Checking existence of `"settings-title" TextField`
+    t =    16.02s Find the "settings-header" StaticText
+    t =    16.05s Find the "settings-save" Button
+    t =    16.08s Find the "settings-title" TextField
+    t =    16.11s Find the "settings-title" TextField
+    t =    16.15s Tap "settings-title" TextField
+    t =    16.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.15s     Find the "settings-title" TextField
+    t =    16.18s     Check for interrupting elements affecting "settings-title" TextField
+    t =    16.21s     Synthesize event
+    t =    16.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.89s Find the "settings-title" TextField
+    t =    16.96s Type '...' into "settings-title" TextField
+    t =    16.96s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.25s     Find the "settings-title" TextField
+    t =    17.30s     Check for interrupting elements affecting "settings-title" TextField
+    t =    17.34s     Synthesize event
+    t =    18.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.02s Type 'После неподтверждё...' into "settings-title" TextField
+    t =    18.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.03s     Find the "settings-title" TextField
+    t =    18.08s     Check for interrupting elements affecting "settings-title" TextField
+    t =    18.12s     Synthesize event
+    t =    18.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.89s Checking `Expect predicate `exists == 1` for object Keyboard (First Match)`
+    t =    19.89s     Checking existence of `Keyboard (First Match)`
+    t =    19.91s Find the Keyboard (First Match)
+    t =    19.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+<unknown>:0: warning: -[SomewhereUITests.SettingsCheckpoint78Tests testCNarrowIMEAndUnknownSameIntentRetry] : Invalid frame dimension (negative or non-finite).
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/SettingsCheckpoint78Tests.swift:168: error: -[SomewhereUITests.SettingsCheckpoint78Tests testCNarrowIMEAndUnknownSameIntentRetry] : XCTAssertLessThan failed: ("590.0") is not less than ("568.0")
+    t =    20.00s Tear Down
+Test Case '-[SomewhereUITests.SettingsCheckpoint78Tests testCNarrowIMEAndUnknownSameIntentRetry]' failed (20.112 seconds).
+2026-11-05 21:35:51.062594+0300 SomewhereUITests-Runner[72181:20684332] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-05 21:35:51.062852+0300 SomewhereUITests-Runner[72181:20684368] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-05 21:35:51.080 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:51.080 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:51.081 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:51.355 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:51.368 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:51.369 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:51.370 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:52.206281+0300 SomewhereUITests-Runner[72361:20685402] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-05 21:35:54.851.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-05 21:35:54.851.
+Test Suite 'SettingsCheckpoint78Tests' started at 2026-11-05 21:35:54.851.
+Test Suite 'SettingsCheckpoint78Tests' passed at 2026-11-05 21:35:54.852.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-05 21:35:54.852.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-05 21:35:54.852.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+2026-11-05 21:35:54.869 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:54.870 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:54.870 xcodebuild[70694:20679662] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-05 21:35:55.135 xcodebuild[70694:20679662] [MT] IDETestOperationsObserverDebug: 94.643 elapsed -- Testing started completed.
+2026-11-05 21:35:55.135 xcodebuild[70694:20679662] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-05 21:35:55.135 xcodebuild[70694:20679662] [MT] IDETestOperationsObserverDebug: 94.643 sec, +94.643 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/settings-checkpoint78-r1-independent.xcresult
+
+Failing tests:
+	SettingsCheckpoint78Tests.testAFormRequiredDirtyStayLeaveAndSave()
+	SettingsCheckpoint78Tests.testBRealConflictReviewAndRebase()
+	SettingsCheckpoint78Tests.testCNarrowIMEAndUnknownSameIntentRetry()
+
+** TEST EXECUTE FAILED **
+
+Testing started

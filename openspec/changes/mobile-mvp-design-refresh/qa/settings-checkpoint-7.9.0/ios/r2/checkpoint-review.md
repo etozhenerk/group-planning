@@ -1,0 +1,13 @@
+# Settings iOS R2 — targeted checkpoint
+
+Вердикт: **PASS в ограниченном объёме**. Два новых независимых UI-метода прошли: normal402 — 33.548 с, narrow320 — 27.546 с. Новых замечаний в изменённых местах не найдено. Это экранный checkpoint, не финальная приёмка и не gates.
+
+Проверен точный immutable candidate из [artifact-binding.json](artifact-binding.json): artifact `9a53a53446eb238b93630f2036f2fdda7765d8ae3cb58ffbaa7da6641a7a943a`, source `686d49905fe2916459d9970de67d699e7edad9e608f77bf367f21e5959797642`, DS 7.9.0. Все 20 файлов frozen bundle и подставленного test host проверены по SHA до запуска. Authority: approved settings → navigation-r2/nav-settings, normalized preparation/references/settings, текущие UX и опубликованная корректировка сверки.
+
+- Дата и время теперь имеют одинаковые вертикальные центры: Δ0 pt, обе кнопки высотой 48 pt. Helper: «Время можно уточнить позже · Москва». [Actual](actual/normal-date-time-helper.png), [геометрия](actual/date-time-metrics.json).
+- Реальный concurrent API PATCH создал предусловие 409; UI открыл отдельную сверку. Обложки нет, заголовок и plain facts показаны без прежних карточек; пояснение о сохранённых локальных правках видно целиком. Опубликованный заголовок 23/30 проверен по реализации и actual; инструментального измерения шрифта отдельного Text не делалось. Кнопка продолжения видна. [Actual](actual/review-plain-facts.png), [API предусловие](actual/concurrent-patch-precondition.json). Продолжение/rebase/save повторно не выполнялись.
+- В окне 320×568 unknown-notice и кнопка находятся на одной закреплённой поверхности. Есть warning icon, заголовок, естественно перенесённое пояснение; дополнительного красного повторения problem нет. [Actual](actual/narrow-unknown-single-panel.png). Fault — QA `offline` до реального PATCH: это доказательство вида и переноса notice, не потери ACK после commit. Повтор/идемпотентность не проверялись заново.
+
+[Журнал](smoke-independent.log), [driver](driver-independent.swift); AX и фактические nativeWindow/physicalScreen записаны рядом с каждым actual. Normal окно 402×874; narrow — реальный QA UIWindow 320×568 на том же физическом Simulator screen 402×874, iOS 27.0, стандартный размер текста L. Отдельное физическое 320-устройство не заявляется.
+
+Dirty/PATCH/rebase/unknown-idempotency из R1 не переносились как новые pass. Другие сценарии, VoiceOver, полные suites и финальные gates не запускались. Собственная memory fixture остановлена, приложение уже завершено runner, simulator lock освобождён; настройки клавиатуры и VoiceOver не изменялись. Код, cases, manifests, tasks и Git не изменялись.
