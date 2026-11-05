@@ -1,0 +1,19 @@
+# Preparation iOS R1 — короткий независимый checkpoint
+
+Вердикт: **needs-fixes по подтверждению и действиям деталей**. Функциональные сценарии выполнены успешно; полный regression/gates не запускался.
+
+[Точный binding](artifact-binding.json): artifact `e7603eff2aacc2da4e91f2104a1f2808c965224095825a8a379df76cc5b1ad0b`, source `822aadf2e6cb0d2475a9af9c8e3c9d1803d90a7fc65ac8fc3affb0e0f834ef82`, DS 7.11. Все 20 файлов frozen/copied host проверены по SHA. Authority: approved nav-preparation, normalized preparation, UX preparation-r1 и требования testing/cases/preparation-tasks.yaml; это ограниченный экранный набор, не полный pass всех кейсов.
+
+## Batch findings
+
+1. **Подтверждение отмены теряет контекст задачи и принятую copy.** [Actual](actual/320-cancel-confirmation.png) содержит заголовок «Отменить задачу?» и «Задача будет отменена для всех участников». В [raw](reference-cancel-confirmation.png) дополнительно видно название конкретной задачи и объяснение «Задача останется в истории с отметкой об отмене». `PreparationTaskDetails.swift:25` не выводит title и использует прежний текст. Подтверждение остаётся в той же панели; «Оставить как есть» работает без изменения ревизии. Белая primary CTA соответствует raw и не является замечанием.
+2. **Действия деталей ещё используют прежние тексты/роль отказа.** Native [offered](actual/320-offered-details.png): «Принять задачу», красная текстовая «Отказаться»; [accepted](actual/320-accepted-details.png): «Отметить выполнение». Raw [details](reference-details.png) и [copy](reference-copy.json): «Взять на себя», отдельная outline «Отказаться от задачи», «Отметить выполненной». Код: `Model/PreparationTaskCopy.swift:18`, `PreparationTaskActions.swift:20`. API-переходы правильные; замечание к переносу approved интерфейса.
+
+## Что выполнено
+
+- **A, normal 402 — PASS 40.370 с:** required→inline hint/focus; поиск «Саш», отмена выбора свайпом возвращает к прежнему «Любому участнику»; повторный выбор себя; dirty same-panel→stay сохраняет title/self→leave возвращает в чат. [Форма](actual/normal-form.png), [focus](actual/required-focus.png), [search](actual/same-panel-search.png), [self](actual/self-recipient.png), [dirty](actual/dirty-same-panel.png).
+- **B, 320 — PASS 49.241 с:** создание себе, реальный POST commit и controlled 503 вместо полученного ответа; unknown блокирует title/recipient. [Actual](actual/320-unknown-frozen.png), [offered revision 1/assignee=null](actual/unknown-committed-self-still-offered.json). Точный повтор сохранил offered/revision 1: [API](actual/exact-retry-offered.json). Карточка→детали; отмена confirmation не меняет revision. Явное accept→[accepted revision 2](actual/confirmed-accepted.json), complete→[completed revision 3](actual/confirmed-completed.json). [Карточка итога](actual/320-completed-card.png), [детали](actual/320-completed-details.png). [Feed proof](actual/confirmed-event-chain.json) содержит ровно один created/accepted/completed без дополнительного события при retry/просмотре/отмене подтверждения.
+
+[Журнал](smoke-independent.log), [driver](driver-independent.swift). Собственные memory/fixture-аккаунты и реальный API/TLS; OAuth не проверялся. Normal 402×874 и реальный QA UIWindow320×568 на physical screen402×874 подтверждены capture context; iOS 27.0, текст L. Raw clock 05Nov10Z; перед сравнением переходы reference досняты после завершения анимации. Предыдущие промежуточные reference-кадры сохранены с suffix-before-transition.
+
+Known-rejection retry, people-load failure, отдельный decline/cancel commit, конкуренция, Large Text и полный набор ролей не запускались; новый pass по ним не заявлен. VoiceOver исключён. Своя fixture остановлена, приложение/lock освобождены; AutomaticMinimization восстановлен в 1 по trap output. Код/cases/manifests/tasks/Git не менялись. Новых app runtime после двух методов не было.

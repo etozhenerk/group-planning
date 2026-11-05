@@ -1,0 +1,67 @@
+{
+  "kind": "targeted corrections checkpoint; not final gate",
+  "platform": "web",
+  "browser": "Chromium",
+  "viewports": [
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      760
+    ]
+  ],
+  "sourceHash": "d852f82b73acf377f2ddfa5d055cefdea1dc56e66d2df7fd9bae1c011332df83",
+  "artifactHash": "91fa40f11c6d393ed4451d491852da04d627101330955c864dc52b80ee7d0ef4",
+  "designInputHash": "3e2bf121ccda2981b62ca7f1b070d709a4349ab5d3a0e648a7df50b73dfce66e",
+  "sourceBefore": "d852f82b73acf377f2ddfa5d055cefdea1dc56e66d2df7fd9bae1c011332df83",
+  "sourceAfter": "d852f82b73acf377f2ddfa5d055cefdea1dc56e66d2df7fd9bae1c011332df83",
+  "findings": [
+    {
+      "id": "F1-recipient-icons",
+      "severity": "P3",
+      "summary": "Recipient people icon32 instead of raw20; chevron accent instead of muted",
+      "evidence": [
+        "form-390-actual.png",
+        "form-390-reference.png",
+        "fieldhint-320-actual.png",
+        "fieldhint-320-reference.png",
+        "probes.json"
+      ]
+    },
+    {
+      "id": "F2-title-weight",
+      "severity": "P3",
+      "summary": "Changed TaskTitleField textarea inherits weight500 instead of published400; actual16/24 versus raw16/23",
+      "evidence": [
+        "form-390-actual.png",
+        "form-390-reference.png",
+        "fieldhint-320-actual.png",
+        "fieldhint-320-reference.png",
+        "probes.json"
+      ]
+    }
+  ],
+  "verified": [
+    "ordinary-create-same-chat",
+    "lost-ack-exact-retry-same-chat",
+    "inline-action-full-width44/r10/font13",
+    "form-action48/r14",
+    "recipient64/r14/font400",
+    "status-icon19",
+    "decorated-fieldhint12/18/icon14",
+    "confirmation48/r14/Keep44/font13/muted",
+    "cancel-browser-Back-to-details-no-mutation"
+  ],
+  "observations": 8,
+  "errors": [],
+  "binding": {
+    "diskFileCount": 261,
+    "liveAssetCount": 38,
+    "diskMismatches": [],
+    "artifactMatches": true,
+    "liveMatches": true
+  },
+  "sourceReleased": true
+}

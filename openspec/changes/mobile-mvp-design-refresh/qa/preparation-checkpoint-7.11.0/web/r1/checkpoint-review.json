@@ -1,0 +1,84 @@
+{
+  "kind": "short independent checkpoint; not final gate",
+  "platform": "web",
+  "browser": "Chromium",
+  "viewports": [
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      760
+    ],
+    [
+      1100,
+      900
+    ]
+  ],
+  "sourceHash": "8bdad91cf888997555628b463bcafe6a0b07cbc90ed72b04d1018051806b3ded",
+  "artifactHash": "cf271a44520f42ef24c83c58cf63accd4250dd38d6a565fd16f4d58e64f82ef8",
+  "designInputHash": "25e8edd73c6c03dff56bb2a2854905b7d54699df2259d5a4b9d79d098c2df132",
+  "sourceBefore": "8bdad91cf888997555628b463bcafe6a0b07cbc90ed72b04d1018051806b3ded",
+  "sourceAfter": "8bdad91cf888997555628b463bcafe6a0b07cbc90ed72b04d1018051806b3ded",
+  "findings": [
+    {
+      "id": "P1-success-navigation",
+      "severity": "P2",
+      "summary": "Successful create leaves the originating chat and navigates to /meetings",
+      "evidence": [
+        "plain-create-destination-actual.png",
+        "probes-complete.json",
+        "self-offered-card-actual.png"
+      ]
+    },
+    {
+      "id": "P2-inline-width",
+      "severity": "P2",
+      "summary": "Mobile card action remains compact auto-width instead of full card content width; raw height44 is already matched",
+      "evidence": [
+        "self-offered-card-resumed-actual.png",
+        "self-card-live-reference.png",
+        "reference-panels.json"
+      ]
+    },
+    {
+      "id": "P3-form-confirm-bindings",
+      "severity": "P3",
+      "summary": "Form submit and destructive confirmation metrics differ from published raw; details46/r12 already match",
+      "evidence": [
+        "form-empty-390-actual.png",
+        "form-empty-390-reference.png",
+        "cancel-confirmation-actual.png",
+        "cancel-confirmation-live-reference.png",
+        "reference-panels.json",
+        "probes-complete.json"
+      ]
+    },
+    {
+      "id": "P4-validation-hint",
+      "severity": "P3",
+      "summary": "Required error uses red13 text without approved FieldHint icon and muted12 copy",
+      "evidence": [
+        "validation-320-actual.png",
+        "validation-320-reference.png"
+      ]
+    }
+  ],
+  "observations": 25,
+  "errors": [],
+  "binding": {
+    "diskFileCount": 261,
+    "liveAssetCount": 38,
+    "diskMismatches": [],
+    "artifactMatches": true,
+    "liveMatches": true
+  },
+  "limitations": [
+    "No full manifest/case gate",
+    "No WebKit/real IME/VO/200%/RM run",
+    "Avatar photo unavailable in fixture; real identities with neutral fallback observed",
+    "Initial probe stopped after real unexpected success navigation; original evidence preserved; remaining probe resumed explicitly"
+  ],
+  "sourceReleased": true
+}

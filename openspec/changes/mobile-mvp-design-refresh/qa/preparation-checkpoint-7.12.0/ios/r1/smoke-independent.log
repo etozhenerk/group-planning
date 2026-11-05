@@ -1,0 +1,90 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/preparation712-r1-independent-20261106.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/PreparationCheckpoint712Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/preparation712-r1-independent-20261106.xcresult
+
+2026-11-06 00:22:39.751 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:41.050321+0300 SomewhereUITests-Runner[72027:21118543] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-06 00:22:44.012.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 00:22:44.013.
+Test Suite 'PreparationCheckpoint712Tests' started at 2026-11-06 00:22:44.013.
+Test Case '-[SomewhereUITests.PreparationCheckpoint712Tests testAFormRecipientBindingsOnly]' started.
+    t =     0.00s Start Test at 2026-11-06 00:22:44.016
+    t =     0.03s Set Up
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/PreparationCheckpoint712Tests.swift:28: error: -[SomewhereUITests.PreparationCheckpoint712Tests testAFormRecipientBindingsOnly] : XCTUnwrap failed: expected non-nil value of type "String"
+    t =     0.28s Tear Down
+Test Case '-[SomewhereUITests.PreparationCheckpoint712Tests testAFormRecipientBindingsOnly]' failed (0.287 seconds).
+2026-11-06 00:22:44.303213+0300 SomewhereUITests-Runner[72027:21118543] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-06 00:22:44.303348+0300 SomewhereUITests-Runner[72027:21118613] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-06 00:22:44.323 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:44.323 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:44.324 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:44.589 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:45.449369+0300 SomewhereUITests-Runner[72051:21118882] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-06 00:22:48.109.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 00:22:48.110.
+Test Suite 'PreparationCheckpoint712Tests' started at 2026-11-06 00:22:48.110.
+Test Case '-[SomewhereUITests.PreparationCheckpoint712Tests testBMinimalCardsDetailsAndConfirmationOnly]' started.
+    t =     0.00s Start Test at 2026-11-06 00:22:48.112
+    t =     0.03s Set Up
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/PreparationCheckpoint712Tests.swift:28: error: -[SomewhereUITests.PreparationCheckpoint712Tests testBMinimalCardsDetailsAndConfirmationOnly] : XCTUnwrap failed: expected non-nil value of type "String"
+    t =     0.27s Tear Down
+Test Case '-[SomewhereUITests.PreparationCheckpoint712Tests testBMinimalCardsDetailsAndConfirmationOnly]' failed (0.279 seconds).
+2026-11-06 00:22:48.391515+0300 SomewhereUITests-Runner[72051:21118882] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-06 00:22:48.391661+0300 SomewhereUITests-Runner[72051:21118975] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-06 00:22:48.413 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:48.414 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:48.414 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:48.687 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:49.525443+0300 SomewhereUITests-Runner[72070:21119043] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-06 00:22:52.183.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 00:22:52.184.
+Test Suite 'PreparationCheckpoint712Tests' started at 2026-11-06 00:22:52.184.
+Test Suite 'PreparationCheckpoint712Tests' passed at 2026-11-06 00:22:52.184.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-06 00:22:52.184.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-06 00:22:52.184.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+2026-11-06 00:22:52.202 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:52.202 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:52.203 xcodebuild[71990:21118240] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 00:22:52.480 xcodebuild[71990:21118240] [MT] IDETestOperationsObserverDebug: 12.767 elapsed -- Testing started completed.
+2026-11-06 00:22:52.480 xcodebuild[71990:21118240] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-06 00:22:52.480 xcodebuild[71990:21118240] [MT] IDETestOperationsObserverDebug: 12.767 sec, +12.767 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/preparation712-r1-independent-20261106.xcresult
+
+Failing tests:
+	PreparationCheckpoint712Tests.testAFormRecipientBindingsOnly()
+	PreparationCheckpoint712Tests.testBMinimalCardsDetailsAndConfirmationOnly()
+
+** TEST EXECUTE FAILED **
+
+Testing started
