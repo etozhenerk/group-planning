@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { usePanelHistory } from '@/shared/lib/panel-history';
 
 export const useMeetingDetailsPanel = (meeting: string, user: string, title: string) => {
@@ -16,6 +16,13 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
   const response = useRef<HTMLDivElement>(null);
   const origin = useRef<HTMLElement | null>(null);
   const previous = useRef(history.panel);
+  const settingsClose = useRef<(() => boolean) | null>(null);
+  const [settingsTitle, setSettingsTitle] = useState('Настройки встречи');
+  const [savedNotice, setSavedNotice] = useState(false);
+  const registerClose = useCallback((handler: (() => boolean) | null) => {
+    settingsClose.current = handler;
+  }, []);
+
   const [visited, setVisited] = useState(false);
   const [generation, setGeneration] = useState(0);
 
@@ -42,6 +49,12 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     opener: HTMLButtonElement,
   ) => {
     origin.current = opener;
+    setSavedNotice(false);
+
+    if (panel === 'settings') {
+      setGeneration((value) => value + 1);
+    }
+
     history.show(panel);
   };
 
@@ -49,7 +62,7 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     ...history,
     title:
       history.panel === 'settings'
-        ? 'Настройки встречи'
+        ? settingsTitle
         : history.panel === 'share'
           ? 'Пригласить друзей'
           : history.panel === 'response'
@@ -60,6 +73,27 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     share,
     response,
     visited,
+    savedNotice,
+    registerClose,
+    setSettingsTitle,
+    close: () => {
+      if (
+        history.panel === 'settings' &&
+        settingsClose.current &&
+        !settingsClose.current()
+      ) {
+        return;
+      }
+
+      history.close();
+    },
+    discarded: (navigating: boolean) => {
+      setGeneration((value) => value + 1);
+
+      if (!navigating) {
+        history.close();
+      }
+    },
     generation,
     edit: (event: MouseEvent<HTMLButtonElement>) =>
       openChild('settings', event.currentTarget),
@@ -68,6 +102,7 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     responseAction: (event: MouseEvent<HTMLButtonElement>) =>
       openChild('response', event.currentTarget),
     saved: () => {
+      setSavedNotice(true);
       setGeneration((value) => value + 1);
 
       if (history.panel === 'settings') {

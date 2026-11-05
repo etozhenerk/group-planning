@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import dev.groupplanning.android.R
@@ -25,23 +26,40 @@ import dev.groupplanning.android.ui.theme.DesignTokens
 import java.util.Locale
 
 @Composable
-internal fun MeetingInformationFacts(value: InvitationPreview) {
+internal fun MeetingInformationFacts(value: InvitationPreview, card: Boolean = true) {
     Column(
         Modifier.fillMaxWidth().testTag("meeting-information-facts")
             .background(
-                DesignTokens.colorBackground,
+                if (card) DesignTokens.colorBackground else Color.Transparent,
                 RoundedCornerShape(DesignTokens.componentMobileChatBubbleRadius),
             )
-            .border(
-                DesignTokens.spaceS1,
-                DesignTokens.colorLine,
-                RoundedCornerShape(DesignTokens.componentMobileChatBubbleRadius),
+            .then(
+                if (card) {
+                    Modifier.border(
+                        DesignTokens.spaceS1,
+                        DesignTokens.colorLine,
+                        RoundedCornerShape(DesignTokens.componentMobileChatBubbleRadius),
+                    )
+                } else {
+                    Modifier
+                },
             )
-            .padding(horizontal = DesignTokens.spaceS16, vertical = DesignTokens.spaceS20),
-        verticalArrangement = Arrangement.spacedBy(DesignTokens.spaceS16),
+            .padding(
+                horizontal = if (card) DesignTokens.spaceS16 else DesignTokens.spaceS0,
+                vertical = if (card) DesignTokens.spaceS20 else DesignTokens.spaceS0,
+            ),
+        verticalArrangement = Arrangement.spacedBy(
+            if (card) DesignTokens.spaceS16 else DesignTokens.spaceS20,
+        ),
     ) {
         listOf(
-            ChatSymbol.Calendar to meetingTime(value.startsAt, value.timezone, value.startsOn),
+            ChatSymbol.Calendar to
+                meetingTime(
+                    value.startsAt,
+                    value.timezone,
+                    value.startsOn,
+                    includeMissingTime = false,
+                ),
             ChatSymbol.Pin to (value.place ?: stringResource(R.string.place_unknown)),
         ).forEach { (icon, text) ->
             Row(
@@ -52,12 +70,18 @@ internal fun MeetingInformationFacts(value: InvitationPreview) {
                 Column {
                     Text(
                         text,
-                        fontSize = DesignTokens.typographySizeButton,
+                        fontSize = if (card) {
+                            DesignTokens.typographySizeButton
+                        } else {
+                            DesignTokens.typographySizeBody
+                        },
                         lineHeight =
                         DesignTokens.typographySizeButton *
                             DesignTokens.typographyLineHeightBody,
                     )
-                    if (icon == ChatSymbol.Calendar) {
+                    if (icon == ChatSymbol.Calendar &&
+                        (value.startsAt != null || value.startsOn != null)
+                    ) {
                         Text(
                             if (value.startsAt ==
                                 null

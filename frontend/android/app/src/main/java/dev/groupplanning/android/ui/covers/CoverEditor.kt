@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,7 +35,6 @@ import dev.groupplanning.android.data.drafts.CoverDraft
 import dev.groupplanning.android.state.covers.CoverSelectionViewModel
 import dev.groupplanning.android.state.covers.CoverSource
 import dev.groupplanning.android.ui.components.AppIcon
-import dev.groupplanning.android.ui.components.CompactButton
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 import java.util.UUID
@@ -49,9 +48,7 @@ internal fun CoverEditor(
     modifier: Modifier = Modifier,
     original: String? = null,
     meetingId: UUID? = null,
-    compact: Boolean = false,
-    prominent: Boolean = false,
-    creation: Boolean = false,
+    optionalHint: Boolean = true,
 ) {
     val repository = LocalCovers.current
     val model = remember { CoverSelectionViewModel() }
@@ -82,30 +79,14 @@ internal fun CoverEditor(
             } else {
                 null
             }
-    val mediaSize = if (creation) {
-        DesignTokens.componentMobileCreationCoverSize
-    } else {
-        DesignTokens.componentMeetingSettingsCoverSize
-    }
-    val mediaRadius = if (creation) {
-        DesignTokens.spaceS16
-    } else {
-        DesignTokens.componentMeetingSettingsCoverRadius
-    }
-    val mediaGap = if (creation) {
-        DesignTokens.spaceS16
-    } else {
-        DesignTokens.componentMeetingSettingsCoverGap
-    }
-    val mediaIcon = if (creation) {
-        DesignTokens.componentMobileCreationCoverIconSize
-    } else {
-        DesignTokens.componentMobileFieldIconSize
-    }
+    val mediaSize = DesignTokens.componentMobileCreationCoverSize
+    val mediaRadius = DesignTokens.spaceS16
+    val mediaGap = DesignTokens.spaceS16
+    val mediaIcon = DesignTokens.componentMobileCreationCoverIconSize
     val actions: @Composable () -> Unit = {
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(
-                if (creation) DesignTokens.spaceS8 else DesignTokens.spaceS12,
+                DesignTokens.spaceS8,
             ),
         ) {
             val select = {
@@ -124,48 +105,30 @@ internal fun CoverEditor(
                 ) {
                     R.string.cover_add
                 } else {
-                    R.string.cover_replace
+                    R.string.settings_cover_replace
                 },
             )
-            if (prominent) {
-                CompactButton(
-                    label,
-                    Modifier.fillMaxWidth().testTag("cover-select"),
-                    primary = true,
-                    icon = R.drawable.ic_photo,
-                    enabled = enabled && !state.busy && repository != null,
-                    click = select,
-                )
-            } else {
-                TextButton(
-                    select,
-                    enabled = enabled && !state.busy && repository != null,
-                    modifier = Modifier.testTag(
-                        "cover-select",
-                    ).heightIn(min = DesignTokens.targetAndroid),
-                    contentPadding = if (creation) {
-                        PaddingValues(
-                            DesignTokens.spaceS0,
-                        )
-                    } else {
-                        PaddingValues(DesignTokens.spaceS8)
-                    },
+            TextButton(
+                select,
+                enabled = enabled && !state.busy && repository != null,
+                modifier = Modifier.testTag(
+                    "cover-select",
+                ).heightIn(min = DesignTokens.targetAndroid),
+                contentPadding = PaddingValues(DesignTokens.spaceS0),
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = DesignTokens.colorAccent,
+                ),
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS6),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    if (creation) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS6),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            AppIcon(R.drawable.ic_photo, Modifier.size(DesignTokens.spaceS16))
-                            Text(
-                                label,
-                                fontSize = DesignTokens.typographySizeCaption,
-                                fontWeight = FontWeight.Medium,
-                            )
-                        }
-                    } else {
-                        Text(label)
-                    }
+                    AppIcon(R.drawable.ic_photo, Modifier.size(DesignTokens.spaceS16))
+                    Text(
+                        label,
+                        fontSize = DesignTokens.typographySizeCaption,
+                        fontWeight = FontWeight.Medium,
+                    )
                 }
             }
             if (source != null) {
@@ -175,29 +138,35 @@ internal fun CoverEditor(
                         onChange(CoverDraft())
                     },
                     enabled = enabled && !state.busy,
-                    modifier = Modifier.testTag("cover-remove"),
+                    modifier = Modifier.testTag(
+                        "cover-remove",
+                    ).heightIn(min = DesignTokens.targetAndroid),
+                    contentPadding = PaddingValues(DesignTokens.spaceS0),
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = DesignTokens.colorAccent,
+                    ),
                 ) {
-                    Text(stringResource(R.string.cover_remove))
+                    Text(
+                        stringResource(R.string.cover_remove),
+                        fontSize = DesignTokens.typographySizeCaption,
+                        fontWeight = FontWeight.Medium,
+                    )
                 }
             }
         }
     }
     Column(
-        if (creation) {
-            modifier.fillMaxWidth()
-                .background(DesignTokens.colorSurface, RoundedCornerShape(DesignTokens.radiusCard))
-                .border(
-                    DesignTokens.spaceS1,
-                    DesignTokens.colorLine,
-                    RoundedCornerShape(DesignTokens.radiusCard),
-                )
-                .padding(DesignTokens.spaceS12 + DesignTokens.spaceS2)
-        } else {
-            modifier
-        },
+        modifier.fillMaxWidth()
+            .background(DesignTokens.colorSurface, RoundedCornerShape(DesignTokens.radiusCard))
+            .border(
+                DesignTokens.spaceS1,
+                DesignTokens.colorLine,
+                RoundedCornerShape(DesignTokens.radiusCard),
+            )
+            .padding(DesignTokens.spaceS12 + DesignTokens.spaceS2),
         verticalArrangement = Arrangement.spacedBy(DesignTokens.componentMeetingSettingsCoverGap),
     ) {
-        if (compact) {
+        run {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(
                     mediaGap,
@@ -242,7 +211,7 @@ internal fun CoverEditor(
                         stringResource(R.string.cover_title),
                         fontSize = DesignTokens.typographySizeSmall,
                     )
-                    if (creation) {
+                    if (optionalHint) {
                         Text(
                             stringResource(R.string.create_cover_optional),
                             fontSize = DesignTokens.typographySizeLabel,
@@ -252,14 +221,6 @@ internal fun CoverEditor(
                     actions()
                 }
             }
-        } else {
-            Text(stringResource(R.string.cover_title), fontWeight = FontWeight.SemiBold)
-            if (state.busy) {
-                CoverSkeleton(Modifier.fillMaxWidth().aspectRatio(16f / 9f))
-            } else {
-                source?.let { CoverImage(it) }
-            }
-            actions()
         }
         state.issue?.let {
             Text(

@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.8.0. Do not edit.
+// Generated from design-system/tokens.json · 7.9.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -930,6 +930,10 @@ enum DesignTokens {
     static let componentMobileRosterAvatarSize = CGFloat(32)
     static let componentMobileRosterRowGap = CGFloat(11)
     static let componentMobileRosterRowHeight = CGFloat(55)
+    static let componentMobileSettingsReviewBodyLineHeight = CGFloat(22)
+    static let componentMobileSettingsReviewBodySize = CGFloat(14)
+    static let componentMobileSettingsReviewTitleLineHeight = CGFloat(30)
+    static let componentMobileSettingsReviewTitleSize = CGFloat(23)
     static let componentMobileSheetBackdropBlur = CGFloat(0)
     static let componentMobileSheetButtonHeight = CGFloat(46)
     static let componentMobileSheetButtonInsetBlock = CGFloat(11)

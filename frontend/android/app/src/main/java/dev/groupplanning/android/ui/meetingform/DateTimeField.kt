@@ -68,7 +68,13 @@ internal fun DateTimeField(
                 if (required) stateDescription = requiredHint
             },
             enabled = enabled,
-            color = if (compact) DesignTokens.colorBackground else DesignTokens.colorNavigation,
+            color = if (creation ||
+                !compact
+            ) {
+                DesignTokens.colorNavigation
+            } else {
+                DesignTokens.colorBackground
+            },
             shape = RoundedCornerShape(
                 if (creation) {
                     DesignTokens.componentMobileCreationFieldRadius

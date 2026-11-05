@@ -2,13 +2,14 @@ import SwiftUI
 
 struct MeetingSettingsFields: View {
     let owner: MeetingSettingsOwner
+    @FocusState private var focused: String?
     @State private var dateSheet = false
     @State private var timeSheet = false
     @State private var width = DesignTokens.breakpointChatNarrowWidth
     @Environment(\.dynamicTypeSize) private var typeSize
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.componentMobileFormGroupGap) {
-            field("Название", key: \.title, identifier: "settings-title")
+            field("Название", key: \.title, identifier: "settings-title", required: true)
             field(
                 "Описание", key: \.description, identifier: "settings-description",
                 lines: 2...6)
@@ -22,8 +23,7 @@ struct MeetingSettingsFields: View {
                             alignment: .top, spacing: DesignTokens.componentMobileFormTwoFieldGap))
                 layout {
                     VStack(alignment: .leading, spacing: DesignTokens.componentMobileFieldGap) {
-                        Text("Дата").designFont(DesignTokens.typographySizeCaption).foregroundStyle(
-                            DesignTokens.colorMuted)
+                        RequiredFieldLabel(title: "Дата", required: true)
                         SettingsPickerButton(
                             title: MeetingLabels.day(owner.value.day), symbol: "calendar"
                         ) { dateSheet = true }
@@ -31,8 +31,7 @@ struct MeetingSettingsFields: View {
                             MeetingLabels.day(owner.value.day))
                     }
                     VStack(alignment: .leading, spacing: DesignTokens.componentMobileFieldGap) {
-                        Text("Время").designFont(DesignTokens.typographySizeCaption)
-                            .foregroundStyle(DesignTokens.colorMuted)
+                        RequiredFieldLabel(title: "Время")
                         SettingsPickerButton(
                             title: MeetingLabels.clock(owner.value.clock), symbol: "clock"
                         ) { timeSheet = true }
@@ -40,11 +39,12 @@ struct MeetingSettingsFields: View {
                             MeetingLabels.clock(owner.value.clock))
                     }
                 }
-                Text("Время необязательно · \(owner.value.timezone)").designFont(
-                    DesignTokens.typographySizeCaption, relativeTo: .caption
-                )
-                .foregroundStyle(
-                    DesignTokens.colorMuted)
+                Text("Время можно уточнить позже · \(MeetingLabels.zone(owner.value.timezone))")
+                    .designFont(
+                        DesignTokens.typographySizeCaption, relativeTo: .caption
+                    )
+                    .foregroundStyle(
+                        DesignTokens.colorMuted)
             }
             if owner.needsTimeChoice {
                 Picker(
@@ -61,6 +61,9 @@ struct MeetingSettingsFields: View {
             }
             field("Место", key: \.place, identifier: "settings-place")
         }.disabled(!owner.editable)
+            .onChange(of: owner.validationAttempt) { _, _ in
+                if owner.titleError != nil { focused = "settings-title" }
+            }
             .onGeometryChange(for: CGFloat.self) {
                 $0.size.width
             } action: {
@@ -93,11 +96,10 @@ struct MeetingSettingsFields: View {
     }
     private func field(
         _ label: String, key: WritableKeyPath<MeetingDraft, String>, identifier: String,
-        lines: ClosedRange<Int> = 1...3
+        lines: ClosedRange<Int> = 1...3, required: Bool = false
     ) -> some View {
         VStack(alignment: .leading, spacing: DesignTokens.componentMobileFieldGap) {
-            Text(label).designFont(DesignTokens.typographySizeCaption, relativeTo: .caption)
-                .foregroundStyle(DesignTokens.colorMuted)
+            RequiredFieldLabel(title: LocalizedStringKey(label), required: required)
             TextField(
                 label,
                 text: Binding(
@@ -105,8 +107,13 @@ struct MeetingSettingsFields: View {
                     set: { value in owner.change { $0[keyPath: key] = value } }),
                 prompt: Text(""), axis: .vertical
             )
-            .lineLimit(lines).actionField()
+            .lineLimit(lines).frame(
+                minHeight: lines.lowerBound > 1
+                    ? DesignTokens.spaceS40 * 2 - DesignTokens.spaceS24 : nil
+            ).modifier(CreationFieldModifier(invalid: required && owner.titleError != nil))
+            .focused($focused, equals: identifier)
             .accessibilityLabel(label).accessibilityIdentifier(identifier)
+            if required, let error = owner.titleError { CreationFieldHint(text: error) }
         }
     }
 }

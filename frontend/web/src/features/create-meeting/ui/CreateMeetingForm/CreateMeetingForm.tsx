@@ -45,7 +45,6 @@ export const CreateMeetingForm = ({ session }: CreateMeetingFormProps) => {
             invalid={!!form.errors.cover}
             prominent={!mobile}
             compact={mobile}
-            creation={mobile}
           />
           {!mobile && <RequiredLegend />}
           <MeetingFields

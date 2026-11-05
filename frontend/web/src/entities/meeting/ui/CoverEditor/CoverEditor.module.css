@@ -47,27 +47,33 @@
 }
 
 .editor[data-compact='true'] {
-  grid-template-columns:
-    var(--ds-component-meeting-settings-cover-size) minmax(0, 1fr)
-    auto;
+  grid-template-columns: var(--ds-component-mobile-creation-cover-size) minmax(0, 1fr);
   align-items: center;
-  gap: var(--ds-component-meeting-settings-cover-gap);
-  border-top: var(--ds-space-s1) solid var(--ds-color-line);
-  padding-top: var(--ds-space-s16);
+  column-gap: var(--ds-space-s16);
+  row-gap: var(--ds-space-s4);
+  padding: calc(var(--ds-space-s12) + var(--ds-space-s2));
+  border: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: var(--ds-radius-card);
+  background: var(--ds-color-surface);
 }
 
 .editor[data-compact='true'] .media {
   grid-column: 1;
-  grid-row: 1;
-  width: var(--ds-component-meeting-settings-cover-size);
-  height: var(--ds-component-meeting-settings-cover-size);
+  grid-row: 1 / 3;
+  width: var(--ds-component-mobile-creation-cover-size);
+  height: var(--ds-component-mobile-creation-cover-size);
   display: grid;
   place-items: center;
   overflow: hidden;
   border: var(--ds-space-s1) solid var(--ds-color-border-strong);
-  border-radius: var(--ds-component-meeting-settings-cover-radius);
-  color: var(--ds-color-muted);
+  border-radius: var(--ds-space-s16);
+  color: var(--ds-color-accent);
   background: var(--ds-color-background);
+}
+
+.editor[data-compact='true'] .media > svg {
+  width: var(--ds-component-mobile-creation-cover-icon-size);
+  height: var(--ds-component-mobile-creation-cover-icon-size);
 }
 
 .editor[data-compact='true'] .preview,
@@ -79,46 +85,17 @@
 
 .editor[data-compact='true'] .label {
   grid-column: 2;
+  grid-row: 1;
+  align-self: end;
   font-size: var(--ds-typography-size-small);
 }
 
 .editor[data-compact='true'] small {
   display: block;
+  margin-top: var(--ds-space-s3);
   font-size: var(--ds-typography-size-label);
 }
 
 .editor[data-compact='true'] .error {
   grid-column: 1 / -1;
-}
-
-.editor[data-create='true'] {
-  grid-template-columns: var(--ds-component-mobile-creation-cover-size) minmax(0, 1fr);
-  column-gap: var(--ds-space-s16);
-  row-gap: var(--ds-space-s4);
-  padding: calc(var(--ds-space-s12) + var(--ds-space-s2));
-  border: var(--ds-space-s1) solid var(--ds-color-line);
-  border-radius: var(--ds-radius-card);
-  background: var(--ds-color-surface);
-}
-
-.editor[data-create='true'] .media {
-  grid-row: 1 / 3;
-  width: var(--ds-component-mobile-creation-cover-size);
-  height: var(--ds-component-mobile-creation-cover-size);
-  border-radius: var(--ds-space-s16);
-  color: var(--ds-color-accent);
-}
-
-.editor[data-create='true'] .media > svg {
-  width: var(--ds-component-mobile-creation-cover-icon-size);
-  height: var(--ds-component-mobile-creation-cover-icon-size);
-}
-
-.editor[data-create='true'] .label {
-  grid-row: 1;
-  align-self: end;
-}
-
-.editor[data-create='true'] small {
-  margin-top: var(--ds-space-s3);
 }

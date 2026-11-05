@@ -1,89 +1,89 @@
-import { RequiredLegend } from '@/shared/ui/RequiredLegend';
-import { useFormViewport } from '@/shared/lib/form';
-import { useMobileLayout } from '@/shared/lib/media';
-import { EditConflict } from '@/features/edit-meeting/ui/EditConflict';
-import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
-import styles from '@/features/edit-meeting/ui/EditMeetingForm/EditMeetingForm.module.css';
+import { useEditMeetingForm } from '@/features/edit-meeting/ui/EditMeetingForm/hooks/useEditMeetingForm';
 import type { Meeting } from '@/entities/meeting';
-import { MeetingFields, CoverEditor } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { useEdit } from '@/features/edit-meeting/model/useEdit';
+import { DesktopSettingsSubmit } from '@/features/edit-meeting/ui/DesktopSettingsSubmit';
+import { SettingsDiscard } from '@/features/edit-meeting/ui/SettingsDiscard';
+import { SettingsFormContent } from '@/features/edit-meeting/ui/SettingsFormContent';
+import { SettingsSubmit } from '@/features/edit-meeting/ui/SettingsSubmit';
+import styles from '@/features/edit-meeting/ui/EditMeetingForm/EditMeetingForm.module.css';
 
 export type EditMeetingFormProps = {
   meeting: Meeting;
   session: Session;
   onSaved: () => void;
+  active?: boolean;
+  onRegisterClose?: ((handler: (() => boolean) | null) => void) | undefined;
+  onModeChange?: ((title: string) => void) | undefined;
+  onDiscard?: ((navigating: boolean) => void) | undefined;
 };
 
-export const EditMeetingForm = ({ meeting, session, onSaved }: EditMeetingFormProps) => {
-  const mobile = useMobileLayout();
-  const scroll = useFormViewport();
-  const form = useEdit(meeting, session, onSaved);
-
-  const cover = (
-    <CoverEditor
-      compact
-      value={form.value.cover}
-      onChange={(cover) => form.change({ ...form.value, cover })}
-      onBusy={form.setPreparing}
-      disabled={form.locked}
-      invalid={!!form.errors.cover}
-      original={{ url: meeting.coverUrl, meeting: meeting.id, user: session.user.id }}
-    />
-  );
-
-  const feedback = (
-    <p role="alert" className={styles['error']}>
-      {form.problem}
-    </p>
-  );
+export const EditMeetingForm = ({
+  meeting,
+  session,
+  onSaved,
+  active = true,
+  onRegisterClose,
+  onModeChange,
+  onDiscard,
+}: EditMeetingFormProps) => {
+  const { mobile, scroll, form, formRef, reviewing, setReviewing, exit } =
+    useEditMeetingForm({
+      meeting,
+      session,
+      onSaved,
+      active,
+      onRegisterClose,
+      onModeChange,
+      onDiscard,
+    });
 
   return (
-    <form onSubmit={form.submit} className={styles['stack']} data-mobile={mobile}>
-      <div className={styles.body} ref={scroll.viewport} onScroll={scroll.update}>
-        <div className={styles.content} ref={scroll.content}>
-          {mobile && cover}
-          <RequiredLegend />
-          <MeetingFields
-            settings
-            dateRequired={!!meeting.startsAt || !!meeting.startsOn}
-            value={form.value}
-            onChange={form.change}
-            disabled={form.locked}
-            errors={form.errors}
-          />
-          {!mobile && cover}
-          {!mobile && feedback}
-          {form.conflict && (
-            <EditConflict
+    <>
+      {exit.confirm && <SettingsDiscard stay={exit.stay} leave={exit.leave} />}
+      <form
+        ref={formRef}
+        noValidate
+        onSubmit={form.submit}
+        className={styles.stack}
+        data-mobile={mobile}
+        data-review={mobile && reviewing}
+        hidden={exit.confirm}
+      >
+        <div className={styles.body} ref={scroll.viewport} onScroll={scroll.update}>
+          <div className={styles.content} ref={scroll.content}>
+            <SettingsFormContent
               meeting={meeting}
-              user={session.user.id}
-              resume={form.resume}
-              ready={form.rebaseReady}
+              session={session}
+              form={form}
+              mobile={mobile}
+              reviewing={reviewing}
+              resume={() => {
+                form.resume();
+                setReviewing(false);
+              }}
+              discard={() => onDiscard?.(false)}
             />
-          )}
+          </div>
         </div>
-      </div>
-      <div className={styles.footer} data-sticky={scroll.overflow}>
-        {mobile && feedback}
-        <button
-          type="submit"
-          className={styles['primary']}
-          disabled={form.pending || form.preparing || form.conflict}
-          aria-label={form.uncertain ? 'Повторить отправку' : 'Сохранить изменения'}
-          aria-busy={form.pending}
-        >
-          {form.pending ? (
-            <ButtonSpinner />
-          ) : form.uncertain ? (
-            'Повторить отправку'
-          ) : mobile ? (
-            'Сохранить'
-          ) : (
-            'Сохранить изменения'
-          )}
-        </button>
-      </div>
-    </form>
+        {!form.forbidden && (
+          <div className={styles.footer} data-sticky={scroll.overflow}>
+            {!mobile ? (
+              <DesktopSettingsSubmit form={form} />
+            ) : (
+              <SettingsSubmit
+                form={form}
+                mobile={mobile}
+                review={() => setReviewing(true)}
+                reviewing={reviewing}
+                resume={() => {
+                  form.resume();
+                  setReviewing(false);
+                }}
+              />
+            )}
+          </div>
+        )}
+      </form>
+    </>
   );
 };

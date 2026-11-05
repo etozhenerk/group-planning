@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.8.0. Do not edit.
+// Generated from design-system/tokens.json · 7.9.0. Do not edit.
 export const conversationTokens = {
   componentDesktopMessageCornerRadius: '5px',
   componentDesktopMessageLineHeight: '1.6',
@@ -51,4 +51,8 @@ export const conversationTokens = {
   componentMobileMessageShadowBlur: '1px',
   componentMobileMessageShadowOffset: '2px',
   componentMobileMessageSmileStroke: '1.45',
+  componentMobileSettingsReviewBodyLineHeight: '22px',
+  componentMobileSettingsReviewBodySize: '14px',
+  componentMobileSettingsReviewTitleLineHeight: '30px',
+  componentMobileSettingsReviewTitleSize: '23px',
 } as const;

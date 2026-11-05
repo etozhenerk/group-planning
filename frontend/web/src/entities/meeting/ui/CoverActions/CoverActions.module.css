@@ -4,20 +4,6 @@
   gap: var(--ds-space-s12);
 }
 
-.actions[data-compact='true'] {
-  grid-column: 3;
-  gap: 0;
-  flex-direction: column;
-}
-
-.actions[data-compact='true'] button {
-  padding: 0;
-  background: transparent;
-  color: var(--ds-color-accent);
-  font-size: var(--ds-typography-size-small);
-  font-weight: var(--ds-typography-weight-regular);
-}
-
 .actions[data-prominent='true'] button:first-child {
   display: inline-flex;
   align-items: center;
@@ -31,7 +17,7 @@
   border-radius: var(--ds-component-button-radius);
 }
 
-.actions[data-create='true'] {
+.actions[data-compact='true'] {
   grid-column: 2;
   grid-row: 2;
   flex-direction: row;
@@ -39,18 +25,20 @@
   align-self: start;
 }
 
-.actions[data-create='true'] button {
+.actions[data-compact='true'] button {
   display: flex;
   align-items: center;
   gap: var(--ds-space-s6);
   min-height: var(--ds-target-web);
   padding: 0;
+  color: var(--ds-color-accent);
+  background: transparent;
   font-size: var(--ds-typography-size-caption);
   font-weight: var(--ds-typography-weight-medium);
   white-space: nowrap;
 }
 
-.actions[data-create='true'] button svg {
+.actions[data-compact='true'] button svg {
   width: var(--ds-space-s16);
   height: var(--ds-space-s16);
 }

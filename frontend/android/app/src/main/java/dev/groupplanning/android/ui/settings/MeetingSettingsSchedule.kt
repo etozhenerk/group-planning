@@ -50,6 +50,8 @@ internal fun MeetingSettingsSchedule(
             R.drawable.ic_calendar,
             editable,
             Modifier.weight(1f),
+            creation = true,
+            required = true,
         ) {
             focus.clearFocus()
             datePicker = true
@@ -60,6 +62,7 @@ internal fun MeetingSettingsSchedule(
             R.drawable.ic_clock,
             editable,
             Modifier.weight(1f),
+            creation = true,
         ) {
             focus.clearFocus()
             timePicker = true
@@ -86,7 +89,13 @@ internal fun MeetingSettingsSchedule(
         }
     }
     Text(
-        stringResource(R.string.meeting_timezone, value.timezone),
+        stringResource(
+            R.string.settings_time_hint,
+            android.icu.text.TimeZoneNames.getInstance(
+                Locale.forLanguageTag("ru"),
+            ).getExemplarLocationName(value.timezone)
+                ?: value.timezone,
+        ),
         color = DesignTokens.colorMuted,
         fontSize = DesignTokens.typographySizeCaption,
     )

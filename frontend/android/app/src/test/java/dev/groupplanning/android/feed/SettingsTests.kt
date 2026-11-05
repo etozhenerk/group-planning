@@ -91,6 +91,9 @@ class SettingsTests {
         model.reload()
         runCurrent()
         assertEquals("Моя правка", model.state.value.draft.title)
+        assertEquals(SettingsIssue.Conflict, model.state.value.issue)
+        assertEquals(ServerCounter("2"), model.state.value.latest?.revision)
+        model.resumeConflict()
         model.change { it.copy(title = "После обновления") }
         h.transport.enqueue(h.path, "", 403)
         model.save()

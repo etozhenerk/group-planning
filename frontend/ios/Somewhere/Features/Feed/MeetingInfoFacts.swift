@@ -2,8 +2,9 @@ import SwiftUI
 
 struct MeetingInfoFacts: View {
     let meeting: Meeting
+    var card = true
     var body: some View {
-        VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
+        VStack(alignment: .leading, spacing: card ? DesignTokens.spaceS12 : DesignTokens.spaceS20) {
             fact(
                 "calendar", text: timeLabel,
                 detail: meeting.startsAt == nil
@@ -12,14 +13,16 @@ struct MeetingInfoFacts: View {
         }.designFont(DesignTokens.typographySizeCaption).foregroundStyle(DesignTokens.colorMuted)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, DesignTokens.spaceS20).padding(.horizontal, DesignTokens.spaceS16)
+            .padding(.vertical, card ? DesignTokens.spaceS20 : 0).padding(
+                .horizontal, card ? DesignTokens.spaceS16 : 0
+            )
             .background(
-                DesignTokens.colorBackground,
+                card ? DesignTokens.colorBackground : .clear,
                 in: RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatBubbleRadius)
             )
             .overlay {
                 RoundedRectangle(cornerRadius: DesignTokens.componentMobileChatBubbleRadius).stroke(
-                    DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
+                    card ? DesignTokens.colorLine : .clear, lineWidth: DesignTokens.spaceS1)
             }
     }
 
@@ -30,8 +33,11 @@ struct MeetingInfoFacts: View {
             )
             .frame(width: DesignTokens.componentMobileRosterActionIcon).accessibilityHidden(true)
             VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
-                Text(text).designFont(DesignTokens.typographySizeButton, weight: .semibold)
-                    .foregroundStyle(DesignTokens.colorText)
+                Text(text).designFont(
+                    card ? DesignTokens.typographySizeButton : DesignTokens.typographySizeBody,
+                    weight: card ? .semibold : .regular
+                )
+                .foregroundStyle(DesignTokens.colorText)
                 if let detail { Text(detail).designFont(DesignTokens.typographySizeLabel) }
             }
         }

@@ -1,4 +1,4 @@
-# Токены somewhere · 7.8.0
+# Токены somewhere · 7.9.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -462,6 +462,10 @@
 | component.mobileRoster.avatarSize | dimension | 32px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row .avatar |
 | component.mobileRoster.rowGap | dimension | 11px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row |
 | component.mobileRoster.rowHeight | dimension | 55px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row |
+| component.mobileSettings.reviewBodyLineHeight | dimension | 22px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
+| component.mobileSettings.reviewBodySize | dimension | 14px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
+| component.mobileSettings.reviewTitleLineHeight | dimension | 30px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
+| component.mobileSettings.reviewTitleSize | dimension | 23px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
 | component.mobileSheet.backdropBlur | dimension | 0px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .sheet-backdrop; эта ревизия без blur |
 | component.mobileSheet.buttonHeight | dimension | 46px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .primary-button/.secondary-button; max с target платформы |
 | component.mobileSheet.buttonInsetBlock | dimension | 11px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .primary-button/.secondary-button |

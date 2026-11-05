@@ -41,7 +41,7 @@ export const MeetingFields = ({
       className={styles['form-fields']}
       disabled={disabled}
       data-mobile={mobile}
-      data-create={mobileLayout && creation}
+      data-create={mobileLayout && (creation || settings)}
     >
       <div className={styles.group}>
         <label>
@@ -63,7 +63,7 @@ export const MeetingFields = ({
         </label>
         {errors.title && (
           <FieldError
-            decorated={mobileLayout && creation}
+            decorated={mobileLayout && (creation || settings)}
             id={titleError}
             error={
               mobileLayout
@@ -76,7 +76,7 @@ export const MeetingFields = ({
       </div>
       <div className={styles.group}>
         <MeetingTimeFields
-          creation={creation}
+          creation={creation || (settings && mobileLayout)}
           value={value}
           onChange={onChange}
           errors={errors}

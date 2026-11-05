@@ -11,6 +11,8 @@ final class MeetingSettingsOwner {
     var preparingCover = false
     var conflict = false
     var forbidden = false
+    var conflictMeeting: Meeting?
+    var validationAttempt = 0
     var problem: String?
     var saved: Meeting?
     var pending: Submission?
@@ -55,6 +57,7 @@ final class MeetingSettingsOwner {
         else { return }
         let version = generation
         saving = true
+        validationAttempt += 1
         problem = nil
         defer { if version == generation { saving = false } }
         do {
@@ -108,10 +111,11 @@ final class MeetingSettingsOwner {
                 MeetingRequests.details(original.id), as: Meeting.self)
             try Task.checkCancellation()
             guard current, generation == version, meeting.id == original.id else { return }
-            value = MeetingSettingsDraft.rebase(value, from: original, to: meeting)
-            original = meeting
-            pending = nil
-            conflict = false
+            conflictMeeting = meeting
+            var resource = ResourceState<Meeting>()
+            let request = resource.begin()
+            resource.succeed(meeting, requestID: request)
+            session.privateData.details[meeting.id] = resource
             forbidden = meeting.organizerID != session.profile?.id
             problem = forbidden ? "Менять настройки может только организатор." : nil
         } catch {
@@ -120,12 +124,32 @@ final class MeetingSettingsOwner {
             }
         }
     }
+    func resumeConflict() {
+        guard current, !saving, !forbidden, let meeting = conflictMeeting else { return }
+        value = MeetingSettingsDraft.rebase(value, from: original, to: meeting)
+        original = meeting
+        conflictMeeting = nil
+        conflict = false
+        pending = nil
+        problem = nil
+    }
+
+    var titleError: String? {
+        guard validationAttempt > 0 else { return nil }
+        let title = value.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        if title.isEmpty { return "Введите название встречи" }
+        return title.unicodeScalars.count > 120 ? DraftIssue.title.text : nil
+    }
+
     func clear() {
         suspend()
         value = MeetingSettingsDraft.make(original)
         pending = nil
         saved = nil
         problem = nil
+        conflict = false
+        conflictMeeting = nil
+        validationAttempt = 0
     }
 
     func suspend() {

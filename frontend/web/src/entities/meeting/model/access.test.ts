@@ -10,6 +10,7 @@ import {
   guarded,
   resetAccess,
 } from '@/entities/meeting/model/access';
+import { ApiError } from '@/shared/api';
 import type { ResponseState } from '@/entities/meeting/model/types';
 
 let epoch = accessEpoch('user', 'meeting');
@@ -162,4 +163,28 @@ describe('private cache access generation', () => {
       'other',
     ]);
   });
+});
+
+it('keeps meeting data for an operation-only 403, while a read 403 still revokes it', async () => {
+  const client = new QueryClient();
+  const key = ['private', 'user', 'meeting', epoch, 'feed'];
+  client.setQueryData(key, ['private text']);
+  await expect(
+    guarded(
+      client,
+      'user',
+      'meeting',
+      epoch,
+      () => Promise.reject(new ApiError(403, 'forbidden')),
+      'operation',
+    ),
+  ).rejects.toBeInstanceOf(ApiError);
+  expect(client.getQueryData(key)).toEqual(['private text']);
+  expect(accessEpoch('user', 'meeting')).toBe(epoch);
+  await expect(
+    guarded(client, 'user', 'meeting', epoch, () =>
+      Promise.reject(new ApiError(403, 'forbidden')),
+    ),
+  ).rejects.toBeInstanceOf(ApiError);
+  expect(client.getQueryData(key)).toBeUndefined();
 });

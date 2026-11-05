@@ -16,7 +16,7 @@ export type CoverEditorProps = {
   invalid?: boolean;
   compact?: boolean;
   prominent?: boolean;
-  creation?: boolean;
+  optionalHint?: boolean;
 };
 
 export const CoverEditor = ({
@@ -28,7 +28,7 @@ export const CoverEditor = ({
   invalid = false,
   compact = false,
   prominent = false,
-  creation = false,
+  optionalHint = true,
 }: CoverEditorProps) => {
   const mobile = useMobileLayout() && compact;
   const selection = useCoverSelection(onChange, onBusy);
@@ -41,13 +41,11 @@ export const CoverEditor = ({
       aria-label="Обложка"
       data-compact={mobile}
       data-prominent={prominent}
-      data-create={creation && mobile}
     >
       <CoverEditorLabel
         className={styles.label ?? ''}
         compact={mobile}
-        creation={creation}
-        hasPhoto={hasPhoto}
+        optionalHint={optionalHint}
       />
       <div className={styles.media}>
         {selection.busy ? (
@@ -86,7 +84,6 @@ export const CoverEditor = ({
       <CoverActions
         compact={mobile}
         prominent={prominent}
-        creation={creation && mobile}
         hasPhoto={hasPhoto}
         disabled={disabled || selection.busy}
         choose={selection.open}

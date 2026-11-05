@@ -21,6 +21,7 @@ final class FeedOwner {
     var returnedToPeople = false
     var reactionPeopleFilter: String?
     var composerSelection = NSRange(location: 0, length: 0)
+    var informationSaved = false
     var informationExpanded = false
     var informationReturn: ChatSheetRoute?
     var informationScrollOffset: CGFloat = 0
@@ -183,7 +184,12 @@ final class FeedOwner {
         composerFocused = false
         returnedMessage = nil
         pendingMessageReturn = nil
-        if child { sheets.append(route) } else { sheets = [route] }
+        if child {
+            informationSaved = false
+            sheets.append(route)
+        } else {
+            sheets = [route]
+        }
     }
 
     func closeSheet() {

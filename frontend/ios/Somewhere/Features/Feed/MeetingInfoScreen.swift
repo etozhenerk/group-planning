@@ -20,6 +20,10 @@ struct MeetingInfoScreen: View {
                 }
             }
             if owner.current, let meeting = owner.meeting {
+                if owner.informationSaved {
+                    Text("Изменения сохранены").foregroundStyle(DesignTokens.colorAccent)
+                        .accessibilityIdentifier("settings-saved")
+                }
                 MeetingInfoHeading(owner: owner, meeting: meeting)
                 MeetingInfoFacts(meeting: meeting)
                 if let text = meeting.description, !text.isEmpty {

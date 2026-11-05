@@ -6,8 +6,7 @@ struct CoverEditor: View {
     var original: URL?
     var meetingID: UUID?
     var session: SessionStore?
-    var compact = false
-    var creation = false
+    var showOptionalHint = true
     let disabled: Bool
     let onBusy: (Bool) -> Void
     let onChange: (CoverDraft) -> Void
@@ -20,7 +19,7 @@ struct CoverEditor: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.componentMeetingSettingsCoverGap) {
-            if creation {
+            Group {
                 HStack(spacing: DesignTokens.spaceS16) {
                     preview.frame(
                         width: DesignTokens.componentMobileCreationCoverSize,
@@ -33,12 +32,14 @@ struct CoverEditor: View {
                     }
                     VStack(alignment: .leading, spacing: DesignTokens.spaceS3) {
                         Text("Обложка").designFont(DesignTokens.typographySizeSmall)
-                        Text("необязательно").designFont(DesignTokens.typographySizeLabel)
-                            .foregroundStyle(DesignTokens.colorMuted)
+                        if showOptionalHint {
+                            Text("необязательно").designFont(DesignTokens.typographySizeLabel)
+                                .foregroundStyle(DesignTokens.colorMuted)
+                        }
                         ViewThatFits(in: .horizontal) {
-                            HStack(spacing: DesignTokens.spaceS8) { creationControls }
+                            HStack(spacing: DesignTokens.spaceS8) { controls }
                             VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
-                                creationControls
+                                controls
                             }
                         }
                     }.frame(maxWidth: .infinity, alignment: .leading)
@@ -51,52 +52,6 @@ struct CoverEditor: View {
                 .overlay {
                     RoundedRectangle(cornerRadius: DesignTokens.radiusCard)
                         .stroke(DesignTokens.colorLine, lineWidth: DesignTokens.spaceS1)
-                }
-            } else if compact {
-                HStack(spacing: DesignTokens.componentMeetingSettingsCoverGap) {
-                    Group {
-                        if hasPhoto {
-                            Button(action: selectPhoto) { preview.contentShape(Rectangle()) }
-                                .buttonStyle(.plain).accessibilityLabel("Заменить обложку")
-                                .accessibilityIdentifier("cover-select")
-                        } else {
-                            preview
-                        }
-                    }.frame(
-                        width: DesignTokens.componentMeetingSettingsCoverSize,
-                        height: DesignTokens.componentMeetingSettingsCoverSize
-                    )
-                    .clipped().clipShape(
-                        RoundedRectangle(
-                            cornerRadius: DesignTokens.componentMeetingSettingsCoverRadius))
-                    VStack(alignment: .leading, spacing: DesignTokens.spaceS2) {
-                        Text("Обложка").designFont(
-                            DesignTokens.typographySizeSmall, weight: .medium)
-                        Text(hasPhoto ? "Фото встречи" : "Не добавлена").designFont(
-                            DesignTokens.typographySizeLabel
-                        )
-                        .foregroundStyle(DesignTokens.colorMuted)
-                    }
-                    Spacer(minLength: DesignTokens.spaceS0)
-                    if hasPhoto {
-                        Button("Убрать") {
-                            owner.remove()
-                            onChange(.removed)
-                        }.frame(minHeight: DesignTokens.targetIos).accessibilityIdentifier(
-                            "cover-remove")
-                    } else {
-                        Button("Добавить", action: selectPhoto).frame(
-                            minHeight: DesignTokens.targetIos
-                        )
-                        .accessibilityIdentifier("cover-select")
-                    }
-                }.designFont(DesignTokens.typographySizeSmall).disabled(disabled || owner.busy)
-            } else {
-                Text("Обложка").font(.headline)
-                if owner.busy || hasPhoto { preview }
-                ViewThatFits(in: .horizontal) {
-                    HStack { controls }
-                    VStack(alignment: .leading) { controls }
                 }
             }
             if let problem = owner.problem {
@@ -126,34 +81,28 @@ struct CoverEditor: View {
             CoverSkeleton().aspectRatio(16.0 / 9.0, contentMode: .fit)
         } else if let image = value?.image {
             CoverImageView(
-                source: .prepared(image), thumbnail: compact,
-                thumbnailSize: creation
-                    ? DesignTokens.componentMobileCreationCoverSize
-                    : DesignTokens.componentMeetingSettingsCoverSize,
-                settingsThumbnail: compact)
+                source: .prepared(image), thumbnail: true,
+                thumbnailSize: DesignTokens.componentMobileCreationCoverSize,
+                settingsThumbnail: true)
         } else if value == nil, let original, let meetingID {
             CoverImageView(
                 source: .remote(original, meetingID), api: session?.api, session: session,
-                thumbnail: compact,
-                thumbnailSize: creation
-                    ? DesignTokens.componentMobileCreationCoverSize
-                    : DesignTokens.componentMeetingSettingsCoverSize,
-                settingsThumbnail: compact)
+                thumbnail: true,
+                thumbnailSize: DesignTokens.componentMobileCreationCoverSize,
+                settingsThumbnail: true)
         } else {
-            Image(systemName: creation ? "photo.badge.plus" : "photo")
+            Image(systemName: "photo.badge.plus")
                 .font(
                     .system(
-                        size: creation
-                            ? DesignTokens.componentMobileCreationCoverIconSize
-                            : DesignTokens.componentMobileFieldIconSize)
+                        size: DesignTokens.componentMobileCreationCoverIconSize)
                 )
-                .foregroundStyle(creation ? DesignTokens.colorAccent : DesignTokens.colorMuted)
+                .foregroundStyle(DesignTokens.colorAccent)
                 .frame(maxWidth: .infinity, maxHeight: .infinity).background(
                     DesignTokens.colorBackground)
         }
     }
 
-    @ViewBuilder private var creationControls: some View {
+    @ViewBuilder private var controls: some View {
         Button(action: selectPhoto) {
             Label(hasPhoto ? "Заменить" : "Добавить фото", systemImage: "photo.badge.plus")
                 .designFont(DesignTokens.typographySizeCaption, weight: .medium)
@@ -167,28 +116,6 @@ struct CoverEditor: View {
             .designFont(DesignTokens.typographySizeCaption, weight: .medium)
             .frame(minHeight: DesignTokens.targetIos)
             .accessibilityIdentifier("cover-remove").disabled(disabled || owner.busy)
-        }
-    }
-
-    @ViewBuilder private var controls: some View {
-        Button(action: selectPhoto) {
-            Label(hasPhoto ? "Заменить фото" : "Добавить фото", systemImage: "photo.badge.plus")
-                .designFont(DesignTokens.typographySizeButton, weight: .semibold)
-                .frame(maxWidth: .infinity, minHeight: DesignTokens.componentButtonMinimumHeight)
-                .foregroundStyle(DesignTokens.colorActionText)
-                .background(
-                    DesignTokens.colorAction,
-                    in: RoundedRectangle(
-                        cornerRadius: DesignTokens.componentButtonRadius))
-        }.accessibilityIdentifier("cover-select").disabled(
-            disabled || owner.busy)
-        if hasPhoto {
-            Button("Убрать фото") {
-                owner.remove()
-                onChange(.removed)
-            }
-            .frame(minHeight: DesignTokens.targetIos).accessibilityIdentifier("cover-remove")
-            .disabled(disabled || owner.busy)
         }
     }
 

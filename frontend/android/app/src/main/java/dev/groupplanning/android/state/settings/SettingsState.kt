@@ -15,6 +15,8 @@ internal data class SettingsState(
     val issue: SettingsIssue? = null,
     val validation: DraftIssue? = null,
     val saved: Boolean = false,
+    val latest: Meeting? = null,
+    val validationAttempt: Int = 0,
 ) {
     val dirty: Boolean get() = draft != original.settingsDraft()
     val editable: Boolean get() = !busy &&

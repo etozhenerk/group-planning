@@ -5,14 +5,17 @@ import Testing
 
 @MainActor
 struct MeetingSettingsTests {
-    func meeting(id: UUID = UUID(), revision: String = "1", title: String = "Настолки") throws
+    func meeting(
+        id: UUID = UUID(), revision: String = "1", title: String = "Настолки",
+        organizerID: UUID = UUID()
+    ) throws
         -> Meeting
     {
         try Meeting(
             id: id, title: title, startsAt: APIInstant("2026-11-01T01:30:00-05:00"),
             timezone: "America/New_York", place: "Кафе", coverURL: nil, participantCount: 2,
             revision: ServerCounter(revision), myRSVP: nil, myRSVPRevision: .zero,
-            organizerID: UUID(), description: "Игры и пицца",
+            organizerID: organizerID, description: "Игры и пицца",
             createdAt: APIInstant("2026-10-21T12:00:00Z"))
     }
     @Test func textOnlyEditDoesNotReinterpretAmbiguousTimeAndClearIsNull() throws {
@@ -57,7 +60,7 @@ struct MeetingSettingsTests {
     @Test func conflictRetainsFormAndRequiresExplicitReloadBeforeAnotherMutation() async throws {
         let harness = try SessionHarness()
         try await harness.login()
-        let baseline = try meeting()
+        let baseline = try meeting(organizerID: #require(harness.session.profile).id)
         let owner = MeetingSettingsOwner(meeting: baseline, session: harness.session)
         let path = "/api/v1/meetings/" + baseline.id.uuidString.lowercased()
         owner.change { $0.title = "Мой вариант" }
@@ -66,9 +69,14 @@ struct MeetingSettingsTests {
         #expect(owner.conflict && owner.value.title == "Мой вариант" && owner.pending == nil)
         await owner.submit()
         #expect(await harness.transport.count(path) == 1)
-        let updated = try meeting(id: baseline.id, revision: "2", title: "С другого устройства")
+        let updated = try meeting(
+            id: baseline.id, revision: "2", title: "С другого устройства",
+            organizerID: baseline.organizerID)
         await harness.transport.enqueue(path, data: try APICoding.encode(updated))
         await owner.reload()
+        #expect(owner.conflict && owner.conflictMeeting?.revision == updated.revision)
+        #expect(owner.original.revision == baseline.revision)
+        owner.resumeConflict()
         #expect(!owner.conflict && owner.value.title == "Мой вариант" && owner.dirty)
         #expect(owner.original.title == updated.title)
     }

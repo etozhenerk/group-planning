@@ -1,6 +1,6 @@
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
-import { EditMeetingForm } from '@/features/edit-meeting';
+import { DetailsSettingsPanel } from '@/widgets/meeting-details/ui/DetailsSettingsPanel';
 import { ShareForm } from '@/features/share-invitation';
 import { DetailsContent } from '@/widgets/meeting-details/ui/DetailsContent';
 import { DetailsResponse } from '@/widgets/meeting-details/ui/DetailsResponse';
@@ -24,7 +24,7 @@ export const DetailsPanels = ({
   surface,
 }: DetailsPanelsProps) => (
   <>
-    {mobile && panel !== 'info' && (
+    {mobile && panel !== 'info' && panel !== 'settings' && (
       <button type="button" className={styles.back} onClick={surface.close}>
         ← К деталям встречи
       </button>
@@ -37,6 +37,7 @@ export const DetailsPanels = ({
         ref={surface.info}
         tabIndex={-1}
       >
+        {mobile && surface.savedNotice && <p role="status">Изменения сохранены</p>}
         <DetailsContent
           meeting={meeting}
           session={session}
@@ -53,21 +54,12 @@ export const DetailsPanels = ({
         />
       )}
     </div>
-    <div
-      className={styles.form}
-      hidden={panel !== 'settings'}
-      ref={surface.settings}
-      tabIndex={-1}
-    >
-      {(surface.visited || panel === 'settings') && (
-        <EditMeetingForm
-          key={surface.generation}
-          meeting={meeting}
-          session={session}
-          onSaved={surface.saved}
-        />
-      )}
-    </div>
+    <DetailsSettingsPanel
+      meeting={meeting}
+      session={session}
+      panel={panel}
+      surface={surface}
+    />
     <div
       className={styles.content}
       data-mobile={mobile}

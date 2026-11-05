@@ -6,9 +6,16 @@ export type EditConflictProps = {
   user: string;
   resume: () => void;
   ready: boolean;
+  showResume?: boolean;
 };
 
-export const EditConflict = ({ meeting, user, resume, ready }: EditConflictProps) => (
+export const EditConflict = ({
+  meeting,
+  user,
+  resume,
+  ready,
+  showResume = true,
+}: EditConflictProps) => (
   <section aria-label="Обновлённые настройки">
     <h3>Сейчас во встрече</h3>
     <p>{meeting.title}</p>
@@ -24,8 +31,10 @@ export const EditConflict = ({ meeting, user, resume, ready }: EditConflictProps
     <p>
       Ваши правки сохранены в форме. Проверьте новые данные перед повторной отправкой.
     </p>
-    <button type="button" disabled={!ready} onClick={resume}>
-      Продолжить с моими правками
-    </button>
+    {showResume && (
+      <button type="button" disabled={!ready} onClick={resume}>
+        Продолжить с моими правками
+      </button>
+    )}
   </section>
 );

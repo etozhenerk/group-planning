@@ -48,9 +48,11 @@ internal fun InvitationConversation(
     val presentation =
         rememberSaveable(id.toString(), saver = ChatPresentation.Saver) { ChatPresentation() }
     var information by rememberSaveable(id.toString()) { mutableStateOf(false) }
+    var settingsSaved by rememberSaveable(id.toString()) { mutableStateOf(false) }
     var infoChild by rememberSaveable(id.toString()) { mutableStateOf<String?>(null) }
     val feedState = feed?.state?.collectAsStateWithLifecycle()?.value
     val share: () -> Unit = {
+        settingsSaved = false
         information = true
         infoChild = "share"
     }
@@ -136,6 +138,7 @@ internal fun InvitationConversation(
                     }
                 },
                 saved = {
+                    settingsSaved = true
                     feed?.closeSettings()
                     reload()
                     feed?.refresh()
@@ -185,12 +188,19 @@ internal fun InvitationConversation(
                     }
                     else -> {
                         val people = snapshot.data.participants[id]
+                        if (settingsSaved) {
+                            androidx.compose.material3.Text(
+                                stringResource(R.string.settings_saved),
+                                color = DesignTokens.colorAccent,
+                            )
+                        }
                         MeetingInformationContent(
                             state.copy(details = details),
                             people?.value,
                             people?.error != null,
                             reload,
                         ) {
+                            settingsSaved = false
                             details.meeting?.let { feed?.openSettings(it) }
                         }
                     }

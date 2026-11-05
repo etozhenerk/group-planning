@@ -11,7 +11,7 @@ struct SettingsPickerButton: View {
                     .foregroundStyle(DesignTokens.colorMuted)
                 Text(title).fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: DesignTokens.spaceS0)
-            }.actionField()
+            }.modifier(CreationFieldModifier())
                 .contentShape(Rectangle())
         }.buttonStyle(OnboardingPressStyle()).foregroundStyle(DesignTokens.colorText)
     }

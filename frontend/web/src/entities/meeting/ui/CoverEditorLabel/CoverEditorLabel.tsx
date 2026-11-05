@@ -1,24 +1,15 @@
 export type CoverEditorLabelProps = {
   compact: boolean;
-  creation: boolean;
-  hasPhoto: boolean;
+  optionalHint: boolean;
   className?: string;
 };
 
 export const CoverEditorLabel = ({
   compact,
-  creation,
-  hasPhoto,
+  optionalHint,
   className,
 }: CoverEditorLabelProps) => (
   <span className={className}>
-    Обложка
-    <small>
-      {compact && !creation
-        ? hasPhoto
-          ? 'Фото встречи'
-          : 'Не добавлена'
-        : 'необязательно'}
-    </small>
+    Обложка{(!compact || optionalHint) && <small>необязательно</small>}
   </span>
 );

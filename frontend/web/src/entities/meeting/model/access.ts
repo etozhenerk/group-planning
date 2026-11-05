@@ -149,6 +149,7 @@ export const guarded = async <T>(
   id: string,
   epoch: number,
   operation: () => Promise<T>,
+  forbiddenScope: 'meeting' | 'operation' = 'meeting',
 ): Promise<T> => {
   if (read(user, id).denied || read(user, id).epoch !== epoch) {
     throw new ApiError(403, 'forbidden');
@@ -163,7 +164,11 @@ export const guarded = async <T>(
 
     return result;
   } catch (error) {
-    if (error instanceof ApiError && error.status === 403) {
+    if (
+      error instanceof ApiError &&
+      error.status === 403 &&
+      forbiddenScope === 'meeting'
+    ) {
       denyAccess(client, user, id, epoch);
     }
 

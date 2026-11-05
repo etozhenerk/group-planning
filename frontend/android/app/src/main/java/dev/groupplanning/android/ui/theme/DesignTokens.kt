@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.8.0. Do not edit.
+// Generated from design-system/tokens.json · 7.9.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -460,6 +460,10 @@ internal object DesignTokens {
     val componentMobileRosterAvatarSize = 32.dp
     val componentMobileRosterRowGap = 11.dp
     val componentMobileRosterRowHeight = 55.dp
+    val componentMobileSettingsReviewBodyLineHeight = 22.dp
+    val componentMobileSettingsReviewBodySize = 14.dp
+    val componentMobileSettingsReviewTitleLineHeight = 30.dp
+    val componentMobileSettingsReviewTitleSize = 23.dp
     val componentMobileSheetBackdropBlur = 0.dp
     val componentMobileSheetButtonHeight = 46.dp
     val componentMobileSheetButtonInsetBlock = 11.dp

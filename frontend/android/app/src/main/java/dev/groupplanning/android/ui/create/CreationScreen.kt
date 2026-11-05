@@ -98,8 +98,6 @@ internal fun CreationScreen(
                     change = { cover ->
                         model.change { it.copy(cover = cover) }
                     },
-                    compact = true,
-                    creation = true,
                 )
                 MeetingFields(
                     state.record.value,

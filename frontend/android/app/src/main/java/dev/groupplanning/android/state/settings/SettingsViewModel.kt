@@ -40,20 +40,12 @@ internal class SettingsViewModel(
 
     fun reload() {
         if (state.value.busy) return
-        mutable.value = state.value.copy(busy = true)
+        mutable.value = state.value.copy(busy = true, latest = null)
         viewModelScope.launch {
             try {
                 val before = state.value
                 val current = repository.details(access)
-                mutable.value =
-                    SettingsState(
-                        current,
-                        draft = rebaseSettings(
-                            before.original.settingsDraft(),
-                            before.draft,
-                            current.settingsDraft(),
-                        ),
-                    )
+                mutable.value = before.copy(latest = current, busy = true)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: ClientFailure) {
@@ -72,6 +64,20 @@ internal class SettingsViewModel(
         }
     }
 
+    fun resumeConflict() {
+        val before = state.value
+        val current = before.latest ?: return
+        if (before.busy || before.issue == SettingsIssue.Forbidden) return
+        mutable.value = SettingsState(
+            current,
+            draft = rebaseSettings(
+                before.original.settingsDraft(),
+                before.draft,
+                current.settingsDraft(),
+            ),
+        )
+    }
+
     fun save() {
         val before = state.value
         if (before.busy ||
@@ -85,11 +91,23 @@ internal class SettingsViewModel(
         }
         val validation = settingsPatch(before.original, before.draft)
         if (validation.issue != null) {
-            mutable.value = before.copy(validation = validation.issue)
+            mutable.value =
+                before.copy(
+                    validation = validation.issue,
+                    validationAttempt =
+                    before.validationAttempt + 1,
+                )
             return
         }
         val pending = before.pending ?: SettingsSubmission(validation.input ?: return)
-        mutable.value = before.copy(busy = true, pending = pending, issue = null)
+        mutable.value =
+            before.copy(
+                busy = true,
+                pending = pending,
+                issue = null,
+                validationAttempt =
+                before.validationAttempt + 1,
+            )
         viewModelScope.launch {
             try {
                 val meeting = repository.save(access, pending.input, pending.key)

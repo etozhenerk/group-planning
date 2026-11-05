@@ -15,8 +15,9 @@ struct ChatSheetContent: View {
                         owner: owner.actionDrafts.settings(meeting: meeting),
                         completed: {
                             owner.actionDrafts.clearSettings()
+                            owner.informationSaved = true
                             owner.reload()
-                        })
+                        }, discarded: { owner.actionDrafts.clearSettings() })
                 }
             case .date:
                 if let meeting = owner.meeting {

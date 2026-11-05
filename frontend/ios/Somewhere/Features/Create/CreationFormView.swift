@@ -20,7 +20,7 @@ struct CreationFormView: View {
                         RequiredLegend(sentence: true)
                     }
                     CoverEditor(
-                        value: owner.value.cover, compact: true, creation: true,
+                        value: owner.value.cover,
                         disabled: !owner.editable,
                         onBusy: { owner.preparingCover = $0 },
                         onChange: { cover in owner.change { $0.cover = cover } })

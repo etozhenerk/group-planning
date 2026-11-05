@@ -9,6 +9,7 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
     var scrollOffset: Binding<CGFloat>?
     var fixedContentHeight: CGFloat?
     var stickyFooter = false
+    var footerVisible = true
     @ViewBuilder let content: () -> Content
     @ViewBuilder let footer: () -> Footer
     @Environment(\.dynamicTypeSize) private var typeSize
@@ -48,6 +49,7 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
         ) {
             updateKeyboard($0, visible: false)
         }
+        .onChange(of: footerVisible) { _, visible in if !visible { footerHeight = 0 } }
         .interactiveDismissDisabled(dismissDisabled || chatClose?.hasParent == true)
         .presentationDetents(detents)
         .accessibilityAction(.escape, close)
@@ -143,44 +145,47 @@ struct ActionFormSheet<Content: View, Footer: View>: View {
     }
 
     @ViewBuilder private var footerView: some View {
-        if Footer.self != EmptyView.self {
-            footer()
-                .padding(.horizontal, DesignTokens.componentMobileSheetContentInsetInline)
-                .padding(
-                    .top,
-                    stickyFooter
-                        ? DesignTokens.componentMobileStickyInsetTop
-                        : DesignTokens.componentMobileSheetFooterInsetBlock
-                )
-                .padding(.bottom, DesignTokens.componentMobileSheetFooterInsetBottom)
-                .frame(maxWidth: .infinity)
-                .background {
-                    if stickyFooter {
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: DesignTokens.componentMobileStickyRadius,
-                            topTrailingRadius: DesignTokens.componentMobileStickyRadius
-                        ).fill(DesignTokens.colorSurface).ignoresSafeArea(edges: .bottom)
-                            .shadow(
-                                color: DesignTokens.colorMobileStickyShadow,
-                                radius: DesignTokens.componentMobileStickyShadowBlur,
-                                y: -DesignTokens.componentMobileStickyShadowUpOffset)
-                    } else {
-                        DesignTokens.colorSurface
-                    }
+        if Footer.self != EmptyView.self && footerVisible {
+            VStack(alignment: .leading, spacing: DesignTokens.componentInvitationNoticeBottomSpace)
+            {
+                footer()
+            }
+            .padding(.horizontal, DesignTokens.componentMobileSheetContentInsetInline)
+            .padding(
+                .top,
+                stickyFooter
+                    ? DesignTokens.componentMobileStickyInsetTop
+                    : DesignTokens.componentMobileSheetFooterInsetBlock
+            )
+            .padding(.bottom, DesignTokens.componentMobileSheetFooterInsetBottom)
+            .frame(maxWidth: .infinity)
+            .background {
+                if stickyFooter {
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: DesignTokens.componentMobileStickyRadius,
+                        topTrailingRadius: DesignTokens.componentMobileStickyRadius
+                    ).fill(DesignTokens.colorSurface).ignoresSafeArea(edges: .bottom)
+                        .shadow(
+                            color: DesignTokens.colorMobileStickyShadow,
+                            radius: DesignTokens.componentMobileStickyShadowBlur,
+                            y: -DesignTokens.componentMobileStickyShadowUpOffset)
+                } else {
+                    DesignTokens.colorSurface
                 }
-                .overlay(alignment: .top) {
-                    if !stickyFooter {
-                        Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
-                    }
+            }
+            .overlay(alignment: .top) {
+                if !stickyFooter {
+                    Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
                 }
-                .onGeometryChange(for: CGFloat.self) {
-                    $0.size.height
-                } action: {
-                    footerHeight = $0
-                }
-                // The system keyboard toolbar floats above its safe-area boundary.
-                // Keep the complete action above it without changing the resting detent.
-                .padding(.bottom, keyboardVisible ? keyboardAccessoryHeight : DesignTokens.spaceS0)
+            }
+            .onGeometryChange(for: CGFloat.self) {
+                $0.size.height
+            } action: {
+                footerHeight = $0
+            }
+            // The system keyboard toolbar floats above its safe-area boundary.
+            // Keep the complete action above it without changing the resting detent.
+            .padding(.bottom, keyboardVisible ? keyboardAccessoryHeight : DesignTokens.spaceS0)
         }
     }
 

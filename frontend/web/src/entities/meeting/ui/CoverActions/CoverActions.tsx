@@ -4,7 +4,6 @@ import styles from '@/entities/meeting/ui/CoverActions/CoverActions.module.css';
 export type CoverActionsProps = {
   compact: boolean;
   prominent: boolean;
-  creation?: boolean;
   hasPhoto: boolean;
   disabled: boolean;
   choose: () => void;
@@ -14,20 +13,14 @@ export type CoverActionsProps = {
 export const CoverActions = ({
   compact,
   prominent,
-  creation = false,
   hasPhoto,
   disabled,
   choose,
   remove,
 }: CoverActionsProps) => (
-  <div
-    className={styles.actions}
-    data-compact={compact}
-    data-prominent={prominent}
-    data-create={creation}
-  >
+  <div className={styles.actions} data-compact={compact} data-prominent={prominent}>
     <button type="button" disabled={disabled} onClick={choose}>
-      {(prominent || creation) && <ImagePlus size={20} aria-hidden="true" />}
+      {(prominent || compact) && <ImagePlus size={20} aria-hidden="true" />}
       {hasPhoto ? 'Заменить' : 'Добавить фото'}
     </button>
     {hasPhoto && (
