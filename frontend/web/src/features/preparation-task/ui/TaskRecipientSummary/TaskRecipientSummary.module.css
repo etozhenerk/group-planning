@@ -1,0 +1,44 @@
+.field {
+  display: grid;
+  gap: var(--ds-space-s8);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-medium);
+  color: var(--ds-color-text);
+}
+
+.field button {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s12);
+  width: 100%;
+  min-height: var(--ds-component-mobile-preparation-recipient-minimum-height);
+  padding: var(--ds-space-s12);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-preparation-recipient-radius);
+  background: var(--ds-color-navigation);
+  color: var(--ds-color-text);
+  text-align: start;
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-regular);
+}
+
+.field button > span:nth-child(2) {
+  flex: 1;
+}
+
+.field svg {
+  color: var(--ds-color-accent);
+  flex-shrink: 0;
+}
+
+.any {
+  display: inline-grid;
+  place-items: center;
+  width: var(--ds-component-mobile-avatar-small-size);
+  height: var(--ds-component-mobile-avatar-small-size);
+  flex-shrink: 0;
+}
+
+.field button > svg:last-child {
+  color: var(--ds-color-muted);
+}

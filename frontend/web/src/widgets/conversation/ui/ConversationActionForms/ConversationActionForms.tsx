@@ -5,7 +5,7 @@ import type { Session } from '@/entities/session';
 import { PollCreateForm } from '@/features/date-poll';
 import { PlacePollForm } from '@/features/place-poll';
 import { ShareForm } from '@/features/share-invitation';
-import { UploadDraft } from '@/features/upload-media';
+import { ConversationUploadForms } from '@/widgets/conversation/ui/ConversationUploadForms';
 import { TaskForm } from '@/features/preparation-task';
 import type { ConversationActionKind } from '@/widgets/conversation/model/actionKind';
 import { useActionCompletion } from '@/widgets/conversation/ui/ConversationActionForms/hooks/useActionCompletion';
@@ -64,34 +64,26 @@ export const ConversationActionForms = ({
         )}
       </div>
       <div className={styles.form} hidden={kind !== 'task'}>
-        <TaskForm
-          key={generation.task}
-          meeting={meeting.id}
-          session={session}
-          done={() => complete('task')}
-          active={open && kind === 'task'}
-        />
+        {(!mobile || kind === 'task') && (
+          <TaskForm
+            key={generation.task}
+            meeting={meeting.id}
+            session={session}
+            done={() => complete('task')}
+            onDiscard={(navigating) => complete('task', navigating)}
+            onRegisterClose={registerClose}
+            onModeChange={onModeChange}
+            active={open && kind === 'task'}
+          />
+        )}
       </div>
-      <div className={styles.form} hidden={kind !== 'photo'}>
-        <UploadDraft
-          id={meeting.id}
-          session={session}
-          photo
-          purpose="message"
-          active={open && kind === 'photo'}
-          done={done}
-        />
-      </div>
-      <div className={styles.form} hidden={kind !== 'file'}>
-        <UploadDraft
-          id={meeting.id}
-          session={session}
-          photo={false}
-          purpose="message"
-          active={open && kind === 'file'}
-          done={done}
-        />
-      </div>
+      <ConversationUploadForms
+        kind={kind}
+        open={open}
+        meeting={meeting.id}
+        session={session}
+        done={done}
+      />
       <div className={styles.form} hidden={kind !== 'share'}>
         {kind === 'share' && <ShareForm id={meeting.id} meeting={meeting} />}
       </div>

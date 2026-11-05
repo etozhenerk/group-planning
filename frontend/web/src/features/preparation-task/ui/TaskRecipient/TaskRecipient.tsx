@@ -1,5 +1,6 @@
 import { useMobileLayout } from '@/shared/lib/media';
 import type { Participant } from '@/entities/meeting';
+import { TaskRecipientSummary } from '@/features/preparation-task/ui/TaskRecipientSummary';
 import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 import styles from '@/features/preparation-task/ui/TaskRecipient/TaskRecipient.module.css';
 
@@ -11,6 +12,7 @@ export type TaskRecipientProps = {
   onChange: (value: string) => void;
   disabled: boolean;
   user: string;
+  open: () => void;
 };
 
 export const TaskRecipient = ({
@@ -21,12 +23,21 @@ export const TaskRecipient = ({
   onChange,
   disabled,
   user,
+  open,
 }: TaskRecipientProps) => {
   const mobile = useMobileLayout();
 
   return (
     <div className={styles.field} data-mobile={mobile}>
-      {people ? (
+      {mobile && people ? (
+        <TaskRecipientSummary
+          people={people}
+          value={value}
+          user={user}
+          disabled={disabled || error}
+          open={open}
+        />
+      ) : people ? (
         <label className={styles.field}>
           Кому предложить
           <select

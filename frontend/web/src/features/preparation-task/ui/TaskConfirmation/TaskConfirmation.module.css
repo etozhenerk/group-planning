@@ -5,19 +5,35 @@
   font-size: var(--ds-typography-size-button);
 }
 
-.confirmation button {
-  min-height: var(--ds-component-mobile-sheet-button-height);
-  border-radius: var(--ds-component-mobile-sheet-button-radius);
-  border: var(--ds-space-s1) solid var(--ds-color-subtle-border);
-  font-size: var(--ds-typography-size-button);
+.confirmation[data-mobile='true'] {
+  gap: 0;
+  min-height: 0;
+  flex: 1;
 }
 
-.confirmation .keep {
-  border: 0;
-  background: transparent;
-  color: var(--ds-color-accent);
+.confirmation[data-mobile='true'] .body {
+  padding: 0 var(--ds-space-s20) var(--ds-space-s24);
+  overflow-y: auto;
+  min-height: 0;
 }
 
-.error {
-  color: var(--ds-color-error);
+.confirmation[data-mobile='true'] .body > strong {
+  font-weight: var(--ds-typography-weight-semibold);
+}
+
+.confirmation[data-mobile='true'] .body > p {
+  margin: var(--ds-space-s12) 0 0;
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-typography-line-height-body);
+  color: var(--ds-color-muted);
+}
+
+.confirmation[data-mobile='true'] .footer {
+  flex-shrink: 0;
+  padding: var(--ds-space-s16) var(--ds-space-s20)
+    max(var(--ds-space-s32), env(safe-area-inset-bottom));
+  border-radius: var(--ds-radius-sheet) var(--ds-radius-sheet) 0 0;
+  background: var(--ds-color-surface);
+  box-shadow: 0 calc(-1 * var(--ds-component-mobile-sticky-shadow-up-offset))
+    var(--ds-component-mobile-sticky-shadow-blur) var(--ds-color-mobile-sticky-shadow);
 }

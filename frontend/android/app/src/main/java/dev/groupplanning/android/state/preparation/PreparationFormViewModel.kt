@@ -25,6 +25,7 @@ internal class PreparationFormViewModel(
     val state = mutable.asStateFlow()
     val userId = access.profile.id
     private var stopped = false
+    val dirty: Boolean get() = state.value.title.isNotEmpty() || state.value.recipient != null
 
     suspend fun loadPeople() {
         if (stopped || state.value.loading) return
@@ -53,6 +54,7 @@ internal class PreparationFormViewModel(
 
     fun title(value: String) {
         if (operation.state.value.editable) {
+            operation.clearIssue()
             mutable.value =
                 state.value.copy(title = value, validation = null)
         }
@@ -60,6 +62,7 @@ internal class PreparationFormViewModel(
 
     fun recipient(value: UUID?) {
         if (operation.state.value.editable) {
+            operation.clearIssue()
             mutable.value =
                 state.value.copy(recipient = value, validation = null)
         }
@@ -72,6 +75,7 @@ internal class PreparationFormViewModel(
             return
         }
         if (!operation.state.value.editable || stopped) return
+        mutable.value = state.value.copy(validationAttempt = state.value.validationAttempt + 1)
         val draft = state.value
         val people = draft.participants ?: return
         if (draft.peopleError) return

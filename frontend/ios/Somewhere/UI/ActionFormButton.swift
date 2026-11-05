@@ -3,6 +3,8 @@ import SwiftUI
 struct ActionFormButton: View {
     let title: String
     var busy = false
+    var minimumHeight = DesignTokens.componentMobileSheetButtonHeight
+    var cornerRadius = DesignTokens.componentMobileSheetButtonRadius
     let action: () -> Void
 
     var body: some View {
@@ -12,13 +14,13 @@ struct ActionFormButton: View {
                 .padding(.vertical, DesignTokens.componentMobileSheetButtonInsetBlock)
                 .padding(.horizontal, DesignTokens.componentMobileSheetButtonInsetInline)
                 .frame(
-                    maxWidth: .infinity, minHeight: DesignTokens.componentMobileSheetButtonHeight
+                    maxWidth: .infinity, minHeight: minimumHeight
                 )
                 .foregroundStyle(DesignTokens.colorActionText)
                 .background(
                     DesignTokens.colorAction,
                     in: RoundedRectangle(
-                        cornerRadius: DesignTokens.componentMobileSheetButtonRadius)
+                        cornerRadius: cornerRadius)
                 )
                 .overlay { if busy { ProgressView().tint(DesignTokens.colorActionText) } }
         }.buttonStyle(.plain).disabled(busy)

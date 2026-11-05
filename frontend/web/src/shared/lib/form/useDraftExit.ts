@@ -7,14 +7,25 @@ export const useDraftExit = (input: {
   active: boolean;
   dirty: boolean;
   blocked: boolean;
+  nested?: boolean;
+  leaveNested?: (() => void) | undefined;
   register: DraftExitRegistration | undefined;
   discard: (navigating: boolean) => void;
 }) => {
-  const { active, dirty, blocked, register, discard } = input;
+  const {
+    active,
+    dirty,
+    blocked,
+    register,
+    discard,
+    nested = false,
+    leaveNested,
+  } = input;
+
   const [confirm, setConfirm] = useState(false);
   const [discarding, setDiscarding] = useState(false);
   const didDiscard = useRef(false);
-  const blocker = useBlocker(active && !discarding && (dirty || blocked));
+  const blocker = useBlocker(active && !discarding && (dirty || blocked || nested));
   useEffect(() => {
     if (!discarding || didDiscard.current) {
       return;
@@ -40,10 +51,14 @@ export const useDraftExit = (input: {
     ),
   );
   useEffect(() => {
-    if (blocked && blocker.state === 'blocked') {
+    if ((blocked || nested) && blocker.state === 'blocked') {
       blocker.reset();
+
+      if (!blocked && nested) {
+        leaveNested?.();
+      }
     }
-  }, [blocked, blocker]);
+  }, [blocked, nested, leaveNested, blocker]);
   useLayoutEffect(() => {
     if (!active) {
       register?.(null);
@@ -62,6 +77,12 @@ export const useDraftExit = (input: {
         return false;
       }
 
+      if (nested) {
+        leaveNested?.();
+
+        return false;
+      }
+
       if (dirty) {
         setConfirm(true);
 
@@ -72,10 +93,14 @@ export const useDraftExit = (input: {
     });
 
     return () => register?.(null);
-  }, [active, dirty, blocked, discarding, confirm, register]);
+  }, [active, dirty, blocked, discarding, confirm, register, nested, leaveNested]);
 
   return {
-    confirm: active && !blocked && (confirm || blocker.state === 'blocked' || discarding),
+    confirm:
+      active &&
+      !blocked &&
+      !nested &&
+      (confirm || blocker.state === 'blocked' || discarding),
     stay: () => {
       setConfirm(false);
 

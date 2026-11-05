@@ -1,94 +1,145 @@
 package dev.groupplanning.android.ui.preparation
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
-import dev.groupplanning.android.state.preparation.PreparationFormIssue
 import dev.groupplanning.android.state.preparation.PreparationFormViewModel
 import dev.groupplanning.android.ui.components.ActionSheet
 import dev.groupplanning.android.ui.components.CompactButton
-import dev.groupplanning.android.ui.components.DesignField
-import dev.groupplanning.android.ui.theme.Palette
+import dev.groupplanning.android.ui.components.FormSubmissionNotice
+import dev.groupplanning.android.ui.components.RequiredMark
+import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
 internal fun CreatePreparationTaskSheet(model: PreparationFormViewModel, close: () -> Unit) {
     val form by model.state.collectAsStateWithLifecycle()
     val state by model.operation.state.collectAsStateWithLifecycle()
-    LaunchedEffect(model) { model.loadPeople() }
-    LaunchedEffect(state.task?.id, state.busy) {
-        if (state.task != null && !state.busy) close()
+    var confirm by remember(model) { mutableStateOf(false) }
+    var selecting by remember(model) { mutableStateOf(false) }
+    val blocked = state.busy || state.pending != null
+    val requestClose = {
+        if (!blocked) {
+            when {
+                selecting -> selecting = false
+                confirm -> confirm = false
+                model.dirty -> confirm = true
+                else -> close()
+            }
+        }
     }
+    LaunchedEffect(model) { model.loadPeople() }
+    LaunchedEffect(state.task?.id, state.busy) { if (state.task != null && !state.busy) close() }
     ActionSheet(
         stringResource(
-            R.string.preparation_propose,
+            if (confirm) {
+                R.string.poll_discard_title
+            } else if (selecting) {
+                R.string.preparation_recipient
+            } else {
+                R.string.preparation_propose
+            },
         ),
-        close,
-        canClose = !state.busy,
-        actions = {
+        requestClose,
+        canClose = !blocked,
+        canDismiss = false,
+    ) {
+        if (confirm) {
+            Text(stringResource(R.string.prep_dirty), color = DesignTokens.colorMuted)
             CompactButton(
                 stringResource(
-                    if (state.pending ==
+                    R.string.keep_editing,
+                ),
+                Modifier.fillMaxWidth(),
+                primary = true,
+                click = {
+                    confirm =
+                        false
+                },
+            )
+            CompactButton(
+                stringResource(R.string.discard_settings),
+                Modifier.fillMaxWidth(),
+                click = close,
+            )
+        } else if (selecting) {
+            PreparationRecipientSearch(form.participants.orEmpty(), model.userId, form.recipient) {
+                model.recipient(it)
+                selecting =
+                    false
+            }
+        } else {
+            Row(
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(
+                    DesignTokens.spaceS4,
+                ),
+            ) {
+                RequiredMark()
+                Text(
+                    stringResource(R.string.prep_required),
+                    fontSize = DesignTokens.typographySizeLabel,
+                    color = DesignTokens.colorMuted,
+                )
+            }
+            PreparationTitleField(form, state.editable, model::title)
+            PreparationRecipientField(form, model.userId, state.editable, {
+                selecting = true
+            }, model::reloadPeople)
+            Text(
+                stringResource(R.string.prep_note),
+                fontSize = DesignTokens.typographySizeCaption,
+                color = DesignTokens.colorMuted,
+            )
+            state.issue?.let {
+                FormSubmissionNotice(
+                    if (state.pending !=
                         null
                     ) {
-                        R.string.preparation_propose
+                        stringResource(R.string.prep_unknown)
                     } else {
-                        R.string.poll_retry
+                        preparationIssueText(it, creating = true)
+                    },
+                    stringResource(
+                        if (state.pending !=
+                            null
+                        ) {
+                            R.string.poll_create_unknown_body
+                        } else {
+                            R.string.prep_error_body
+                        },
+                    ),
+                )
+            }
+            CompactButton(
+                stringResource(
+                    if (state.pending !=
+                        null
+                    ) {
+                        R.string.poll_retry_send
+                    } else if (state.issue !=
+                        null
+                    ) {
+                        R.string.poll_create_retry
+                    } else {
+                        R.string.preparation_propose
                     },
                 ),
-                modifier = Modifier.fillMaxWidth().testTag("preparation-create"),
+                Modifier.fillMaxWidth().testTag("preparation-create"),
                 busy = state.busy,
-                enabled =
-                state.pending != null || (form.participants != null && !form.peopleError),
+                cornerRadius = DesignTokens.componentMobilePreparationFormActionRadius,
+                enabled = state.pending != null || (form.participants != null && !form.peopleError),
                 primary = true,
                 click = model::create,
-            )
-        },
-    ) {
-        DesignField(
-            form.title,
-            model::title,
-            label = stringResource(R.string.preparation_title),
-            placeholder = stringResource(R.string.preparation_title_placeholder),
-            enabled = state.editable,
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth().testTag(
-                "preparation-title",
-            ),
-        )
-        PreparationRecipientField(
-            form,
-            model.userId,
-            state.editable,
-            model::recipient,
-            model::reloadPeople,
-        )
-
-        state.issue?.let {
-            Text(
-                preparationIssueText(it, creating = true),
-                color = Palette.error,
-                modifier = Modifier.testTag("preparation-error"),
-            )
-        }
-        form.validation?.let {
-            Text(
-                stringResource(
-                    if (it ==
-                        PreparationFormIssue.Title
-                    ) {
-                        R.string.preparation_title_invalid
-                    } else {
-                        R.string.preparation_recipient_invalid
-                    },
-                ),
-                color = Palette.error,
             )
         }
     }

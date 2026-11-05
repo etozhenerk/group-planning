@@ -4,13 +4,13 @@ enum PreparationTaskCopy {
     static func status(_ task: PreparationTask, user: UUID?) -> String {
         switch task.state {
         case "offered":
-            guard let recipient = task.recipient else { return "Пока никто не взял задачу" }
+            guard let recipient = task.recipient else { return "Кто возьмёт?" }
             return recipient.id == user
-                ? "Предложено вам" : String(localized: "Кому предложено: \(recipient.displayName)")
+                ? "Предложено вам" : String(localized: "Предложено: \(recipient.displayName)")
         case "accepted":
             return task.assignee?.id == user
-                ? "Задача у вас"
-                : String(localized: "Исполняет \(task.assignee?.displayName ?? "участник")")
+                ? "Вы выполняете"
+                : String(localized: "Исполняет: \(task.assignee?.displayName ?? "участник")")
         case "completed": return String(localized: "Выполнено · \(task.updatedBy.displayName)")
         case "declined": return String(localized: "Отказ · \(task.updatedBy.displayName)")
         case "cancelled": return String(localized: "Отменено · \(task.updatedBy.displayName)")
@@ -20,10 +20,10 @@ enum PreparationTaskCopy {
 
     static func label(_ action: PreparationAction, task: PreparationTask) -> String {
         switch action {
-        case .accept: task.recipient == nil ? "Взять на себя" : "Принять задачу"
-        case .decline: "Отказаться"
+        case .accept: "Взять на себя"
+        case .decline: "Отказаться от задачи"
         case .cancel: "Отменить задачу"
-        case .complete: "Отметить выполнение"
+        case .complete: "Отметить выполненной"
         }
     }
 

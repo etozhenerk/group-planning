@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "id": "vibe-album-download-web",
+  "designVersion": "7.10.0",
+  "phase": "checkpoint",
+  "approval": "29.10.2026: пользователь уточнил «рядом с добавить фото»; ZIP/native gallery ранее подтверждены. Повторное указание 29.10.2026: обе кнопки в одной строке, web-группа переносится целиком.",
+  "implementer": "implementation-team:/root",
+  "report": "openspec/changes/vibe-album-download/qa/design-6.3.0/rsvp-7.0.0/design-review.json",
+  "screens": [
+    {
+      "id": "vibe-save-web-desktop",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "ready",
+        "empty",
+        "preparing",
+        "cancelled",
+        "error",
+        "success",
+        "access-revoked",
+        "browser-download",
+        "ready-long-title",
+        "preparing-long-title"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-ready.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-empty.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-preparing.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-cancelled.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-error.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-desktop-success.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.ts",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/generated/download.js",
+        "openspec/changes/vibe-album-download/ux.md",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css"
+      ],
+      "contracts": [
+        "docs/design/components/memories.md",
+        "docs/design/components/navigation.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "web": [
+          "3.1"
+        ]
+      }
+    },
+    {
+      "id": "vibe-save-web-mobile",
+      "platforms": [
+        "web"
+      ],
+      "states": [
+        "ready",
+        "empty",
+        "preparing",
+        "cancelled",
+        "error",
+        "success",
+        "access-revoked",
+        "browser-download"
+      ],
+      "inputs": [
+        "frontend/web/src",
+        "package.json",
+        "package-lock.json",
+        "frontend/web/package.json",
+        "frontend/web/playwright.visual.config.ts",
+        "frontend/web/tests",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/web/scripts",
+        "frontend/web/vite.config.ts",
+        "frontend/web/playwright.config.ts",
+        "frontend/web/playwright.cross.config.ts",
+        "frontend/web/tsconfig.json",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-ready.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-empty.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-preparing.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-cancelled.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-error.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/web-mobile-success.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-actions-row/download.css",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.ts",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/generated/download.js",
+        "openspec/changes/vibe-album-download/ux.md",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css"
+      ],
+      "contracts": [
+        "docs/design/components/memories.md",
+        "docs/design/components/navigation.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "web": [
+          "3.1"
+        ]
+      }
+    }
+  ]
+}

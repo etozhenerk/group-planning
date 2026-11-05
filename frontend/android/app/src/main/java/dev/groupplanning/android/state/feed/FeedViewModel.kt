@@ -63,7 +63,6 @@ internal class FeedViewModel(
     val tasks = mutableTasks.asStateFlow()
     private val mutableTaskCreation = MutableStateFlow<PreparationFormViewModel?>(null)
     val taskCreation = mutableTaskCreation.asStateFlow()
-    private var savedTaskCreation: PreparationFormViewModel? = null
     private var access: MeetingAccess? = null
     private var active: CoroutineScope? = null
     private var activeJob: Job? = null
@@ -287,24 +286,20 @@ internal class FeedViewModel(
         if (taskCreation.value ==
             null
         ) {
-            mutableTaskCreation.value = savedTaskCreation
-                ?: PreparationFormViewModel(repository, lease, childScope())
-            savedTaskCreation = null
+            mutableTaskCreation.value = PreparationFormViewModel(repository, lease, childScope())
         }
     }
 
     fun closeTaskCreation() {
         val model = taskCreation.value ?: return
-        if (model.operation.state.value.busy) return
+        if (model.operation.state.value.busy || model.operation.state.value.pending != null) return
         val created = model.operation.state.value.task != null
-        if (created) model.stop() else savedTaskCreation = model
+        model.stop()
         mutableTaskCreation.value = null
         if (created) refresh()
     }
 
     private fun clearPolls() {
-        savedTaskCreation?.stop()
-        savedTaskCreation = null
         tasks.value.values.forEach { it.stop() }
         mutableTasks.value = emptyMap()
         taskCreation.value?.stop()

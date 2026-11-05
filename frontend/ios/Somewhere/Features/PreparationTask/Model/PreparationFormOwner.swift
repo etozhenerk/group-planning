@@ -7,6 +7,14 @@ final class PreparationFormOwner {
     var title = ""
     var recipient: UUID?
     var participants: [Participant]?
+    var validationAttempt = 0
+    var dirty: Bool { !title.isEmpty || recipient != nil }
+    var titleError: String? {
+        guard validationAttempt > 0, operation.pending == nil else { return nil }
+        let value = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        if value.isEmpty { return "Напишите, что нужно сделать" }
+        return value.unicodeScalars.count > 200 ? "Сократите название до 200 символов" : nil
+    }
     var peopleLoading = false
     var peopleProblem: String?
     @ObservationIgnored private var version = UUID()
@@ -39,6 +47,7 @@ final class PreparationFormOwner {
             return
         }
         guard operation.editable, let participants, peopleProblem == nil else { return }
+        validationAttempt += 1
         let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
         guard (1...200).contains(trimmed.unicodeScalars.count) else {
             operation.problem = "Введите название задачи: от 1 до 200 символов."

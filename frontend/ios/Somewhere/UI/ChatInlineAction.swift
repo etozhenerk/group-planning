@@ -3,6 +3,7 @@ import SwiftUI
 struct ChatInlineAction: View {
     let title: String
     var busy = false
+    var fillWidth = false
     let action: () -> Void
 
     var body: some View {
@@ -13,7 +14,7 @@ struct ChatInlineAction: View {
                 .opacity(busy ? 0 : 1)
                 .padding(.vertical, DesignTokens.componentMobileChatInlineActionInsetBlock)
                 .padding(.horizontal, DesignTokens.componentMobileChatInlineActionInsetInline)
-                .frame(minHeight: DesignTokens.targetIos)
+                .frame(maxWidth: fillWidth ? .infinity : nil, minHeight: DesignTokens.targetIos)
                 .foregroundStyle(DesignTokens.colorActionText)
                 .background(
                     DesignTokens.colorAction,

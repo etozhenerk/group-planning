@@ -9,6 +9,7 @@ internal data class PreparationFormState(
     val participants: List<Participant>? = null,
     val loading: Boolean = false,
     val peopleError: Boolean = false,
+    val validationAttempt: Int = 0,
     val validation: PreparationFormIssue? = null,
 )
 

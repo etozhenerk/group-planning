@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -23,6 +23,9 @@ export const useTaskForm = (
   done: () => void,
   active: boolean,
 ) => {
+  const [saved, setSaved] = useState(false);
+  const notified = useRef(false);
+  const [attempt, setAttempt] = useState(0);
   const [title, setTitle] = useState('');
   const [recipient, setRecipient] = useState('');
   const [validation, setValidation] = useState('');
@@ -45,7 +48,7 @@ export const useTaskForm = (
       }
 
       await client.invalidateQueries({ queryKey: ['private', session.user.id, meeting] });
-      done();
+      setSaved(true);
     },
     onError: (error) => {
       if (error instanceof ApiError && error.status === 422) {
@@ -56,14 +59,47 @@ export const useTaskForm = (
   });
 
   const uncertain = uncertainTaskError(action.error);
+  useEffect(() => {
+    if (saved && !notified.current) {
+      notified.current = true;
+      done();
+    }
+  }, [saved, done]);
+  const titleError =
+    attempt > 0 && !uncertain
+      ? !title.trim()
+        ? 'Напишите, что нужно сделать'
+        : [...title.trim()].length > 200
+          ? 'Сократите название до 200 символов'
+          : ''
+      : '';
+
+  const edit = () => {
+    setValidation('');
+    action.reset();
+  };
 
   return {
     title,
-    setTitle,
+    setTitle: (value: string) => {
+      if (!action.isPending && !uncertain) {
+        edit();
+        setTitle(value);
+      }
+    },
     recipient,
-    setRecipient,
+    setRecipient: (value: string) => {
+      if (!action.isPending && !uncertain) {
+        edit();
+        setRecipient(value);
+      }
+    },
     people,
     participants,
+    dirty: !saved && (title !== '' || recipient !== ''),
+    attempt,
+    titleError,
+    failed: !!action.error,
     pending: action.isPending,
     locked: action.isPending || uncertain,
     uncertain,
@@ -81,6 +117,7 @@ export const useTaskForm = (
         return;
       }
 
+      setAttempt((value) => value + 1);
       const trimmed = title.trim();
 
       if (!trimmed || [...trimmed].length > 200) {

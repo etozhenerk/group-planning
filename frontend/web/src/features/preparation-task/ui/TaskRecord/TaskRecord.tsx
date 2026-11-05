@@ -35,7 +35,7 @@ export const TaskRecord = ({ meeting, id, session, occurredAt }: TaskRecordProps
           <TaskCardContent
             task={query.data}
             user={session.user.id}
-            controls={controls}
+            controls={surface.panel === null ? controls : { ...controls, problem: '' }}
             opener={surface.opener}
             open={() => surface.show('details')}
           />

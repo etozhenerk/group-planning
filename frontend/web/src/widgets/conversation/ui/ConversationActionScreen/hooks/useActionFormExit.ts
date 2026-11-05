@@ -11,7 +11,7 @@ export const useActionFormExit = (kind: ConversationActionKind, done: () => void
     handler.current = next;
   }, []);
 
-  const guarded = kind === 'date' || kind === 'place';
+  const guarded = kind === 'date' || kind === 'place' || kind === 'task';
   useEffect(() => {
     setFormTitle(kind === 'date' ? 'Предложить дату' : actionTitle(kind));
   }, [kind]);

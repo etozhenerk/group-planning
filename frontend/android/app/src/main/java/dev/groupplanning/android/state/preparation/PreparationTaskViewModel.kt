@@ -125,6 +125,10 @@ internal class PreparationTaskViewModel(
             )
     }
 
+    fun clearIssue() {
+        if (state.value.editable) mutable.value = state.value.copy(issue = null)
+    }
+
     fun stop() {
         stopped = true
         viewModelScope.cancel()

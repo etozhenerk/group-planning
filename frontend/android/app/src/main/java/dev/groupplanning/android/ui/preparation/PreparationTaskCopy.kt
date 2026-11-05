@@ -32,13 +32,7 @@ internal fun preparationStatus(task: PreparationTask, user: UUID): String = when
 internal fun preparationActionLabel(action: PreparationAction, task: PreparationTask): String =
     stringResource(
         when (action) {
-            PreparationAction.Accept -> if (task.recipient ==
-                null
-            ) {
-                R.string.preparation_take
-            } else {
-                R.string.preparation_accept
-            }
+            PreparationAction.Accept -> R.string.preparation_take
             PreparationAction.Decline -> R.string.preparation_decline
             PreparationAction.Cancel -> R.string.preparation_cancel
             PreparationAction.Complete -> R.string.preparation_complete

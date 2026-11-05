@@ -1,10 +1,12 @@
-import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
+import { useMobileLayout } from '@/shared/lib/media';
 import type { useTaskControls } from '@/features/preparation-task/model/useTaskControls';
+import { TaskConfirmationActions } from '@/features/preparation-task/ui/TaskConfirmationActions';
 import styles from '@/features/preparation-task/ui/TaskConfirmation/TaskConfirmation.module.css';
 
 export type TaskConfirmationProps = {
   action: 'cancel' | 'decline';
   controls: ReturnType<typeof useTaskControls>;
+  title: string;
   back: () => void;
   done: () => void;
 };
@@ -12,49 +14,32 @@ export type TaskConfirmationProps = {
 export const TaskConfirmation = ({
   action,
   controls,
+  title,
   back,
   done,
-}: TaskConfirmationProps) => (
-  <div className={styles.confirmation}>
-    <p>
-      {action === 'cancel'
-        ? 'Задача останется в истории с отметкой об отмене. Новый исполнитель не назначится.'
-        : 'Отказ останется в истории. Передать задачу можно новым предложением.'}
-    </p>
-    {controls.problem && (
-      <p role="alert" className={styles.error}>
-        {controls.problem}
-      </p>
-    )}
-    <button
-      type="button"
-      disabled={
-        (controls.disabled ||
-          !controls.actions.some((available) => available.action === action)) &&
-        !controls.retryable
-      }
-      aria-busy={controls.pending === action}
-      onClick={() =>
-        controls.retryable ? controls.retry(done) : controls.act(action, done)
-      }
-    >
-      {controls.pending === action ? (
-        <ButtonSpinner />
-      ) : controls.retryable ? (
-        'Повторить'
-      ) : action === 'cancel' ? (
-        'Отменить задачу'
-      ) : (
-        'Отказаться'
-      )}
-    </button>
-    <button
-      type="button"
-      className={styles.keep}
-      disabled={!!controls.pending}
-      onClick={back}
-    >
-      Оставить как есть
-    </button>
-  </div>
-);
+}: TaskConfirmationProps) => {
+  const mobile = useMobileLayout();
+
+  return (
+    <div className={styles.confirmation} data-mobile={mobile}>
+      <div className={styles.body}>
+        {mobile && <strong>{title}</strong>}
+        <p>
+          {action === 'cancel'
+            ? mobile
+              ? 'Задача останется в истории с отметкой об отмене.'
+              : 'Задача останется в истории с отметкой об отмене. Новый исполнитель не назначится.'
+            : 'Отказ останется в истории. Передать задачу можно новым предложением.'}
+        </p>
+      </div>
+      <div className={styles.footer}>
+        <TaskConfirmationActions
+          action={action}
+          controls={controls}
+          back={back}
+          done={done}
+        />
+      </div>
+    </div>
+  );
+};

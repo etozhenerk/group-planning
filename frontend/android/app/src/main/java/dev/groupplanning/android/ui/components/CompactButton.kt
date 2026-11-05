@@ -21,6 +21,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
@@ -32,6 +33,7 @@ internal fun CompactButton(
     enabled: Boolean = true,
     busy: Boolean = false,
     icon: Int? = null,
+    cornerRadius: Dp? = null,
     click: () -> Unit,
 ) {
     val compact = LocalMobileSheet.current
@@ -42,7 +44,7 @@ internal fun CompactButton(
         },
         enabled = enabled && !busy,
         shape = RoundedCornerShape(
-            if (compact) {
+            cornerRadius ?: if (compact) {
                 DesignTokens.componentMobileSheetButtonRadius
             } else {
                 DesignTokens.componentButtonRadius

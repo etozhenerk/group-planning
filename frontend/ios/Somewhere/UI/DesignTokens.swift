@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.10.0. Do not edit.
+// Generated from design-system/tokens.json · 7.12.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -945,6 +945,15 @@ enum DesignTokens {
     static let componentMobilePeopleChipMoreWidth = CGFloat(32)
     static let componentMobilePeopleChipOpenerHeight = CGFloat(48)
     static let componentMobilePeopleChipOverlap = CGFloat(4)
+    static let componentMobilePreparationCardTitleLineHeight = CGFloat(28)
+    static let componentMobilePreparationCardTitleSize = CGFloat(21)
+    static let componentMobilePreparationCardTitleWeight = 650
+    static let componentMobilePreparationFormActionMinimumHeight = CGFloat(48)
+    static let componentMobilePreparationFormActionRadius = CGFloat(14)
+    static let componentMobilePreparationRecipientMinimumHeight = CGFloat(64)
+    static let componentMobilePreparationRecipientRadius = CGFloat(14)
+    static let componentMobilePreparationStatusIconSize = CGFloat(19)
+    static let componentMobilePreparationTitleFieldMinimumHeight = CGFloat(86)
     static let componentMobileRequiredFontSize = CGFloat(18)
     static let componentMobileRequiredFontWeight = 650
     static let componentMobileRosterActionHeight = CGFloat(52)

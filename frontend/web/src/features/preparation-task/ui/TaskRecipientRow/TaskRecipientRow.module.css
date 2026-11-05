@@ -1,0 +1,37 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s12);
+  width: 100%;
+  min-height: var(--ds-component-mobile-preparation-recipient-minimum-height);
+  padding: var(--ds-space-s10) 0;
+  border: 0;
+  border-bottom: var(--ds-space-s1) solid var(--ds-color-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ds-color-text);
+  text-align: start;
+}
+
+.row > span:nth-child(2) {
+  display: grid;
+  gap: var(--ds-space-s3);
+  flex: 1;
+}
+
+.row strong {
+  font-size: var(--ds-typography-size-button);
+  font-weight: var(--ds-typography-weight-medium);
+  line-height: var(--ds-typography-line-height-body);
+}
+
+.row small {
+  font-size: var(--ds-typography-size-label);
+  color: var(--ds-color-muted);
+}
+
+.row svg,
+.check {
+  color: var(--ds-color-accent);
+  flex-shrink: 0;
+}

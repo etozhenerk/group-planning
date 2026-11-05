@@ -1,4 +1,4 @@
-# Токены somewhere · 7.10.0
+# Токены somewhere · 7.12.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -465,6 +465,15 @@
 | component.mobilePeopleChip.moreWidth | dimension | 32px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-more |
 | component.mobilePeopleChip.openerHeight | dimension | 48px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-summary |
 | component.mobilePeopleChip.overlap | dimension | 4px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .people-chip margin-right negative |
+| component.mobilePreparation.cardTitleLineHeight | dimension | 28px | Неизменённый approved nav-preparation/preparation-r1: форма, выбор получателя, карточка и сведения. |
+| component.mobilePreparation.cardTitleSize | dimension | 21px | Неизменённый approved nav-preparation/preparation-r1: форма, выбор получателя, карточка и сведения. |
+| component.mobilePreparation.cardTitleWeight | fontWeight | 650 | Неизменённый approved nav-preparation/preparation-r1: форма, выбор получателя, карточка и сведения. |
+| component.mobilePreparation.formActionMinimumHeight | dimension | 48px | Неизменённые approved preparation-r1/nav-preparation: действия формы, карточки и подробностей. |
+| component.mobilePreparation.formActionRadius | dimension | 14px | Неизменённые approved preparation-r1/nav-preparation: действия формы, карточки и подробностей. |
+| component.mobilePreparation.recipientMinimumHeight | dimension | 64px | Неизменённый approved nav-preparation/preparation-r1: форма, выбор получателя, карточка и сведения. |
+| component.mobilePreparation.recipientRadius | dimension | 14px | Неизменённые approved preparation-r1/nav-preparation: действия формы, карточки и подробностей. |
+| component.mobilePreparation.statusIconSize | dimension | 19px | Неизменённые approved preparation-r1/nav-preparation: действия формы, карточки и подробностей. |
+| component.mobilePreparation.titleFieldMinimumHeight | dimension | 86px | Неизменённый approved nav-preparation/preparation-r1: форма, выбор получателя, карточка и сведения. |
 | component.mobileRequired.fontSize | dimension | 18px | Заметная звёздочка обязательного поля: settings-r3/source/ui/SettingsForm и help-r2/src/pages/help/ui/FeedbackFields, .required/.legend span. |
 | component.mobileRequired.fontWeight | fontWeight | 650 | Вес звёздочки в согласованных settings-r3/help-r2:650. |
 | component.mobileRoster.actionHeight | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .list-action |

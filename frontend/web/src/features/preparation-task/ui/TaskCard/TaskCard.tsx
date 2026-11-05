@@ -1,3 +1,5 @@
+import { useMobileLayout } from '@/shared/lib/media';
+import { TaskByline } from '@/features/preparation-task/ui/TaskByline';
 import type { ReactNode } from 'react';
 import type { PreparationTask } from '@/entities/meeting';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
@@ -21,27 +23,34 @@ export const TaskCard = ({
   pending = false,
   error,
   retry,
-}: TaskCardProps) => (
-  <section className={styles.card} aria-label="Задача подготовки">
-    {task ? (
-      <>
-        <div className={styles.caption}>
-          <ChatIcon name="task" />
-          <span>Новая задача · {task.author.displayName}</span>
-          <time dateTime={occurredAt}>{clockLabel(occurredAt)}</time>
+}: TaskCardProps) => {
+  const mobile = useMobileLayout();
+
+  return (
+    <section className={styles.card} data-mobile={mobile} aria-label="Задача подготовки">
+      {task ? (
+        <>
+          {mobile && <TaskByline author={task.author} occurredAt={occurredAt} />}
+          <div className={styles.caption}>
+            <ChatIcon name="task" />
+            <span>
+              {mobile ? 'Подготовка' : `Новая задача · ${task.author.displayName}`}
+            </span>
+            {!mobile && <time dateTime={occurredAt}>{clockLabel(occurredAt)}</time>}
+          </div>
+          {children}
+        </>
+      ) : pending ? (
+        <SkeletonRows label="Загрузка задачи" variant="agenda" />
+      ) : null}
+      {!!error && (
+        <div role="alert">
+          <p>Не удалось загрузить задачу.</p>
+          <button type="button" onClick={retry}>
+            Повторить
+          </button>
         </div>
-        {children}
-      </>
-    ) : pending ? (
-      <SkeletonRows label="Загрузка задачи" variant="agenda" />
-    ) : null}
-    {!!error && (
-      <div role="alert">
-        <p>Не удалось загрузить задачу.</p>
-        <button type="button" onClick={retry}>
-          Повторить
-        </button>
-      </div>
-    )}
-  </section>
-);
+      )}
+    </section>
+  );
+};

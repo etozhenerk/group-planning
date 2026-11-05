@@ -21,45 +21,46 @@ struct PreparationTaskCard: View {
     }
 
     var body: some View {
-        ChatInlineCard {
-            HStack(spacing: DesignTokens.componentMobileChatInlineEyebrowGap) {
-                Image("ChatTask").resizable().scaledToFit()
-                    .frame(
-                        width: DesignTokens.componentMobileChatInlineEyebrowIcon,
-                        height: DesignTokens.componentMobileChatInlineEyebrowIcon
-                    )
-                    .foregroundStyle(DesignTokens.colorAccent).accessibilityHidden(true)
-                Text("Новая задача · " + entry.actor.displayName)
-                Spacer(minLength: DesignTokens.spaceS0)
-                Text(FeedPresentation.time(entry.occurredAt.date))
-            }.designFont(DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2)
-                .foregroundStyle(DesignTokens.colorMuted)
+        ChatInlineCard(
+            inset: DesignTokens.spaceS16, radius: DesignTokens.componentMobileDecisionCardRadius
+        ) {
+            HStack(spacing: DesignTokens.spaceS8) {
+                ParticipantAvatar(
+                    user: entry.actor, size: DesignTokens.componentMobileAvatarSmallSize)
+                Text(entry.actor.displayName).designFont(DesignTokens.typographySizeCaption)
+                Spacer(minLength: DesignTokens.spaceS8)
+                Text(FeedPresentation.time(entry.occurredAt.date)).designFont(
+                    DesignTokens.typographySizeLabel
+                ).foregroundStyle(DesignTokens.colorMuted)
+            }.padding(.bottom, (DesignTokens.spaceS12 + DesignTokens.spaceS2))
+            HStack(spacing: DesignTokens.spaceS6) {
+                ChatIcon(kind: .task, size: DesignTokens.typographySizeButton)
+                Text("Подготовка")
+            }.designFont(DesignTokens.typographySizeLabel).foregroundStyle(DesignTokens.colorMuted)
             Button {
                 openDetails(owner)
             } label: {
                 HStack(spacing: DesignTokens.spaceS10) {
-                    Text(owner.task?.title ?? "Загружаем задачу…").designFont(
-                        DesignTokens.typographySizeBody, weight: .semibold
-                    )
-                    .multilineTextAlignment(.leading)
-                    Spacer(minLength: DesignTokens.spaceS0)
-                    Image("ChatRight").resizable().scaledToFit()
-                        .frame(
-                            width: DesignTokens.componentMobileChatInlineTaskChevron,
-                            height: DesignTokens.componentMobileChatInlineTaskChevron
+                    Text(owner.task?.title ?? "Загружаем задачу…")
+                        .designTokenFont(
+                            DesignTokens.componentMobilePreparationCardTitleSize,
+                            weight: DesignTokens.componentMobilePreparationCardTitleWeight
                         )
-                        .foregroundStyle(DesignTokens.colorMuted).accessibilityHidden(true)
-                }.padding(.top, DesignTokens.spaceS8).padding(.bottom, DesignTokens.spaceS2)
+                        .multilineTextAlignment(.leading)
+                    Spacer(minLength: DesignTokens.spaceS0)
+                    ChatIcon(kind: .right, size: DesignTokens.componentMobileChatInlineTaskChevron)
+                        .foregroundStyle(DesignTokens.colorMuted)
+                }.padding(.top, DesignTokens.spaceS10).padding(.bottom, DesignTokens.spaceS16)
                     .frame(minHeight: DesignTokens.targetIos).contentShape(Rectangle())
             }.buttonStyle(ChatPressStyle()).disabled(owner.task == nil)
                 .accessibilityIdentifier("preparation-task-" + taskID.uuidString.lowercased())
                 .accessibilityHint("Открыть задачу")
             if let task = owner.task {
-                Text(PreparationTaskCopy.status(task, user: owner.session.profile?.id))
-                    .designFont(DesignTokens.typographySizeCaption).foregroundStyle(
-                        DesignTokens.colorMuted
-                    )
-                    .padding(.bottom, DesignTokens.spaceS10)
+                PreparationStatusRow(task: task, user: owner.session.profile?.id)
+                    .padding(
+                        .bottom,
+                        ["declined", "cancelled"].contains(task.state)
+                            ? DesignTokens.spaceS0 : (DesignTokens.spaceS12 + DesignTokens.spaceS2))
                 PreparationTaskActions(owner: owner, task: task, inline: true)
             }
             if let problem = owner.problem {

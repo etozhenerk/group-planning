@@ -43,7 +43,7 @@ struct ChatSheetContent: View {
                     completed: {
                         owner.actionDrafts.clearPreparation()
                         owner.reload()
-                    })
+                    }, discarded: { owner.actionDrafts.clearPreparation() })
             case .media: MediaPickerPanel(owner: owner.media, photosOnly: owner.photoSelection)
             case .task(let id):
                 if let selected = owner.selectedTask {

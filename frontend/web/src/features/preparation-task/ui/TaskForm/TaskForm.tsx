@@ -1,11 +1,11 @@
-import { RequiredMark } from '@/shared/ui/RequiredMark';
-import { RequiredLegend } from '@/shared/ui/RequiredLegend';
-import { useFormViewport } from '@/shared/lib/form';
-import { useMobileLayout } from '@/shared/lib/media';
 import type { Session } from '@/entities/session';
+import type { DraftExitRegistration } from '@/shared/lib/form';
+import { ActionNotice } from '@/shared/ui/ActionNotice';
+import { DraftDiscard } from '@/shared/ui/DraftDiscard';
 import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
-import { TaskRecipient } from '@/features/preparation-task/ui/TaskRecipient';
-import { useTaskForm } from '@/features/preparation-task/model/useTaskForm';
+import { TaskFormBody } from '@/features/preparation-task/ui/TaskFormBody';
+import { TaskRecipientSearch } from '@/features/preparation-task/ui/TaskRecipientSearch';
+import { useTaskSurface } from '@/features/preparation-task/ui/TaskForm/hooks/useTaskSurface';
 import styles from '@/features/preparation-task/ui/TaskForm/TaskForm.module.css';
 
 export type TaskFormProps = {
@@ -13,44 +13,78 @@ export type TaskFormProps = {
   session: Session;
   done: () => void;
   active: boolean;
+  onRegisterClose?: DraftExitRegistration | undefined;
+  onModeChange?: ((title: string) => void) | undefined;
+  onDiscard?: ((navigating: boolean) => void) | undefined;
 };
 
-export const TaskForm = ({ meeting, session, done, active }: TaskFormProps) => {
-  const mobile = useMobileLayout();
-  const scroll = useFormViewport();
-  const form = useTaskForm(meeting, session, done, active);
+export const TaskForm = (props: TaskFormProps) => {
+  const { mobile, form, scroll, formRef, selecting, setSelecting, exit } =
+    useTaskSurface(props);
+
+  if (exit.confirm) {
+    return (
+      <DraftDiscard
+        text="Текст и адресат задачи не сохранятся."
+        stay={exit.stay}
+        leave={exit.leave}
+      />
+    );
+  }
+
+  if (mobile && selecting) {
+    return (
+      <TaskRecipientSearch
+        people={form.participants ?? []}
+        value={form.recipient}
+        user={props.session.user.id}
+        choose={(id) => {
+          form.setRecipient(id);
+          setSelecting(false);
+        }}
+      />
+    );
+  }
+
+  const problem = mobile && form.titleError ? '' : form.problem;
+  const title = form.uncertain
+    ? 'Повторить отправку'
+    : mobile && form.failed
+      ? 'Попробовать снова'
+      : 'Предложить задачу';
 
   return (
-    <form onSubmit={form.submit} className={styles.form} data-mobile={mobile}>
-      <div className={styles.body} ref={scroll.viewport} onScroll={scroll.update}>
-        <div ref={scroll.content}>
-          <RequiredLegend spaced />
-          <label className={styles.field}>
-            Что сделать <RequiredMark />
-            <input
-              value={form.title}
-              onChange={(event) => form.setTitle(event.target.value)}
-              disabled={form.locked}
-              required
-            />
-          </label>
-          <TaskRecipient
-            people={form.participants}
-            error={!!form.people.error}
-            retry={() => void form.people.refetch()}
-            value={form.recipient}
-            onChange={form.setRecipient}
-            disabled={form.locked}
-            user={session.user.id}
-          />
-        </div>
-      </div>
+    <form
+      noValidate={mobile}
+      ref={formRef}
+      onSubmit={form.submit}
+      className={styles.form}
+      data-mobile={mobile}
+    >
+      <TaskFormBody
+        form={form}
+        scroll={scroll}
+        mobile={mobile}
+        user={props.session.user.id}
+        classes={styles}
+        select={() => setSelecting(true)}
+      />
       <div className={styles.footer} data-sticky={scroll.overflow}>
-        {form.problem && (
-          <p role="alert" className={styles.error}>
-            {form.problem}
-          </p>
-        )}
+        {problem &&
+          (mobile ? (
+            <ActionNotice
+              title={form.uncertain ? 'Создание задачи не подтверждено' : problem}
+              text={
+                form.uncertain
+                  ? 'Повторите отправку — данные менять не нужно.'
+                  : 'Текст и адресат остались в форме.'
+              }
+            />
+          ) : (
+            <p role="alert" className={styles.error}>
+              {problem}
+            </p>
+          ))}
         <button
           type="submit"
           disabled={
@@ -58,15 +92,9 @@ export const TaskForm = ({ meeting, session, done, active }: TaskFormProps) => {
             (!form.uncertain && (!form.participants || !!form.people.error))
           }
           aria-busy={form.pending}
-          aria-label={form.uncertain ? 'Повторить отправку' : 'Предложить задачу'}
+          aria-label={title}
         >
-          {form.pending ? (
-            <ButtonSpinner />
-          ) : form.uncertain ? (
-            'Повторить отправку'
-          ) : (
-            'Предложить задачу'
-          )}
+          {form.pending ? <ButtonSpinner /> : title}
         </button>
       </div>
     </form>

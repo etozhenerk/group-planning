@@ -1,0 +1,49 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.body {
+  padding: 0 var(--ds-space-s20) var(--ds-space-s24);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s8);
+  padding: var(--ds-space-s8) 0 var(--ds-space-s20);
+  font-size: var(--ds-typography-size-small);
+  color: var(--ds-color-accent);
+}
+
+.status[data-state='declined'],
+.status[data-state='cancelled'] {
+  color: var(--ds-color-muted);
+}
+
+.note {
+  margin: var(--ds-space-s16) 0 0;
+  font-size: var(--ds-typography-size-caption);
+  line-height: var(--ds-typography-line-height-body);
+  color: var(--ds-color-muted);
+}
+
+.footer {
+  flex-shrink: 0;
+  padding: var(--ds-space-s16) var(--ds-space-s20)
+    max(var(--ds-space-s32), env(safe-area-inset-bottom));
+  border-radius: var(--ds-radius-sheet) var(--ds-radius-sheet) 0 0;
+  box-shadow: 0 calc(-1 * var(--ds-component-mobile-sticky-shadow-up-offset))
+    var(--ds-component-mobile-sticky-shadow-blur) var(--ds-color-mobile-sticky-shadow);
+  background: var(--ds-color-surface);
+}
+
+.status svg {
+  width: var(--ds-component-mobile-chat-icon-size);
+  height: var(--ds-component-mobile-chat-icon-size);
+  flex: none;
+}

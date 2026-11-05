@@ -20,6 +20,23 @@ export const taskStatus = (task: PreparationTask, user: string) => {
   }
 };
 
+export const mobileTaskStatus = (task: PreparationTask, user: string) => {
+  switch (task.state) {
+    case 'accepted':
+      return task.assignee?.id === user
+        ? 'Вы выполняете'
+        : `Исполняет: ${task.assignee?.displayName ?? 'участник'}`;
+    case 'completed':
+      return `Выполнено · ${task.updatedBy.displayName}`;
+    case 'declined':
+      return `Отказ · ${task.updatedBy.displayName}`;
+    case 'cancelled':
+      return `Отменено · ${task.updatedBy.displayName}`;
+    default:
+      return taskStatus(task, user);
+  }
+};
+
 export const taskActions = (
   task: PreparationTask,
 ): { action: PreparationAction; label: string }[] => {

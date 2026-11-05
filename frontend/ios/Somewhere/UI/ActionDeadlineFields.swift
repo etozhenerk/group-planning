@@ -4,7 +4,6 @@ struct ActionDeadlineFields: View {
     @Binding var selection: Date
     let zone: TimeZone
     @Environment(\.dynamicTypeSize) private var typeSize
-    @State private var width: CGFloat = DesignTokens.breakpointChatNarrowWidth
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.componentMobileFieldGap) {
@@ -31,10 +30,6 @@ struct ActionDeadlineFields: View {
                         ?? zone.identifier
             )
             .designFont(DesignTokens.typographySizeCaption).foregroundStyle(DesignTokens.colorMuted)
-        }.onGeometryChange(for: CGFloat.self) {
-            $0.size.width
-        } action: {
-            width = $0
         }
     }
 }

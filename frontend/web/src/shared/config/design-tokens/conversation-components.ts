@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.10.0. Do not edit.
+// Generated from design-system/tokens.json · 7.12.0. Do not edit.
 export const conversationTokens = {
   componentDesktopMessageCornerRadius: '5px',
   componentDesktopMessageLineHeight: '1.6',
@@ -59,6 +59,15 @@ export const conversationTokens = {
   componentMobileMessageShadowBlur: '1px',
   componentMobileMessageShadowOffset: '2px',
   componentMobileMessageSmileStroke: '1.45',
+  componentMobilePreparationCardTitleLineHeight: '28px',
+  componentMobilePreparationCardTitleSize: '21px',
+  componentMobilePreparationCardTitleWeight: '650',
+  componentMobilePreparationFormActionMinimumHeight: '48px',
+  componentMobilePreparationFormActionRadius: '14px',
+  componentMobilePreparationRecipientMinimumHeight: '64px',
+  componentMobilePreparationRecipientRadius: '14px',
+  componentMobilePreparationStatusIconSize: '19px',
+  componentMobilePreparationTitleFieldMinimumHeight: '86px',
   componentMobileSettingsReviewBodyLineHeight: '22px',
   componentMobileSettingsReviewBodySize: '14px',
   componentMobileSettingsReviewTitleLineHeight: '30px',
