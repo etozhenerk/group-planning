@@ -8,20 +8,29 @@ struct ActionDeadlineFields: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.componentMobileFieldGap) {
-            Text("Опрос завершится").designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+            Divider().overlay(DesignTokens.colorLine)
+                .padding(.bottom, DesignTokens.componentMobileFormSectionGap)
+            Text("Окончание опроса").designFont(DesignTokens.typographySizeCaption).foregroundStyle(
                 DesignTokens.colorMuted)
             let layout =
-                width < DesignTokens.breakpointChatNarrowWidth || typeSize > .large
+                typeSize > .large
                 ? AnyLayout(VStackLayout(spacing: DesignTokens.componentMobileFormTwoFieldGap))
-                : AnyLayout(HStackLayout(spacing: DesignTokens.componentMobileFormTwoFieldGap))
+                : AnyLayout(HStackLayout(spacing: DesignTokens.componentMobileDecisionDeadlineGap))
             layout {
                 ActionDateField(
-                    title: "Дата окончания", selection: $selection, zone: zone, hideLabel: true,
+                    title: "Дата", selection: $selection, zone: zone, required: true,
                     omitWeekday: true)
                 ActionDateField(
-                    title: "Время окончания", selection: $selection, zone: zone, hideLabel: true,
+                    title: "Время", selection: $selection, zone: zone, required: true,
                     timeOnly: true)
             }
+            Text(
+                zone.identifier == "Europe/Moscow"
+                    ? "По московскому времени"
+                    : zone.localizedName(for: .generic, locale: Locale(identifier: "ru_RU"))
+                        ?? zone.identifier
+            )
+            .designFont(DesignTokens.typographySizeCaption).foregroundStyle(DesignTokens.colorMuted)
         }.onGeometryChange(for: CGFloat.self) {
             $0.size.width
         } action: {

@@ -16,25 +16,51 @@ struct DatePollCard: View {
         _owner = State(initialValue: DatePollOwner(meetingID: meeting.id, session: session))
     }
 
+    @ViewBuilder private func footer(_ poll: DatePoll) -> some View {
+        Text(DatePollCopy.status(poll, timezone: meeting.timezone))
+        Spacer(minLength: DesignTokens.spaceS8)
+        Text(poll.settings.anonymous ? "Анонимный опрос" : "Неанонимный опрос")
+    }
+
     var body: some View {
-        ChatInlineCard {
-            ChatPollEyebrow(entry: entry, icon: "ChatCalendar")
-            VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
-                Text("Новая дата встречи")
-                    .designFont(DesignTokens.typographySizeBody, weight: .semibold)
+        MobileDecisionCard(entry: entry) {
+            HStack(spacing: DesignTokens.spaceS8) {
+                ChatIcon(kind: .calendar, size: DesignTokens.componentMobileFieldIconSize)
+                Text("Опрос")
+            }.designFont(DesignTokens.typographySizeLabel).foregroundStyle(DesignTokens.colorMuted)
+            VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                Text("Когда встретимся?")
+                    .designFont(DesignTokens.componentMobileDecisionCardTitleSize, weight: .bold)
+                    .padding(.bottom, DesignTokens.spaceS8)
                 if owner.current, let poll = owner.poll {
+                    Text(
+                        poll.settings.multipleAnswers
+                            ? "Можно выбрать несколько вариантов." : "Выберите один вариант."
+                    )
+                    .designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                        DesignTokens.colorMuted
+                    )
+                    .padding(.bottom, DesignTokens.componentMobileFormSectionGap)
                     DatePollBallot(owner: owner, poll: poll)
                     if poll.canResolve {
                         DatePollResolution(owner: owner, poll: poll, meeting: meeting)
                     }
-                    Text(DatePollCopy.status(poll, timezone: meeting.timezone))
-                        .designFont(
-                            DesignTokens.typographySizeEmojiGroupLabel, relativeTo: .caption2
-                        )
-                        .foregroundStyle(DesignTokens.colorMuted)
-                    if poll.settings.anonymous { Text("Анонимное голосование").font(.caption) }
+                    ViewThatFits(in: .horizontal) {
+                        HStack(alignment: .top) { footer(poll) }
+                        VStack(alignment: .leading, spacing: DesignTokens.spaceS6) {
+                            Text(DatePollCopy.status(poll, timezone: meeting.timezone))
+                            Text(poll.settings.anonymous ? "Анонимный опрос" : "Неанонимный опрос")
+                        }
+                    }.designFont(DesignTokens.typographySizeLabel).foregroundStyle(
+                        DesignTokens.colorMuted
+                    )
+                    .padding(.top, DesignTokens.componentMobileFormSectionGap)
                     if poll.state == "open" && poll.settings.hideResults {
-                        Text("Результаты появятся после окончания").font(.caption)
+                        Text("Результаты появятся после окончания").designFont(
+                            DesignTokens.typographySizeCaption
+                        )
+                        .foregroundStyle(DesignTokens.colorMuted).padding(
+                            .top, DesignTokens.spaceS8)
                     }
                 } else if owner.current && owner.problem == nil {
                     ProgressView().frame(maxWidth: .infinity).accessibilityLabel("Загрузка опроса")

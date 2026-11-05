@@ -48,7 +48,7 @@ const nativeToken = (token, platform) =>
 const chatComponent = (token) => token.path[0] === 'component' &&
   ['chatComposer', 'chatActionDialog', 'mobileChat', 'messageDelivery'].includes(token.path[1]);
 const conversationComponent = (token) => token.path[0] === 'component' &&
-  ['mobileMessage', 'mobileInfo', 'mobileSettings', 'desktopMessage'].includes(token.path[1]);
+  ['mobileMessage', 'mobileInfo', 'mobileSettings', 'mobileDecision', 'desktopMessage'].includes(token.path[1]);
 const mobileComponent = (token) => token.path[0] === 'component' &&
   token.path[1].startsWith('mobile') && !chatComponent(token) && !conversationComponent(token);
 

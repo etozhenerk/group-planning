@@ -1,13 +1,17 @@
 package dev.groupplanning.android.ui.datepoll
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,6 +48,7 @@ internal fun DatePollSettingsFields(
         },
     )
     Column {
+        HorizontalDivider(color = DesignTokens.colorLine)
         settings.forEach { (resource, selected, update) ->
             val label = stringResource(resource)
             Row(
@@ -62,19 +67,36 @@ internal fun DatePollSettingsFields(
                 Text(
                     label,
                     Modifier.weight(1f),
-                    fontSize = DesignTokens.typographySizeButton,
+                    fontSize = DesignTokens.typographySizeSmall,
                 )
-                Switch(
-                    selected,
-                    onCheckedChange = null,
-                    enabled = enabled,
-                    colors = SwitchDefaults.colors(
-                        checkedTrackColor = DesignTokens.colorAccent,
-                        checkedThumbColor = DesignTokens.colorOwnText,
-                        uncheckedTrackColor = DesignTokens.colorBorderStrong,
-                        uncheckedThumbColor = DesignTokens.colorMuted,
-                    ),
-                )
+                Box(
+                    Modifier.size(
+                        DesignTokens.componentMobileFormSwitchWidth,
+                        DesignTokens.componentMobileFormSwitchHeight,
+                    )
+                        .background(
+                            if (selected) {
+                                DesignTokens.colorAccent
+                            } else {
+                                DesignTokens.colorBorderStrong
+                            },
+                            RoundedCornerShape(DesignTokens.radiusPill),
+                        )
+                        .padding(DesignTokens.componentMobileFormSwitchThumbInset),
+                    contentAlignment = if (selected) Alignment.CenterEnd else Alignment.CenterStart,
+                ) {
+                    Box(
+                        Modifier.size(DesignTokens.componentMobileFormSwitchThumbSize)
+                            .background(
+                                if (selected) {
+                                    DesignTokens.colorOwnText
+                                } else {
+                                    DesignTokens.colorMuted
+                                },
+                                RoundedCornerShape(DesignTokens.radiusPill),
+                            ),
+                    )
+                }
             }
         }
     }

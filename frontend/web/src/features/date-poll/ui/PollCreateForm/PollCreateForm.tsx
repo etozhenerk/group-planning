@@ -1,6 +1,9 @@
 import { RequiredLegend } from '@/shared/ui/RequiredLegend';
 import { useMobileLayout } from '@/shared/lib/media';
-import { ButtonSpinner } from '@/shared/ui/ButtonSpinner';
+import { DraftDiscard } from '@/shared/ui/DraftDiscard';
+import type { DraftExitRegistration } from '@/shared/lib/form';
+import { PollSubmit } from '@/features/date-poll/ui/PollSubmit';
+import { usePollExit } from '@/features/date-poll/ui/PollCreateForm/hooks/usePollExit';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { usePollForm } from '@/features/date-poll/model/usePollForm';
@@ -14,12 +17,27 @@ export type PollCreateFormProps = {
   meeting: Meeting;
   session: Session;
   done: () => void;
+  active?: boolean;
+  onRegisterClose?: DraftExitRegistration | undefined;
+  onModeChange?: ((title: string) => void) | undefined;
 };
 
-export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) => {
+export const PollCreateForm = (props: PollCreateFormProps) => {
+  const { meeting, session, done } = props;
   const mobile = useMobileLayout();
   const form = usePollForm(meeting, session, done);
   const scroll = usePollViewport(form.attempt);
+  const exit = usePollExit(props, mobile, form.dirty, form.locked);
+
+  if (exit.confirm) {
+    return (
+      <DraftDiscard
+        text="Варианты и настройки опроса не сохранятся."
+        stay={exit.stay}
+        leave={exit.leave}
+      />
+    );
+  }
 
   const settings = (
     <PollSettingsFields
@@ -30,7 +48,12 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
   );
 
   return (
-    <form onSubmit={form.submit} className={styles['form']} data-mobile={mobile}>
+    <form
+      noValidate={mobile}
+      onSubmit={form.submit}
+      className={styles['form']}
+      data-mobile={mobile}
+    >
       <div
         className={styles['body']}
         ref={scroll.viewport}
@@ -55,6 +78,7 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
             zone={meeting.timezone}
             choice={form.choice}
             onChoice={form.setChoice}
+            errors={mobile ? form.deadlineErrors : undefined}
             ambiguous={form.problem.includes('дважды')}
             disabled={form.locked}
           />
@@ -62,31 +86,18 @@ export const PollCreateForm = ({ meeting, session, done }: PollCreateFormProps) 
         </div>
       </div>
       <div
-        className={[styles['footer'], scroll.hasMore ? styles['overflowing'] : '']
-          .filter(Boolean)
-          .join(' ')}
+        className={[styles.footer, scroll.hasMore ? styles.overflowing : ''].join(' ')}
         data-testid="poll-form-footer"
         data-sticky={scroll.overflow}
       >
-        {form.problem && (
-          <p role="alert" className={styles['error']}>
-            {form.problem}
-          </p>
-        )}
-        <button
-          type="submit"
-          disabled={form.pending}
-          aria-busy={form.pending}
-          aria-label={form.uncertain ? 'Повторить отправку' : 'Создать опрос'}
-        >
-          {form.pending ? (
-            <ButtonSpinner />
-          ) : form.uncertain ? (
-            'Повторить отправку'
-          ) : (
-            'Создать опрос'
-          )}
-        </button>
+        <PollSubmit
+          mobile={mobile}
+          problem={mobile && Object.keys(form.deadlineErrors).length ? '' : form.problem}
+          uncertain={form.uncertain}
+          failed={form.failed}
+          pending={form.pending}
+          errorClassName={styles.error}
+        />
       </div>
     </form>
   );

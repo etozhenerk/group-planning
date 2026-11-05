@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import type { PollOption } from '@/entities/meeting';
 import { dayLabel } from '@/shared/lib/time';
 import { voteLabel } from '@/features/date-poll/model/pollCopy';
@@ -22,8 +23,10 @@ export const PollOptionRow = ({
   toggle,
   pending,
 }: PollOptionRowProps) => {
+  const mobile = useMobileLayout();
+
   return (
-    <div className={styles['option']} data-selected={selected}>
+    <div className={styles['option']} data-mobile={mobile} data-selected={selected}>
       <span
         className={styles['fill']}
         style={{

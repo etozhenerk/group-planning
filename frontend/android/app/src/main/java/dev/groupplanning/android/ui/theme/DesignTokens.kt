@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.9.0. Do not edit.
+// Generated from design-system/tokens.json · 7.10.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -40,6 +40,8 @@ internal object DesignTokens {
     val colorMeetingMark = Color(0xff2e3938)
     val colorMeetingMarkForeground = Color(0xffdcece5)
     val colorMessage = Color(0xff33343a)
+    val colorMobileDecisionSelected = Color(0x13c5bbd6)
+    val colorMobileDecisionVoteFill = Color(0x1cc5bbd6)
     val colorMobileInvitationFooterLine = Color(0x08ffffff)
     val colorMobileMessageOwnMetadata = Color(0xff685f75)
     val colorMobileMessageShadow = Color(0x11000000)
@@ -295,6 +297,14 @@ internal object DesignTokens {
     val componentMobileCreationInvalidRingWidth = 3.dp
     val componentMobileCreationLabelSize = 14.dp
     val componentMobileCreationTitleLineHeight = 1.2f
+    val componentMobileDecisionCardMaximumWidth = 320.dp
+    val componentMobileDecisionCardRadius = 18.dp
+    val componentMobileDecisionCardTitleLineHeight = 26.dp
+    val componentMobileDecisionCardTitleSize = 20.dp
+    val componentMobileDecisionDeadlineGap = 12.dp
+    val componentMobileDecisionOptionMinimumHeight = 60.dp
+    val componentMobileDecisionSwitchRowHeight = 44.dp
+    val componentMobileDecisionVoteFillOpacity = 0.6f
     val componentMobileFieldGap = 7.dp
     val componentMobileFieldIconSize = 18.dp
     val componentMobileFieldInsetBlock = 10.dp

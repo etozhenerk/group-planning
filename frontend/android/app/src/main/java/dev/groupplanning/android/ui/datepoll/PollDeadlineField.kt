@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,10 +33,15 @@ internal fun PollDeadlineField(
     val day = value.day?.let {
         LocalDate.parse(
             it,
-        ).format(DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("ru")))
+        ).format(DateTimeFormatter.ofPattern("d MMMM", Locale.forLanguageTag("ru")))
     }.orEmpty()
     Column(verticalArrangement = Arrangement.spacedBy(DesignTokens.componentMobileFieldGap)) {
-        Text(stringResource(R.string.action_poll_deadline), color = DesignTokens.colorMuted)
+        HorizontalDivider(color = DesignTokens.colorLine)
+        Text(
+            stringResource(R.string.action_poll_deadline),
+            color = DesignTokens.colorMuted,
+            fontSize = DesignTokens.typographySizeCaption,
+        )
         BoxWithConstraints {
             val date: @Composable (Modifier) -> Unit = { modifier ->
                 DateTimeField(
@@ -44,6 +50,8 @@ internal fun PollDeadlineField(
                     R.drawable.ic_calendar,
                     enabled,
                     modifier,
+                    required = true,
+                    leadingIcon = true,
                 ) { step = 1 }
             }
             val time: @Composable (Modifier) -> Unit = { modifier ->
@@ -53,12 +61,14 @@ internal fun PollDeadlineField(
                     R.drawable.ic_clock,
                     enabled,
                     modifier,
+                    required = true,
+                    leadingIcon = true,
                 ) { step = 2 }
             }
-            if (maxWidth < DesignTokens.breakpointChatNarrowWidth) {
+            if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1f) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(
-                        DesignTokens.componentMobileFormTwoFieldGap,
+                        DesignTokens.componentMobileDecisionDeadlineGap,
                     ),
                 ) {
                     date(Modifier)
@@ -67,7 +77,7 @@ internal fun PollDeadlineField(
             } else {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(
-                        DesignTokens.componentMobileFormTwoFieldGap,
+                        DesignTokens.componentMobileDecisionDeadlineGap,
                     ),
                 ) {
                     date(Modifier.weight(1f))
@@ -75,6 +85,16 @@ internal fun PollDeadlineField(
                 }
             }
         }
+        Text(
+            if (value.timezone == "Europe/Moscow") {
+                stringResource(R.string.poll_moscow_time)
+            } else {
+                android.icu.text.TimeZoneNames.getInstance(Locale.forLanguageTag("ru"))
+                    .getExemplarLocationName(value.timezone) ?: value.timezone
+            },
+            color = DesignTokens.colorMuted,
+            fontSize = DesignTokens.typographySizeCaption,
+        )
     }
     if (step == 1) {
         MeetingDateDialog(value, { step = 0 }, stringResource(R.string.action_poll_deadline)) {

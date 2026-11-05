@@ -1,3 +1,4 @@
+import type { DraftExitRegistration } from '@/shared/lib/form';
 import type { Meeting } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { PollCreateForm } from '@/features/date-poll';
@@ -15,6 +16,8 @@ export type ConversationActionFormsProps = {
   meeting: Meeting;
   session: Session;
   done: () => void;
+  registerClose: DraftExitRegistration;
+  onModeChange: (title: string) => void;
 };
 
 export const ConversationActionForms = ({
@@ -23,6 +26,8 @@ export const ConversationActionForms = ({
   meeting,
   session,
   done,
+  registerClose,
+  onModeChange,
 }: ConversationActionFormsProps) => {
   const { generation, complete } = useActionCompletion(kind, open, done);
 
@@ -34,6 +39,9 @@ export const ConversationActionForms = ({
           meeting={meeting}
           session={session}
           done={() => complete('date')}
+          active={open && kind === 'date'}
+          onRegisterClose={registerClose}
+          onModeChange={onModeChange}
         />
       </div>
       <div className={styles.form} hidden={kind !== 'place'}>

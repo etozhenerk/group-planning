@@ -12,6 +12,9 @@ final class DatePollFormOwner {
     }
     var deadline = Date().addingTimeInterval(86_400)
     var repetition: MeetingDraft.Repetition?
+    var validationAttempt = 0
+    private var originalDates: [String] = []
+    private var originalDeadline = Date()
     var ambiguous = false
     var settings = DatePollSettings()
 
@@ -24,6 +27,18 @@ final class DatePollFormOwner {
                 meeting.startsAt?.date ?? Date(),
                 zone: TimeZone(identifier: meeting.timezone) ?? .gmt)
         dates = [first, CalendarDate.adding(first, component: .day, value: 1)]
+        originalDates = dates
+        originalDeadline = deadline
+    }
+
+    var dirty: Bool {
+        dates != originalDates || deadline != originalDeadline || repetition != nil
+            || settings != DatePollSettings()
+    }
+
+    func dateError(_ day: String) -> String? {
+        validationAttempt > 0 && dates.filter { $0 == day }.count > 1
+            ? "Эта дата уже есть в опросе." : nil
     }
 
     func date(for id: UUID, fallback: Date) -> Date {
@@ -36,11 +51,13 @@ final class DatePollFormOwner {
             return
         }
         options[index].day = CalendarDate.string(date)
+        operation.problem = nil
     }
 
     func removeDate(_ id: UUID) {
         guard operation.editable, options.count > 2 else { return }
         options.removeAll { $0.id == id }
+        operation.problem = nil
     }
 
     func addDate() {
@@ -48,12 +65,14 @@ final class DatePollFormOwner {
         let day = CalendarDate.adding(
             options.last?.day ?? CalendarDate.today(), component: .day, value: 1)
         options.append(DatePollDraftOption(day: day))
+        operation.problem = nil
     }
 
     func submit() async -> Bool {
         if operation.pending != nil {
             await operation.retry()
         } else {
+            validationAttempt += 1
             guard dates.count >= 2, Set(dates).count == dates.count,
                 dates.allSatisfy({ CalendarDate.parse($0) != nil })
             else {

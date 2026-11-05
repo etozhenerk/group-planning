@@ -1,4 +1,4 @@
-# Токены somewhere · 7.9.0
+# Токены somewhere · 7.10.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -42,6 +42,8 @@
 | color.meetingMark | color | #2e3938 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.meetingMarkForeground | color | #dcece5 | Принятая mobile-ревизия 2026-10-27-telegram-chat, chat.css .meeting-mark |
 | color.message | color | #33343a | Смысловая роль message |
+| color.mobileDecisionSelected | color | #c5bbd613 | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| color.mobileDecisionVoteFill | color | #c5bbd61c | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
 | color.mobileInvitationFooterLine | color | #ffffff08 | Внутренняя верхняя линия footer invite-r3: #ffffff08; роль не меняет calendarHover. |
 | color.mobileMessageOwnMetadata | color | #685f75 | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
 | color.mobileMessageShadow | color | #00000011 | Неизменённый approved chat-r6/source/PrototypeMessage.module.css, MessageReceipt и ErrorIndicator; общая поздняя sticky-коррекция. |
@@ -297,6 +299,14 @@
 | component.mobileCreation.invalidRingWidth | dimension | 3px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
 | component.mobileCreation.labelSize | dimension | 14px | Неизменённый approved create-r5/source/MeetingFields.module.css и FieldHint: принятые поля/подсказки create-r4; карта исключена. |
 | component.mobileCreation.titleLineHeight | number | 1.2 | Неизменённый create-r5/source/CreatePreview.module.css: header h1 line-height1.2. |
+| component.mobileDecision.cardMaximumWidth | dimension | 320px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.cardRadius | dimension | 18px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.cardTitleLineHeight | dimension | 26px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.cardTitleSize | dimension | 20px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.deadlineGap | dimension | 12px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.optionMinimumHeight | dimension | 60px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.switchRowHeight | dimension | 44px | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
+| component.mobileDecision.voteFillOpacity | number | 0.6 | Неизменённая approved nav-date/date-r1: карточка/параметры/равные deadline-колонки. |
 | component.mobileField.gap | dimension | 7px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field |
 | component.mobileField.iconSize | dimension | 18px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .date-field/.input-with-icon |
 | component.mobileField.insetBlock | dimension | 10px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .field |

@@ -10,3 +10,12 @@ button.submit {
   margin: 12px 0 0;
   font-size: 13px;
 }
+
+[data-mobile='true'] > button.submit {
+  min-height: var(--ds-target-mobile-web);
+  padding: calc(var(--ds-space-s12) - var(--ds-space-s1))
+    calc(var(--ds-space-s16) + var(--ds-space-s2));
+  border-radius: var(--ds-radius-control);
+  font-size: var(--ds-typography-size-small);
+  font-weight: var(--ds-typography-weight-semibold);
+}

@@ -1,5 +1,4 @@
-import { useMobileLayout, useMediaQuery } from '@/shared/lib/media';
-import { designTokens } from '@/shared/config/design-tokens';
+import { useMobileLayout } from '@/shared/lib/media';
 import { DateInput } from '@/shared/ui/DateInput';
 import { TimeInput } from '@/shared/ui/TimeInput';
 import { SelectInput } from '@/shared/ui/SelectInput';
@@ -14,6 +13,7 @@ export type PollDeadlineProps = {
   onChoice: (value: '' | 'earlier' | 'later') => void;
   ambiguous: boolean;
   disabled: boolean;
+  errors?: Record<string, string> | undefined;
 };
 
 export const PollDeadline = ({
@@ -24,17 +24,12 @@ export const PollDeadline = ({
   onChoice,
   ambiguous,
   disabled,
+  errors = {},
 }: PollDeadlineProps) => {
   const mobile = useMobileLayout();
-  const narrow = useMediaQuery(`(max-width: ${designTokens.breakpointChatNarrowWidth})`);
 
   return (
-    <fieldset
-      className={styles['deadline']}
-      data-mobile={mobile}
-      data-narrow={narrow}
-      disabled={disabled}
-    >
+    <fieldset className={styles['deadline']} data-mobile={mobile} disabled={disabled}>
       <legend>Окончание опроса</legend>
       <div className={styles['fields']}>
         <DateInput
@@ -42,6 +37,8 @@ export const PollDeadline = ({
           compact
           required
           label="Дата"
+          error={errors['date'] ?? ''}
+          invalid={!!errors['date']}
           value={value.split('T')[0] ?? ''}
           timezone={zone}
           onChange={(date) => onChange(`${date}T${value.split('T')[1] ?? ''}`)}
@@ -50,6 +47,8 @@ export const PollDeadline = ({
         <TimeInput
           mobileSheet
           label="Время"
+          error={errors['time'] ?? ''}
+          invalid={!!errors['time']}
           value={value.split('T')[1] ?? ''}
           onChange={(hour) => onChange(`${value.split('T')[0] ?? ''}T${hour}`)}
           required

@@ -63,7 +63,6 @@ internal class FeedViewModel(
     val tasks = mutableTasks.asStateFlow()
     private val mutableTaskCreation = MutableStateFlow<PreparationFormViewModel?>(null)
     val taskCreation = mutableTaskCreation.asStateFlow()
-    private var savedPollCreation: DatePollViewModel? = null
     private var savedPlaceCreation: PlacePollViewModel? = null
     private var savedTaskCreation: PreparationFormViewModel? = null
     private var access: MeetingAccess? = null
@@ -252,17 +251,15 @@ internal class FeedViewModel(
     fun createPoll(meeting: Meeting) {
         val lease = access ?: return
         if (pollCreation.value == null) {
-            mutableCreation.value = savedPollCreation
-                ?: DatePollViewModel(repository, lease, childScope(), meeting)
-            savedPollCreation = null
+            mutableCreation.value = DatePollViewModel(repository, lease, childScope(), meeting)
         }
     }
 
     fun closePollCreation() {
         val model = pollCreation.value ?: return
-        if (model.state.value.busy) return
+        if (model.state.value.busy || model.state.value.pending != null) return
         val created = model.state.value.poll != null
-        if (created) model.stop() else savedPollCreation = model
+        model.stop()
         mutableCreation.value = null
         if (created) refresh()
     }
@@ -308,8 +305,6 @@ internal class FeedViewModel(
     }
 
     private fun clearPolls() {
-        savedPollCreation?.stop()
-        savedPollCreation = null
         savedPlaceCreation?.stop()
         savedPlaceCreation = null
         savedTaskCreation?.stop()

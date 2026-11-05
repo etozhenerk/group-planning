@@ -1,8 +1,16 @@
-// Generated from design-system/tokens.json · 7.9.0. Do not edit.
+// Generated from design-system/tokens.json · 7.10.0. Do not edit.
 export const conversationTokens = {
   componentDesktopMessageCornerRadius: '5px',
   componentDesktopMessageLineHeight: '1.6',
   componentDesktopMessageRadius: '18px',
+  componentMobileDecisionCardMaximumWidth: '320px',
+  componentMobileDecisionCardRadius: '18px',
+  componentMobileDecisionCardTitleLineHeight: '26px',
+  componentMobileDecisionCardTitleSize: '20px',
+  componentMobileDecisionDeadlineGap: '12px',
+  componentMobileDecisionOptionMinimumHeight: '60px',
+  componentMobileDecisionSwitchRowHeight: '44px',
+  componentMobileDecisionVoteFillOpacity: '0.6',
   componentMobileInfoCompanyAllInsetTop: '2px',
   componentMobileInfoCompanyAllMinimumHeight: '32px',
   componentMobileInfoCompanyChipGap: '6px',

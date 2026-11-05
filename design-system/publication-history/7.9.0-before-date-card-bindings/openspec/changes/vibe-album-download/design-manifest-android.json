@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "vibe-album-download-android",
+  "designVersion": "7.9.0",
+  "phase": "checkpoint",
+  "approval": "29.10.2026: пользователь уточнил «рядом с добавить фото»; ZIP/native gallery ранее подтверждены. Повторное указание 29.10.2026: обе кнопки в одной строке, web-группа переносится целиком.",
+  "implementer": "implementation-team:/root",
+  "report": "openspec/changes/vibe-album-download/qa/design-6.3.0/rsvp-7.0.0/design-review.json",
+  "screens": [
+    {
+      "id": "vibe-save-android",
+      "platforms": [
+        "android"
+      ],
+      "states": [
+        "ready",
+        "empty",
+        "preparing",
+        "cancelled",
+        "error",
+        "success",
+        "permissions",
+        "saving",
+        "save-error",
+        "partial",
+        "access-revoked"
+      ],
+      "inputs": [
+        "frontend/android/app/src/main",
+        "package.json",
+        "package-lock.json",
+        "frontend/android/app/build.gradle.kts",
+        "frontend/android/gradle",
+        "frontend/android/app/src/androidTestQa",
+        "backend/internal/httpapi",
+        "contracts/fixtures",
+        "frontend/android/scripts",
+        "frontend/android/build.gradle.kts",
+        "frontend/android/settings.gradle.kts",
+        "backend/go.mod",
+        "backend/go.sum",
+        "scripts/test-cross-platform.py"
+      ],
+      "references": [
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-ready.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-empty.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-preparing.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-cancelled.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-error.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-success.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-permissions.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-saving.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-save-error.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/android-partial.html",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.css",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/download.ts",
+        "openspec/changes/vibe-album-download/assets/revisions/2026-10-29-album-download/generated/download.js",
+        "openspec/changes/vibe-album-download/ux.md"
+      ],
+      "contracts": [
+        "docs/design/components/memories.md",
+        "docs/design/components/navigation.md",
+        "docs/design/components/mobile-mvp.md"
+      ],
+      "tasks": {
+        "android": [
+          "3.3"
+        ]
+      }
+    }
+  ]
+}

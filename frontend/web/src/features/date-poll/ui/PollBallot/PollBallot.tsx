@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import type { DatePoll } from '@/entities/meeting';
 import type { Session } from '@/entities/session';
 import { usePollAction } from '@/features/date-poll/model/usePollAction';
@@ -9,11 +10,12 @@ import styles from '@/features/date-poll/ui/PollBallot/PollBallot.module.css';
 export type PollBallotProps = { poll: DatePoll; session: Session };
 
 export const PollBallot = ({ poll, session }: PollBallotProps) => {
+  const mobile = useMobileLayout();
   const choice = usePollSelection(poll);
   const action = usePollAction(poll.meetingId, poll.id, session);
 
   return (
-    <div>
+    <div data-mobile={mobile}>
       {poll.options.map((option) => (
         <PollOptionRow
           key={option.id}

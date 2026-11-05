@@ -28,8 +28,9 @@ internal class DatePollViewModel(
     scope: CoroutineScope,
     meeting: Meeting? = null,
 ) : ViewModel(scope) {
-    private val mutable =
-        MutableStateFlow(DatePollState(draft = meeting?.let(DatePollDraft::forMeeting)))
+    private val initialDraft = meeting?.let(DatePollDraft::forMeeting)
+    private val mutable = MutableStateFlow(DatePollState(draft = initialDraft))
+    val dirty: Boolean get() = state.value.draft != initialDraft
     val state = mutable.asStateFlow()
     private var stopped = false
     private var generation = 0

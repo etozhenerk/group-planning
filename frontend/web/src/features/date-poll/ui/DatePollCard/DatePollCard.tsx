@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { ChatIcon } from '@/shared/ui/ChatIcon';
 import { SkeletonRows } from '@/shared/ui/SkeletonRows';
 import type { DatePoll } from '@/entities/meeting';
@@ -29,18 +30,21 @@ export const DatePollCard = ({
   retry,
   now = Date.now(),
 }: DatePollCardProps) => {
+  const mobile = useMobileLayout();
+
   return (
     <section
       className={[styles['card'], outgoing ? styles['outgoing'] : '']
         .filter(Boolean)
         .join(' ')}
+      data-mobile={mobile}
       aria-label="Опрос о дате"
     >
       <div className={styles['caption']}>
         <ChatIcon name="calendar" size={18} aria-hidden="true" />
-        Предлагает изменить дату
+        {mobile ? 'Опрос' : 'Предлагает изменить дату'}
       </div>
-      <h3>Новая дата встречи</h3>
+      <h3>{mobile ? 'Когда встретимся?' : 'Новая дата встречи'}</h3>
       {poll ? (
         <>
           <p className={styles['note']}>
@@ -54,7 +58,13 @@ export const DatePollCard = ({
           <div className={styles['footer']}>
             <span>{pollStatus(poll, zone, now)}</span>
             <span>
-              {poll.settings.anonymous ? 'Анонимные голоса' : 'Открытые голоса'}
+              {mobile
+                ? poll.settings.anonymous
+                  ? 'Анонимный опрос'
+                  : 'Неанонимный опрос'
+                : poll.settings.anonymous
+                  ? 'Анонимные голоса'
+                  : 'Открытые голоса'}
             </span>
           </div>
           {poll.state === 'open' && poll.settings.hideResults && (

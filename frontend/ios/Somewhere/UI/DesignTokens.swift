@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.9.0. Do not edit.
+// Generated from design-system/tokens.json · 7.10.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -227,6 +227,20 @@ enum DesignTokens {
         green: 0.20392156862745098,
         blue: 0.22745098039215686,
         opacity: 1
+    )
+    static let colorMobileDecisionSelected = Color(
+        .sRGB,
+        red: 0.7725490196078432,
+        green: 0.7333333333333333,
+        blue: 0.8392156862745098,
+        opacity: 0.07450980392156863
+    )
+    static let colorMobileDecisionVoteFill = Color(
+        .sRGB,
+        red: 0.7725490196078432,
+        green: 0.7333333333333333,
+        blue: 0.8392156862745098,
+        opacity: 0.10980392156862745
     )
     static let colorMobileInvitationFooterLine = Color(
         .sRGB,
@@ -765,6 +779,14 @@ enum DesignTokens {
     static let componentMobileCreationInvalidRingWidth = CGFloat(3)
     static let componentMobileCreationLabelSize = CGFloat(14)
     static let componentMobileCreationTitleLineHeight = 1.2
+    static let componentMobileDecisionCardMaximumWidth = CGFloat(320)
+    static let componentMobileDecisionCardRadius = CGFloat(18)
+    static let componentMobileDecisionCardTitleLineHeight = CGFloat(26)
+    static let componentMobileDecisionCardTitleSize = CGFloat(20)
+    static let componentMobileDecisionDeadlineGap = CGFloat(12)
+    static let componentMobileDecisionOptionMinimumHeight = CGFloat(60)
+    static let componentMobileDecisionSwitchRowHeight = CGFloat(44)
+    static let componentMobileDecisionVoteFillOpacity = 0.6
     static let componentMobileFieldGap = CGFloat(7)
     static let componentMobileFieldIconSize = CGFloat(18)
     static let componentMobileFieldInsetBlock = CGFloat(10)

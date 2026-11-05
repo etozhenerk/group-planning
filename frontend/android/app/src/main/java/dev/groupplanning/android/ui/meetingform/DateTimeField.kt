@@ -41,6 +41,8 @@ internal fun DateTimeField(
     creation: Boolean = false,
     errorText: String? = null,
     controlModifier: Modifier = Modifier,
+    hideLabel: Boolean = false,
+    leadingIcon: Boolean = false,
     open: () -> Unit,
 ) {
     val requiredHint = stringResource(R.string.required_field_hint)
@@ -51,16 +53,18 @@ internal fun DateTimeField(
             if (compact) DesignTokens.componentMobileFieldGap else DesignTokens.spaceS8,
         ),
     ) {
-        RequiredFieldLabel(
-            label,
-            required,
-            fontSize = if (creation) {
-                DesignTokens.componentMobileCreationLabelSize.value.sp
-            } else {
-                DesignTokens.typographySizeCaption
-            },
-            color = if (creation) DesignTokens.colorText else DesignTokens.colorMuted,
-        )
+        if (!hideLabel) {
+            RequiredFieldLabel(
+                label,
+                required,
+                fontSize = if (creation) {
+                    DesignTokens.componentMobileCreationLabelSize.value.sp
+                } else {
+                    DesignTokens.typographySizeCaption
+                },
+                color = if (creation) DesignTokens.colorText else DesignTokens.colorMuted,
+            )
+        }
         Surface(
             open,
             controlModifier.fillMaxWidth().heightIn(min = DesignTokens.targetAndroid).semantics {
@@ -111,6 +115,12 @@ internal fun DateTimeField(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                if (leadingIcon) {
+                    ChatIcon(
+                        if (icon == R.drawable.ic_clock) ChatSymbol.Clock else ChatSymbol.Calendar,
+                        Modifier.size(DesignTokens.componentMobileFieldIconSize),
+                    )
+                }
                 Text(
                     value,
                     Modifier.weight(1f),
@@ -123,15 +133,22 @@ internal fun DateTimeField(
                     maxLines = if (compact || creation) Int.MAX_VALUE else 1,
                     color = Palette.text,
                 )
-                val symbol = when (icon) {
-                    R.drawable.ic_calendar -> ChatSymbol.Calendar
-                    R.drawable.ic_clock -> ChatSymbol.Clock
-                    else -> null
-                }
-                if (compact && symbol != null) {
-                    ChatIcon(symbol, Modifier.size(DesignTokens.componentMobileFieldIconSize))
+                if (leadingIcon) {
+                    ChatIcon(
+                        ChatSymbol.Down,
+                        Modifier.size(DesignTokens.componentMobileFieldIconSize),
+                    )
                 } else {
-                    AppIcon(icon, Modifier.size(DesignTokens.componentMobileFieldIconSize))
+                    val symbol = when (icon) {
+                        R.drawable.ic_calendar -> ChatSymbol.Calendar
+                        R.drawable.ic_clock -> ChatSymbol.Clock
+                        else -> null
+                    }
+                    if (compact && symbol != null) {
+                        ChatIcon(symbol, Modifier.size(DesignTokens.componentMobileFieldIconSize))
+                    } else {
+                        AppIcon(icon, Modifier.size(DesignTokens.componentMobileFieldIconSize))
+                    }
                 }
             }
         }

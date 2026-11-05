@@ -45,12 +45,8 @@
 
 .deadline[data-mobile='true'] .fields {
   clear: both;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: var(--ds-component-mobile-form-two-field-gap);
-}
-
-.deadline[data-mobile='true'][data-narrow='true'] .fields {
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ds-component-mobile-decision-deadline-gap);
 }
 
 .deadline[data-mobile='true'] small {

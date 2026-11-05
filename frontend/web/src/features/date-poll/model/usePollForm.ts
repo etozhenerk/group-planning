@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Temporal } from '@js-temporal/polyfill';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -37,8 +37,19 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
     hideResults: false,
   });
 
+  const [saved, setSaved] = useState(false);
+  const notified = useRef(false);
+  const currentDraft = JSON.stringify({ dates, deadline, choice, settings });
+  const [originalDraft] = useState(currentDraft);
+  useEffect(() => {
+    if (saved && !notified.current) {
+      notified.current = true;
+      done();
+    }
+  }, [saved, done]);
   const [attempt, setAttempt] = useState(0);
   const [validation, setValidation] = useState('');
+  const [deadlineErrors, setDeadlineErrors] = useState<Record<string, string>>({});
   const dateErrors = attempt > 0 ? pollDateErrors(dates) : [];
   const client = useQueryClient();
   const intent = useIntent();
@@ -56,7 +67,7 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
       void client.invalidateQueries({
         queryKey: ['private', session.user.id, meeting.id],
       });
-      done();
+      setSaved(true);
     },
     retry: false,
   });
@@ -84,6 +95,7 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
     }
 
     setValidation('');
+    setDeadlineErrors({});
     setAttempt((before) => before + 1);
 
     if (pollDateErrors(dates).some(Boolean)) {
@@ -95,15 +107,34 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
         throw new Error('Предложите хотя бы две даты.');
       }
 
+      if (!deadline.split('T')[0]) {
+        setValidation('Выберите дату и укажите время встречи.');
+        setDeadlineErrors({ date: 'Выберите дату окончания' });
+
+        return;
+      }
+
+      if (!deadline.split('T')[1]) {
+        setValidation('Выберите дату и укажите время встречи.');
+        setDeadlineErrors({ time: 'Укажите время окончания' });
+
+        return;
+      }
+
       const closesAt = resolveTime(deadline, meeting.timezone, choice);
 
       if (Date.parse(closesAt) <= Date.now()) {
-        throw new Error('Выберите время окончания позже текущего.');
+        setValidation('Выберите время окончания позже текущего.');
+        setDeadlineErrors({ date: 'Опрос должен закончиться позже текущего времени' });
+
+        return;
       }
 
       mutation.mutate({ dates: [...dates], closesAt, settings: { ...settings } });
     } catch (error) {
-      setValidation(error instanceof Error ? error.message : 'Проверьте дату.');
+      const text = error instanceof Error ? error.message : 'Проверьте дату.';
+      setValidation(text);
+      setDeadlineErrors(text.includes('дважды') ? { ambiguous: text } : { time: text });
     }
   };
 
@@ -113,6 +144,7 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
     }
 
     change();
+    setDeadlineErrors({});
     setValidation('');
     mutation.reset();
   };
@@ -139,6 +171,9 @@ export const usePollForm = (meeting: Meeting, session: Session, done: () => void
 
   return {
     dates,
+    deadlineErrors,
+    dirty: !saved && currentDraft !== originalDraft,
+    failed: !!mutation.error,
     attempt,
     dateErrors,
     changeDate,

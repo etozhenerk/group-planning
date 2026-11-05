@@ -18,6 +18,7 @@ internal fun DatePollDayField(
     label: String,
     day: String,
     enabled: Boolean,
+    hideLabel: Boolean = false,
     change: (String) -> Unit,
 ) {
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -26,6 +27,8 @@ internal fun DatePollDayField(
         pollDayLabel(day),
         R.drawable.ic_calendar,
         enabled,
+        hideLabel = hideLabel,
+        leadingIcon = true,
     ) { picking = true }
     if (picking) {
         MeetingDateDialog(MeetingDraft("UTC", day = day), { picking = false }) {
@@ -36,4 +39,4 @@ internal fun DatePollDayField(
 }
 
 internal fun pollDayLabel(day: String): String = LocalDate.parse(day)
-    .format(DateTimeFormatter.ofPattern("d MMMM, EEEE", Locale.forLanguageTag("ru")))
+    .format(DateTimeFormatter.ofPattern("EE, d MMMM", Locale.forLanguageTag("ru")))
