@@ -1,6 +1,7 @@
 package dev.groupplanning.android
 
 import android.animation.ValueAnimator
+import android.os.SystemClock
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
@@ -72,7 +73,10 @@ class EmojiSearchUiTests {
             compose.onNodeWithText("Настолки у Саши").performScrollTo().performClick()
             fixture.waitTag("message-composer")
             val composer = compose.onNodeWithTag("message-composer")
+            composer.performClick()
+            waitForKeyboard(activity, true)
             composer.performTextReplacement("Черновик ")
+            waitForStableEmojiButton()
             compose.onNodeWithTag("emoji-open").performTouchInput { click() }
             fixture.waitTag("emoji-dock")
             val search = compose.onNodeWithTag("emoji-search")
@@ -145,6 +149,19 @@ class EmojiSearchUiTests {
             fixture.device.click(bounds.centerX(), bounds.centerY())
             fixture.screenshot("rapid-opening-touches")
             composer.assertTextEquals("Без случайных эмодзи")
+        }
+    }
+
+    private fun waitForStableEmojiButton() {
+        var previous = compose.onNodeWithTag("emoji-open").fetchSemanticsNode().boundsInWindow
+        var stableSince = SystemClock.elapsedRealtime()
+        compose.waitUntil(5_000) {
+            val current = compose.onNodeWithTag("emoji-open").fetchSemanticsNode().boundsInWindow
+            if (current != previous) {
+                previous = current
+                stableSince = SystemClock.elapsedRealtime()
+            }
+            SystemClock.elapsedRealtime() - stableSince >= 200
         }
     }
 

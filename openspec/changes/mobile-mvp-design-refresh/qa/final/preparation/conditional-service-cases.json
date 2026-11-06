@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-06T16:33:42.505604+00:00",
+  "purpose": "Исправить область feature mapping по фактически отсутствующим WHEN, без изменения каталога/требований и без присвоения pass.",
+  "reasons": {
+    "TC-INFO-5AF98147": "Сценарий макета до заполнения оператора/контакта. Клиенты показывают существующий документ с заполненными оператором/контактом; редизайн не удаляет реальные реквизиты ради теста макета. Проверки публичности, реальных реквизитов, проекта документа и возврата остаются в остальных кейсах12.",
+    "TC-INFO-E5D26634": "Условие — выпуск добавляет необязательное отслеживание. Текущий редизайн его не добавляет; внедрение аналитики не входит в поручение. Правила фактического хранения/cookie и приватности продолжают проверяться."
+  },
+  "changes": [
+    {
+      "task": "12.1",
+      "platforms": [
+        "web"
+      ],
+      "removedInapplicable": [
+        "TC-INFO-5AF98147",
+        "TC-INFO-E5D26634"
+      ],
+      "remainingCases": 38
+    },
+    {
+      "task": "12.2",
+      "platforms": [
+        "ios"
+      ],
+      "removedInapplicable": [
+        "TC-INFO-5AF98147"
+      ],
+      "remainingCases": 27
+    },
+    {
+      "task": "12.3",
+      "platforms": [
+        "android"
+      ],
+      "removedInapplicable": [
+        "TC-INFO-5AF98147"
+      ],
+      "remainingCases": 27
+    },
+    {
+      "task": "12.4",
+      "platforms": [
+        "web"
+      ],
+      "removedInapplicable": [
+        "TC-INFO-5AF98147",
+        "TC-INFO-E5D26634"
+      ],
+      "remainingCases": 38
+    },
+    {
+      "task": "12.5",
+      "platforms": [
+        "ios"
+      ],
+      "removedInapplicable": [
+        "TC-INFO-5AF98147"
+      ],
+      "remainingCases": 27
+    },
+    {
+      "task": "12.6",
+      "platforms": [
+        "android"
+      ],
+      "removedInapplicable": [
+        "TC-INFO-5AF98147"
+      ],
+      "remainingCases": 27
+    }
+  ],
+  "catalogChanged": false,
+  "existingPlans": "Более широкие планы сохранены; эти checks не объявлены passed. Scoped gate остальных задач использует актуальный mapping; wholeReady не подменяется.",
+  "futureCoverage": "Оба стабильных caseID остаются активными в каталоге и применяются при наступлении соответствующего WHEN/в релизе по фактическому составу."
+}

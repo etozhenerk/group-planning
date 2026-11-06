@@ -195,9 +195,23 @@ test('a revoked session closes private content and keeps invitation entry', asyn
     { timeout: 10_000 },
   );
   await expect(friend.getByLabel('Сообщение', { exact: true })).toHaveCount(0);
+  const before = await page.request.get(`/api/v1/meetings/${created.meeting.id}/feed`);
+  expect(before.ok()).toBe(true);
+  const confirmedFeed: unknown = await before.json();
+  let repeatedWrites = 0;
+  friend.on('request', (request) => {
+    if (request.method() === 'PUT' && request.url().endsWith('/rsvp')) {
+      repeatedWrites += 1;
+    }
+  });
   await friend.getByRole('button', { name: 'Войти через Яндекс ID' }).click();
   await friend.getByRole('link', { name: 'Войти как Лена' }).click();
-  await expect(friend).toHaveURL(url);
+  await expect(friend).toHaveURL(`/meetings/${created.meeting.id}`);
+  await expect(friend.getByLabel('Сообщение', { exact: true })).toBeVisible();
+  expect(repeatedWrites).toBe(0);
+  const after = await page.request.get(`/api/v1/meetings/${created.meeting.id}/feed`);
+  expect(after.ok()).toBe(true);
+  expect(await after.json()).toEqual(confirmedFeed);
   await context.close();
 });
 

@@ -287,19 +287,26 @@ class ChatReadLiveUiTests {
                         incoming.getString("sequence")
                 }
                 val detail = api.request("invite-rsvp", base)
-                api.request(
-                    "invite-rsvp",
-                    "$base/rsvp",
-                    "PUT",
-                    JSONObject()
-                        .put(
-                            "answer",
-                            "not_going",
-                        ).put("expected_revision", detail.getString("my_rsvp_revision")),
-                )
-                fixture.waitAbsent("message-composer")
-                assertTrue(QaChatProbe.signals.contains("meeting:AccessRevoked"))
-                fixture.screenshot("read-revoked")
+                // Keep the HTTP reconciliation behind the realtime revocation in this SDK case.
+                val previousRoundTrip = QaResponseGate.artificialRoundTripMillis
+                QaResponseGate.artificialRoundTripMillis = 3_000L
+                try {
+                    api.request(
+                        "invite-rsvp",
+                        "$base/rsvp",
+                        "PUT",
+                        JSONObject()
+                            .put(
+                                "answer",
+                                "not_going",
+                            ).put("expected_revision", detail.getString("my_rsvp_revision")),
+                    )
+                    fixture.waitAbsent("message-composer")
+                    assertTrue(QaChatProbe.signals.contains("meeting:AccessRevoked"))
+                    fixture.screenshot("read-revoked")
+                } finally {
+                    QaResponseGate.artificialRoundTripMillis = previousRoundTrip
+                }
             }
         } finally {
             File(output, "read-runtime.json").writeText(

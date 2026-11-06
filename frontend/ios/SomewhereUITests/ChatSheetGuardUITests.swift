@@ -21,7 +21,12 @@ final class ChatSheetGuardUITests: XCTestCase {
         let afterSwipe = try counts(trace)
         XCTAssertEqual(afterSwipe, before, "Dragging the sheet body must not start any request")
         XCTAssertTrue(app.staticTexts["action-form-header"].exists)
-        ChatSheetTestSupport.stayAfterDirtySwipe(app)
+        if app.buttons["Продолжить редактирование"].exists {
+            app.buttons["Продолжить редактирование"].tap()
+        } else {
+            ChatSheetTestSupport.stayAfterDirtySwipe(app)
+        }
+        XCTAssertTrue(app.staticTexts["action-form-header"].exists)
         XCTAssertEqual(field.value as? String, "Сохраняем кафе у метро")
         ExperienceScreenshot.save("sheet-controls-body-draft", test: self)
     }
@@ -96,8 +101,11 @@ final class ChatSheetGuardUITests: XCTestCase {
         let meeting = MeetingInfoTestSupport.memberMeeting
         ChatSheetTestSupport.openChat(app, id: meeting)
         MeetingInfoTestSupport.open(app)
+        let change = app.buttons["meeting-change-answer"]
+        MeetingInfoTestSupport.reveal(change, app: app)
+        change.tap()
         let maybe = app.buttons["rsvp-maybe"]
-        MeetingInfoTestSupport.reveal(maybe, app: app)
+        XCTAssertTrue(maybe.waitForExistence(timeout: 5))
         maybe.tap()
         let card = app.buttons["saved-invitation-" + meeting]
         XCTAssertTrue(card.waitForExistence(timeout: 10))

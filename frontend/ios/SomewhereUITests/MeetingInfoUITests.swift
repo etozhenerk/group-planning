@@ -134,9 +134,10 @@ final class MeetingInfoUITests: XCTestCase {
         MeetingInfoTestSupport.open(app)
         XCTAssertFalse(app.buttons["edit-meeting"].exists)
         XCTAssertFalse(app.buttons["share-invitation"].exists)
-        let going = app.buttons["rsvp-going"]
-        XCTAssertTrue(going.isSelected)
-        XCTAssertTrue(going.isHittable)
+        let going = app.staticTexts["Приду"]
+        XCTAssertTrue(going.exists)
+        let change = app.buttons["meeting-change-answer"]
+        XCTAssertTrue(change.isHittable)
         ExperienceScreenshot.save("info-member-compact", test: self)
         app.buttons["meeting-people-summary"].tap()
         XCTAssertTrue(app.buttons["meeting-people-collapse"].waitForExistence(timeout: 5))
@@ -145,10 +146,15 @@ final class MeetingInfoUITests: XCTestCase {
         MeetingInfoTestSupport.reveal(collapse, app: app)
         collapse.tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 5))
-        XCTAssertTrue(going.isSelected)
+        XCTAssertTrue(going.exists)
         app.buttons["meeting-people-summary"].tap()
+        MeetingInfoTestSupport.reveal(change, app: app)
+        change.tap()
+        let selected = app.buttons["rsvp-going"]
+        XCTAssertTrue(selected.waitForExistence(timeout: 5))
+        XCTAssertTrue(selected.isSelected)
         let maybe = app.buttons["rsvp-maybe"]
-        MeetingInfoTestSupport.reveal(maybe, app: app)
+        ChatSheetTestSupport.reveal(maybe, in: app.scrollViews["action-form-scroll"], app: app)
         ExperienceScreenshot.save("info-member-expanded-response", test: self)
         maybe.tap()
         let card = app.buttons["saved-invitation-" + MeetingInfoTestSupport.memberMeeting]

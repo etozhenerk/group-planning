@@ -115,11 +115,8 @@ final class FeedUITests: XCTestCase {
         app.buttons["message-send"].tap()
         let retry = app.otherElements.matching(
             NSPredicate(format: "identifier BEGINSWITH %@", "chat-row-")
-        ).containing(
-            NSPredicate(
-                format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
-                "outgoing-message-", "Пицца будет к семи")
-        ).buttons["retry-message"].firstMatch
+        ).containing(.staticText, identifier: "Пицца будет к семи")
+            .buttons["retry-message"].firstMatch
         let latest = app.buttons["feed-new-messages"]
         XCTAssertTrue(latest.waitForExistence(timeout: 5))
         latest.tap()
@@ -137,7 +134,7 @@ final class FeedUITests: XCTestCase {
         XCTAssertEqual(
             app.staticTexts.matching(
                 NSPredicate(
-                    format: "label BEGINSWITH %@ AND label CONTAINS %@", "Вы, ",
+                    format: "label == %@",
                     "Пицца будет к семи")
             )
             .count, 1)
@@ -182,7 +179,9 @@ final class FeedUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Вечер настолок"].waitForExistence(timeout: 10))
         capture("feed-settings-saved", app)
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
-        XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 10))
+        let heading = app.buttons["meeting-heading"]
+        XCTAssertTrue(heading.waitForExistence(timeout: 10))
+        XCTAssertTrue(heading.label.contains("Вечер настолок"))
         XCTAssertEqual(field("message-input", app: app).value as? String, "Ещё думаю")
         app.terminate()
         app.launchArguments = [

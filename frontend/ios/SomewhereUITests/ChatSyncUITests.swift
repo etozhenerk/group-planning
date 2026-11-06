@@ -44,7 +44,8 @@ final class ChatSyncUITests: XCTestCase {
         app.launch()
         defer { app.terminate() }
         ChatSheetTestSupport.openChat(app, id: id)
-        let row = app.staticTexts["chat-message-" + anchorID]
+        let anchorKey = try XCTUnwrap(messages[60]["client_request_id"] as? String)
+        let row = app.otherElements["chat-row-" + anchorKey]
         let found = row.waitForExistence(timeout: 10)
         ExperienceScreenshot.save("ios-history-opening", test: self)
         XCTAssertTrue(found)
@@ -160,12 +161,10 @@ final class ChatSyncUITests: XCTestCase {
         let message = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", text))
             .firstMatch
         XCTAssertTrue(message.waitForExistence(timeout: 10))
+        let row = ChatMessageTestSupport.row(containing: text, app: app)
+        let receipt = ChatMessageTestSupport.receipt(in: row)
         let saved = XCTNSPredicateExpectation(
-            predicate: NSPredicate { _, _ in
-                !app.otherElements.matching(
-                    NSPredicate(format: "identifier BEGINSWITH %@", "outgoing-message-")
-                ).firstMatch.exists
-            }, object: nil)
+            predicate: NSPredicate(format: "exists == true"), object: receipt)
         let savedResult = await XCTWaiter.fulfillment(of: [saved], timeout: 10)
         XCTAssertEqual(savedResult, .completed)
         app.buttons["composer-emoji-toggle"].tap()
@@ -183,16 +182,16 @@ final class ChatSyncUITests: XCTestCase {
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "chat-readers-header")
         XCTAssertTrue(message.waitForExistence(timeout: 5))
         try await counterpart.read(text)
-        let receipt = app.buttons[
-            message.identifier.replacingOccurrences(of: "chat-message-", with: "message-readers-")]
         XCTAssertTrue(receipt.waitForExistence(timeout: 10))
-        XCTAssertEqual(receipt.label, "Прочитали 1")
+        XCTAssertEqual(receipt.label, "Прочитали 1. Открыть сведения")
         ExperienceScreenshot.save("chat-receipt-before-open", test: self)
         print("RECEIPT_FRAME=\(receipt.frame) HITTABLE=\(receipt.isHittable)")
         XCTAssertLessThanOrEqual(
             receipt.frame.maxY, app.textViews["message-input"].frame.minY,
             "Receipt stays above the composer when following the latest message")
         receipt.tap()
+        XCTAssertTrue(app.buttons["message-readers-action"].waitForExistence(timeout: 5))
+        app.buttons["message-readers-action"].tap()
         ExperienceScreenshot.save("chat-receipt-after-open", test: self)
         XCTAssertTrue(app.staticTexts["chat-readers-header"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["Пока никто не прочитал"].exists)

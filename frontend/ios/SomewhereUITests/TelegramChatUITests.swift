@@ -91,13 +91,16 @@ final class TelegramChatUITests: XCTestCase {
         XCTAssertTrue(title.waitForExistence(timeout: 5))
         title.tap()
         title.typeText(" — черновик")
-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
+        ChatSheetTestSupport.stayAfterDirtySwipe(app, headerIdentifier: "settings-header")
+        XCTAssertTrue((title.value as? String)?.contains("черновик") == true)
+        ExperienceScreenshot.save("telegram-settings-draft", test: self)
+        ChatSheetTestSupport.discardAfterDirtySwipe(app, headerIdentifier: "settings-header")
         XCTAssertTrue(app.buttons["meeting-people-collapse"].waitForExistence(timeout: 5))
         MeetingInfoTestSupport.reveal(settings, app: app)
         settings.tap()
         XCTAssertTrue(title.waitForExistence(timeout: 5))
-        XCTAssertTrue((title.value as? String)?.contains("черновик") == true)
-        ExperienceScreenshot.save("telegram-settings-draft", test: self)
+        XCTAssertFalse((title.value as? String)?.contains("черновик") == true)
+        ExperienceScreenshot.save("telegram-settings-after-discard", test: self)
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertEqual(input.value as? String, "Вернусь к разговору")
@@ -112,9 +115,9 @@ final class TelegramChatUITests: XCTestCase {
     func testAnchoredReactionFullPickerAndPeopleFilter() {
         let app = ChatSheetTestSupport.launch()
         ChatSheetTestSupport.openChat(app)
-        let message = app.descendants(matching: .any)[
-            "chat-message-ded00000-0000-4000-8000-000000000013"
-        ].firstMatch
+        let message = app.otherElements[
+            "chat-row-ded00000-0000-4000-8000-000000000013"
+        ].staticTexts["Тогда беру две игры. И можно заказать пиццу!"]
         ChatSheetTestSupport.revealInConversation(message, app: app)
         XCTAssertTrue(message.waitForExistence(timeout: 10))
         XCTAssertFalse(

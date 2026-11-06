@@ -70,7 +70,8 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
     fun waitTag(tag: String) {
         try {
             compose.waitUntil(15_000) {
-                compose.onAllNodes(hasTestTag(tag)).fetchSemanticsNodes().isNotEmpty()
+                compose.onAllNodes(hasTestTag(tag))
+                    .fetchSemanticsNodes(atLeastOneRootRequired = false).isNotEmpty()
             }
             compose.waitForIdle()
         } catch (failure: AssertionError) {
@@ -129,7 +130,8 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
     fun waitText(text: String) {
         try {
             compose.waitUntil(15_000) {
-                compose.onAllNodes(hasText(text)).fetchSemanticsNodes().isNotEmpty()
+                compose.onAllNodes(hasText(text))
+                    .fetchSemanticsNodes(atLeastOneRootRequired = false).isNotEmpty()
             }
             compose.waitForIdle()
         } catch (failure: AssertionError) {

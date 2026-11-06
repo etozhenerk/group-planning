@@ -82,9 +82,15 @@ final class InvitationUITests: XCTestCase {
         if app.buttons["meeting-info-open"].exists && !app.buttons["rsvp-" + value].isHittable {
             app.buttons["meeting-info-open"].tap()
         }
+        if app.buttons["meeting-change-answer"].exists {
+            let change = app.buttons["meeting-change-answer"]
+            MeetingInfoTestSupport.reveal(change, app: app)
+            change.tap()
+        }
         let button = app.buttons["rsvp-" + value]
         let scroll = app.scrollViews[
-            app.scrollViews["meeting-info"].exists ? "meeting-info" : "invitation-screen"
+            app.scrollViews["action-form-scroll"].exists
+                ? "action-form-scroll" : "invitation-screen"
         ].firstMatch
         for _ in 0..<5 {
             if button.isHittable { break }
@@ -99,7 +105,8 @@ final class InvitationUITests: XCTestCase {
             XCTAssertTrue(info.waitForExistence(timeout: 10))
             info.tap()
             XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
-            XCTAssertTrue(app.buttons["rsvp-going"].isSelected)
+            XCTAssertTrue(app.staticTexts["Приду"].exists)
+            XCTAssertTrue(app.buttons["meeting-change-answer"].isHittable)
             XCTAssertFalse(app.buttons["rsvp-save"].exists)
             ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         } else if value == "maybe" {

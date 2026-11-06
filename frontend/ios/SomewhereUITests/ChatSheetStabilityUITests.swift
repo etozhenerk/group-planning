@@ -12,7 +12,7 @@ final class ChatSheetStabilityUITests: XCTestCase {
             app.buttons["composer-emoji-toggle"].tap()
             XCTAssertTrue(app.textFields["emoji-search"].waitForExistence(timeout: 5))
             let rows = app.descendants(matching: .any).matching(
-                NSPredicate(format: "identifier BEGINSWITH %@", "chat-message-"))
+                NSPredicate(format: "identifier BEGINSWITH %@", "chat-row-"))
             XCTAssertGreaterThan(rows.count, 0)
             for row in rows.allElementsBoundByIndex {
                 XCTAssertGreaterThanOrEqual(row.frame.minX + 0.5, app.frame.minX)
@@ -110,30 +110,37 @@ final class ChatSheetStabilityUITests: XCTestCase {
         let requestedResult = await XCTWaiter.fulfillment(of: [requested], timeout: 5)
         XCTAssertEqual(requestedResult, .completed)
         XCTAssertFalse(app.staticTexts["Отправляем…"].exists)
-        let pendingMessage = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier BEGINSWITH %@", "outgoing-message-")
-        ).firstMatch
-        XCTAssertTrue(pendingMessage.exists)
-        let key = pendingMessage.identifier.replacingOccurrences(of: "outgoing-message-", with: "")
-        let row = app.otherElements["chat-row-" + key]
+        let row = ChatMessageTestSupport.row(containing: text, app: app)
         XCTAssertTrue(row.exists)
-        let pending = row.frame
+        let key = row.identifier.replacingOccurrences(of: "chat-row-", with: "")
+        XCTAssertNotNil(UUID(uuidString: key))
+        let pending = try MessageBubbleFrameEvidence.size(of: row, name: "pending-early")
+        let textOrigin = message.frame.origin
         ExperienceScreenshot.save("sheet-controls-pending-early", test: self)
         try await Task.sleep(for: .seconds(3))
         let spinner = app.descendants(matching: .any)["message-pending-indicator"].firstMatch
         XCTAssertTrue(spinner.exists)
-        XCTAssertEqual(row.frame.height, pending.height, accuracy: 1)
+        let delayed = try MessageBubbleFrameEvidence.size(of: row, name: "pending-delayed")
+        XCTAssertEqual(delayed.height, pending.height, accuracy: 1)
+        XCTAssertEqual(delayed.width, pending.width, accuracy: 1)
+        XCTAssertEqual(message.frame.minY, textOrigin.y, accuracy: 1)
         ExperienceScreenshot.save("sheet-controls-pending-delayed", test: self)
         try gate.release()
+        let receipt = ChatMessageTestSupport.receipt(in: row)
         let acknowledged = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "identifier BEGINSWITH %@", "chat-message-"),
-            object: message)
+            predicate: NSPredicate(format: "exists == true"), object: receipt)
         let acknowledgedResult = await XCTWaiter.fulfillment(of: [acknowledged], timeout: 10)
         XCTAssertEqual(acknowledgedResult, .completed)
         XCTAssertFalse(spinner.exists)
-        XCTAssertEqual(row.frame.height, pending.height, accuracy: 1)
+        let accepted = try MessageBubbleFrameEvidence.size(of: row, name: "accepted")
+        XCTAssertEqual(accepted.height, pending.height, accuracy: 1)
+        XCTAssertEqual(accepted.width, pending.width, accuracy: 1)
+        XCTAssertEqual(message.frame.minX, textOrigin.x, accuracy: 1)
+        XCTAssertEqual(message.frame.minY, textOrigin.y, accuracy: 1)
+        XCTAssertGreaterThanOrEqual(receipt.frame.width, 44)
+        XCTAssertGreaterThanOrEqual(receipt.frame.height, 44)
         ExperienceScreenshot.save("sheet-controls-pending-ack", test: self)
-        let entry = message.identifier.replacingOccurrences(of: "chat-message-", with: "")
+        let entry = receipt.identifier.replacingOccurrences(of: "message-readers-", with: "")
         try gate.configure(path: root + "/messages/" + entry + "/readers", mode: "hold")
         app.buttons["composer-emoji-toggle"].tap()
         app.buttons["composer-emoji-toggle"].tap()

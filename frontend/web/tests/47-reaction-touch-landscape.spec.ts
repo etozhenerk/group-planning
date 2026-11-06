@@ -47,7 +47,7 @@ test('touch landscape can hold a message, scroll the full picker and tap a whole
   const touch = await page.context().newCDPSession(page);
   await touch.send('Input.dispatchTouchEvent', {
     type: 'touchStart',
-    touchPoints: [{ x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 }],
+    touchPoints: [{ x: rect.x + 8, y: rect.y + rect.height / 2 }],
   });
   const picker = page.getByRole('dialog', { name: 'Реакция', exact: true });
   await expect(picker).toBeVisible();

@@ -114,7 +114,11 @@ final class DesignExperienceUITests: XCTestCase {
             XCTAssertLessThanOrEqual(submit.frame.maxY, app.frame.maxY - 16)
             capture(name)
             capture(name + "-settled")
-            ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
+            if name == "action-task" {
+                ChatSheetTestSupport.discardAfterDirtySwipe(app)
+            } else {
+                ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
+            }
             XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
         }
     }

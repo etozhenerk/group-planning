@@ -69,10 +69,12 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
         assertDismissed(app)
         let message = app.staticTexts.matching(
             NSPredicate(
-                format: "identifier BEGINSWITH %@ AND label CONTAINS %@", "chat-message-", sent)
+                format: "label == %@", sent)
         )
         XCTAssertTrue(message.firstMatch.waitForExistence(timeout: 10))
         XCTAssertEqual(message.count, 1)
+        let sentRow = ChatMessageTestSupport.row(containing: sent, app: app)
+        XCTAssertTrue(ChatMessageTestSupport.receipt(in: sentRow).waitForExistence(timeout: 10))
         XCTAssertEqual(input.value as? String, "")
         ExperienceScreenshot.save("chat-keyboard-send-first-tap", test: self)
 
@@ -95,7 +97,9 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
         assertKeyboard(app, field: title)
         XCTAssertTrue((title.value as? String)?.contains("!") == true)
         ExperienceScreenshot.save("chat-keyboard-sheet-field", test: self)
-        ChatSheetTestSupport.dismissBySwipe(app)
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
+        XCTAssertEqual(title.value as? String, "Забрать пиццу!")
+        ChatSheetTestSupport.discardAfterDirtySwipe(app)
         assertDismissed(app)
         XCTAssertEqual(input.value as? String, draft)
         ExperienceScreenshot.save("chat-keyboard-sheet-return-no-ime", test: self)
@@ -119,9 +123,9 @@ final class ChatKeyboardDismissalUITests: XCTestCase {
         input.tap()
         input.typeText(draft)
         assertKeyboard(app, field: input)
-        let message = app.descendants(matching: .any)[
-            "chat-message-ded00000-0000-4000-8000-000000000013"
-        ].firstMatch
+        let message = app.otherElements[
+            "chat-row-ded00000-0000-4000-8000-000000000013"
+        ].staticTexts["Тогда беру две игры. И можно заказать пиццу!"]
         XCTAssertTrue(message.waitForExistence(timeout: 5))
         message.tap()
         assertDismissed(app)

@@ -123,11 +123,13 @@ struct FeedMessageView: View {
         HStack(spacing: DesignTokens.componentMobileMessageMetadataGap) {
             Text(FeedPresentation.time(date)).font(.system(size: metadataSize))
             if own {
-                if let pendingSince {
+                ZStack {
                     MessagePendingIndicator(since: pendingSince)
-                } else {
-                    receipt
+                    if pendingSince == nil { receipt }
                 }
+                .frame(
+                    width: DesignTokens.componentMobileMessageReceiptWidth,
+                    height: DesignTokens.componentMobileMessageReceiptHeight)
             }
         }
         .foregroundStyle(own ? DesignTokens.colorMobileMessageOwnMetadata : DesignTokens.colorMuted)

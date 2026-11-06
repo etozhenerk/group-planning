@@ -158,6 +158,23 @@ enum ChatSheetTestSupport {
         XCTAssertEqual(header.label, originalTitle)
     }
 
+    static func discardAfterDirtySwipe(
+        _ app: XCUIApplication, headerIdentifier: String = "action-form-header"
+    ) {
+        if app.buttons["action-keyboard-done"].isHittable {
+            app.buttons["action-keyboard-done"].tap()
+        }
+        let header = app.staticTexts[headerIdentifier]
+        XCTAssertTrue(header.waitForExistence(timeout: 5))
+        let leave = app.buttons["Выйти без сохранения"]
+        if !leave.exists {
+            swipeDownFromHeader(app, headerIdentifier: headerIdentifier)
+        }
+        XCTAssertTrue(leave.waitForExistence(timeout: 5))
+        leave.tap()
+        XCTAssertTrue(header.waitForNonExistence(timeout: 5))
+    }
+
     static func openAction(_ identifier: String, app: XCUIApplication) {
         app.buttons["meeting-add"].tap()
         let action = app.buttons[identifier]
