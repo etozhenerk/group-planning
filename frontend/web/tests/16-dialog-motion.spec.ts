@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { apiCreate, login } from '@tests/helpers';
+import { meetingInfoSurface, apiCreate, login } from '@tests/helpers';
 
 for (const width of [390, 1440]) {
   test(`dialog keeps content and scroll lock until exit ends at ${width}px`, async ({
@@ -10,7 +10,7 @@ for (const width of [390, 1440]) {
     const { meeting } = await apiCreate(page, 'Проверка анимации');
     await page.goto(`/meetings/${meeting.id}`);
     const open = page.getByRole('button', { name: 'Информация о встрече', exact: true });
-    const dialog = page.getByRole('dialog', { name: meeting.title });
+    const dialog = meetingInfoSurface(page, meeting.title);
     await open.click();
     await expect(dialog).toHaveAttribute('data-motion', 'open');
     const height = await dialog.evaluate((element) =>
@@ -32,7 +32,7 @@ for (const width of [390, 1440]) {
     await expect(dialog).toBeVisible();
     await expect(
       dialog.getByRole('heading', {
-        name: width < 740 ? /^Компания\s*1$/ : 'Кто придёт',
+        name: width < 740 ? /^Кто придёт\s*(?:·\s*)?1$/ : 'Кто придёт',
         exact: true,
       }),
     ).toBeVisible();
@@ -50,7 +50,7 @@ for (const width of [390, 1440]) {
     if (width === 390) {
       const info = page.getByRole('button', { name: 'Информация о встрече' });
       await info.click();
-      const details = page.getByRole('dialog', { name: meeting.title });
+      const details = meetingInfoSurface(page, meeting.title);
       await expect(details).toHaveAttribute('data-motion', 'open');
       await page.keyboard.press('Escape');
       await expect(details).toHaveAttribute('data-motion', 'closing');
@@ -70,7 +70,7 @@ test('touch swipe follows the finger, returns after a short drag and dismisses a
   await page.goto(`/meetings/${meeting.id}`);
   const open = page.getByRole('button', { name: 'Информация о встрече' });
   await open.click();
-  const dialog = page.getByRole('dialog', { name: meeting.title });
+  const dialog = meetingInfoSurface(page, meeting.title);
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   const handle = dialog.getByTestId('dialog-drag-region');
   await expect(handle).toHaveCSS('touch-action', 'none');
@@ -124,7 +124,7 @@ for (const width of [320, 390]) {
     const { meeting } = await apiCreate(page, 'Вся верхняя область шторки');
     await page.goto(`/meetings/${meeting.id}`);
     const open = page.getByRole('button', { name: 'Информация о встрече' });
-    const dialog = page.getByRole('dialog', { name: meeting.title });
+    const dialog = meetingInfoSurface(page, meeting.title);
     const touch = await page.context().newCDPSession(page);
     await touch.send('Emulation.setTouchEmulationEnabled', { enabled: true });
 

@@ -9,3 +9,5 @@ export type { TaskCardContentProps } from '@/features/preparation-task/ui/TaskCa
 export { taskActions } from '@/features/preparation-task/model/taskCopy';
 
 export { TaskForm } from '@/features/preparation-task/ui/TaskForm';
+
+export { TaskStatusRow } from '@/features/preparation-task/ui/TaskStatusRow';

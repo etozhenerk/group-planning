@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.14.0. Do not edit.
+// Generated from design-system/tokens.json · 7.15.0. Do not edit.
 export const mobileComponentTokens = {
   componentMobileAvatarFallbackOpacity: '0.7',
   componentMobileAvatarFallbackRatio: '0.72',
@@ -114,21 +114,6 @@ export const mobileComponentTokens = {
   componentMobileNavigationIconStroke: '1.7',
   componentMobileNavigationPadding: '7px',
   componentMobileNavigationSelectedIconStroke: '1.8',
-  componentMobileOnboardingArtworkGap: '30px',
-  componentMobileOnboardingArtworkHeight: '360px',
-  componentMobileOnboardingCopyGap: '18px',
-  componentMobileOnboardingCopyMinimumHeight: '180px',
-  componentMobileOnboardingFooterMinimumHeight: '110px',
-  componentMobileOnboardingInsetInline: '27px',
-  componentMobileOnboardingNextHeight: '52px',
-  componentMobileOnboardingNextInsetInline: '23px',
-  componentMobileOnboardingNextMinimumWidth: '135px',
-  componentMobileOnboardingProgressDotSize: '6px',
-  componentMobileOnboardingProgressSelectedWidth: '19px',
-  componentMobileOnboardingProgressSlotWidth: '27px',
-  componentMobileOnboardingProgressVisualHeight: '34px',
-  componentMobileOnboardingTallArtworkHeight: '390px',
-  componentMobileOnboardingTitleTracking: '1px',
   componentMobilePageInsetTop: '28px',
   componentMobilePeopleChipAvatarSize: '21px',
   componentMobilePeopleChipBorderWidth: '2px',

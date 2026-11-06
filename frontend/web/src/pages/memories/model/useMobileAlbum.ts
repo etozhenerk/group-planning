@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   createDeckMotion,
   initialDeckState,
@@ -18,6 +18,14 @@ export const useMobileAlbum = (count: number) => {
   );
 
   const element = useRef<HTMLDivElement>(null);
+  const restore = useCallback(
+    (index: number, grid: boolean) => {
+      motion.select(index);
+      motion.setGrid(grid);
+    },
+    [motion],
+  );
+
   useDeckWheel(element, motion, pointer.active, count, state.grid);
   useEffect(() => {
     motion.countChanged();
@@ -32,6 +40,7 @@ export const useMobileAlbum = (count: number) => {
     ...state,
     element,
     select: motion.select,
+    restore,
     setGrid: motion.setGrid,
     progress: Math.min(
       1,

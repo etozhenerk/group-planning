@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { actionSurface, apiCreate, login, writeHeaders } from '@tests/helpers';
+import {
+  meetingInfoSurface,
+  actionSurface,
+  apiCreate,
+  login,
+  writeHeaders,
+} from '@tests/helpers';
 import { datePollSchema, placePollSchema } from '@/shared/api';
 import { meetingRoster } from '@tests/helpers/meetingRoster';
 
@@ -38,10 +44,7 @@ test('TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independ
         });
 
         await open.click();
-        const info = viewer.getByRole('dialog', {
-          name: fixture.meeting.title,
-          exact: true,
-        });
+        const info = meetingInfoSurface(viewer, fixture.meeting.title);
 
         const chips = info.getByRole('button', {
           name: 'Все участники встречи. Придут: 6',
@@ -63,11 +66,24 @@ test('TC-CHAT-INFO-EXPAND: both roles reveal the real roster and retain independ
           exact: true,
         });
 
-        const answer = info.getByRole('button', { name: 'Приду', exact: true });
+        const answer =
+          width < 740
+            ? info
+                .getByTestId('info-footer')
+                .getByRole('button', { name: 'Изменить', exact: true })
+            : info.getByRole('button', { name: 'Приду', exact: true });
+
         await expect(chips).toHaveAttribute('aria-expanded', 'false');
         await expect(chips).toContainText(width < 740 ? '+3' : 'ещё 3');
         await expect(roster).toHaveCount(0);
-        await expect(info.locator('img')).toHaveCount(0);
+
+        if (width < 740) {
+          await expect(info.getByTestId('meeting-cover').locator('img')).toBeVisible();
+        } else {
+          await expect(info.getByTestId('meeting-cover')).toHaveCount(0);
+        }
+
+        await expect(info).not.toContainText('sasha@example.com');
         await expect(settings).toHaveCount(organizer ? 1 : 0);
         await expect(invite).toHaveCount(organizer ? 1 : 0);
         await expect(answer).toHaveCount(organizer ? 0 : 1);
@@ -174,7 +190,7 @@ for (const kind of ['date', 'place'] as const) {
     await page.getByRole('button', { name: 'Добавить к встрече' }).click();
     await page.getByRole('menuitem', { name: title, exact: true }).click();
     const sheet = page.getByRole('dialog', {
-      name: kind === 'date' ? 'Новая дата встречи' : title,
+      name: title,
       exact: true,
     });
 
@@ -216,8 +232,8 @@ for (const kind of ['date', 'place'] as const) {
     }
 
     await sheet.getByRole('button', { name: 'Закрыть', exact: true }).click();
-    await page.getByRole('button', { name: 'Добавить к встрече' }).click();
-    await page.getByRole('menuitem', { name: title, exact: true }).click();
+    await expect(sheet).toBeVisible();
+    await expect(page.locator('dialog:modal')).toHaveCount(1);
 
     for (const input of await inputs.all()) {
       await expect(input).toBeDisabled();
@@ -283,18 +299,22 @@ test('mobile task sheet preserves an uncertain request across close and resize',
   await expect(page.getByRole('dialog', { name: 'Предложить задачу' })).toBeVisible();
   await expect(page.locator('main#main')).toBeVisible();
   await expect(sheet.getByRole('button', { name: 'Назад' })).toHaveCount(0);
-  await sheet.getByLabel('Что сделать').fill('Принести настолку');
+  await sheet.getByLabel(/^Что (?:нужно сделать|сделать)/).fill('Принести настолку');
   await sheet.getByRole('button', { name: 'Предложить задачу', exact: true }).click();
   await expect(sheet.getByRole('button', { name: 'Повторить отправку' })).toBeVisible();
   await sheet.getByRole('button', { name: 'Закрыть', exact: true }).click();
+  await expect(sheet).toBeVisible();
+  await expect(page.locator('dialog:modal')).toHaveCount(1);
   await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
     'Обсудим после',
   );
-  await page.getByRole('button', { name: 'Добавить к встрече' }).click();
-  await page.getByRole('menuitem', { name: 'Предложить задачу', exact: true }).click();
-  await expect(sheet.getByLabel('Что сделать')).toHaveValue('Принести настолку');
+  await expect(sheet.getByLabel(/^Что (?:нужно сделать|сделать)/)).toHaveValue(
+    'Принести настолку',
+  );
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await expect(sheet.getByLabel('Что сделать')).toHaveValue('Принести настолку');
+  await expect(sheet.getByLabel(/^Что (?:нужно сделать|сделать)/)).toHaveValue(
+    'Принести настолку',
+  );
   await expect(sheet.getByRole('button', { name: 'Закрыть', exact: true })).toBeVisible();
   await expect(page.locator('dialog:modal')).toHaveCount(1);
   await sheet.getByRole('button', { name: 'Повторить отправку' }).click();
@@ -334,7 +354,7 @@ test('meeting information shares in one sheet, excludes service links and keeps 
   });
 
   await open.click();
-  const info = page.getByRole('dialog', { name: meeting.title, exact: true });
+  const info = meetingInfoSurface(page, meeting.title);
   await expect(
     info.getByRole('heading', { name: meeting.title, exact: true }),
   ).toBeVisible();
@@ -365,10 +385,15 @@ test('meeting information shares in one sheet, excludes service links and keeps 
     }),
   ).toHaveCount(0);
   const invite = info.getByRole('button', { name: 'Пригласить друзей', exact: true });
-  await invite.scrollIntoViewIfNeeded();
-  expect(
-    await info.getByTestId('meeting-info-scroll').evaluate((node) => node.scrollTop),
-  ).toBeGreaterThan(0);
+  await info.getByTestId('meeting-info-scroll').evaluate((node) => {
+    node.scrollTop = node.scrollHeight;
+  });
+  await expect
+    .poll(() =>
+      info.getByTestId('meeting-info-scroll').evaluate((node) => node.scrollTop),
+    )
+    .toBeGreaterThan(0);
+  await expect(invite).toBeInViewport({ ratio: 1 });
   await expect(info.getByRole('button', { name: 'Закрыть', exact: true })).toBeInViewport(
     { ratio: 1 },
   );
@@ -399,6 +424,21 @@ test('meeting information shares in one sheet, excludes service links and keeps 
     .getByRole('textbox', { name: 'Название', exact: true })
     .fill('Сохраним позже');
   await edit.getByRole('button', { name: 'Закрыть', exact: true }).click();
+  const settingsGuard = page.getByRole('dialog', {
+    name: 'Выйти без сохранения?',
+    exact: true,
+  });
+
+  await settingsGuard
+    .getByRole('button', { name: 'Продолжить редактирование', exact: true })
+    .click();
+  await expect(edit.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
+    'Сохраним позже',
+  );
+  await edit.getByRole('button', { name: 'Закрыть', exact: true }).click();
+  await settingsGuard
+    .getByRole('button', { name: 'Выйти без сохранения', exact: true })
+    .click();
   await expect(info).toBeVisible();
   await expect(
     info.getByRole('button', { name: 'Настройки встречи', exact: true }),
@@ -413,7 +453,7 @@ test('meeting information shares in one sheet, excludes service links and keeps 
   await open.click();
   await info.getByRole('button', { name: 'Настройки встречи', exact: true }).click();
   await expect(edit.getByRole('textbox', { name: 'Название', exact: true })).toHaveValue(
-    'Сохраним позже',
+    'Информация о встрече',
   );
   await edit.getByRole('button', { name: 'Закрыть', exact: true }).click();
   await page.goto('/profile');
@@ -433,11 +473,11 @@ for (const width of [320, 390]) {
     await page.getByLabel('Сообщение', { exact: true }).fill('Обсудим после опроса');
     await page.getByRole('button', { name: 'Добавить к встрече' }).click();
     await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
-    const sheet = page.getByRole('dialog', { name: 'Новая дата встречи', exact: true });
+    const sheet = actionSurface(page, 'Новая дата встречи');
     await expect(sheet).toHaveAttribute('data-motion', 'open');
     await page.setViewportSize({ width, height: 430 });
     const heading = sheet.getByRole('heading', {
-      name: 'Новая дата встречи',
+      name: 'Предложить дату',
       exact: true,
     });
 
@@ -479,7 +519,7 @@ test('mobile task details keep inline actions and require a reversible cancellat
   await page.getByRole('button', { name: 'Добавить к встрече' }).click();
   await page.getByRole('menuitem', { name: 'Предложить задачу', exact: true }).click();
   const form = actionSurface(page, 'Предложить задачу');
-  await form.getByLabel('Что сделать').fill('Принести настолку');
+  await form.getByLabel(/^Что (?:нужно сделать|сделать)/).fill('Принести настолку');
   await form.getByRole('button', { name: 'Предложить задачу', exact: true }).click();
   await expect(form).not.toBeVisible();
   const card = page.getByRole('region', { name: 'Задача подготовки' });
@@ -497,12 +537,18 @@ test('mobile task details keep inline actions and require a reversible cancellat
   await expect(
     details.getByRole('heading', { name: 'Принести настолку', exact: true }),
   ).toHaveCount(1);
-  await expect(details.getByText('Исполняет Саша', { exact: true })).toHaveCount(1);
+  await expect(details.getByText('В работе', { exact: true })).toHaveCount(1);
+  await expect(details.getByText('Исполнитель', { exact: true })).toBeVisible();
   await expect(details.getByText('Контекст задачи', { exact: true })).toHaveCount(0);
   await expect(details.getByText('Предложение от', { exact: true })).toBeVisible();
   await expect(details.locator('dd').nth(0)).toContainText('Саша');
-  await expect(details.locator('dd').nth(1)).toHaveText('Саша');
-  await expect(details.getByTestId('avatar')).toBeVisible();
+  await expect(details.locator('dd').nth(1)).toHaveText('Саша · вы');
+  await expect(details.getByTestId('avatar')).toHaveCount(2);
+
+  for (const avatar of await details.getByTestId('avatar').all()) {
+    await expect(avatar).toBeVisible();
+  }
+
   await details.getByRole('button', { name: 'Отменить задачу', exact: true }).click();
   const confirmation = page.getByRole('dialog', {
     name: 'Отменить задачу?',
@@ -517,7 +563,9 @@ test('mobile task details keep inline actions and require a reversible cancellat
   await expect(
     details.getByRole('button', { name: 'Отменить задачу', exact: true }),
   ).toBeFocused();
-  await expect(details.getByText('Исполняет Саша', { exact: true })).toBeVisible();
+  await expect(details.getByText('В работе', { exact: true })).toBeVisible();
+  await expect(details.getByText('Исполнитель', { exact: true })).toBeVisible();
+  await expect(details.locator('dd').nth(1)).toHaveText('Саша · вы');
   await details.getByRole('button', { name: 'Отменить задачу', exact: true }).click();
   await confirmation
     .getByRole('button', { name: 'Отменить задачу', exact: true })
@@ -533,6 +581,6 @@ test('mobile task details keep inline actions and require a reversible cancellat
     .toBe(true);
   await details.getByRole('button', { name: 'Закрыть', exact: true }).click();
   await expect(opener).toBeFocused();
-  await expect(card.getByText('Отменено', { exact: true })).toBeVisible();
+  await expect(card.getByText('Отменено · Саша', { exact: true })).toBeVisible();
   await expect(composer).toHaveValue('Обсудим задачу');
 });

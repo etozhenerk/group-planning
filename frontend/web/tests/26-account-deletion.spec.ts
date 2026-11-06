@@ -128,6 +128,13 @@ test('profile hides account deletion and keeps logout last on narrow screens', a
     ),
   ).toBe(true);
   await page.setViewportSize({ width: 390, height: 844 });
+  const mobileServices = page.getByRole('navigation', {
+    name: 'Помощь и приложение',
+    exact: true,
+  });
+
+  await expect(mobileServices).toBeVisible();
+  await expect(logout).toBeVisible();
   await logout.scrollIntoViewIfNeeded();
   await expect(logout).toBeInViewport();
   expect(

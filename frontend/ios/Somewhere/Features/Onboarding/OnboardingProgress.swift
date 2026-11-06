@@ -2,13 +2,14 @@ import SwiftUI
 import UIKit
 
 struct OnboardingProgress: UIViewRepresentable {
+    @Environment(\.isEnabled) private var enabled
     let selected: OnboardingSlide
     let choose: (OnboardingSlide) -> Void
     func makeUIView(context: Context) -> UIPageControl {
         let control = UIPageControl()
         control.numberOfPages = OnboardingSlide.allCases.count
-        control.currentPageIndicatorTintColor = UIColor(AppPalette.accent)
-        control.pageIndicatorTintColor = UIColor(AppPalette.border)
+        control.currentPageIndicatorTintColor = UIColor(DesignTokens.colorAccent)
+        control.pageIndicatorTintColor = UIColor(DesignTokens.colorMobileOnboardingInactive)
         control.addTarget(
             context.coordinator, action: #selector(Coordinator.changed), for: .valueChanged)
         control.accessibilityIdentifier = "onboarding-progress"
@@ -17,8 +18,10 @@ struct OnboardingProgress: UIViewRepresentable {
     }
     func updateUIView(_ control: UIPageControl, context: Context) {
         context.coordinator.choose = choose
+        control.isEnabled = enabled
         control.currentPage = selected.rawValue
-        control.accessibilityValue = String(selected.rawValue + 1) + " из 5"
+        control.accessibilityValue =
+            String(selected.rawValue + 1) + " из " + String(OnboardingSlide.allCases.count)
     }
     func makeCoordinator() -> Coordinator { Coordinator(choose: choose) }
     @MainActor final class Coordinator: NSObject {

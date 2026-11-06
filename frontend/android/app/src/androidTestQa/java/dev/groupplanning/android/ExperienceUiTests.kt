@@ -22,8 +22,10 @@ import androidx.compose.ui.test.swipe
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.test.swipeUp
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.core.app.ActivityScenario
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
+import dev.groupplanning.android.state.AppViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -189,14 +191,24 @@ class ExperienceUiTests {
             fixture.waitText("Киновечер")
             fixture.screenshot("refresh-meeting-cards")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             fixture.screenshot("refresh-profile")
             compose.onNodeWithText("Сообщить о проблеме").performScrollTo()
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
             fixture.waitTag("support-description")
+            compose.waitUntil(5_000) {
+                var busy = true
+                activity.onActivity {
+                    busy = checkNotNull(ViewModelProvider(it)[AppViewModel::class.java].support)
+                        .state.value.busy
+                }
+                !busy
+            }
             compose.onNodeWithTag("support-description")
                 .performClick()
                 .performTextInput("Проверка формы обращения из Android QA")
+            compose.onNodeWithTag("support-description")
+                .assertTextContains("Проверка формы обращения из Android QA")
             fixture.device.pressBack()
             fixture.waitTag("support-description")
             activity.recreate()
@@ -204,11 +216,13 @@ class ExperienceUiTests {
             compose.onNodeWithTag("support-description")
                 .assertTextContains("Проверка формы обращения из Android QA")
             fixture.screenshot("refresh-support-restored")
-            compose.onNodeWithText("Отправить обращение").performScrollTo()
+            compose.onNodeWithTag("support-send").assertIsDisplayed()
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
-            fixture.waitText("Спасибо, что рассказали")
+            fixture.waitText("Обращение принято")
             fixture.screenshot("refresh-support-success")
             compose.onNodeWithTag("support-success-back").performClick()
+            fixture.waitText(fixture.context.getString(R.string.help_title))
+            fixture.device.pressBack()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()
             compose.onNodeWithTag("home-invitations").performClick()

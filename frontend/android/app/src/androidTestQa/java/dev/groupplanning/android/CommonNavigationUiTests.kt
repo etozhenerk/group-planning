@@ -6,6 +6,9 @@ import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -55,11 +58,17 @@ class CommonNavigationUiTests {
                 fixture.waitAbsent("service-page")
                 compose.onNodeWithTag("home-profile").assertIsSelected()
                 compose.onNodeWithText("Помощь").performScrollTo().performClick()
-                fixture.waitText(fixture.context.getString(R.string.help_heading))
+                fixture.waitTag("service-page")
+                compose.waitUntil(10_000) {
+                    compose.onAllNodes(
+                        hasText(fixture.context.getString(R.string.help_title)) and
+                            hasAnyAncestor(hasTestTag("service-page")),
+                    ).fetchSemanticsNodes().isNotEmpty()
+                }
                 fixture.device.pressBack()
                 fixture.waitAbsent("service-page")
                 compose.onNodeWithTag("home-profile").assertIsSelected()
-                compose.onNodeWithText("Выйти").performScrollTo().assertIsDisplayed()
+                compose.onNodeWithText("Выйти из аккаунта").performScrollTo().assertIsDisplayed()
                 compose.onNodeWithText("Удалить аккаунт").assertDoesNotExist()
                 compose.onNodeWithText("Версия", substring = true).assertDoesNotExist()
                 fixture.screenshot("common-profile-logout-bottom")

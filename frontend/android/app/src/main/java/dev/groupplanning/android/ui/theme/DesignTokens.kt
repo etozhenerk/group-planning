@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.14.0. Do not edit.
+// Generated from design-system/tokens.json · 7.15.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -455,17 +455,45 @@ internal object DesignTokens {
     val componentMobileNavigationSelectedIconStroke = 1.8f
     val componentMobileOnboardingArtworkGap = 30.dp
     val componentMobileOnboardingArtworkHeight = 360.dp
+    val componentMobileOnboardingArtworkReferenceWidth = 336.dp
+    val componentMobileOnboardingChatMaximumWidth = 270.dp
     val componentMobileOnboardingCopyGap = 18.dp
     val componentMobileOnboardingCopyMinimumHeight = 180.dp
+    val componentMobileOnboardingExampleSwitcherHeight = 40.dp
+    val componentMobileOnboardingExampleSwitcherInsetBlock = 9.dp
+    val componentMobileOnboardingExampleSwitcherInsetInline = 14.dp
     val componentMobileOnboardingFooterMinimumHeight = 110.dp
+    val componentMobileOnboardingHeroPhotoAngle = -4f
+    val componentMobileOnboardingHeroPhotoHeight = 245.dp
+    val componentMobileOnboardingHeroPhotoTrailingSpace = 35.dp
     val componentMobileOnboardingInsetInline = 27.dp
+    val componentMobileOnboardingInvitationCardTop = 132.dp
+    val componentMobileOnboardingInvitationPhotoAngle = -3f
+    val componentMobileOnboardingInvitationPhotoHeight = 185.dp
+    val componentMobileOnboardingInvitationPhotoInset = 13.dp
+    val componentMobileOnboardingInvitationResponseTop = 316.dp
+    val componentMobileOnboardingNarrowTitleBoundary = 350.dp
     val componentMobileOnboardingNextHeight = 52.dp
     val componentMobileOnboardingNextInsetInline = 23.dp
     val componentMobileOnboardingNextMinimumWidth = 135.dp
+    val componentMobileOnboardingPhotoFrameWidth = 5.dp
+    val componentMobileOnboardingPhotoShadowBlur = 32.dp
+    val componentMobileOnboardingPhotoShadowOffset = 16.dp
+    val componentMobileOnboardingPhotoShadowOpacity = 0.25f
+    val componentMobileOnboardingPhotoStoryHeight = 290.dp
     val componentMobileOnboardingProgressDotSize = 6.dp
     val componentMobileOnboardingProgressSelectedWidth = 19.dp
     val componentMobileOnboardingProgressSlotWidth = 27.dp
     val componentMobileOnboardingProgressVisualHeight = 34.dp
+    val componentMobileOnboardingSecondPhotoAngle = 7f
+    val componentMobileOnboardingSecondPhotoHeight = 160.dp
+    val componentMobileOnboardingSecondPhotoTop = 125.dp
+    val componentMobileOnboardingSecondPhotoWidth = 138.dp
+    val componentMobileOnboardingStoryLabelGap = 9.dp
+    val componentMobileOnboardingStoryLabelSize = 10.dp
+    val componentMobileOnboardingStoryLabelTracking = 0.8.dp
+    val componentMobileOnboardingSwipeCommitDistance = 45.dp
+    val componentMobileOnboardingSwipeMaximumVerticalDistance = 60.dp
     val componentMobileOnboardingTallArtworkHeight = 390.dp
     val componentMobileOnboardingTitleTracking = 1.dp
     val componentMobilePageInsetTop = 28.dp

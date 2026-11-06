@@ -37,15 +37,12 @@ final class ExperienceUITests: XCTestCase {
         back.tap()
     }
     private func reveal(_ element: XCUIElement, app: XCUIApplication) {
-        for _ in 0..<10 {
-            if element.isHittable && element.frame.maxY < app.frame.maxY - 120 { return }
-            let scroll =
-                ["support-scroll", "service-information-scroll", "profile-screen"]
-                .map { app.scrollViews[$0] }.first { $0.exists } ?? app.scrollViews.firstMatch
-            scroll.swipeUp()
-        }
-        XCTAssertTrue(element.isHittable)
+        let scroll =
+            ["support-scroll", "service-information-scroll", "profile-screen"]
+            .map { app.scrollViews[$0] }.first { $0.exists } ?? app.scrollViews.firstMatch
+        ChatSheetTestSupport.reveal(element, in: scroll, app: app)
     }
+
     func testNavigationProfileDocumentsAndFeedbackDraft() {
         let app = launch()
         let profile = app.buttons["home-tab-person.crop.circle"]
@@ -54,12 +51,14 @@ final class ExperienceUITests: XCTestCase {
         app.buttons["home-tab-envelope"].tap()
         XCTAssertTrue(
             app.staticTexts[
-                "Здесь сохранены приглашения, на которые вы ответили «Возможно». Когда определитесь, откройте приглашение и измените ответ."
+                "Здесь встречи, на которые вы ответили «Возможно». Откройте приглашение, чтобы изменить ответ."
             ].waitForExistence(
                 timeout: 5))
         capture("refresh-invitations")
         profile.tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
+        app.buttons["profile-account-data"].tap()
+        XCTAssertTrue(app.scrollViews["profile-account-scroll"].waitForExistence(timeout: 5))
         XCTAssertTrue(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Не указана"))
                 .firstMatch.exists)
@@ -67,6 +66,8 @@ final class ExperienceUITests: XCTestCase {
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Не указан"))
                 .firstMatch.exists)
         XCTAssertFalse(app.textFields.firstMatch.exists)
+        capture("refresh-profile-personal")
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "profile-account-header")
         capture("refresh-profile")
         let help = app.buttons["Помощь"]
         reveal(help, app: app)
@@ -74,7 +75,7 @@ final class ExperienceUITests: XCTestCase {
         XCTAssertTrue(
             app.buttons["Где найти приглашения с ответом «Возможно»?"].waitForExistence(timeout: 5))
         capture("refresh-help")
-        let question = app.buttons["Задать вопрос"]
+        let question = app.buttons["Написать в поддержку"]
         reveal(question, app: app)
         question.tap()
         let description = app.textViews["support-description"]
@@ -82,9 +83,11 @@ final class ExperienceUITests: XCTestCase {
         description.tap()
         description.typeText("Подскажите, как добавить фото встречи")
         finishSupportEditing(app)
-        let toggle = app.buttons["Приложить сведения об устройстве"]
+        let toggle = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS %@", "Данные об устройстве")
+        ).firstMatch
         reveal(toggle, app: app)
-        XCTAssertEqual(toggle.value as? String, "0")
+        XCTAssertEqual(toggle.value as? String, "Выключено")
         capture("refresh-support")
         let helpPage = app.scrollViews["service-information-scroll"]
         let backgroundBack = helpPage.buttons["Назад"]
@@ -97,7 +100,7 @@ final class ExperienceUITests: XCTestCase {
         returnFromPage(app.scrollViews["support-scroll"])
         XCTAssertTrue(app.buttons["Где найти приглашения с ответом «Возможно»?"].exists)
         returnFromPage(helpPage)
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 5))
 
     }
     func testEmojiSelectionAndAttachmentCancellationKeepDraft() {
@@ -199,7 +202,7 @@ final class ExperienceUITests: XCTestCase {
         let profile = app.buttons["home-tab-person.crop.circle"]
         XCTAssertTrue(profile.waitForExistence(timeout: 15))
         profile.tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
         XCTAssertGreaterThanOrEqual(profile.frame.minX, app.frame.minX)
         XCTAssertLessThanOrEqual(profile.frame.maxX, app.frame.maxX)
         capture("refresh-profile-large-text")
@@ -212,7 +215,7 @@ final class ExperienceUITests: XCTestCase {
     func testSupportSendsToFixtureAndShowsReceipt() {
         let app = launch()
         app.buttons["home-tab-person.crop.circle"].tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
         let problem = app.buttons["Сообщить о проблеме"]
         reveal(problem, app: app)
         problem.tap()
@@ -221,7 +224,7 @@ final class ExperienceUITests: XCTestCase {
         description.tap()
         description.typeText("Проверка обращения из приложения iOS")
         finishSupportEditing(app)
-        let send = app.buttons["Отправить"]
+        let send = app.buttons["support-submit"]
         reveal(send, app: app)
         send.tap()
         XCTAssertTrue(app.staticTexts["Обращение принято"].waitForExistence(timeout: 15))

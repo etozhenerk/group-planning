@@ -21,6 +21,8 @@ for (const width of [320, 1440]) {
     await expect(page.getByTestId('home-empty')).toBeVisible();
     const header = page.getByTestId('page-heading');
 
+    let past = false;
+
     try {
       for (const [action, calendar] of [
         ['Календарь', true],
@@ -31,6 +33,15 @@ for (const width of [320, 1440]) {
         ['Следующий месяц', true],
       ] as const) {
         hold = true;
+
+        if (action === 'Прошедшие') {
+          past = true;
+        }
+
+        if (action === 'Предстоящие') {
+          past = false;
+        }
+
         const label =
           width < 740 && (action === 'Календарь' || action === 'Список')
             ? `Показать ${action === 'Календарь' ? 'календарь' : 'список'}`
@@ -46,7 +57,7 @@ for (const width of [320, 1440]) {
         });
         await expect(
           page.getByRole('link', { name: 'Создать встречу', exact: true }),
-        ).toHaveCount(1);
+        ).toHaveCount(width < 740 && past && !calendar ? 0 : 1);
         hold = false;
         pending.splice(0).forEach((release) => release());
         await expect(header.getByRole('link', { name: 'Создать встречу' })).toHaveCount(

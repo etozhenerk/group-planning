@@ -47,4 +47,13 @@ describe('published media breakpoint', () => {
     );
     expect(result.css).not.toContain('design-token(');
   });
+  it('resolves the onboarding title boundary from the published token', async () => {
+    const result = await postcss([designMediaPlugin()]).process(
+      '@media (width < design-token(component.mobileOnboarding.narrowTitleBoundary)) {.title {display: block}}',
+      { from: undefined },
+    );
+
+    expect(result.css).toContain('@media (width < 350px)');
+    expect(result.css).not.toContain('design-token(');
+  });
 });

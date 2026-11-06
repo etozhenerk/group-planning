@@ -224,7 +224,8 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   await page.mouse.move(x - 24, y, { steps: 4 });
   await expect(stack).toHaveAttribute('data-dragging', 'true');
   await page.mouse.up();
-  await expect(page.getByText('1 / 2', { exact: true })).toBeVisible();
+  await expect(stack).toHaveAttribute('data-phase', 'idle');
+  await expect(page.getByTestId('album-counter')).toHaveText(/1\s*\/\s*2/);
   await expect(
     page.getByRole('dialog', { name: 'Фото встречи', exact: true }),
   ).toHaveCount(0);
@@ -232,12 +233,15 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   await page.mouse.down();
   await page.mouse.move(x - 120, y, { steps: 6 });
   await page.mouse.up();
-  await expect(page.getByText('2 / 2', { exact: true })).toBeVisible();
+  await expect(stack).toHaveAttribute('data-phase', 'idle');
+  await expect(page.getByTestId('album-counter')).toHaveText(/2\s*\/\s*2/);
   await stack.focus();
   await stack.press('ArrowRight');
-  await expect(page.getByText('1 / 2', { exact: true })).toBeVisible();
+  await expect(stack).toHaveAttribute('data-phase', 'idle');
+  await expect(page.getByTestId('album-counter')).toHaveText(/1\s*\/\s*2/);
   await stack.press('ArrowRight');
-  await expect(page.getByText('2 / 2', { exact: true })).toBeVisible();
+  await expect(stack).toHaveAttribute('data-phase', 'idle');
+  await expect(page.getByTestId('album-counter')).toHaveText(/2\s*\/\s*2/);
   await page.getByRole('button', { name: 'Показать сеткой' }).click();
   await page.getByRole('button', { name: 'Открыть фото 1', exact: true }).click();
   await expect(
@@ -252,7 +256,7 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   ]) {
     await page.setViewportSize(viewport);
     const viewer = page.getByRole('dialog', { name: 'Фото встречи', exact: true });
-    const image = viewer.getByRole('img');
+    const image = viewer.locator('[aria-hidden="false"] img').or(viewer.getByRole('img'));
     await expect(image).toBeVisible();
     await expect(image).toHaveCSS('object-fit', 'contain');
     await expect
@@ -294,12 +298,13 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
     page.getByRole('dialog', { name: 'Фото встречи', exact: true }),
   ).toHaveCount(0);
   await page.getByRole('button', { name: 'Показать стопкой' }).click();
-  await expect(page.getByText('1 / 2', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('album-counter')).toHaveText(/1\s*\/\s*2/);
   await expect(page.locator('body')).not.toHaveCSS('position', 'fixed');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await stack.focus();
   await stack.press('ArrowLeft');
-  await expect(page.getByText('2 / 2', { exact: true })).toBeVisible();
+  await expect(stack).toHaveAttribute('data-phase', 'idle');
+  await expect(page.getByTestId('album-counter')).toHaveText(/2\s*\/\s*2/);
   const feed = feedSchema.parse(
     await (await page.request.get(`/api/v1/meetings/${id}/feed`)).json(),
   );

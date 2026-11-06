@@ -25,8 +25,7 @@ final class ChatSheetGestureUITests: XCTestCase {
         ExperienceScreenshot.save("sheet-task-before-swipe", test: self)
         XCTAssertEqual(
             app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
-        ChatSheetTestSupport.dismissBySwipe(app)
-        ChatSheetTestSupport.openAction("new-preparation-task", app: app)
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         XCTAssertEqual(field.value as? String, "Забрать пиццу по дороге")
         ExperienceScreenshot.save("sheet-task-swipe-reopen", test: self)
@@ -57,8 +56,7 @@ final class ChatSheetGestureUITests: XCTestCase {
         ExperienceScreenshot.save("sheet-place-before-swipe", test: self)
         XCTAssertEqual(
             app.staticTexts["action-form-header"].frame.minY, restingHeader.minY, accuracy: 1)
-        ChatSheetTestSupport.dismissBySwipe(app)
-        ChatSheetTestSupport.openAction("new-place-poll", app: app)
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
         XCTAssertTrue(place.waitForExistence(timeout: 5))
         XCTAssertEqual(place.value as? String, "Кафе у метро")
         XCTAssertEqual(explanation.value as? String, "Всем удобно добираться")
@@ -94,8 +92,7 @@ final class ChatSheetGestureUITests: XCTestCase {
             expected[label] = after
         }
         ExperienceScreenshot.save("sheet-date-before-swipe", test: self)
-        ChatSheetTestSupport.dismissBySwipe(app)
-        ChatSheetTestSupport.openAction("new-date-poll", app: app)
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
         for label in labels {
             let control = app.switches[label]
             ChatSheetTestSupport.reveal(

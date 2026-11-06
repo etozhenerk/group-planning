@@ -57,29 +57,38 @@ final class PreparationTaskUITests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap()
         field.typeText("Заказать пиццу")
+        if app.buttons["action-keyboard-done"].exists { app.buttons["action-keyboard-done"].tap() }
         XCTAssertTrue(app.buttons["preparation-people-retry"].waitForExistence(timeout: 10))
         app.buttons["preparation-people-retry"].tap()
         let recipient = app.buttons["preparation-recipient"]
         XCTAssertTrue(recipient.waitForExistence(timeout: 10))
         recipient.tap()
-        app.buttons["Лена"].tap()
+        let recipientOption = app.buttons.matching(
+            NSPredicate(
+                format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+                "preparation-recipient-", "Лена")
+        ).firstMatch
+        XCTAssertTrue(recipientOption.waitForExistence(timeout: 5))
+        recipientOption.tap()
         app.buttons["preparation-create"].tap()
-        XCTAssertTrue(app.staticTexts["preparation-error"].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(identifier: "preparation-error").firstMatch
+                .waitForExistence(timeout: 10))
         XCTAssertTrue((field.value as? String)?.contains("Заказать пиццу") == true)
-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
-        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
-        app.buttons["meeting-add"].tap()
-        app.buttons["new-preparation-task"].tap()
+        ChatSheetTestSupport.swipeDownFromHeader(app, headerIdentifier: "action-form-header")
+        XCTAssertTrue(app.staticTexts["action-form-header"].exists)
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         XCTAssertTrue((field.value as? String)?.contains("Заказать пиццу") == true)
         XCTAssertEqual(app.buttons["preparation-recipient"].value as? String, "Лена")
-        XCTAssertEqual(app.buttons["preparation-create"].label, "Повторить")
+        XCTAssertEqual(app.buttons["preparation-create"].label, "Повторить отправку")
         capture("ios-task-create-error")
         XCUIDevice.shared.press(.home)
         app.activate()
-        XCTAssertTrue(app.staticTexts["preparation-error"].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(identifier: "preparation-error").firstMatch
+                .waitForExistence(timeout: 10))
         app.buttons["preparation-create"].tap()
-        XCTAssertTrue(app.staticTexts["Кому предложено: Лена"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["Предложено: Лена"].waitForExistence(timeout: 15))
         XCTAssertFalse(app.buttons["preparation-accept"].exists)
         capture("ios-task-offered")
     }
@@ -101,12 +110,14 @@ final class PreparationTaskUITests: XCTestCase {
         capture("ios-task-accept-error")
         app.buttons["Повторить"].tap()
         XCTAssertTrue(app.buttons["preparation-complete"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.staticTexts["Задача у вас"].exists)
+        XCTAssertTrue(app.staticTexts["Вы выполняете"].exists)
         capture("ios-task-accepted")
         task.tap()
         XCTAssertTrue(app.staticTexts["preparation-details-header"].waitForExistence(timeout: 5))
         app.buttons["preparation-complete"].tap()
-        XCTAssertTrue(app.staticTexts["Выполнено · Лена"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Выполнено"].waitForExistence(timeout: 10))
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "preparation-details-header")
+        XCTAssertTrue(app.staticTexts["Выполнено · Лена"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["preparation-complete"].exists)
         capture("ios-task-completed")
     }
@@ -118,13 +129,17 @@ final class PreparationTaskUITests: XCTestCase {
         XCTAssertTrue(app.buttons["preparation-confirm"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["Отказ · Лена"].exists)
         app.buttons["preparation-confirm"].tap()
-        XCTAssertTrue(app.staticTexts["Отказ · Лена"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Отказ от задачи"].waitForExistence(timeout: 10))
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "preparation-details-header")
+        XCTAssertTrue(app.staticTexts["Отказ · Лена"].waitForExistence(timeout: 5))
         capture("ios-task-declined")
         app.terminate()
         let other = open("task-conflict", suffix: "500")
         XCTAssertTrue(other.buttons["preparation-accept"].waitForExistence(timeout: 10))
         other.buttons["preparation-accept"].tap()
-        XCTAssertTrue(other.staticTexts["Исполняет Саша"].waitForExistence(timeout: 10))
+        XCTAssertTrue(other.staticTexts["В работе"].waitForExistence(timeout: 10))
+        XCTAssertTrue(other.staticTexts["Исполнитель"].exists)
+        XCTAssertTrue(other.staticTexts["Саша"].firstMatch.exists)
         XCTAssertFalse(other.buttons["preparation-accept"].exists)
         XCTAssertFalse(other.buttons["preparation-complete"].exists)
         capture("ios-task-conflict")
@@ -142,8 +157,9 @@ final class PreparationTaskUITests: XCTestCase {
             app.scrollViews["preparation-details"].swipeUp()
         }
         confirm.tap()
-        XCTAssertTrue(app.staticTexts["Отменено · Саша"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Отменено"].waitForExistence(timeout: 10))
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "preparation-details-header")
+        XCTAssertTrue(app.staticTexts["Отменено · Саша"].waitForExistence(timeout: 5))
         XCTAssertTrue(
             app.staticTexts["Задача отменена · Саша · «Заказать пиццу»"].waitForExistence(
                 timeout: 10))

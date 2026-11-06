@@ -45,7 +45,10 @@ final class InvitationOwner {
         self.target = target
         self.api = api
         self.session = session
-        if case .token(let token) = target { publicToken = token }
+        switch target {
+        case .token(let token): publicToken = token
+        case .meeting(_, let token): publicToken = token
+        }
         userID = session?.profile?.id
         sessionLease = try? session?.privateData.lease()
     }

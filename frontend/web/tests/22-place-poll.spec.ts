@@ -55,9 +55,20 @@ for (const width of [320, 390, 1440]) {
       }
     });
     await form.getByRole('button', { name: 'Предложить место', exact: true }).click();
-    await expect(form.getByRole('alert')).toHaveText(
-      'Не удалось подтвердить создание опроса. Повторите отправку.',
-    );
+
+    if (width < 740) {
+      await expect(form.getByRole('alert').locator('strong')).toHaveText(
+        'Создание опроса не подтверждено',
+      );
+      await expect(form.getByRole('alert')).toContainText(
+        'Повторите отправку — данные менять не нужно.',
+      );
+    } else {
+      await expect(form.getByRole('alert')).toHaveText(
+        'Не удалось подтвердить создание опроса. Повторите отправку.',
+      );
+    }
+
     await expect(form.getByLabel('Новое место')).toHaveValue('Кафе у парка');
     await expect(
       form.getByRole('button', { name: 'Повторить отправку' }),
@@ -101,6 +112,19 @@ for (const width of [320, 390, 1440]) {
     await activeForm.getByRole('button', { name: 'Предложить место' }).click();
     await expect(activeForm.getByRole('alert')).toContainText('уже есть открытый опрос');
     await page.keyboard.press('Escape');
+
+    if (width < 740) {
+      const guard = page.getByRole('dialog', {
+        name: 'Выйти без сохранения?',
+        exact: true,
+      });
+
+      await expect(guard).toBeVisible();
+      await guard
+        .getByRole('button', { name: 'Выйти без сохранения', exact: true })
+        .click();
+    }
+
     await expect(activeForm).not.toBeVisible();
     await expect(page.getByRole('button', { name: 'Добавить к встрече' })).toBeFocused();
     const current = await apiMeeting(page, meeting.id);

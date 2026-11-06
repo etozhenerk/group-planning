@@ -61,7 +61,7 @@ class EntryUiTests {
             assertNoOnboardingServiceControls()
             compose.onNodeWithText("Пропустить").assertIsDisplayed().assertIsEnabled()
             screenshot("onboarding-1")
-            for (page in 1..4) {
+            for (page in 1..7) {
                 compose.onNodeWithTag("onboarding-progress").performSemanticsAction(
                     SemanticsActions.SetProgress,
                 ) { it(page.toFloat()) }
@@ -80,19 +80,18 @@ class EntryUiTests {
             ).assertIsDisplayed().assertIsEnabled().performClick()
             compose.waitForIdle()
             compose.onNodeWithContentDescription(
-                "Попробовать",
+                "Войти через Яндекс ID",
             ).assertIsDisplayed().assertIsEnabled()
             compose.onNodeWithText("Пропустить").assertDoesNotExist()
             assertNoOnboardingServiceControls()
             screenshot("onboarding-skip-last")
-            compose.onNodeWithContentDescription("Попробовать").performClick()
-            waitText("Не удалось войти")
-            compose.onNodeWithText("Понятно").performClick()
+            compose.onNodeWithContentDescription("Войти через Яндекс ID").performClick()
+            waitText("Не удалось открыть вход")
             compose.waitForIdle()
             device.waitForIdle(2_000)
             activity.recreate()
             waitFor("onboarding")
-            compose.onNodeWithContentDescription("Попробовать").assertIsDisplayed()
+            compose.onNodeWithContentDescription("Войти через Яндекс ID").assertIsDisplayed()
         }
     }
 
@@ -122,9 +121,11 @@ class EntryUiTests {
 
     @Test fun listFailureCanRetry() {
         launch("list-error").use {
-            waitText("Не удалось получить встречи")
+            waitText(context.getString(R.string.calendar_error))
             screenshot("list-error")
-            compose.onNodeWithText("Повторить").performSemanticsAction(
+            compose.onNodeWithText(
+                context.getString(R.string.meetings_retry_load),
+            ).performSemanticsAction(
                 SemanticsActions.OnClick,
             ) { click ->
                 QaResponseGate.releaseListError()
@@ -140,8 +141,10 @@ class EntryUiTests {
             compose.onNodeWithText("Создать встречу").performClick()
             waitFor("create-form")
             compose.onNodeWithTag("home-navigation").assertDoesNotExist()
-            compose.onNodeWithTag("create-submit").performScrollTo().performClick()
-            compose.onNodeWithTag("create-problem").assertIsDisplayed()
+            compose.onNodeWithTag("create-submit").assertIsDisplayed().performClick()
+            compose.onNodeWithText(
+                context.getString(R.string.create_title_required),
+            ).assertIsDisplayed()
             compose.onNodeWithContentDescription("Название").performScrollTo()
                 .performTextInput("Вечер настольных игр")
             device.pressBack()
@@ -152,12 +155,12 @@ class EntryUiTests {
             screenshot("time-picker")
             compose.onNodeWithTag("time-confirm").performClick()
             screenshot("create")
-            compose.onNodeWithTag("create-submit").performScrollTo().performClick()
-            waitText(context.getString(R.string.create_retry))
+            compose.onNodeWithTag("create-submit").assertIsDisplayed().performClick()
+            waitText(context.getString(R.string.create_send_again))
             screenshot("create-retry")
             activity.recreate()
-            waitText(context.getString(R.string.create_retry))
-            compose.onNodeWithTag("create-submit").performScrollTo().performClick()
+            waitText(context.getString(R.string.create_send_again))
+            compose.onNodeWithTag("create-submit").assertIsDisplayed().performClick()
             waitText("Вечер настольных игр")
             compose.waitUntil(10_000) {
                 compose.onAllNodesWithContentDescription(
@@ -194,7 +197,7 @@ class EntryUiTests {
                 screenshot("onboarding-large")
                 compose.onNodeWithText("Пропустить").performClick()
                 compose.waitForIdle()
-                compose.onNodeWithContentDescription("Попробовать").assertIsDisplayed()
+                compose.onNodeWithContentDescription("Войти через Яндекс ID").assertIsDisplayed()
                     .assertIsEnabled()
                 compose.onNodeWithText("Пропустить").assertDoesNotExist()
                 assertNoOnboardingServiceControls()
@@ -210,7 +213,7 @@ class EntryUiTests {
                 compose.onNodeWithContentDescription("Время").performScrollTo().performClick()
                 screenshot("time-large")
                 compose.onNodeWithTag("time-confirm").performClick()
-                compose.onNodeWithTag("create-submit").performScrollTo().assertIsDisplayed()
+                compose.onNodeWithTag("create-submit").assertIsDisplayed()
                 screenshot("create-large")
             }
         } finally {

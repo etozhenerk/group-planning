@@ -1,29 +1,31 @@
 package dev.groupplanning.android.ui.onboarding
 
-internal enum class OnboardingSlide(val title: String, val text: String, val example: String) {
+import androidx.annotation.StringRes
+import dev.groupplanning.android.R
+
+internal enum class OnboardingSlide(
+    @get:StringRes val title: Int,
+    @get:StringRes val text: Int,
+    @get:StringRes val example: Int,
+) {
     Invitation(
-        "Назначьте встречу.\nОтправьте ссылку.",
-        "Друзья ответят «Приду», «Возможно» или «Не смогу». Вы увидите, кого ждать.",
-        "Пример приглашения: 24 октября, 19:00, у Саши. Лена ответила: приду.",
+        R.string.onboarding_title_0,
+        R.string.onboarding_text_0,
+        R.string.onboarding_example_0,
+    ),
+    Meetings(
+        R.string.onboarding_title_1,
+        R.string.onboarding_text_1,
+        R.string.onboarding_example_1,
     ),
     Conversation(
-        "Разговор —\nвнутри встречи.",
-        "Обсудите детали в общем чате. Дата, место и ответы участников останутся рядом.",
-        "Пример разговора: Лена предлагает встретиться у Саши, Миша обещает принести настолки.",
+        R.string.onboarding_title_2,
+        R.string.onboarding_text_2,
+        R.string.onboarding_example_2,
     ),
-    Poll(
-        "Новое место?\nРешите голосованием.",
-        "После завершения опроса место изменится, если большинство проголосовавших будет за.",
-        "Пример будущего опроса: встретиться у Саши. За — 3, против — 1.",
-    ),
-    Task(
-        "Кто закажет пиццу?\nПредложите задачу.",
-        "Друг станет ответственным, когда примет задачу. Остальные увидят, кто что готовит.",
-        "Пример будущей задачи: заказать пиццу. Миша принял задачу.",
-    ),
-    Plans(
-        "Создайте\nпервую встречу.",
-        "После входа откроются ваши встречи. Отдельная регистрация не нужна.",
-        "Пример списка предстоящих встреч. Календарь появится позже.",
-    ),
+    Date(R.string.onboarding_title_3, R.string.onboarding_text_3, R.string.onboarding_example_3),
+    Poll(R.string.onboarding_title_4, R.string.onboarding_text_4, R.string.onboarding_example_4),
+    Task(R.string.onboarding_title_5, R.string.onboarding_text_5, R.string.onboarding_example_5),
+    Album(R.string.onboarding_title_6, R.string.onboarding_text_6, R.string.onboarding_example_6),
+    Plans(R.string.onboarding_title_7, R.string.onboarding_text_7, R.string.onboarding_example_7),
 }

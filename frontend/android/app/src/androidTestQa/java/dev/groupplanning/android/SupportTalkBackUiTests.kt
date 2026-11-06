@@ -38,10 +38,10 @@ class SupportTalkBackUiTests {
         fixture.launch("calendar").use { activity ->
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             compose.onNodeWithText("Сообщить о проблеме").performScrollTo().performClick()
             fixture.waitTag("support-description")
-            val label = fixture.context.getString(R.string.support_diagnostics)
+            val label = fixture.context.getString(R.string.support_device_data)
             compose.onNodeWithText(label).performScrollTo()
             val configurator = Configurator.getInstance()
             val originalFlags = configurator.uiAutomationFlags

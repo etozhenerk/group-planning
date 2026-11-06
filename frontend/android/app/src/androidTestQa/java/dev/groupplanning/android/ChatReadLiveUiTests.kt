@@ -7,10 +7,11 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.click
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
@@ -212,8 +213,16 @@ class ChatReadLiveUiTests {
                     JSONObject()
                         .put("read_through_sequence", ownSequence),
                 )
-                fixture.waitText("Прочитали 1")
-                compose.onNodeWithText("Прочитали 1").performClick()
+                val receipt = hasTestTag("chat-read-receipt") and
+                    hasAnyAncestor(hasTestTag("feed-entry-$ownSequence")) and
+                    hasContentDescription(fixture.context.getString(R.string.chat_read_count, "1"))
+                compose.waitUntil(10_000) {
+                    compose.onAllNodes(receipt).fetchSemanticsNodes().size == 1
+                }
+                compose.onNode(receipt).performClick()
+                fixture.waitTag("chat-read-context")
+                compose.onNodeWithTag("chat-read-context").assertTextContains("Прочитали 1")
+                    .performClick()
                 val ownerName = api.request(
                     "design",
                     "me",

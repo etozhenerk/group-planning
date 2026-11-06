@@ -6,8 +6,10 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -15,6 +17,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTouchInput
 import androidx.lifecycle.ViewModelProvider
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import dev.groupplanning.android.state.AppRoute
@@ -51,13 +54,18 @@ class DesignVisualUiTests {
             fixture.screenshot("design-calendar")
             compose.onNodeWithTag("meeting-display-toggle").performClick()
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("sasha@example.com")
+            fixture.waitTag("profile-account-data")
             fixture.screenshot("design-profile")
+            compose.onNodeWithTag("profile-account-data").performClick()
+            fixture.waitTag("profile-account-sheet")
+            fixture.waitText("sasha@example.com")
             compose.onNodeWithText("23 декабря").performScrollTo().assertExists()
             compose.onNodeWithText("Александр").assertExists()
             compose.onNodeWithText("Иванов").assertExists()
             compose.onNodeWithText("Мужской").assertExists()
             fixture.screenshot("design-profile-personal")
+            fixture.device.pressBack()
+            fixture.waitAbsent("profile-account-sheet")
             compose.onNodeWithText("Сообщить о проблеме").performScrollTo()
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
             fixture.waitTag("support-description")
@@ -75,7 +83,13 @@ class DesignVisualUiTests {
             fixture.waitAbsent("service-page")
             compose.onNodeWithText("Помощь").performScrollTo()
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
-            fixture.waitText(fixture.context.getString(R.string.help_heading))
+            fixture.waitTag("service-page")
+            compose.waitUntil(10_000) {
+                compose.onAllNodes(
+                    hasText(fixture.context.getString(R.string.help_title)) and
+                        hasAnyAncestor(hasTestTag("service-page")),
+                ).fetchSemanticsNodes().isNotEmpty()
+            }
             fixture.screenshot("design-help")
             fixture.device.pressBack()
             fixture.waitAbsent("service-page")
@@ -139,10 +153,8 @@ class DesignVisualUiTests {
                 }
                 activity.recreate()
                 fixture.waitTag(field)
-                fixture.device.pressBack()
-                fixture.waitTag("meeting-add")
-                compose.onNodeWithTag("meeting-add").performClick()
-                compose.onNodeWithTag(action).performClick()
+                fixture.closeActionSheet()
+                fixture.stayInDirtyForm()
                 fixture.waitTag(field)
                 when (field) {
                     "preparation-title" -> compose.onNodeWithTag(
@@ -162,7 +174,7 @@ class DesignVisualUiTests {
                             .config[SemanticsProperties.ToggleableState],
                     )
                 }
-                fixture.device.pressBack()
+                fixture.discardDirtyForm()
                 fixture.waitTag("meeting-add")
             }
             compose.onNodeWithTag("emoji-open").performClick()
@@ -179,7 +191,7 @@ class DesignVisualUiTests {
             compose.onNodeWithText("Суббота без спешки").performScrollTo().performClick()
             fixture.waitText("Открыть вайб")
             compose.onNodeWithText("Открыть вайб").performClick()
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             compose.waitUntil(15_000) {
                 compose.onAllNodes(
                     SemanticsMatcher("Loaded album image") { node ->
@@ -194,7 +206,7 @@ class DesignVisualUiTests {
             compose.onNodeWithContentDescription("Все фото").performClick()
             fixture.screenshot("design-album-grid")
             fixture.device.pressBack()
-            compose.onNodeWithTag("photo-stack").performClick()
+            compose.onNodeWithTag("photo-stack").performTouchInput { click() }
             fixture.waitTag("memory-viewer")
             compose.waitUntil(15_000) {
                 compose.onAllNodes(
@@ -207,7 +219,7 @@ class DesignVisualUiTests {
             }
             fixture.screenshot("design-album-fullscreen")
             fixture.device.pressBack()
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
         }
     }
 }

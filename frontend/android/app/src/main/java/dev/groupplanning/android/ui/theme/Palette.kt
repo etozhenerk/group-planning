@@ -9,6 +9,7 @@ internal object Palette {
     val background: Color @Composable get() = colorResource(R.color.background)
     val surface: Color @Composable get() = colorResource(R.color.surface)
     val message: Color @Composable get() = colorResource(R.color.message)
+    val ownMessage: Color @Composable get() = colorResource(R.color.own_message)
     val text: Color @Composable get() = colorResource(R.color.foreground)
     val muted: Color @Composable get() = colorResource(R.color.muted)
     val accent: Color @Composable get() = colorResource(R.color.accent)

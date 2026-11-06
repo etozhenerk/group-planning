@@ -77,7 +77,8 @@ struct InvitationOwnerTests {
         #expect(
             context.owner.answer == .going && context.owner.canAccess
                 && context.owner.pending == nil
-                && context.owner.completedResponse == .going(context.id))
+                && context.owner.completedResponse == .going(context.id, publicToken: context.token)
+        )
         let requests = await context.harness.transport.requests.filter { $0.httpMethod == "PUT" }
         #expect(requests.count == 2 && requests.first?.httpBody == requests.last?.httpBody)
         #expect(

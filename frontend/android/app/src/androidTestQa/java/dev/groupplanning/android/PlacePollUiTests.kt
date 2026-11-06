@@ -43,7 +43,7 @@ class PlacePollUiTests {
     }
 
     @Test fun createRetryAndRevoteWithoutEarlyPlaceChange() {
-        fixture.launch("place-owner").use {
+        fixture.launch("place-owner").use { activity ->
             open("100")
             compose.onNodeWithTag("meeting-add").performClick()
             compose.onNodeWithTag("new-place-poll").performClick()
@@ -53,21 +53,22 @@ class PlacePollUiTests {
                 .performTextInput("Есть стол на всех и тихий зал")
             fixture.device.pressBack()
             compose.onNodeWithTag("place-poll-create").assertIsDisplayed().performClick()
-            fixture.waitTag("place-poll-error")
+            fixture.waitText(fixture.context.getString(R.string.poll_create_unknown_title))
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             fixture.screenshot("android-place-create-error")
             fixture.closeActionSheet()
-            fixture.waitAbsent("chat-action-sheet")
-            compose.onNodeWithTag("meeting-add").performClick()
-            compose.onNodeWithTag("new-place-poll").performClick()
-            fixture.waitTag("place-poll-error")
+            compose.onNodeWithTag("chat-action-sheet").assertIsDisplayed()
+            activity.recreate()
+            fixture.waitText(fixture.context.getString(R.string.poll_create_unknown_title))
             compose.onNodeWithTag("place-poll-place").assertTextContains("Кафе у парка")
             compose.onNodeWithTag("place-poll-explanation")
                 .assertTextContains("Есть стол на всех и тихий зал")
             compose.onNodeWithTag("place-poll-create").assertIsDisplayed().performClick()
             fixture.waitTag("place-vote-for")
             compose.onNodeWithText("Есть стол на всех и тихий зал").assertExists()
+            compose.onNodeWithTag("feed-timeline").performScrollToNode(hasText("Опрос"))
             compose.onNodeWithText("Опрос").assertIsDisplayed()
+            compose.onNodeWithTag("feed-timeline").performScrollToNode(hasTestTag("place-vote-for"))
             assertTrue(
                 "Poll deadline must follow the vote controls",
                 compose.onNodeWithTag("place-poll-status").fetchSemanticsNode().boundsInRoot.top >=

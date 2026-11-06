@@ -12,6 +12,7 @@ import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -222,7 +223,15 @@ class SavedInvitationsUiTests {
             }}",
         ).fetchSemanticsNodes().isNotEmpty()
         val action = compose.onNode(hasText(answer) and hasClickAction())
-        if (!public) action.performScrollTo()
+        if (!public) {
+            if (compose.onAllNodes(hasTestTag("meeting-information-rsvp"))
+                    .fetchSemanticsNodes().isEmpty()
+            ) {
+                compose.onNodeWithTag("information-change-answer").performClick()
+            }
+            fixture.waitTag("meeting-information-rsvp")
+            action.performScrollTo()
+        }
         action.performClick()
     }
 }

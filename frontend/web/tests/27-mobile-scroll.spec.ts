@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
-import { apiCreate, login, writeHeaders } from '@tests/helpers';
+import { meetingInfoSurface, apiCreate, login, writeHeaders } from '@tests/helpers';
 import { designTokens } from '@/shared/config/design-tokens';
 
 const expectFitsWidth = async (element: Locator) => {
@@ -113,7 +113,7 @@ for (const width of [320, 402, 430]) {
 
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
     await page.getByRole('button', { name: 'Информация о встрече' }).click();
-    const dialog = page.getByRole('dialog', { name: created.meeting.title });
+    const dialog = meetingInfoSurface(page, created.meeting.title);
     await expect(
       dialog.getByRole('heading', { name: created.meeting.title, exact: true }),
     ).toHaveText(created.meeting.title);
@@ -169,7 +169,7 @@ test('chat and sheet follow the visible viewport without creating a second page 
   await expectFitsWidth(page.locator('html'));
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(874);
   await page.getByRole('button', { name: 'Информация о встрече' }).click();
-  const dialog = page.getByRole('dialog', { name: created.meeting.title });
+  const dialog = meetingInfoSurface(page, created.meeting.title);
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expectFitsWidth(dialog);
   const bounds = await dialog.boundingBox();
@@ -199,17 +199,19 @@ test('closing a mobile sheet restores the background position and permits normal
 }) => {
   await page.setViewportSize({ width: 402, height: 600 });
   await login(page, 'Саша');
-  await page.goto('/meetings/new');
+  await page.getByRole('link', { name: 'Создать встречу', exact: true }).click();
   await page
     .getByRole('textbox', { name: 'Название', exact: true })
     .fill('Несохранённая встреча');
-  const cancel = page.getByRole('link', { name: 'Отмена', exact: true });
-  await cancel.scrollIntoViewIfNeeded();
+  await page.evaluate(() =>
+    scrollTo(0, document.documentElement.scrollHeight - innerHeight),
+  );
   const before = await page.evaluate(() => scrollY);
-  const profile = cancel;
+  const profile = page.getByRole('textbox', { name: 'Название', exact: true });
   const profileBefore = await profile.boundingBox();
   expect(before).toBeGreaterThan(0);
-  await cancel.click();
+  // Browser Back opens the approved dirty guard without first scrolling the header into view.
+  await page.goBack();
   const dialog = page.getByRole('dialog', { name: 'Выйти из формы?' });
   await expect(dialog).toHaveAttribute('data-motion', 'open');
   await expect(page.locator('body')).toHaveCSS('position', 'fixed');

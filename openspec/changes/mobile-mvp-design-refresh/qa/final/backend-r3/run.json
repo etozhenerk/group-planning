@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "planHash": "6bd7e33feddafed3f371243c7253207af74dbaafaab7382479aa00d9857f5b9e",
+  "checks": [
+    {
+      "id": "TC-INVITE-PUBLIC-ORGANIZER/public-organizer-api-r3/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-public-organizer-final-backend-r3"
+      },
+      "startedAt": "2026-11-06T13:53:40.043Z",
+      "finishedAt": "2026-11-06T13:55:18.966Z",
+      "actual": "Fresh own HTTPS9150 current API: public/signed/repeated previews show identical real PublicUser id/display_name/avatar_url only; private contacts/profile/roster/chat absent; RSVPnull/revision0, protectedresources403, roster/feed/savedlist unchanged; invalidtoken404 noidentity. Fresh QA-only TLS overlay missingrealidentity/disabledidentity omitsorganizer preservinglegacyfields; historical3e25d63c DTO decoded all4newresponses. Required official backend-unit-integration executed after freshR3plan and passed (Go cache reported). No supplementalfullrace repeated perroot, no oldpasscopied. Source/catalog unchanged; ownmemoryfixture stopped.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "evidence/interaction.json",
+          "kind": "interaction",
+          "sha256": "722b639cd22882a316aa9d61aef938ac671186df4f53df6813c87a0ec87caeb5"
+        },
+        {
+          "path": "evidence/public-preview.json",
+          "kind": "raw",
+          "sha256": "58f9b6a09cd26952c09b311243f283c4b74899781f17708cf30294041999d993"
+        },
+        {
+          "path": "evidence/signed-preview.json",
+          "kind": "raw",
+          "sha256": "58f9b6a09cd26952c09b311243f283c4b74899781f17708cf30294041999d993"
+        },
+        {
+          "path": "evidence/invalid-preview.json",
+          "kind": "raw",
+          "sha256": "a002887f45e12770d23a8903d120fc90a6574291b29f2f5bd4c0a5622ff744c3"
+        },
+        {
+          "path": "evidence/public-summary.json",
+          "kind": "raw",
+          "sha256": "d82db7be7979037f155abc9c1e53c42f6d1b23f79a62644757798b932f25e5d0"
+        },
+        {
+          "path": "evidence/missing-identity-preview.json",
+          "kind": "raw",
+          "sha256": "a5d54e4fba53137eec687099ab664facece44627fafda44fd57141acffa4bfab"
+        },
+        {
+          "path": "evidence/no-identity-service-preview.json",
+          "kind": "raw",
+          "sha256": "a5d54e4fba53137eec687099ab664facece44627fafda44fd57141acffa4bfab"
+        },
+        {
+          "path": "evidence/optional-identity-http.log",
+          "kind": "log",
+          "sha256": "6ed779948ebd12c24aa27a3060507d42438c22defc30c34d27a0cfc77bc9c9fb"
+        },
+        {
+          "path": "evidence/public_organizer_qa_test.go",
+          "kind": "raw",
+          "sha256": "e4a159191ba4ea4a0760c18d1f259acfd489e1894010de73d41469c2d985ce60"
+        },
+        {
+          "path": "evidence/legacy-decoder.log",
+          "kind": "log",
+          "sha256": "5d5000316e33e2feacc87a7aa53ebe9075fd3ffdbe6195ce072aceef99569f9e"
+        },
+        {
+          "path": "evidence/legacy-web-3e25d63c/source-index.json",
+          "kind": "raw",
+          "sha256": "55646ac57ec17089393d72a7c9738db58b2ccf96e9b9cdf34dac5b0ae13de713"
+        },
+        {
+          "path": "inputs-before.json",
+          "kind": "raw",
+          "sha256": "2c7b8b009a07808e123ffc7a775010eec2732356667d1a1231fb57538c0d0fad"
+        },
+        {
+          "path": "inputs-after.json",
+          "kind": "raw",
+          "sha256": "7959a672a0c8fa1f1e44d69fcccd33c77b2c49770c79023850e6ad8d9cae066a"
+        },
+        {
+          "path": "server-process.json",
+          "kind": "raw",
+          "sha256": "e93cea939a5819afc3b768951976d080913675adba558e8281775dbc52f925ef"
+        },
+        {
+          "path": "cleanup.json",
+          "kind": "raw",
+          "sha256": "7b72a24aec03503373948c36dfae7b51e53fac26c904a1e1aa633f33d4af1899"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "backend-unit-integration",
+      "status": "passed",
+      "commandHash": "5bbfa8af0436461b926ea6760e3493f6c9c5bfb85e890a9da130344d32a629e4",
+      "startedAt": "2026-11-06T13:53:40.681Z",
+      "finishedAt": "2026-11-06T13:53:41.625Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "suites/backend-unit-integration-1793973220682.txt",
+          "kind": "log",
+          "sha256": "e3a9664b32a88b45f8c5e402aaae86863962a21a36819bd073517e1f242ad348"
+        }
+      ]
+    }
+  ]
+}

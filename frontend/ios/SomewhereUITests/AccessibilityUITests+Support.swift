@@ -70,10 +70,6 @@ extension AccessibilityUITests {
     }
 
     func reveal(_ element: XCUIElement, in scroll: XCUIElement) {
-        for _ in 0..<8 {
-            if element.isHittable { return }
-            scroll.swipeUp()
-        }
-        XCTAssertTrue(element.isHittable)
+        ChatSheetTestSupport.reveal(element, in: scroll, app: XCUIApplication())
     }
 }

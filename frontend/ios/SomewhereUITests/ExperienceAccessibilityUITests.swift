@@ -87,7 +87,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
         for stage in ["full", "partial", "clear"] {
             let skip = app.buttons["Пропустить знакомство"]
             if skip.waitForExistence(timeout: 2), skip.isHittable { skip.tap() }
-            let login = app.buttons["Попробовать"]
+            let login = app.buttons["Войти через Яндекс ID"]
             XCTAssertTrue(login.waitForExistence(timeout: 10))
             login.tap()
             let profile = app.buttons["home-tab-person.crop.circle"]
@@ -155,13 +155,13 @@ final class ExperienceAccessibilityUITests: XCTestCase {
         _ = ChatSheetTestSupport.launch(application: app)
         try gate.configure(path: "/api/v1/me/profile", mode: "unavailable")
         app.buttons["home-tab-person.crop.circle"].tap()
-        XCTAssertTrue(app.staticTexts["Не удалось загрузить профиль"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Профиль не загрузился"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["Не указана"].exists)
         ExperienceScreenshot.save("profile-error", test: self)
         try gate.release()
-        app.buttons["Попробовать ещё раз"].tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts["Не удалось загрузить профиль"].exists)
+        app.buttons["Повторить"].tap()
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["Профиль не загрузился"].exists)
         ExperienceScreenshot.save("profile-retry", test: self)
     }
     func testRevokedSessionCannotReopenCachedMemories() async throws {

@@ -33,6 +33,7 @@ import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.ApiInstant
 import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.ui.theme.DesignTokens
+import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
 internal fun FeedMessage(
@@ -137,7 +138,7 @@ internal fun FeedMessage(
                             ) {
                                 Color.Transparent
                             } else if (own) {
-                                DesignTokens.colorOwnMessage
+                                Palette.ownMessage
                             } else {
                                 DesignTokens.colorSurface
                             },

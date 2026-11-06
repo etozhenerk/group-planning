@@ -121,7 +121,9 @@ class ComposerOutsideTapUiTests {
             place.assertIsFocused().assertTextEquals("Кафе у парка")
             fixture.screenshot("composer-outside-sheet-input-ime-visible")
             fixture.closeActionSheet()
-            fixture.waitAbsent("chat-action-sheet")
+            fixture.stayInDirtyForm()
+            place.assertTextEquals("Кафе у парка")
+            fixture.discardDirtyForm()
             assertDismissedDraft()
             assertDraftRange()
             fixture.screenshot("composer-outside-sheet-return-ime-hidden")
@@ -166,9 +168,11 @@ class ComposerOutsideTapUiTests {
             fixture.waitTag("reaction-quick")
             compose.onNodeWithTag("message-composer").assertTextEquals(DRAFT)
             fixture.screenshot("composer-outside-long-press-reaction")
+            val reactions = ReactionUiFixture(compose)
+            val before = reactions.state("👍")
             compose.onNodeWithText("👍").performTouchInput { click() }
             fixture.waitAbsent("reaction-quick")
-            fixture.waitText("👍 1 ✓")
+            reactions.waitState("👍", before.first + if (before.second) -1 else 1, !before.second)
         }
     }
 

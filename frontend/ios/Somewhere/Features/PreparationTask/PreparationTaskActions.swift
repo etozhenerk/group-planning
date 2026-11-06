@@ -41,7 +41,7 @@ struct PreparationTaskActions: View {
                     } else if inline {
                         ChatInlineAction(
                             title: action == .accept ? "Взять на себя" : label,
-                            busy: owner.busy && owner.sendingAction == action, fillWidth: true
+                            busy: owner.busy && owner.sendingAction == action
                         ) {
                             Task { await owner.act(action) }
                         }.disabled(!owner.editable).accessibilityIdentifier(

@@ -46,9 +46,14 @@ enum ChatSheetTestSupport {
             if keyboard.exists {
                 viewport.size.height = min(viewport.maxY, keyboard.frame.minY) - viewport.minY
             }
-            let submit = app.buttons["support-submit"]
-            if submit.exists && submit.isHittable && element != submit {
-                viewport.size.height = min(viewport.maxY, submit.frame.minY - 8) - viewport.minY
+            for identifier in [
+                "support-submit", "create-submit", "poll-create", "place-poll-create",
+                "preparation-create", "settings-save",
+            ] {
+                let submit = app.buttons[identifier]
+                if submit.exists && submit.isHittable && element != submit {
+                    viewport.size.height = min(viewport.maxY, submit.frame.minY - 8) - viewport.minY
+                }
             }
             let top = viewport.minY + 8
             let bottom = viewport.maxY - 8
@@ -125,6 +130,23 @@ enum ChatSheetTestSupport {
         let start = origin.withOffset(CGVector(dx: app.frame.midX, dy: close.frame.midY))
         let end = origin.withOffset(CGVector(dx: app.frame.midX, dy: app.frame.maxY - 20))
         start.press(forDuration: 0.1, thenDragTo: end)
+    }
+
+    static func stayAfterDirtySwipe(
+        _ app: XCUIApplication, headerIdentifier: String = "action-form-header"
+    ) {
+        if app.buttons["action-keyboard-done"].isHittable {
+            app.buttons["action-keyboard-done"].tap()
+        }
+        let header = app.staticTexts[headerIdentifier]
+        let originalTitle = header.label
+        swipeDownFromHeader(app, headerIdentifier: headerIdentifier)
+        let stay = app.buttons["Продолжить редактирование"]
+        XCTAssertTrue(stay.waitForExistence(timeout: 5))
+        XCTAssertEqual(header.label, "Выйти без сохранения?")
+        stay.tap()
+        XCTAssertTrue(header.waitForExistence(timeout: 5))
+        XCTAssertEqual(header.label, originalTitle)
     }
 
     static func openAction(_ identifier: String, app: XCUIApplication) {

@@ -62,7 +62,8 @@ struct HomeView: View {
             }
             .navigationDestination(for: HomeDestination.self) { destination in
                 switch destination {
-                case .meeting(let id): MeetingSnapshotView(id: id, session: session)
+                case .meeting(let id, let publicToken):
+                    MeetingSnapshotView(id: id, session: session, publicToken: publicToken)
                 case .declined(let title):
                     DeclinedResponseScreen(title: title) {
                         section = .meetings
@@ -94,9 +95,9 @@ struct HomeView: View {
         .onChange(of: responseDestination) { _, destination in
             guard let destination else { return }
             switch destination {
-            case .going(let id):
+            case .going(let id, let publicToken):
                 section = .meetings
-                path = [.meeting(id)]
+                path = [.meeting(id, publicToken: publicToken)]
             case .maybe:
                 savedInvitations.invalidate()
                 refreshID = UUID()

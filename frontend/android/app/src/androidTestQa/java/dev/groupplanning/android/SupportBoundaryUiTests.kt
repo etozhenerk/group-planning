@@ -74,7 +74,13 @@ class SupportBoundaryUiTests {
             assertNotEquals(first.id, second.id)
             assertNotEquals(first.reference, second.reference)
             compose.onNodeWithTag("support-success-back").performClick()
-            fixture.waitText(fixture.context.getString(R.string.help_title_new))
+            fixture.waitTag("service-page")
+            compose.waitUntil(10_000) {
+                compose.onAllNodes(
+                    hasText(fixture.context.getString(R.string.help_title)) and
+                        hasAnyAncestor(hasTestTag("service-page")),
+                ).fetchSemanticsNodes().isNotEmpty()
+            }
             compose.onNodeWithContentDescription("Назад").performClick()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()

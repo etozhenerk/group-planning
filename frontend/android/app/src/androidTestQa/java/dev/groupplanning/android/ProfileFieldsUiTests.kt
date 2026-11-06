@@ -37,7 +37,7 @@ class ProfileFieldsUiTests {
                     compose.onNodeWithText("Пропустить").performClick()
                 }
                 ProfileFieldsLoginSupport(stage).use {
-                    compose.onNodeWithContentDescription("Попробовать").performClick()
+                    compose.onNodeWithContentDescription("Войти через Яндекс ID").performClick()
                     fixture.waitTag("home-profile")
                 }
                 compose.onNodeWithTag("home-profile").performClick()

@@ -51,7 +51,7 @@ export const AlbumBody = ({ photos, user, album, query, open }: AlbumBodyProps) 
           <AlbumPhotos photos={photos} user={user} album={album} open={open} />
           {!mobile && (
             <div className={styles.counter}>
-              <span aria-live="polite">
+              <span aria-live="polite" data-testid="album-counter">
                 {album.index + 1} / {photos.length}
                 {query.hasNextPage ? ' +' : ''}
               </span>

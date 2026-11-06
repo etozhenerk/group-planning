@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
-import { apiCreate, login, writeHeaders } from '@tests/helpers';
+import { meetingInfoSurface, apiCreate, login, writeHeaders } from '@tests/helpers';
 
 test.use({ hasTouch: true });
 
@@ -203,7 +203,7 @@ test('settings and sharing return to the same information sheet and retain the d
   await page.goto(`/meetings/${meeting.id}`);
   await page.getByLabel('Сообщение', { exact: true }).fill('Черновик сообщения');
   await page.getByRole('button', { name: 'Информация о встрече' }).click();
-  const info = page.getByRole('dialog', { name: meeting.title, exact: true });
+  const info = meetingInfoSurface(page, meeting.title);
   await info.getByRole('button', { name: 'Настройки встречи' }).click();
   const settings = page.getByRole('dialog', { name: 'Настройки встречи' });
   await expect(page.locator('dialog:modal')).toHaveCount(1);
@@ -215,13 +215,17 @@ test('settings and sharing return to the same information sheet and retain the d
   ).toHaveCSS('font-size', '16px');
   await page.screenshot({ path: test.info().outputPath('meeting-settings-draft.png') });
   await page.goBack();
-  await expect(info).toBeVisible();
-  await expect(info.getByRole('button', { name: 'Настройки встречи' })).toBeFocused();
-  await info.getByRole('button', { name: 'Настройки встречи' }).click();
+  const guard = page.getByRole('dialog', { name: 'Выйти без сохранения?', exact: true });
+  await guard
+    .getByRole('button', { name: 'Продолжить редактирование', exact: true })
+    .click();
   await expect(
     settings.getByRole('textbox', { name: 'Название', exact: true }),
   ).toHaveValue('Несохранённое название');
   await settings.getByRole('button', { name: 'Закрыть', exact: true }).click();
+  await guard.getByRole('button', { name: 'Выйти без сохранения', exact: true }).click();
+  await expect(info).toBeVisible();
+  await expect(info.getByRole('button', { name: 'Настройки встречи' })).toBeFocused();
   await info.getByRole('button', { name: 'Пригласить друзей' }).click();
   const share = page.getByRole('dialog', { name: 'Пригласить друзей', exact: true });
   await expect(page.locator('dialog:modal')).toHaveCount(1);

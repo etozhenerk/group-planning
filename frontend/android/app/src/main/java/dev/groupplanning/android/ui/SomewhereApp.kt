@@ -98,7 +98,9 @@ internal fun SomewhereApp(model: AppViewModel) {
                 model::leaveDeletion,
             )
         }
-        if (auth.problem) {
+        if (auth.problem &&
+            (route as? AppRoute.Invitation)?.model?.target is InvitationTarget.Token
+        ) {
             AlertDialog(
                 onDismissRequest = model.signIn::dismissProblem,
                 title = { Text(stringResource(R.string.auth_failed)) },
@@ -173,6 +175,7 @@ internal fun SomewhereApp(model: AppViewModel) {
                                         key(returningToMeeting) {
                                             OnboardingScreen(
                                                 authenticating = auth.busy,
+                                                problem = auth.problem,
                                                 signIn = model::startSignIn,
                                                 startWithSignIn = returningToMeeting,
                                             )

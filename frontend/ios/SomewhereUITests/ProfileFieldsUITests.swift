@@ -15,7 +15,7 @@ final class ProfileFieldsUITests: XCTestCase {
         for stage in ["full", "partial", "clear"] {
             let skip = app.buttons["Пропустить знакомство"]
             if skip.waitForExistence(timeout: 3), skip.isHittable { skip.tap() }
-            let signIn = app.buttons["Попробовать"]
+            let signIn = app.buttons["Войти через Яндекс ID"]
             XCTAssertTrue(signIn.waitForExistence(timeout: 10))
             signIn.tap()
             let profile = app.buttons["home-tab-person.crop.circle"]

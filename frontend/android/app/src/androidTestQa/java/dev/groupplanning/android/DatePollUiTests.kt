@@ -1,14 +1,16 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Before
@@ -29,20 +31,19 @@ class DatePollUiTests {
     }
 
     @Test fun createVoteAndApplyDateWithoutTime() {
-        fixture.launch("poll-owner", "UFBQUFBQUFBQUFBQUFBQUA").use {
+        fixture.launch("poll-owner", "UFBQUFBQUFBQUFBQUFBQUA").use { activity ->
             fixture.waitTag("meeting-add")
             compose.onNodeWithTag("meeting-add").performClick()
             compose.onNodeWithTag("new-date-poll").performClick()
             fixture.waitTag("poll-create")
             fixture.screenshot("poll-create")
             compose.onNodeWithTag("poll-create").assertIsDisplayed().performClick()
-            fixture.waitTag("poll-error")
+            fixture.waitText(fixture.context.getString(R.string.poll_create_unknown_title))
             fixture.screenshot("poll-create-uncertain")
             fixture.closeActionSheet()
-            fixture.waitAbsent("chat-action-sheet")
-            compose.onNodeWithTag("meeting-add").performClick()
-            compose.onNodeWithTag("new-date-poll").performClick()
-            fixture.waitTag("poll-error")
+            compose.onNodeWithTag("chat-action-sheet").assertIsDisplayed()
+            activity.recreate()
+            fixture.waitText(fixture.context.getString(R.string.poll_create_unknown_title))
             fixture.screenshot("poll-create-restored")
             compose.onNodeWithTag("poll-create").assertIsDisplayed().performClick()
             fixture.waitAbsent("chat-action-sheet")
@@ -56,8 +57,9 @@ class DatePollUiTests {
             compose.onNodeWithText("Проголосовать").assertDoesNotExist()
             fixture.screenshot("poll-applied")
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
-            fixture.waitText("26 октября 2026 · Время пока не выбрано")
-            compose.onNodeWithText("26 октября 2026 · Время пока не выбрано").assertIsDisplayed()
+            fixture.waitText("Время пока не выбрано")
+            compose.onNodeWithText("26 октября 2026").assertIsDisplayed()
+            compose.onNodeWithText("Время пока не выбрано").assertIsDisplayed()
             fixture.screenshot("poll-date-only-details")
         }
     }
@@ -80,17 +82,22 @@ class DatePollUiTests {
             compose.onNodeWithText("Оставить без времени").performClick()
             fixture.waitText("Опрос завершён · дата выбрана")
             compose.onNodeWithContentDescription("Информация о встрече").performClick()
-            fixture.waitText("8 марта 2026 · Время пока не выбрано")
+            fixture.waitText("Время пока не выбрано")
+            compose.onNodeWithText("8 марта 2026").assertIsDisplayed()
         }
     }
 
     @Test fun cancelledHiddenPollHasNoTotalsOrActions() {
         fixture.launch("poll-hidden").use {
-            compose.onNodeWithText("Прошедшие").performScrollTo().performClick()
+            compose.onNodeWithText("Прошедшие").assertIsDisplayed().performClick()
             open("400")
             fixture.waitText("Опрос завершён")
-            compose.onNodeWithTag("poll-option-2026-10-25")
-                .assertTextContains("25 октября, воскресенье").assertIsNotEnabled()
+            val option = hasAnyAncestor(hasTestTag("poll-option-2026-10-25"))
+            compose.onNode(hasText("25 октября") and option).assertIsDisplayed()
+            compose.onNode(hasText("Воскресенье") and option).assertIsDisplayed()
+            compose.onNode(
+                option and SemanticsMatcher.keyIsDefined(SemanticsProperties.ToggleableState),
+            ).assertIsNotEnabled()
             compose.onNodeWithText("1").assertDoesNotExist()
             compose.onNodeWithText("Проголосовать").assertDoesNotExist()
             compose.onNodeWithText("Добавить дату").assertDoesNotExist()

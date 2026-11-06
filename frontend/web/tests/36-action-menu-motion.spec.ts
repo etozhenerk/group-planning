@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { apiCreate, login } from '@tests/helpers';
+import { actionSurface, apiCreate, login } from '@tests/helpers';
 import {
   controlSurfaceMotion,
   finishSurfaceMotion,
@@ -69,9 +69,7 @@ for (const width of [390, 1440]) {
     await finishSurfaceMotion(menu);
     await expect(menu).toHaveAttribute('data-motion', 'open');
     await menu.getByRole('menuitem', { name: 'Предложить дату' }).click();
-    await expect(
-      page.getByRole('dialog', { name: 'Новая дата встречи', exact: true }),
-    ).toBeVisible();
+    await expect(actionSurface(page, 'Новая дата встречи')).toBeVisible();
     await expect(menu).toHaveAttribute('data-motion', 'closing');
     await expect(menu).toHaveAttribute('inert', '');
     await expect(input).toHaveValue('Черновик под меню');
@@ -129,7 +127,7 @@ for (const width of [390, 1440]) {
       ['file', 'Отправить файл'],
     ] as const) {
       await page.goto(`/meetings/${meeting.id}?action=${action}`);
-      const dialog = page.getByRole('dialog', { name: title, exact: true });
+      const dialog = actionSurface(page, title);
       await expect(dialog).toHaveAttribute('data-motion', 'open');
       await dialog.evaluate((element) => {
         element.setAttribute('data-exit-probe', 'true');
@@ -161,7 +159,8 @@ for (const width of [390, 1440]) {
         .filter(Boolean);
 
       expect(observed.length).toBeGreaterThan(0);
-      expect(observed.every((value) => value === title)).toBe(true);
+      const expectedTitle = action === 'date' && width < 740 ? 'Предложить дату' : title;
+      expect(observed.every((value) => value === expectedTitle)).toBe(true);
     }
   });
 }

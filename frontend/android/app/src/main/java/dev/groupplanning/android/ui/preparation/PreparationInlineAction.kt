@@ -1,7 +1,6 @@
 package dev.groupplanning.android.ui.preparation
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,7 +24,7 @@ internal fun PreparationInlineAction(
 ) {
     Surface(
         act,
-        modifier.fillMaxWidth().heightIn(min = DesignTokens.targetAndroid),
+        modifier.heightIn(min = DesignTokens.targetAndroid),
         enabled = enabled && !busy,
         shape = RoundedCornerShape(DesignTokens.componentMobileChatInlineActionRadius),
         color = DesignTokens.colorAction,

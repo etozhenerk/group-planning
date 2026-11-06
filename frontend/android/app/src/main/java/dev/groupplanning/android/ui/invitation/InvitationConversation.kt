@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -50,11 +51,39 @@ internal fun InvitationConversation(
     var information by rememberSaveable(id.toString()) { mutableStateOf(false) }
     var settingsSaved by rememberSaveable(id.toString()) { mutableStateOf(false) }
     var infoChild by rememberSaveable(id.toString()) { mutableStateOf<String?>(null) }
+    var sharePending by remember(id) { mutableStateOf(false) }
+    val context = LocalContext.current
+    val shareTitle = stringResource(R.string.invitation_share)
     val feedState = feed?.state?.collectAsStateWithLifecycle()?.value
     val share: () -> Unit = {
         settingsSaved = false
-        information = true
-        infoChild = "share"
+        val url = state.shareUrl
+        when {
+            state.issue == InvitationIssue.Share -> {
+                information = true
+                infoChild = "share"
+            }
+            url != null -> launchInvitationShare(context, url, shareTitle)
+            !sharePending -> {
+                sharePending = true
+                if (!state.loading) reload()
+            }
+        }
+    }
+    LaunchedEffect(sharePending, state.shareUrl, state.loading, state.issue) {
+        if (sharePending) {
+            val url = state.shareUrl
+            if (!state.loading &&
+                state.issue in listOf(InvitationIssue.Share, InvitationIssue.Load)
+            ) {
+                sharePending = false
+                information = true
+                infoChild = "share"
+            } else if (url != null) {
+                sharePending = false
+                launchInvitationShare(context, url, shareTitle)
+            }
+        }
     }
     LaunchedEffect(state.completedResponseID) {
         if (state.completedResponseID != null) {

@@ -1,7 +1,9 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
@@ -74,7 +76,7 @@ class CoverUiTests {
             compose.onAllNodes(
                 hasTestTag("meeting-cover") and hasAnyAncestor(hasTestTag("meeting-information")),
                 useUnmergedTree = true,
-            ).assertCountEquals(0)
+            ).assertCountEquals(1)
             compose.onNodeWithTag("open-settings").performScrollTo().performClick()
             fixture.waitTag("meeting-settings")
             fixture.waitTag("meeting-cover")
@@ -99,20 +101,23 @@ class CoverUiTests {
             fixture.waitTag("meeting-settings")
             compose.onNodeWithTag("cover-select").performScrollTo().performClick()
             compose.waitUntil(10_000) {
-                compose.onAllNodes(hasTestTag("cover-loading")).fetchSemanticsNodes().isEmpty()
+                val save = compose.onAllNodes(hasTestTag("settings-save")).fetchSemanticsNodes()
+                save.singleOrNull()?.config?.contains(SemanticsProperties.Disabled) == false
             }
-            compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
-            fixture.waitTag("feed-timeline")
-            compose.onNodeWithContentDescription("Информация о встрече").performClick()
+            compose.onNodeWithTag(
+                "settings-save",
+            ).assertIsDisplayed().assertIsEnabled().performClick()
+            fixture.waitAbsent("meeting-settings")
             fixture.waitTag("open-settings")
             fixture.screenshot("android-cover-replaced")
             compose.onNodeWithTag("open-settings").performScrollTo().performClick()
             fixture.waitTag("meeting-settings")
             compose.onNodeWithTag("cover-remove").performScrollTo().performClick()
             compose.onNodeWithTag("meeting-cover").assertDoesNotExist()
-            compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
-            fixture.waitTag("feed-timeline")
-            compose.onNodeWithContentDescription("Информация о встрече").performClick()
+            compose.onNodeWithTag(
+                "settings-save",
+            ).assertIsDisplayed().assertIsEnabled().performClick()
+            fixture.waitAbsent("meeting-settings")
             fixture.waitTag("open-settings")
             compose.onNodeWithTag("meeting-cover").assertDoesNotExist()
         }

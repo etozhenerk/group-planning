@@ -14,12 +14,13 @@ import okio.Buffer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNotSame
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Test
 
 class ActionDraftTests {
-    @Test fun backReopensAllActionDraftsAndRevocationClearsHiddenForms() = runTest {
+    @Test fun discardedActionDraftsReopenCleanAndRevocationClearsCurrentForms() = runTest {
         val h = FeedHarness(StandardTestDispatcher(testScheduler))
         h.login()
         h.transport.enqueue(h.path, apiJson.encodeToString(Fixtures.meeting()))
@@ -34,38 +35,41 @@ class ActionDraftTests {
         model.closePollCreation()
         assertNull(model.pollCreation.value)
         model.createPoll(Fixtures.meeting())
-        assertSame(date, model.pollCreation.value)
-        assertEquals(listOf("2026-11-01", "2026-11-02"), date.state.value.draft?.dates)
-        model.closePollCreation()
+        val freshDate = checkNotNull(model.pollCreation.value)
+        assertNotSame(date, freshDate)
+        assertFalse(freshDate.dirty)
+        assertNull(date.state.value.draft)
 
         model.createPlacePoll(Fixtures.meeting())
         val place = checkNotNull(model.placeCreation.value)
         place.change { it.copy(place = "Кафе", explanation = "Тихий зал") }
         model.closePlaceCreation()
         model.createPlacePoll(Fixtures.meeting())
-        assertSame(place, model.placeCreation.value)
-        assertEquals("Тихий зал", place.state.value.draft?.explanation)
-        model.closePlaceCreation()
+        val freshPlace = checkNotNull(model.placeCreation.value)
+        assertNotSame(place, freshPlace)
+        assertEquals("", freshPlace.state.value.draft?.explanation)
+        assertNull(place.state.value.draft)
 
         model.createPreparationTask()
         val task = checkNotNull(model.taskCreation.value)
         task.title("Заказать пиццу")
         model.closeTaskCreation()
         model.createPreparationTask()
-        assertSame(task, model.taskCreation.value)
-        assertEquals("Заказать пиццу", task.state.value.title)
-        model.closeTaskCreation()
-        model.closePollCreation()
-        model.closePlaceCreation()
-        model.closeTaskCreation()
+        val freshTask = checkNotNull(model.taskCreation.value)
+        assertNotSame(task, freshTask)
+        assertEquals("", freshTask.state.value.title)
+        assertEquals("", task.state.value.title)
         runCurrent()
         assertEquals(initialReads, h.transport.requests.filter { it.method == "GET" })
 
         h.session.updateAccess(h.id, false)
         runCurrent()
-        assertNull(date.state.value.draft)
-        assertNull(place.state.value.draft)
-        assertEquals("", task.state.value.title)
+        assertNull(freshDate.state.value.draft)
+        assertNull(freshPlace.state.value.draft)
+        assertEquals("", freshTask.state.value.title)
+        assertNull(model.pollCreation.value)
+        assertNull(model.placeCreation.value)
+        assertNull(model.taskCreation.value)
         model.createPreparationTask()
         assertNull(model.taskCreation.value)
     }
@@ -88,7 +92,7 @@ class ActionDraftTests {
         h.page()
         model.closePollCreation()
         runCurrent()
-        assertNull(model.pollCreation.value)
+        assertSame(date, model.pollCreation.value)
         model.createPoll(Fixtures.meeting())
         assertSame(date, model.pollCreation.value)
         assertSame(dateRequest, date.state.value.pending)
@@ -111,7 +115,7 @@ class ActionDraftTests {
         h.page()
         model.closePlaceCreation()
         runCurrent()
-        assertNull(model.placeCreation.value)
+        assertSame(place, model.placeCreation.value)
         model.createPlacePoll(Fixtures.meeting())
         assertSame(place, model.placeCreation.value)
         assertSame(placeRequest, place.state.value.pending)
@@ -144,7 +148,7 @@ class ActionDraftTests {
         h.page()
         model.closeTaskCreation()
         runCurrent()
-        assertNull(model.taskCreation.value)
+        assertSame(task, model.taskCreation.value)
         model.createPreparationTask()
         assertSame(task, model.taskCreation.value)
         assertSame(request, task.operation.state.value.pending)

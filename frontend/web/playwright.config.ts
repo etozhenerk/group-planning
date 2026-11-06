@@ -56,6 +56,7 @@ export default defineConfig({
         '61-composer-outside-focus.spec.ts',
         '62-mobile-meetings.spec.ts',
         '63-rsvp-routing.spec.ts',
+        '65-mobile-onboarding.spec.ts',
       ],
       use: {
         ...devices['iPhone 13 Pro'],

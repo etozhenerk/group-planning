@@ -6,6 +6,8 @@ final class OnboardingPagerController: UIViewController, UIScrollViewDelegate {
     var settled: ((OnboardingSlide) -> Void)?
     var moving: ((Bool) -> Void)?
     var reduceMotion = false
+    var interactionEnabled = true { didSet { scroll.isScrollEnabled = interactionEnabled } }
+    private var animator: UIViewPropertyAnimator?
     private let scroll = UIScrollView()
     private var pages: [UIViewController] = []
     private var lastRequest: OnboardingSlide?
@@ -82,12 +84,32 @@ final class OnboardingPagerController: UIViewController, UIScrollViewDelegate {
             guard let self, target == slide else { return }
             moving?(true)
             let animated = !reduceMotion && view.window != nil
-            scroll.setContentOffset(offset, animated: animated)
-            if !animated { finish() }
+            animate(to: offset, animated: animated)
+        }
+    }
+
+    private func animate(to offset: CGPoint, animated: Bool) {
+        animator?.stopAnimation(true)
+        if animated {
+            let next = UIViewPropertyAnimator(
+                duration: DesignTokens.motionDurationNavigation, curve: .easeOut
+            ) {
+                self.scroll.contentOffset = offset
+            }
+            next.addCompletion { [weak self, weak next] position in
+                guard let self, let next, self.animator === next, position == .end else { return }
+                self.finish()
+            }
+            animator = next
+            next.startAnimation()
+        } else {
+            scroll.setContentOffset(offset, animated: false)
+            finish()
         }
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        animator?.stopAnimation(true)
         target = nil
         moving?(true)
     }
@@ -119,8 +141,7 @@ final class OnboardingPagerController: UIViewController, UIScrollViewDelegate {
         for (index, page) in pages.enumerated() {
             let distance = reduceMotion ? 0 : min(1, abs(CGFloat(index) - progress))
             page.view.alpha = 1 - distance * 0.25
-            page.view.transform = CGAffineTransform(translationX: 0, y: distance * 8)
-                .scaledBy(x: 1 - distance * 0.025, y: 1 - distance * 0.025)
+            page.view.transform = .identity
         }
     }
 }

@@ -1,17 +1,26 @@
 package dev.groupplanning.android
 
 import android.app.LocaleManager
-import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
 import android.os.SystemClock
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.lifecycle.ActivityLifecycleCallback
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
+import androidx.test.runner.lifecycle.Stage
 import org.junit.rules.ExternalResource
 
 internal class QaAppLocaleRule(private val persistentNamespace: String? = null) :
     ExternalResource() {
     private var original: LocaleList? = null
     private var manager: LocaleManager? = null
+    private val observed = mutableListOf<Pair<String, String>>()
+    private val activityLocale = ActivityLifecycleCallback { activity, stage ->
+        if (activity is MainActivity && stage == Stage.RESUMED) {
+            observed +=
+                activity.javaClass.name to activity.resources.configuration.locales.toLanguageTags()
+        }
+    }
 
     override fun before() {
         check(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -31,6 +40,10 @@ internal class QaAppLocaleRule(private val persistentNamespace: String? = null) 
         }
         try {
             applyLocales(LocaleList.forLanguageTags("ru-RU"))
+            instrumentation.runOnMainSync {
+                observed.clear()
+                ActivityLifecycleMonitorRegistry.getInstance().addLifecycleCallback(activityLocale)
+            }
         } catch (failure: Throwable) {
             // ExternalResource.after is not called when before itself fails.
             try {
@@ -44,7 +57,25 @@ internal class QaAppLocaleRule(private val persistentNamespace: String? = null) 
 
     override fun after() {
         val locales = original ?: return
-        applyLocales(locales)
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        try {
+            instrumentation.runOnMainSync {
+                ActivityLifecycleMonitorRegistry.getInstance().removeLifecycleCallback(
+                    activityLocale,
+                )
+                check(observed.isNotEmpty()) { "No MainActivity locale was observed" }
+                check(
+                    observed.all { (_, tags) ->
+                        LocaleList.forLanguageTags(tags)[0].language ==
+                            "ru"
+                    },
+                ) {
+                    "Actual Activity locale differs from Russian: $observed"
+                }
+            }
+        } finally {
+            applyLocales(locales)
+        }
     }
 
     private fun applyLocales(locales: LocaleList) {
@@ -55,25 +86,18 @@ internal class QaAppLocaleRule(private val persistentNamespace: String? = null) 
                 localeManager.applicationLocales = locales
             }
         }
-        val expected = if (locales.isEmpty) Resources.getSystem().configuration.locales else locales
-        val expectedLanguage = expected[0].toLanguageTag()
         val deadline = SystemClock.uptimeMillis() + 5_000
         var requested = ""
-        var effective = ""
         while (SystemClock.uptimeMillis() < deadline) {
             instrumentation.waitForIdleSync()
             var applied = false
             instrumentation.runOnMainSync {
-                val actual = instrumentation.targetContext.resources.configuration.locales
                 requested = localeManager.applicationLocales.toLanguageTags()
-                effective = actual.toLanguageTags()
-                applied = localeManager.applicationLocales == locales &&
-                    !actual.isEmpty &&
-                    actual[0].toLanguageTag() == expectedLanguage
+                applied = localeManager.applicationLocales == locales
             }
             if (applied) return
             SystemClock.sleep(25)
         }
-        error("QA locale not applied: expected=$locales requested=$requested effective=$effective")
+        error("QA locale not applied: expected=$locales requested=$requested")
     }
 }

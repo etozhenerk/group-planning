@@ -56,7 +56,7 @@ extension InvitationOwner {
         guard let session, current else { return }
         let id: UUID
         switch target {
-        case .meeting(let value): id = value
+        case .meeting(let value, _): id = value
         case .token:
             guard let value = preview?.meetingID else { return }
             id = value
@@ -118,7 +118,25 @@ extension InvitationOwner {
             } else if status == 403 || error as? ClientFailure == .accessRevoked {
                 session.updateMeetingAccess(id, allowed: false)
                 if case .meeting = target {
-                    problem = "Доступ к встрече изменился. Откройте исходное приглашение."
+                    canAccess = false
+                    organizer = false
+                    shareURL = nil
+                    if publicToken != nil {
+                        do {
+                            try await loadPublicPreview(version: version)
+                        } catch {
+                            guard current, generation == version else { return }
+                            preview = nil
+                            answer = nil
+                            choice = nil
+                            problem = "Не удалось открыть приглашение"
+                        }
+                    } else {
+                        preview = nil
+                        answer = nil
+                        choice = nil
+                        problem = "Доступ к встрече изменился. Откройте исходное приглашение."
+                    }
                 }
             } else {
                 responseProblem = "Не удалось обновить данные встречи. Попробуйте ещё раз."

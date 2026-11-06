@@ -23,18 +23,18 @@ final class AccessibilityUITests: XCTestCase {
     func testOnboardingPages() throws {
         let app = launch("onboarding")
         XCTAssertTrue(app.buttons["Далее"].waitForExistence(timeout: 10))
-        for page in 1...5 {
+        for page in 1...8 {
             XCTAssertEqual(
                 app.scrollViews.matching(
                     NSPredicate(format: "identifier BEGINSWITH %@", "onboarding-slide-")
                 ).count, 1)
             try audit("audit-onboarding-\(page)", app)
-            if page < 5 { app.buttons["Далее"].tap() }
+            if page < 8 { app.buttons["Далее"].tap() }
         }
         app.buttons["Предыдущий слайд"].tap()
         XCTAssertTrue(app.buttons["Далее"].waitForExistence(timeout: 5))
         app.buttons["Пропустить знакомство"].tap()
-        XCTAssertTrue(app.buttons["Попробовать"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Войти через Яндекс ID"].waitForExistence(timeout: 5))
     }
 
     func testAnonymousAndResponseAccessibility() throws {
@@ -50,11 +50,12 @@ final class AccessibilityUITests: XCTestCase {
         let answer = guest.buttons["rsvp-going"]
         XCTAssertTrue(answer.waitForExistence(timeout: 10))
         reveal(answer, in: guest.scrollViews["invitation-screen"])
-        answer.tap()
-        XCTAssertTrue(answer.isSelected)
         XCTAssertEqual(answer.label, "Приду")
+        answer.tap()
+        XCTAssertTrue(guest.buttons["meeting-add"].waitForExistence(timeout: 10))
+        XCTAssertTrue(guest.buttons["message-send"].exists)
+        XCTAssertFalse(guest.buttons["rsvp-going"].exists)
         try audit("audit-rsvp-large", guest)
-        XCTAssertFalse(guest.buttons["message-send"].exists)
     }
 
     func testCreationAtLargestText() throws {
@@ -86,13 +87,16 @@ final class AccessibilityUITests: XCTestCase {
         XCTAssertGreaterThanOrEqual(past.frame.height, 44)
         past.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.05)).tap()
         XCTAssertTrue(past.isSelected)
+        XCTAssertFalse(app.buttons["Создать встречу"].exists)
+        app.buttons["period-upcoming"].tap()
+        XCTAssertTrue(app.buttons["Создать встречу"].waitForExistence(timeout: 5))
         app.buttons["Создать встречу"].tap()
         let title = app.descendants(matching: .any)["meeting-title"].firstMatch
         XCTAssertTrue(title.waitForExistence(timeout: 5))
         title.tap()
         title.typeText("Проверка отмены")
         app.buttons["creation-keyboard-done"].tap()
-        let cancel = app.buttons["Отмена"]
+        let cancel = app.buttons["Вернуться к встречам"]
         reveal(cancel, in: app.scrollViews["create-form"])
         XCTAssertGreaterThanOrEqual(cancel.frame.height, 44)
         cancel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.05)).tap()
@@ -125,7 +129,7 @@ final class AccessibilityUITests: XCTestCase {
         waitForTimePicker(app)
         try audit("audit-time", app)
         app.buttons["picker-done"].tap()
-        app.buttons["Закрыть"].tap()
+        app.buttons["Вернуться к встречам"].tap()
         app.buttons["Продолжить редактирование"].tap()
         XCTAssertEqual(title.value as? String, "Вечер с друзьями")
     }
@@ -150,7 +154,16 @@ final class AccessibilityUITests: XCTestCase {
                 NSPredicate(format: "label CONTAINS %@", "Я захвачу настолки.")
             ).firstMatch
             XCTAssertTrue(message.waitForExistence(timeout: 5))
-            XCTAssertTrue(message.label.hasPrefix("Вы, "))
+            let row = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier BEGINSWITH %@", "chat-row-")
+            ).containing(.staticText, identifier: message.label).firstMatch
+            XCTAssertTrue(row.exists)
+            let receipt = row.buttons.matching(
+                NSPredicate(
+                    format: "label BEGINSWITH %@ OR label BEGINSWITH %@", "Отправлено.",
+                    "Прочитали ")
+            ).firstMatch
+            XCTAssertTrue(receipt.waitForExistence(timeout: 5))
             try audit(large ? "audit-feed-large" : "audit-feed", app)
             let input = app.textViews["message-input"]
             let field = input.exists ? input : app.textFields["message-input"]

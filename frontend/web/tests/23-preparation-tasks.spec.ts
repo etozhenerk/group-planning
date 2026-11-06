@@ -47,12 +47,47 @@ for (const width of [320, 390, 1440]) {
     const { meeting } = await apiCreate(page, 'Подготовка вечера');
     await page.goto(`/meetings/${meeting.id}`);
     const form = await openForm(page);
-    await form.getByLabel('Что сделать').fill('Заказать пиццу');
-    await form.getByLabel('Кому предложить').selectOption({ label: 'Вы' });
+    await form.getByLabel(/^Что (?:нужно сделать|сделать)/).fill('Заказать пиццу');
+
+    if (width < 740) {
+      await form
+        .getByRole('button', { name: 'Кому предложить: Любому участнику', exact: true })
+        .click();
+      const recipients = page.getByRole('dialog', {
+        name: 'Кому предложить',
+        exact: true,
+      });
+
+      await recipients.getByRole('button', { name: /^Саша · вы(?:\s|$)/ }).click();
+      await expect(
+        form.getByRole('button', { name: 'Кому предложить: Вам', exact: true }),
+      ).toBeVisible();
+    } else {
+      await form.getByLabel('Кому предложить').selectOption({ label: 'Вы' });
+    }
+
     await page.keyboard.press('Escape');
-    await expect(page.getByRole('button', { name: 'Добавить к встрече' })).toBeFocused();
-    await openForm(page);
-    await expect(form.getByLabel('Что сделать')).toHaveValue('Заказать пиццу');
+
+    if (width < 740) {
+      const guard = page.getByRole('dialog', {
+        name: 'Выйти без сохранения?',
+        exact: true,
+      });
+
+      await expect(page.locator('dialog:modal')).toHaveCount(1);
+      await guard
+        .getByRole('button', { name: 'Продолжить редактирование', exact: true })
+        .click();
+    } else {
+      await expect(
+        page.getByRole('button', { name: 'Добавить к встрече' }),
+      ).toBeFocused();
+      await openForm(page);
+    }
+
+    await expect(form.getByLabel(/^Что (?:нужно сделать|сделать)/)).toHaveValue(
+      'Заказать пиццу',
+    );
     const keys: (string | undefined)[] = [];
     const bodies: (string | null)[] = [];
     await page.route(`**/meetings/${meeting.id}/preparation-tasks`, async (route) => {
@@ -66,8 +101,10 @@ for (const width of [320, 390, 1440]) {
       }
     });
     await form.getByRole('button', { name: 'Предложить задачу' }).click();
-    await expect(form.getByRole('alert')).toContainText('Не удалось предложить задачу');
-    await expect(form.getByLabel('Что сделать')).toBeDisabled();
+    await expect(form.getByRole('alert')).toContainText(
+      width < 740 ? 'Создание задачи не подтверждено' : 'Не удалось предложить задачу',
+    );
+    await expect(form.getByLabel(/^Что (?:нужно сделать|сделать)/)).toBeDisabled();
     await page.screenshot({
       path: `test-results/task-form-error-${width}.png`,
       animations: 'disabled',
@@ -99,28 +136,46 @@ for (const width of [320, 390, 1440]) {
       .getByRole('button', { name: 'Подробности задачи «Заказать пиццу»' })
       .click();
     const proposed = page.getByRole('dialog', { name: 'Заказать пиццу', exact: true });
-    await expect(proposed.getByText('Предложено вам', { exact: true })).toBeVisible();
-    await expect(proposed.getByText('Саша (вы)', { exact: true })).toBeVisible();
+
+    if (width < 740) {
+      await expect(proposed.getByText('Предложена', { exact: true })).toBeVisible();
+      await expect(proposed.getByText('Кому предложено', { exact: true })).toBeVisible();
+      await expect(proposed.locator('dd').nth(0)).toHaveText('Саша · вы');
+      await expect(proposed.locator('dd').nth(1)).toHaveText('Саша · вы');
+    } else {
+      await expect(proposed.getByText('Предложено вам', { exact: true })).toBeVisible();
+      await expect(proposed.getByText('Саша (вы)', { exact: true })).toBeVisible();
+    }
+
     await expect(proposed.getByText('Создано', { exact: true })).toBeVisible();
     await expect(proposed.locator('time')).toHaveAttribute(
       'datetime',
       createdTask.created_at,
     );
     await expect(proposed.locator('time')).toContainText('Сегодня,');
-    await expect(proposed.getByTestId('avatar')).toBeVisible();
+    await expect(proposed.getByTestId('avatar')).toHaveCount(width < 740 ? 2 : 1);
+
+    for (const avatar of await proposed.getByTestId('avatar').all()) {
+      await expect(avatar).toBeVisible();
+    }
+
     await proposed.getByRole('button', { name: 'Закрыть', exact: true }).click();
     await expect(card.getByRole('button', { name: 'Отметить выполненной' })).toHaveCount(
       0,
     );
     await card.getByRole('button', { name: 'Взять на себя' }).click();
-    await expect(card.getByText('Исполняет Саша')).toBeVisible();
+    await expect(
+      card.getByText(width < 740 ? 'Вы выполняете' : 'Исполняет Саша', { exact: true }),
+    ).toBeVisible();
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     await page.screenshot({
       path: `test-results/task-accepted-${width}.png`,
       animations: 'disabled',
     });
     await card.getByRole('button', { name: 'Отметить выполненной' }).click();
-    await expect(card.getByText('Выполнено', { exact: true })).toBeVisible();
+    await expect(
+      card.getByText(width < 740 ? 'Выполнено · Саша' : 'Выполнено', { exact: true }),
+    ).toBeVisible();
     await expect(card.getByRole('button')).toHaveCount(1);
 
     {
@@ -288,13 +343,15 @@ test('participant loading failure keeps the draft and task read failures retain 
     route.abort('failed'),
   );
   const form = await openForm(page);
-  await form.getByLabel('Что сделать').fill('Купить напитки');
+  await form.getByLabel(/^Что (?:нужно сделать|сделать)/).fill('Купить напитки');
   await expect(form.getByText('Не удалось загрузить участников.')).toBeVisible();
   await expect(form.getByRole('button', { name: 'Предложить задачу' })).toBeDisabled();
   await page.unroute(`**/meetings/${meeting.id}/participants`);
   await form.getByRole('button', { name: 'Повторить', exact: true }).click();
   await form.getByLabel('Кому предложить').selectOption({ label: 'Любому участнику' });
-  await expect(form.getByLabel('Что сделать')).toHaveValue('Купить напитки');
+  await expect(form.getByLabel(/^Что (?:нужно сделать|сделать)/)).toHaveValue(
+    'Купить напитки',
+  );
   await form.getByRole('button', { name: 'Предложить задачу' }).click();
   const card = page.getByRole('region', { name: 'Задача подготовки' });
   await expect(card.getByText('Кто возьмёт?')).toBeVisible();

@@ -58,7 +58,7 @@ export const renderTokens = (tokens, version) => {
   const header = `Generated from design-system/tokens.json · ${version}. Do not edit.`;
   const files = {
     'frontend/web/src/app/styles/design-tokens.css': `/* ${header} */\n\n:root {\n${tokens.map((t) => `  --ds-${kebab(t.path)}: ${cssValue(t)};`).join('\n')}\n}\n`,
-    'frontend/web/src/shared/config/design-tokens/tokens.ts': `// ${header}\nimport { foundationTokens } from '@/shared/config/design-tokens/foundations';\nimport { componentTokens } from '@/shared/config/design-tokens/components';\nimport { chatComponentTokens } from '@/shared/config/design-tokens/chat-components';\nimport { mobileComponentTokens } from '@/shared/config/design-tokens/mobile-components';\nimport { conversationTokens } from '@/shared/config/design-tokens/conversation-components';\nimport { galleryTokens } from '@/shared/config/design-tokens/gallery-components';\nimport { serviceTokens } from '@/shared/config/design-tokens/service-components';\n\nexport const designTokens = { ...foundationTokens, ...componentTokens, ...chatComponentTokens, ...mobileComponentTokens, ...conversationTokens, ...galleryTokens, ...serviceTokens } as const;\n`,
+    'frontend/web/src/shared/config/design-tokens/tokens.ts': `// ${header}\nimport { foundationTokens } from '@/shared/config/design-tokens/foundations';\nimport { componentTokens } from '@/shared/config/design-tokens/components';\nimport { chatComponentTokens } from '@/shared/config/design-tokens/chat-components';\nimport { mobileComponentTokens } from '@/shared/config/design-tokens/mobile-components';\nimport { conversationTokens } from '@/shared/config/design-tokens/conversation-components';\nimport { galleryTokens } from '@/shared/config/design-tokens/gallery-components';\nimport { serviceTokens } from '@/shared/config/design-tokens/service-components';\nimport { onboardingTokens } from '@/shared/config/design-tokens/onboarding-components';\n\nexport const designTokens = { ...foundationTokens, ...componentTokens, ...chatComponentTokens, ...mobileComponentTokens, ...conversationTokens, ...galleryTokens, ...serviceTokens, ...onboardingTokens } as const;\n`,
     'frontend/web/src/shared/config/design-tokens/foundations.ts': `// ${header}\nexport const foundationTokens = {\n${tokens
       .filter((t) => t.path[0] !== 'component')
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
@@ -72,9 +72,10 @@ export const renderTokens = (tokens, version) => {
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/mobile-components.ts': `// ${header}\nexport const mobileComponentTokens = {\n${tokens
-      .filter(mobileComponent)
+      .filter((t) => mobileComponent(t) && t.path[1] !== 'mobileOnboarding')
       .map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`)
       .join('\n')}\n} as const;\n`,
+    'frontend/web/src/shared/config/design-tokens/onboarding-components.ts': `// ${header}\nexport const onboardingTokens = {\n${tokens.filter((t) => t.path[0] === 'component' && t.path[1] === 'mobileOnboarding').map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`).join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/conversation-components.ts': `// ${header}\nexport const conversationTokens = {\n${tokens.filter(conversationComponent).map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`).join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/gallery-components.ts': `// ${header}\nexport const galleryTokens = {\n${tokens.filter(galleryComponent).map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`).join('\n')}\n} as const;\n`,
     'frontend/web/src/shared/config/design-tokens/service-components.ts': `// ${header}\nexport const serviceTokens = {\n${tokens.filter(serviceComponent).map((t) => `  ${camel(t.path)}: ${JSON.stringify(cssValue(t))},`).join('\n')}\n} as const;\n`,

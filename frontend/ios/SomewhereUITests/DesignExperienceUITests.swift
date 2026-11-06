@@ -24,12 +24,9 @@ final class DesignExperienceUITests: XCTestCase {
         ExperienceScreenshot.save("design-" + name, test: self)
     }
     private func reveal(_ element: XCUIElement, app: XCUIApplication) {
-        for _ in 0..<10 {
-            if element.isHittable && element.frame.maxY < app.frame.maxY - 120 { return }
-            app.scrollViews.firstMatch.swipeUp()
-        }
-        XCTAssertTrue(element.isHittable)
+        ChatSheetTestSupport.reveal(element, in: app.scrollViews.firstMatch, app: app)
     }
+
     func testListProfileAndCreationMatchApprovedLayout() throws {
         let app = launch()
         // Other UI cases may have created newer meetings without a cover in this shared fixture.
@@ -42,11 +39,14 @@ final class DesignExperienceUITests: XCTestCase {
         app.buttons["meeting-display-toggle"].tap()
 
         app.buttons["home-tab-person.crop.circle"].tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.staticTexts["ЛИЧНЫЕ ДАННЫЕ"].exists)
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["profile-account-data"].exists)
         capture("profile")
-        app.scrollViews["profile-screen"].swipeUp()
+        app.buttons["profile-account-data"].tap()
+        XCTAssertTrue(app.scrollViews["profile-account-scroll"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Личные данные"].exists)
         capture("profile-contacts")
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "profile-account-header")
         app.buttons["home-tab-calendar"].tap()
         app.buttons["Создать встречу"].tap()
         let title = app.descendants(matching: .any)["meeting-title"].firstMatch
@@ -148,12 +148,19 @@ final class DesignExperienceUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["settings-header"].isHittable)
         XCTAssertLessThanOrEqual(app.staticTexts["settings-header"].frame.maxY, keyboard.frame.minY)
         capture("settings-keyboard")
-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
+        ChatSheetTestSupport.swipeDownFromHeader(app, headerIdentifier: "settings-header")
+        XCTAssertTrue(app.buttons["Продолжить редактирование"].waitForExistence(timeout: 5))
+        app.buttons["Продолжить редактирование"].tap()
+        XCTAssertTrue((title.value as? String)?.contains("черновик") == true)
+        capture("settings-dirty-stay")
+        ChatSheetTestSupport.swipeDownFromHeader(app, headerIdentifier: "settings-header")
+        XCTAssertTrue(app.buttons["Выйти без сохранения"].waitForExistence(timeout: 5))
+        app.buttons["Выйти без сохранения"].tap()
         XCTAssertTrue(edit.waitForExistence(timeout: 5))
         edit.tap()
         XCTAssertTrue(title.waitForExistence(timeout: 5))
-        XCTAssertTrue((title.value as? String)?.contains("черновик") == true)
-        capture("settings-reopen")
+        XCTAssertFalse((title.value as? String)?.contains("черновик") == true)
+        capture("settings-reopen-after-discard")
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "settings-header")
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
@@ -175,7 +182,7 @@ final class DesignExperienceUITests: XCTestCase {
         for (identifier, name, heading, submitIdentifier) in [
             ("new-preparation-task", "task", "Предложить задачу", "preparation-create"),
             ("new-place-poll", "place", "Предложить место", "place-poll-create"),
-            ("new-date-poll", "date", "Новая дата встречи", "poll-create"),
+            ("new-date-poll", "date", "Предложить дату", "poll-create"),
         ] {
             app.buttons["meeting-add"].tap()
             app.buttons[identifier].tap()
@@ -208,11 +215,11 @@ final class DesignExperienceUITests: XCTestCase {
     func testHelpAndAboutMatchApprovedLayout() {
         let app = launch()
         app.buttons["home-tab-person.crop.circle"].tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
         let help = app.buttons["Помощь"]
         reveal(help, app: app)
         help.tap()
-        XCTAssertTrue(app.staticTexts["Нужна подсказка?"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Помощь"].waitForExistence(timeout: 5))
         capture("help")
         app.buttons["Назад"].tap()
         let about = app.buttons["О приложении"]
@@ -229,7 +236,7 @@ final class DesignExperienceUITests: XCTestCase {
     func testSupportMatchesApprovedLayout() {
         let app = launch()
         app.buttons["home-tab-person.crop.circle"].tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 10))
         let problem = app.buttons["Сообщить о проблеме"]
         reveal(problem, app: app)
         problem.tap()

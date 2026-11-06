@@ -1,23 +1,34 @@
+import { meetingAlbumPath } from '@/entities/meeting/ui/MeetingCard/lib/meetingAlbumPath';
+import type { ReactNode } from 'react';
 import { useMobileLayout } from '@/shared/lib/media';
 import { UnreadIndicator } from '@/entities/meeting/ui/UnreadIndicator';
-import { MemoryPreview } from '@/entities/meeting/ui/MemoryPreview';
-import { MeetingCover } from '@/entities/meeting/ui/MeetingCover';
+import { MeetingAlbumContent } from '@/entities/meeting/ui/MeetingAlbumContent';
+import { MeetingCardCover } from '@/entities/meeting/ui/MeetingCardCover';
+import { MeetingCardTitle } from '@/entities/meeting/ui/MeetingCardTitle';
 import { ParticipantPreview } from '@/entities/meeting/ui/ParticipantPreview';
 import { Link, useLocation } from 'react-router';
-import { Images, Crown, MapPin, Sparkle } from 'lucide-react';
+import { Images, MapPin, Sparkle } from 'lucide-react';
 import type { MeetingSummary } from '@/entities/meeting/model/types';
 import { cardLabels } from '@/entities/meeting/lib/cardLabels';
 import styles from '@/entities/meeting/ui/MeetingCard/MeetingCard.module.css';
 
-export type MeetingCardProps = { meeting: MeetingSummary; user: string; past?: boolean };
+export type MeetingCardProps = {
+  meeting: MeetingSummary;
+  user: string;
+  past?: boolean;
+  coverPreview?: ReactNode;
+};
 
-export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) => {
+export const MeetingCard = ({
+  meeting,
+  user,
+  past = false,
+  coverPreview,
+}: MeetingCardProps) => {
   const location = useLocation();
   const mobile = useMobileLayout();
   const labels = cardLabels(meeting);
-  const lastSpace = meeting.title.trimEnd().lastIndexOf(' ');
-  const prefix = lastSpace < 0 ? '' : meeting.title.slice(0, lastSpace + 1);
-  const tail = meeting.title.slice(lastSpace + 1);
+  const albumFallback = <Images size={18} aria-hidden="true" />;
 
   return (
     <article
@@ -34,25 +45,23 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
         >
           {labels.date}
         </time>
-        {meeting.coverUrl && (
+        {(meeting.coverUrl || coverPreview) && (
           <div className={styles.cover}>
-            <MeetingCover url={meeting.coverUrl} meeting={meeting.id} user={user} fill />
+            <MeetingCardCover
+              url={meeting.coverUrl}
+              meeting={meeting.id}
+              user={user}
+              preview={coverPreview}
+            />
           </div>
         )}
         <div className={styles.info}>
           <div className={styles.titleRow}>
             <h2>
-              {meeting.organizerId === user ? (
-                <>
-                  {prefix}
-                  <span className={styles.titleEnd}>
-                    <span>{tail}</span>
-                    <Crown size={16} aria-label="Вы организатор" />
-                  </span>
-                </>
-              ) : (
-                meeting.title
-              )}
+              <MeetingCardTitle
+                title={meeting.title}
+                own={meeting.organizerId === user}
+              />
             </h2>
             {!mobile && <UnreadIndicator count={meeting.unreadCount} />}
           </div>
@@ -82,20 +91,9 @@ export const MeetingCard = ({ meeting, user, past = false }: MeetingCardProps) =
         <Link
           className={styles.album}
           state={{ returnTo: location.pathname + location.search }}
-          to={
-            meeting.memoryPhotoCount
-              ? `/meetings/${meeting.id}/memories`
-              : `/meetings/${meeting.id}/memories?action=upload`
-          }
+          to={meetingAlbumPath(meeting)}
         >
-          {meeting.memoryPreview?.length ? (
-            <MemoryPreview photos={meeting.memoryPreview} user={user} />
-          ) : (
-            <Images size={18} aria-hidden="true" />
-          )}
-          {meeting.memoryPhotoCount
-            ? `Вайб встречи · ${meeting.memoryPhotoCount} фото`
-            : 'Добавить фото встречи'}
+          <MeetingAlbumContent meeting={meeting} user={user} fallback={albumFallback} />
         </Link>
       )}
     </article>

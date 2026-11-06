@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { apiCreate, login } from '@tests/helpers';
+import { meetingInfoSurface, apiCreate, login } from '@tests/helpers';
 
 for (const width of [320, 1440]) {
   test(`one create action in every list state at ${width}px`, async ({ page }) => {
@@ -82,7 +82,7 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
   await page.goto(`/meetings/${created.meeting.id}`);
   const info = page.getByRole('button', { name: 'Информация о встрече' });
   const when = page.getByRole('term').filter({ hasText: 'Когда' });
-  const dialog = page.getByRole('dialog', { name: created.meeting.title });
+  const dialog = meetingInfoSurface(page, created.meeting.title);
   await expect(
     page.getByRole('heading', { name: 'Детали без повторов', exact: true }),
   ).toHaveCount(1);
@@ -94,9 +94,11 @@ test('details stay in one surface when resizing the meeting', async ({ page }) =
   await expect(when).toHaveCount(0);
   await info.click();
   await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAccessibleName('О встрече');
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 1440, height: 900 });
   await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAccessibleName(created.meeting.title);
   await expect(when).toHaveCount(1);
   await page.setViewportSize({ width: 390, height: 900 });
   await expect(dialog).toBeVisible();

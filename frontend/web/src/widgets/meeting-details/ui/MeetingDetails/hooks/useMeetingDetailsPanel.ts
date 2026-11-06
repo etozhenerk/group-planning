@@ -51,10 +51,6 @@ export const useMeetingDetailsPanel = (meeting: string, user: string, title: str
     origin.current = opener;
     setSavedNotice(false);
 
-    if (panel === 'settings') {
-      setGeneration((value) => value + 1);
-    }
-
     history.show(panel);
   };
 

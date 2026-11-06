@@ -1,3 +1,5 @@
+import { MobileOnboarding } from '@/widgets/onboarding';
+import { useMobileLayout } from '@/shared/lib/media';
 import styles from '@/pages/landing/ui/LandingPage/LandingPage.module.css';
 import { Navigate } from 'react-router';
 import { Sparkles } from 'lucide-react';
@@ -9,9 +11,14 @@ import { ExampleCard } from '@/pages/landing/ui/ExampleCard';
 
 export const LandingPage = () => {
   const session = useSession();
+  const mobile = useMobileLayout();
 
   if (session.data) {
     return <Navigate to="/meetings" replace />;
+  }
+
+  if (mobile) {
+    return <MobileOnboarding />;
   }
 
   return (

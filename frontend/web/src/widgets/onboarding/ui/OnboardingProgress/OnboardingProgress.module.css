@@ -1,0 +1,64 @@
+.progress {
+  position: relative;
+  min-height: var(--ds-target-web);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  place-items: center;
+}
+
+.dots {
+  width: min(100%, calc(var(--ds-component-mobile-onboarding-progress-slot-width) * 8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.slot {
+  min-width: 0;
+  flex: 1;
+  width: var(--ds-component-mobile-onboarding-progress-slot-width);
+  height: var(--ds-component-mobile-onboarding-progress-visual-height);
+  display: grid;
+  place-items: center;
+}
+
+.slot i {
+  width: var(--ds-component-mobile-onboarding-progress-dot-size);
+  height: var(--ds-component-mobile-onboarding-progress-dot-size);
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-color-mobile-onboarding-inactive);
+  transition: width var(--ds-motion-duration-navigation) var(--ds-motion-easing-standard);
+}
+
+.slot i[data-selected='true'] {
+  width: var(--ds-component-mobile-onboarding-progress-selected-width);
+  background: var(--ds-color-accent);
+}
+
+.progress input {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--ds-component-mobile-onboarding-progress-slot-width) * 8);
+  max-width: 100%;
+  height: 100%;
+  padding: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.progress:focus-within {
+  outline: var(--ds-space-s2) solid var(--ds-color-accent);
+  outline-offset: var(--ds-space-s2);
+  border-radius: var(--ds-radius-control);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot i {
+    transition: none;
+  }
+}

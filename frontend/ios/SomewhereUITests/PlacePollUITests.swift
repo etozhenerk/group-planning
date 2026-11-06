@@ -36,10 +36,7 @@ final class PlacePollUITests: XCTestCase {
         explanation.tap()
         explanation.typeText("Рядом с метро")
         app.buttons["action-keyboard-done"].tap()
-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
-        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
-        app.buttons["meeting-add"].tap()
-        app.buttons["new-place-poll"].tap()
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         XCTAssertTrue((field.value as? String)?.contains("Кафе у парка") == true)
         XCTAssertTrue((explanation.value as? String)?.contains("Рядом с метро") == true)
@@ -48,7 +45,9 @@ final class PlacePollUITests: XCTestCase {
             app.scrollViews["action-form-scroll"].swipeUp()
         }
         app.buttons["place-poll-create"].tap()
-        XCTAssertTrue(app.staticTexts["place-poll-error"].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.descendants(matching: .any)["place-poll-error"].firstMatch.waitForExistence(
+                timeout: 10))
         XCTAssertTrue((field.value as? String)?.contains("Кафе у парка") == true)
         XCTAssertTrue((explanation.value as? String)?.contains("Рядом с метро") == true)
         capture("ios-place-create-error")
@@ -57,7 +56,9 @@ final class PlacePollUITests: XCTestCase {
         XCTAssertTrue(yes.waitForExistence(timeout: 15))
         XCTAssertTrue(app.staticTexts["Рядом с метро"].exists)
         yes.tap()
-        XCTAssertTrue(app.staticTexts["Не удалось сохранить голос."].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.staticTexts["Не удалось сохранить голос."].waitForExistence(
+                timeout: 10))
         XCTAssertFalse(yes.isSelected)
         capture("ios-place-vote-error")
         app.buttons["Повторить"].tap()

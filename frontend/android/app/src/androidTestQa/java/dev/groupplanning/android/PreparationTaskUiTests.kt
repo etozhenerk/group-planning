@@ -1,5 +1,7 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
@@ -49,23 +51,24 @@ class PreparationTaskUiTests {
             compose.onNodeWithTag("preparation-recipient").performClick()
             compose.onNodeWithText("Лена").performClick()
             compose.onNodeWithTag("preparation-create").assertIsDisplayed().performClick()
-            fixture.waitTag("preparation-error")
+            waitSheetText(R.string.prep_unknown)
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
             fixture.screenshot("android-task-create-error")
             scenario.recreate()
-            fixture.waitTag("preparation-error")
+            waitSheetText(R.string.prep_unknown)
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
             fixture.closeActionSheet()
-            fixture.waitAbsent("chat-action-sheet")
-            compose.onNodeWithTag("meeting-add").performClick()
-            compose.onNodeWithTag("new-preparation-task").performClick()
-            fixture.waitTag("preparation-error")
+            // Unknown submission keeps the same visible form until its original request is retried.
+            compose.onNodeWithTag("chat-action-sheet").assertExists()
+            waitSheetText(R.string.prep_unknown)
             compose.onNodeWithTag("preparation-title").assertTextContains("Заказать пиццу")
             compose.onNodeWithTag("preparation-create").assertIsDisplayed().performClick()
             fixture.waitAbsent("chat-action-sheet")
             fixture.waitText("Заказать пиццу")
+            compose.onAllNodes(hasText("Заказать пиццу")).assertCountEquals(1)
             compose.onNodeWithText("Заказать пиццу").performClick()
-            fixture.waitText(fixture.context.getString(R.string.task_recipient))
+            waitSheetText(R.string.prep_recipient)
+            waitSheetText(R.string.prep_state_offered)
             compose.onNodeWithText("Лена").assertIsDisplayed()
             compose.onNodeWithTag("preparation-accept").assertDoesNotExist()
             fixture.screenshot("android-task-offered")
@@ -93,14 +96,17 @@ class PreparationTaskUiTests {
             fixture.screenshot("android-task-accept-error")
             compose.onNodeWithText("Повторить").performClick()
             fixture.waitTag("preparation-complete")
-            compose.onNode(
-                hasText("Задача у вас") and hasAnyAncestor(hasTestTag("chat-action-sheet")),
-            ).assertIsDisplayed()
+            waitSheetText(R.string.prep_state_accepted)
+            waitSheetText(R.string.prep_assignee)
+            waitSheetText(fixture.context.getString(R.string.prep_you_suffix, "Лена"))
             fixture.screenshot("android-task-accepted")
             compose.onNodeWithTag("preparation-complete").performClick()
-            fixture.waitText("Выполнено · Лена")
+            waitSheetText(R.string.prep_state_completed)
             compose.onNodeWithTag("preparation-complete").assertDoesNotExist()
             fixture.screenshot("android-task-completed")
+            fixture.closeActionSheet()
+            fixture.waitAbsent("chat-action-sheet")
+            fixture.waitText("Выполнено · Лена")
         }
     }
 
@@ -113,8 +119,11 @@ class PreparationTaskUiTests {
             compose.onNodeWithTag("preparation-decline").performClick()
             fixture.waitTag("preparation-confirm")
             compose.onNodeWithTag("preparation-confirm").performClick()
-            fixture.waitText("Отказ · Лена")
+            waitSheetText(R.string.prep_state_declined)
             fixture.screenshot("android-task-declined")
+            fixture.closeActionSheet()
+            fixture.waitAbsent("chat-action-sheet")
+            fixture.waitText("Отказ · Лена")
         }
         fixture.launch("task-conflict").use {
             open("500")
@@ -122,10 +131,23 @@ class PreparationTaskUiTests {
             compose.onNodeWithText("Заказать пиццу").performClick()
             fixture.waitTag("preparation-accept")
             compose.onNodeWithTag("preparation-accept").performClick()
-            fixture.waitText("Исполняет Саша")
+            waitSheetText(R.string.prep_state_accepted)
+            waitSheetText(R.string.prep_assignee)
+            val assigneeY = compose.onNodeWithText(
+                fixture.context.getString(R.string.prep_assignee),
+            ).fetchSemanticsNode().boundsInRoot.center.y
+            compose.onNode(
+                hasText("Саша") and SemanticsMatcher("Assignee value beside its fact label") {
+                    kotlin.math.abs(it.boundsInRoot.center.y - assigneeY) <=
+                        4 * compose.density.density
+                },
+            ).assertIsDisplayed()
             compose.onNodeWithTag("preparation-accept").assertDoesNotExist()
             compose.onNodeWithTag("preparation-complete").assertDoesNotExist()
             fixture.screenshot("android-task-conflict")
+            fixture.closeActionSheet()
+            fixture.waitAbsent("chat-action-sheet")
+            fixture.waitText("Исполняет: Саша")
         }
     }
 
@@ -141,8 +163,10 @@ class PreparationTaskUiTests {
                 compose.onNodeWithTag("preparation-cancel").performClick()
                 fixture.waitTag("preparation-confirm")
                 compose.onNodeWithTag("preparation-confirm").performClick()
-                fixture.waitText("Отменено · Саша")
+                waitSheetText(R.string.prep_state_cancelled)
                 fixture.device.pressBack()
+                fixture.waitAbsent("chat-action-sheet")
+                fixture.waitText("Отменено · Саша")
                 fixture.screenshot("android-task-large-cancelled")
                 fixture.device.pressBack()
                 fixture.waitTag("meeting-d3c70000-0000-4000-8000-000000000400")
@@ -155,5 +179,12 @@ class PreparationTaskUiTests {
                 fixture.shell("settings put system font_scale $original")
             }
         }
+    }
+    private fun waitSheetText(resource: Int) = waitSheetText(fixture.context.getString(resource))
+
+    private fun waitSheetText(text: String) {
+        val target = hasText(text) and hasAnyAncestor(hasTestTag("chat-action-sheet"))
+        compose.waitUntil(15_000) { compose.onAllNodes(target).fetchSemanticsNodes().isNotEmpty() }
+        compose.onNode(target).assertIsDisplayed()
     }
 }

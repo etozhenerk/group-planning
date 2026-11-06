@@ -2,7 +2,6 @@ package dev.groupplanning.android.ui.invitation
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,14 +57,6 @@ internal fun MeetingShareContent(preview: InvitationPreview, url: String) {
         copied = true
     }
     CompactButton(label, Modifier.fillMaxWidth(), primary = true) {
-        context.startActivity(
-            Intent.createChooser(
-                Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_TEXT, url)
-                },
-                label,
-            ),
-        )
+        launchInvitationShare(context, url, label)
     }
 }

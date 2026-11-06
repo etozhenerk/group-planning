@@ -4,7 +4,14 @@ extension InvitationOwner {
     // A successful withdrawal closes private access. Its preview must use the
     // invitation capability, never a private cover URL or a reopened meeting lease.
     func loadPublicPreview(version: UUID) async throws {
-        guard current, generation == version, let id = preview?.meetingID else { return }
+        guard current, generation == version else { return }
+        let id: UUID
+        switch target {
+        case .meeting(let value, _): id = value
+        case .token:
+            guard let value = preview?.meetingID else { return }
+            id = value
+        }
         canAccess = false
         shareURL = nil
         problem = nil

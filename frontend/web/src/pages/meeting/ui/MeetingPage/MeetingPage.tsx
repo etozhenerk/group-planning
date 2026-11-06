@@ -1,3 +1,4 @@
+import { MobileOnboarding } from '@/widgets/onboarding';
 import { WorkspaceSkeleton } from '@/shared/ui/WorkspaceSkeleton';
 import { useParams } from 'react-router';
 import { storedInvitation } from '@/entities/meeting';
@@ -10,6 +11,7 @@ export const MeetingPage = () => {
 
   return (
     <SessionGate
+      anonymous={<MobileOnboarding />}
       loading={<WorkspaceSkeleton layout="conversation" />}
       context={token ? { kind: 'invitation', token } : { kind: 'home' }}
     >

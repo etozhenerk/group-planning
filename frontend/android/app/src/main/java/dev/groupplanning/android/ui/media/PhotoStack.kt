@@ -141,7 +141,7 @@ internal fun PhotoStack(
                                     DesignTokens.componentMobileVibeAxisBias
                                 ) {
                                     cancelled = true
-                                } else if (!controller.busy && photos.size > 1) {
+                                } else if (!controller.busy) {
                                     horizontal = true
                                     dragged = true
                                     controller.drag(distance.x, distance.y)
@@ -195,7 +195,9 @@ internal fun PhotoStack(
                         } else {
                             DesignTokens.componentMobileVibeFlickDistance
                         }
-                        if (distance > threshold ||
+                        if (photos.size < 2) {
+                            controller.settle(motion)
+                        } else if (distance > threshold ||
                             (
                                 distance > flick.value &&
                                     abs(velocity) / density >

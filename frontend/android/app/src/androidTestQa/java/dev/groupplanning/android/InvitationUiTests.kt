@@ -23,6 +23,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
+import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import java.time.Instant
 import org.json.JSONObject
@@ -74,6 +75,7 @@ class InvitationUiTests {
             }
         }
         reschedule(null)
+        SecondDeviceRsvp(fixture, "invite-rsvp").respond(fixture.token, RsvpAnswer.NotGoing)
         fixture.launch("invite-rsvp", fixture.token).use { activity ->
             fixture.waitTag("rsvp-Going")
             waitGoing(true)
@@ -132,6 +134,7 @@ class InvitationUiTests {
     }
 
     @Test fun allResponsesControlPeopleAndChatAcrossReentry() {
+        SecondDeviceRsvp(fixture, "invite-rsvp").respond(fixture.token, RsvpAnswer.NotGoing)
         fixture.launch("invite-rsvp", fixture.token).use { activity ->
             fixture.waitTag("rsvp-Going")
             respond("Возможно")
@@ -165,7 +168,22 @@ class InvitationUiTests {
             assertClosed()
             fixture.screenshot("invitation-declined")
             compose.onNodeWithText("К моим встречам").performScrollTo().performClick()
-            fixture.waitText("Нет предстоящих встреч")
+            fixture.waitTag("meetings-list")
+            compose.onNodeWithTag("meeting-22222222-2222-4222-8222-222222222222")
+                .assertDoesNotExist()
+            val api = ChatReadLiveApi(fixture.context)
+            val meetings = api.request("invite-rsvp", "meetings?period=upcoming")
+                .getJSONArray("meetings")
+            assertTrue(
+                (0 until meetings.length()).none {
+                    meetings.getJSONObject(it).getString("id") ==
+                        "22222222-2222-4222-8222-222222222222"
+                },
+            )
+            assertTrue(
+                api.request("invite-rsvp", "invitations/${fixture.token}")
+                    .getString("my_rsvp") == "not_going",
+            )
         }
         fixture.launch("invite-rsvp-reentry", fixture.token).use {
             fixture.waitTag("rsvp-NotGoing")
@@ -276,7 +294,15 @@ class InvitationUiTests {
         }
         val public = compose.onAllNodes(hasTestTag("rsvp-$name")).fetchSemanticsNodes().isNotEmpty()
         val action = compose.onNodeWithTag(if (public) "rsvp-$name" else "information-rsvp-$name")
-        if (!public) action.performScrollTo()
+        if (!public) {
+            if (compose.onAllNodes(hasTestTag("information-rsvp-$name"))
+                    .fetchSemanticsNodes().isEmpty()
+            ) {
+                compose.onNodeWithTag("information-change-answer").performClick()
+            }
+            fixture.waitTag("meeting-information-rsvp")
+            action.performScrollTo()
+        }
         action.performClick()
     }
 

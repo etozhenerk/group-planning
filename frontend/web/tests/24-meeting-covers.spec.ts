@@ -1,3 +1,4 @@
+import { designTokens } from '@/shared/config/design-tokens';
 import { createdSchema } from '@/shared/api';
 import { test, expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
@@ -166,18 +167,35 @@ for (const width of [320, 390, 1440]) {
 
     if (width < 740) {
       const bounds = await prepared.locator('..').boundingBox();
-      expect(bounds?.width).toBe(52);
-      expect(bounds?.height).toBe(52);
+      expect(bounds?.width).toBe(
+        Number.parseFloat(designTokens.componentMobileCreationCoverSize),
+      );
+      expect(bounds?.height).toBe(
+        Number.parseFloat(designTokens.componentMobileCreationCoverSize),
+      );
       await expect(
         form.getByRole('button', { name: 'Дата', exact: true }),
       ).toHaveAttribute('data-date', '29.02.2028');
     }
 
     await form.getByRole('button', { name: 'Закрыть', exact: true }).click();
-    await expect(
-      page.getByRole('dialog', { name: `Встреча с фото ${width}`, exact: true }),
-    ).toBeVisible();
-    form = await edit(page);
+
+    if (width < 740) {
+      const guard = page.getByRole('dialog', {
+        name: 'Выйти без сохранения?',
+        exact: true,
+      });
+
+      await guard
+        .getByRole('button', { name: 'Продолжить редактирование', exact: true })
+        .click();
+    } else {
+      await expect(
+        page.getByRole('dialog', { name: `Встреча с фото ${width}`, exact: true }),
+      ).toBeVisible();
+      form = await edit(page);
+    }
+
     await expect(
       form.getByRole('textbox', { name: 'Название', exact: true }),
     ).toHaveValue(`Встреча с фото ${width}`);
@@ -185,7 +203,12 @@ for (const width of [320, 390, 1440]) {
       'src',
       chosen ?? '',
     );
-    await form.getByRole('button', { name: 'Сохранить изменения' }).click();
+    await form
+      .getByRole('button', {
+        name: width < 740 ? 'Сохранить' : 'Сохранить изменения',
+        exact: true,
+      })
+      .click();
     await expect(form).not.toBeVisible();
     await previewPage.goto(invitation);
     const blue = await imageColor(previewPage);
@@ -200,7 +223,12 @@ for (const width of [320, 390, 1440]) {
     form = await edit(page);
     await form.getByRole('button', { name: 'Убрать фото' }).click();
     await expect(form.getByRole('img')).toHaveCount(0);
-    await form.getByRole('button', { name: 'Сохранить изменения' }).click();
+    await form
+      .getByRole('button', {
+        name: width < 740 ? 'Сохранить' : 'Сохранить изменения',
+        exact: true,
+      })
+      .click();
     await expect(form).not.toBeVisible();
     expect((await apiMeeting(page, id)).cover_url).toBeNull();
     await previewPage.goto(invitation);

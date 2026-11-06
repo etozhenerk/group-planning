@@ -179,8 +179,10 @@ internal class InvitationViewModel(
         } catch (error: ClientFailure) {
             if (epoch == version) {
                 val unavailable = error.status == 404
+                val denied = error.status == 403
                 mutable.value = state.value.copy(
-                    details = if (unavailable) null else state.value.details,
+                    details = if (unavailable || denied) null else state.value.details,
+                    choice = if (denied) null else state.value.choice,
                     issue = if (unavailable) InvitationIssue.Unavailable else InvitationIssue.Load,
                 )
             }

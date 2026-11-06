@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.14.0. Do not edit.
+// Generated from design-system/tokens.json · 7.15.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -949,17 +949,45 @@ enum DesignTokens {
     static let componentMobileNavigationSelectedIconStroke = 1.8
     static let componentMobileOnboardingArtworkGap = CGFloat(30)
     static let componentMobileOnboardingArtworkHeight = CGFloat(360)
+    static let componentMobileOnboardingArtworkReferenceWidth = CGFloat(336)
+    static let componentMobileOnboardingChatMaximumWidth = CGFloat(270)
     static let componentMobileOnboardingCopyGap = CGFloat(18)
     static let componentMobileOnboardingCopyMinimumHeight = CGFloat(180)
+    static let componentMobileOnboardingExampleSwitcherHeight = CGFloat(40)
+    static let componentMobileOnboardingExampleSwitcherInsetBlock = CGFloat(9)
+    static let componentMobileOnboardingExampleSwitcherInsetInline = CGFloat(14)
     static let componentMobileOnboardingFooterMinimumHeight = CGFloat(110)
+    static let componentMobileOnboardingHeroPhotoAngle = -4
+    static let componentMobileOnboardingHeroPhotoHeight = CGFloat(245)
+    static let componentMobileOnboardingHeroPhotoTrailingSpace = CGFloat(35)
     static let componentMobileOnboardingInsetInline = CGFloat(27)
+    static let componentMobileOnboardingInvitationCardTop = CGFloat(132)
+    static let componentMobileOnboardingInvitationPhotoAngle = -3
+    static let componentMobileOnboardingInvitationPhotoHeight = CGFloat(185)
+    static let componentMobileOnboardingInvitationPhotoInset = CGFloat(13)
+    static let componentMobileOnboardingInvitationResponseTop = CGFloat(316)
+    static let componentMobileOnboardingNarrowTitleBoundary = CGFloat(350)
     static let componentMobileOnboardingNextHeight = CGFloat(52)
     static let componentMobileOnboardingNextInsetInline = CGFloat(23)
     static let componentMobileOnboardingNextMinimumWidth = CGFloat(135)
+    static let componentMobileOnboardingPhotoFrameWidth = CGFloat(5)
+    static let componentMobileOnboardingPhotoShadowBlur = CGFloat(32)
+    static let componentMobileOnboardingPhotoShadowOffset = CGFloat(16)
+    static let componentMobileOnboardingPhotoShadowOpacity = 0.25
+    static let componentMobileOnboardingPhotoStoryHeight = CGFloat(290)
     static let componentMobileOnboardingProgressDotSize = CGFloat(6)
     static let componentMobileOnboardingProgressSelectedWidth = CGFloat(19)
     static let componentMobileOnboardingProgressSlotWidth = CGFloat(27)
     static let componentMobileOnboardingProgressVisualHeight = CGFloat(34)
+    static let componentMobileOnboardingSecondPhotoAngle = 7
+    static let componentMobileOnboardingSecondPhotoHeight = CGFloat(160)
+    static let componentMobileOnboardingSecondPhotoTop = CGFloat(125)
+    static let componentMobileOnboardingSecondPhotoWidth = CGFloat(138)
+    static let componentMobileOnboardingStoryLabelGap = CGFloat(9)
+    static let componentMobileOnboardingStoryLabelSize = CGFloat(10)
+    static let componentMobileOnboardingStoryLabelTracking = CGFloat(0.8)
+    static let componentMobileOnboardingSwipeCommitDistance = CGFloat(45)
+    static let componentMobileOnboardingSwipeMaximumVerticalDistance = CGFloat(60)
     static let componentMobileOnboardingTallArtworkHeight = CGFloat(390)
     static let componentMobileOnboardingTitleTracking = CGFloat(1)
     static let componentMobilePageInsetTop = CGFloat(28)

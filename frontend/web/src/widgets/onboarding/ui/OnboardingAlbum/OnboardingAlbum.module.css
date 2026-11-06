@@ -1,0 +1,61 @@
+.album {
+  width: 100%;
+}
+
+.photos {
+  height: var(--ds-component-mobile-onboarding-photo-story-height);
+  position: relative;
+}
+
+.hero,
+.second {
+  position: absolute;
+  object-fit: cover;
+  border: var(--ds-component-mobile-onboarding-photo-frame-width) solid
+    var(--ds-color-photo-frame);
+  border-radius: var(--ds-radius-cover);
+  box-shadow: 0 var(--ds-component-mobile-onboarding-photo-shadow-offset)
+    var(--ds-component-mobile-onboarding-photo-shadow-blur)
+    var(--ds-color-mobile-vibe-photo-shadow);
+}
+
+.hero {
+  top: var(--ds-space-s8);
+  left: var(--ds-space-s4);
+  width: calc(100% - var(--ds-component-mobile-onboarding-hero-photo-trailing-space));
+  height: var(--ds-component-mobile-onboarding-hero-photo-height);
+  transform: rotate(calc(var(--ds-component-mobile-onboarding-hero-photo-angle) * 1deg));
+}
+
+.second {
+  top: var(--ds-component-mobile-onboarding-second-photo-top);
+  right: 0;
+  width: var(--ds-component-mobile-onboarding-second-photo-width);
+  height: var(--ds-component-mobile-onboarding-second-photo-height);
+  transform: rotate(
+    calc(var(--ds-component-mobile-onboarding-second-photo-angle) * 1deg)
+  );
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-s12);
+  padding-top: var(--ds-space-s16);
+  font-size: var(--ds-typography-size-small);
+}
+
+.bar small {
+  display: block;
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-label);
+  margin-top: var(--ds-space-s4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .second {
+    transform: none;
+  }
+}

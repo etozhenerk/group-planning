@@ -6,5 +6,7 @@ internal sealed interface InvitationTarget {
     class Token(val value: String) : InvitationTarget {
         override fun toString(): String = "InvitationTarget.Token(redacted)"
     }
-    data class Meeting(val id: UUID) : InvitationTarget
+    data class Meeting(val id: UUID, val originToken: String? = null) : InvitationTarget {
+        override fun toString(): String = "InvitationTarget.Meeting(id=$id, originToken=redacted)"
+    }
 }

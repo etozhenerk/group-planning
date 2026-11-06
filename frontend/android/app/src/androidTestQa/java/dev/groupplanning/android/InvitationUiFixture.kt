@@ -2,20 +2,26 @@ package dev.groupplanning.android
 
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.Settings
+import android.util.DisplayMetrics
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToString
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
+import androidx.test.runner.lifecycle.Stage
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import java.io.File
@@ -96,6 +102,19 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         }
     }
 
+    fun stayInDirtyForm() {
+        waitText(context.getString(R.string.poll_discard_title))
+        compose.onNodeWithText(context.getString(R.string.keep_editing)).performClick()
+        waitTag("chat-action-sheet")
+    }
+
+    fun discardDirtyForm() {
+        closeActionSheet()
+        waitText(context.getString(R.string.poll_discard_title))
+        compose.onNodeWithText(context.getString(R.string.discard_settings)).performClick()
+        waitAbsent("chat-action-sheet")
+    }
+
     fun waitGalleryCounter(index: Int, count: Int, displayed: Boolean = false) {
         val split = hasText(index.toString(), substring = false) and
             hasAnySibling(hasText("/ $count", substring = false))
@@ -148,10 +167,34 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         val bitmap = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeFile(image.absolutePath, bitmap)
         check(bitmap.outWidth > 0 && bitmap.outHeight > 0) { "Screenshot bounds are unavailable" }
-        val configuration = context.resources.configuration
-        val metrics = context.resources.displayMetrics
+        lateinit var configuration: Configuration
+        val metrics = DisplayMetrics()
+        var activityClass = ""
+        var activityStage = ""
+        instrumentation.runOnMainSync {
+            val monitor = ActivityLifecycleMonitorRegistry.getInstance()
+            val actual = listOf(
+                Stage.RESUMED,
+                Stage.PAUSED,
+                Stage.STARTED,
+                Stage.STOPPED,
+                Stage.CREATED,
+            )
+                .firstNotNullOfOrNull { stage ->
+                    monitor.getActivitiesInStage(stage).firstOrNull { it is MainActivity }
+                        ?.let { it to stage }
+                }
+            checkNotNull(actual) { "Capture has no actual MainActivity configuration" }
+            configuration = Configuration(actual.first.resources.configuration)
+            metrics.setTo(actual.first.resources.displayMetrics)
+            activityClass = actual.first.javaClass.name
+            activityStage = actual.second.name
+        }
         val metadata = JSONObject().apply {
             put("schemaVersion", 1)
+            put("contextSource", "activity")
+            put("activityClass", activityClass)
+            put("activityLifecycleStage", activityStage)
             put("image", image.name)
             put("captureStartedAt", startedAt)
             put("capturedAt", capturedAt)

@@ -43,6 +43,8 @@ class PhotoPickerUiTests {
         val photos = mutableListOf<Uri>()
         try {
             repeat(3) { photos += createPhoto(it) }
+            val api = ChatReadLiveApi(fixture.context)
+            val beforeIds = feedAttachments(api).map { it.first }.toSet()
             fixture.launch("design").use {
                 fixture.waitText("Настолки у Саши")
                 compose.onNodeWithText("Настолки у Саши").performScrollTo().performClick()
@@ -127,26 +129,35 @@ class PhotoPickerUiTests {
                         hasContentDescription(fixture.context.getString(R.string.experience_photo)),
                     ).fetchSemanticsNodes().isNotEmpty()
                 }
-                val feed = ChatReadLiveApi(fixture.context).request(
-                    "design",
-                    "meetings/deb00000-0000-4000-8000-000000000002/feed",
-                ).getJSONArray("entries")
-                val sentNames = (0 until feed.length()).flatMap { index ->
-                    val attachments = feed.getJSONObject(index).getJSONObject("payload")
-                        .optJSONArray("attachments")
-                    if (attachments == null) {
-                        emptyList()
-                    } else {
-                        (0 until attachments.length()).map { item ->
-                            attachments.getJSONObject(item).getString("file_name")
-                        }
-                    }
-                }
-                assertTrue("Only the two remaining photos publish", sentNames.size == 2)
-                assertTrue(removedName !in sentNames)
+                val sent = feedAttachments(api).filter { it.first !in beforeIds }
+                assertTrue("Only the two remaining photos publish: $sent", sent.size == 2)
+                assertTrue(
+                    "Each uploaded photo has one ID",
+                    sent.map { it.first }.distinct().size == 2,
+                )
+                assertTrue(removedName !in sent.map { it.second })
             }
         } finally {
             photos.forEach { fixture.context.contentResolver.delete(it, null, null) }
+        }
+    }
+
+    private fun feedAttachments(api: ChatReadLiveApi): List<Pair<String, String>> {
+        val feed = api.request(
+            "design",
+            "meetings/deb00000-0000-4000-8000-000000000002/feed",
+        ).getJSONArray("entries")
+        return (0 until feed.length()).flatMap { index ->
+            val attachments = feed.getJSONObject(index).getJSONObject("payload")
+                .optJSONArray("attachments")
+            if (attachments == null) {
+                emptyList()
+            } else {
+                (0 until attachments.length()).map { item ->
+                    val attachment = attachments.getJSONObject(item)
+                    attachment.getString("id") to attachment.getString("file_name")
+                }
+            }
         }
     }
 

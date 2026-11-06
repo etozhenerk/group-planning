@@ -1,7 +1,7 @@
 package dev.groupplanning.android.ui.datepoll
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.HorizontalDivider
@@ -42,7 +42,7 @@ internal fun PollDeadlineField(
             color = DesignTokens.colorMuted,
             fontSize = DesignTokens.typographySizeCaption,
         )
-        BoxWithConstraints {
+        Box {
             val date: @Composable (Modifier) -> Unit = { modifier ->
                 DateTimeField(
                     stringResource(R.string.meeting_day_field),

@@ -34,7 +34,8 @@ struct AppRootView: View {
                     retry: { runtime.restoreID = UUID() })
             } else {
                 OnboardingView(
-                    authenticating: runtime.signIn?.busy == true, signIn: runtime.startSignIn
+                    authenticating: runtime.signIn?.busy == true,
+                    problem: runtime.signIn?.problem != nil, signIn: runtime.startSignIn
                 )
             }
         }
@@ -58,9 +59,6 @@ struct AppRootView: View {
             if let url = activity.webpageURL { runtime.open(url) }
         }
         .onChange(of: runtime.signIn?.completedContext) { runtime.completeSignIn() }
-        .modifier(
-            SignInProblemModifier(signIn: runtime.signIn, active: runtime.invitation == nil)
-        )
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if runtime.session?.accountDeleted == true {
                 Text("Аккаунт удалён").padding(16).background(
@@ -93,7 +91,8 @@ struct AppRootView: View {
                     InvitationRouteView(
                         target: target, api: api, session: runtime.session,
                         warning: runtime.linkWarning, close: runtime.closeInvitation,
-                        authenticating: runtime.signIn?.busy == true, signIn: runtime.startSignIn)
+                        authenticating: runtime.signIn?.busy == true,
+                        signIn: runtime.startSignIn)
                 } else {
                     StatusView(
                         title: "Сервер ещё не настроен",

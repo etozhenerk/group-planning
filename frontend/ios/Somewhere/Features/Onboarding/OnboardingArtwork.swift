@@ -4,23 +4,37 @@ struct OnboardingArtwork: View {
     let slide: OnboardingSlide
     var body: some View {
         GeometryReader { geometry in
-            let scale = min(1, min(geometry.size.width / 330, geometry.size.height / 330))
-            ZStack {
-                Ellipse().fill(AppPalette.accent.opacity(0.10))
-                    .frame(width: 240, height: 200).blur(radius: 42)
-                Group {
-                    switch slide {
-                    case .invitation: InvitationExample()
-                    case .conversation: ConversationExample()
-                    case .poll: PollExample()
-                    case .task: TaskExample()
-                    case .plans: PlansExample()
-                    }
-                }.frame(maxWidth: 330)
+            let width = DesignTokens.componentMobileOnboardingArtworkReferenceWidth
+            let height =
+                slide == .conversation || slide == .task
+                ? DesignTokens.componentMobileOnboardingTallArtworkHeight
+                : DesignTokens.componentMobileOnboardingArtworkHeight
+            let scale = min(1, geometry.size.width / width)
+            Group {
+                if slide == .meetings {
+                    artwork.accessibilityElement(children: .contain)
+                } else {
+                    artwork.allowsHitTesting(false)
+                        .accessibilityElement(children: .ignore).accessibilityLabel(
+                            slide.exampleLabel)
+                }
             }
-            .frame(width: 330, height: 330).scaleEffect(scale)
+            .environment(\.dynamicTypeSize, .medium)
+            .frame(width: width, height: height)
+            .scaleEffect(scale)
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
-        .accessibilityElement(children: .ignore).accessibilityLabel(slide.exampleLabel)
+    }
+    @ViewBuilder private var artwork: some View {
+        switch slide {
+        case .invitation: InvitationExample()
+        case .meetings: PlansExample()
+        case .conversation: ConversationExample()
+        case .date: DateExample()
+        case .poll: PollExample()
+        case .task: TaskExample()
+        case .album: OnboardingAlbumExample()
+        case .plans: OnboardingMeetingPreview(title: "Ваша первая встреча", first: true)
+        }
     }
 }

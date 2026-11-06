@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.14.0. Do not edit.
+// Generated from design-system/tokens.json · 7.15.0. Do not edit.
 export const conversationTokens = {
   componentDesktopMessageCornerRadius: '5px',
   componentDesktopMessageLineHeight: '1.6',

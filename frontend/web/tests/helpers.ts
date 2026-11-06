@@ -8,6 +8,14 @@ export const login = async (
   who: 'Саша' | 'Лена' | 'Удаление: автор' | 'Удаление: участник',
 ) => {
   await page.goto('/meetings');
+  const intro = page.getByTestId('mobile-onboarding');
+  const signIn = page.getByRole('button', { name: 'Войти через Яндекс ID' });
+  await expect(intro.or(signIn).first()).toBeVisible();
+
+  if ((await intro.isVisible()) && !(await signIn.isVisible())) {
+    await intro.getByRole('button', { name: 'Пропустить', exact: true }).click();
+  }
+
   await page.getByRole('button', { name: 'Войти через Яндекс ID' }).click();
   await page.getByRole('link', { name: `Войти как ${who}` }).click();
   await expect(page).toHaveURL(/\/meetings$/);
@@ -206,7 +214,18 @@ export const expectMessageSide = async (
   }).toPass();
 };
 
-export const actionSurface = (page: Page, title: string) =>
-  page
-    .getByRole('main', { name: title, exact: true })
-    .or(page.getByRole('dialog', { name: title, exact: true }));
+export const actionSurface = (page: Page, title: string) => {
+  const name =
+    title === 'Новая дата встречи' && (page.viewportSize()?.width ?? 1440) < 740
+      ? 'Предложить дату'
+      : title;
+
+  return page
+    .getByRole('main', { name, exact: true })
+    .or(page.getByRole('dialog', { name, exact: true }));
+};
+
+export const meetingInfoSurface = (page: Page, title: string) =>
+  page.getByRole('dialog').filter({
+    has: page.getByRole('heading', { name: title, exact: true }),
+  });

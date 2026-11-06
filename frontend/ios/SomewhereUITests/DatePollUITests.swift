@@ -34,10 +34,7 @@ final class DatePollUITests: XCTestCase {
             if app.staticTexts["action-form-header"].isHittable { break }
             app.scrollViews["action-form-scroll"].swipeDown()
         }
-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
-        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
-        app.buttons["meeting-add"].tap()
-        app.buttons["new-date-poll"].tap()
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
         XCTAssertTrue(submit.waitForExistence(timeout: 5))
         XCTAssertEqual(multiple.value as? String, changed)
         capture("poll-create")
@@ -46,20 +43,20 @@ final class DatePollUITests: XCTestCase {
             app.swipeUp()
         }
         submit.tap()
-        XCTAssertTrue(app.staticTexts["poll-error"].waitForExistence(timeout: 10))
+        XCTAssertTrue(
+            app.descendants(matching: .any).matching(identifier: "poll-error").firstMatch
+                .waitForExistence(timeout: 10))
         capture("poll-create-error")
-        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
-        XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 5))
-        app.buttons["meeting-add"].tap()
-        app.buttons["new-date-poll"].tap()
+        ChatSheetTestSupport.swipeDownFromHeader(app, headerIdentifier: "action-form-header")
+        XCTAssertTrue(app.staticTexts["action-form-header"].exists)
         XCTAssertTrue(submit.waitForExistence(timeout: 5))
-        XCTAssertEqual(submit.label, "Повторить")
+        XCTAssertEqual(submit.label, "Повторить отправку")
         XCTAssertEqual(multiple.value as? String, changed)
         for _ in 0..<6 {
             if submit.isHittable { break }
             app.scrollViews["action-form-scroll"].swipeUp()
         }
-        capture("poll-pending-reopen")
+        capture("poll-pending-keeps-original-form")
         submit.tap()
         let option = app.buttons["poll-option-2026-10-26"]
         XCTAssertTrue(option.waitForExistence(timeout: 15))
@@ -129,7 +126,8 @@ final class DatePollUITests: XCTestCase {
         let app = open("poll-hidden", suffix: "400")
         XCTAssertTrue(app.staticTexts["Опрос завершён"].waitForExistence(timeout: 10))
         let first = app.buttons["poll-option-2026-10-25"]
-        XCTAssertEqual(first.label, "25 октября, воскресенье")
+        XCTAssertTrue(first.label.contains("25 октября"))
+        XCTAssertTrue(first.label.contains("Воскресенье"))
         XCTAssertFalse(first.isEnabled)
         XCTAssertFalse(app.buttons["Проголосовать"].exists)
         XCTAssertFalse(app.buttons["Добавить дату"].exists)

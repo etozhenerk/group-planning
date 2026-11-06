@@ -57,7 +57,7 @@ export const ParticipantList = ({
           </button>
         </p>
       )}
-      {people.data && (!expanded || mobile) && (
+      {people.data && !expanded && (
         <ParticipantChips
           people={people.data}
           onOpen={compact ? showAll : () => expansion.change(!expanded)}

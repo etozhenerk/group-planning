@@ -57,6 +57,7 @@ internal fun MeetingCard(
     meeting: MeetingSummary,
     inviter: String? = null,
     invitation: Boolean = false,
+    coverPreview: (@Composable () -> Unit)? = null,
     onClick: () -> Unit,
 ) {
     val date = meeting.startsAt?.instant?.atZone(ZoneId.of(meeting.timezone))?.toLocalDate()
@@ -66,7 +67,8 @@ internal fun MeetingCard(
     val tint = if (weekend) Color(0xff2e3938) else Color(0xff38313d)
     val own = meeting.organizerId != null && meeting.organizerId == LocalViewer.current
     val crown = stringResource(R.string.organizer_badge)
-    val cover = meeting.coverUrl != null && LocalDensity.current.fontScale <= 1.5f
+    val cover = (meeting.coverUrl != null || coverPreview != null) &&
+        LocalDensity.current.fontScale <= 1.5f
     val coverReserve = if (cover) {
         if (invitation) {
             DesignTokens.componentCardCoverMobileWidth + DesignTokens.spaceS10
@@ -199,11 +201,15 @@ internal fun MeetingCard(
                         RoundedCornerShape(16.dp),
                     ).padding(3.dp),
             ) {
-                CoverImage(
-                    CoverSource.Remote(checkNotNull(meeting.coverUrl), meeting.id),
-                    Modifier.fillMaxSize(),
-                    thumbnail = true,
-                )
+                if (coverPreview != null) {
+                    coverPreview()
+                } else {
+                    CoverImage(
+                        CoverSource.Remote(checkNotNull(meeting.coverUrl), meeting.id),
+                        Modifier.fillMaxSize(),
+                        thumbnail = true,
+                    )
+                }
             }
         }
         if (!invitation && meeting.period != MeetingPeriod.Past) {

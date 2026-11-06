@@ -65,7 +65,16 @@ internal class InvitationRepository(
                 session.updateAccess(id, allowed = false, generation)
             }
             val current = error.problem?.currentResponse
-            val public = preview ?: throw error
+            val public = if (target is InvitationTarget.Meeting && current == null) {
+                val token = target.originToken ?: throw error
+                session.authenticated(
+                    InvitationRequests.preview(token),
+                    InvitationPreview.serializer(),
+                    generation,
+                )
+            } else {
+                preview ?: throw error
+            }
             return InvitationDetails(
                 public.copy(
                     myRsvp = current?.rsvp ?: public.myRsvp,

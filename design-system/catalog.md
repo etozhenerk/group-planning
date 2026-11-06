@@ -1,4 +1,4 @@
-# Токены somewhere · 7.14.0
+# Токены somewhere · 7.15.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -457,17 +457,45 @@
 | component.mobileNavigation.selectedIconStroke | number | 1.8 | Привязка iOS baseline выбранного navigation icon; без изменения принятого дизайна. Источники/hash: mobile-response-navigation-bindings-6.3.json. |
 | component.mobileOnboarding.artworkGap | dimension | 30px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
 | component.mobileOnboarding.artworkHeight | dimension | 360px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.artworkReferenceWidth | dimension | 336px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; 390px минус два inset27px, база пропорциональной native-адаптации. |
+| component.mobileOnboarding.chatMaximumWidth | dimension | 270px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; chatMaximumWidth. Не новое оформление. |
 | component.mobileOnboarding.copyGap | dimension | 18px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
 | component.mobileOnboarding.copyMinimumHeight | dimension | 180px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.exampleSwitcherHeight | dimension | 40px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; exampleSwitcherHeight. Не новое оформление. |
+| component.mobileOnboarding.exampleSwitcherInsetBlock | dimension | 9px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; exampleSwitcherInsetBlock. Не новое оформление. |
+| component.mobileOnboarding.exampleSwitcherInsetInline | dimension | 14px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; exampleSwitcherInsetInline. Не новое оформление. |
 | component.mobileOnboarding.footerMinimumHeight | dimension | 110px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.heroPhotoAngle | number | -4 | Неизменённая композиция onboarding-r4/r5, heroPhotoAngle. Системные insets и Reduce Motion задаются клиентом. |
+| component.mobileOnboarding.heroPhotoHeight | dimension | 245px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; heroPhotoHeight. Не новое оформление. |
+| component.mobileOnboarding.heroPhotoTrailingSpace | dimension | 35px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; heroPhotoTrailingSpace. Не новое оформление. |
 | component.mobileOnboarding.insetInline | dimension | 27px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.invitationCardTop | dimension | 132px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; invitationCardTop. Не новое оформление. |
+| component.mobileOnboarding.invitationPhotoAngle | number | -3 | Неизменённая композиция onboarding-r4/r5, invitationPhotoAngle. Системные insets и Reduce Motion задаются клиентом. |
+| component.mobileOnboarding.invitationPhotoHeight | dimension | 185px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; invitationPhotoHeight. Не новое оформление. |
+| component.mobileOnboarding.invitationPhotoInset | dimension | 13px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; invitationPhotoInset. Не новое оформление. |
+| component.mobileOnboarding.invitationResponseTop | dimension | 316px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; invitationResponseTop. Не новое оформление. |
+| component.mobileOnboarding.narrowTitleBoundary | dimension | 350px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; narrowTitleBoundary. Не новое оформление. |
 | component.mobileOnboarding.nextHeight | dimension | 52px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
 | component.mobileOnboarding.nextInsetInline | dimension | 23px | onboarding-r4/r5, .next padding-inline23px из computed style. |
 | component.mobileOnboarding.nextMinimumWidth | dimension | 135px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.photoFrameWidth | dimension | 5px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; photoFrameWidth. Не новое оформление. |
+| component.mobileOnboarding.photoShadowBlur | dimension | 32px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; photoShadowBlur. Не новое оформление. |
+| component.mobileOnboarding.photoShadowOffset | dimension | 16px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; photoShadowOffset. Не новое оформление. |
+| component.mobileOnboarding.photoShadowOpacity | number | 0.25 | Неизменённая композиция onboarding-r4/r5, photoShadowOpacity. Системные insets и Reduce Motion задаются клиентом. |
+| component.mobileOnboarding.photoStoryHeight | dimension | 290px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; photoStoryHeight. Не новое оформление. |
 | component.mobileOnboarding.progressDotSize | dimension | 6px | onboarding-r4/r5: невыбранная точка6×6. |
 | component.mobileOnboarding.progressSelectedWidth | dimension | 19px | onboarding-r4/r5: выбранная капсула19×6, radius.pill. |
 | component.mobileOnboarding.progressSlotWidth | dimension | 27px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
 | component.mobileOnboarding.progressVisualHeight | dimension | 34px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
+| component.mobileOnboarding.secondPhotoAngle | number | 7 | Неизменённая композиция onboarding-r4/r5, secondPhotoAngle. Системные insets и Reduce Motion задаются клиентом. |
+| component.mobileOnboarding.secondPhotoHeight | dimension | 160px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; secondPhotoHeight. Не новое оформление. |
+| component.mobileOnboarding.secondPhotoTop | dimension | 125px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; secondPhotoTop. Не новое оформление. |
+| component.mobileOnboarding.secondPhotoWidth | dimension | 138px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; secondPhotoWidth. Не новое оформление. |
+| component.mobileOnboarding.storyLabelGap | dimension | 9px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; storyLabelGap. Не новое оформление. |
+| component.mobileOnboarding.storyLabelSize | dimension | 10px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; storyLabelSize. Не новое оформление. |
+| component.mobileOnboarding.storyLabelTracking | dimension | 0.8px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; storyLabelTracking. Не новое оформление. |
+| component.mobileOnboarding.swipeCommitDistance | dimension | 45px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; swipeCommitDistance. Не новое оформление. |
+| component.mobileOnboarding.swipeMaximumVerticalDistance | dimension | 60px | Привязка неизменённого onboarding-r4/r5: Artwork.module.css/useOnboarding из одобренного frame.html; swipeMaximumVerticalDistance. Не новое оформление. |
 | component.mobileOnboarding.tallArtworkHeight | dimension | 390px | onboarding-r4/r5, сохранённая композиция; computed style preparation/onboarding-layout-audit.json и onboarding-style-audit.json. Системные fake-frame insets не переносятся в приложения. |
 | component.mobileOnboarding.titleTracking | dimension | 1px | onboarding-r4/r5 title: tracking-1px; размер/вес/lineHeight уже опубликованы6.0.0. |
 | component.mobilePage.insetTop | dimension | 28px | Вертикальный отступ мобильной страницы из действующих app-форм и принятых create/help/profile; desktop не меняется. |

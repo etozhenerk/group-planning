@@ -236,6 +236,14 @@ internal class AppViewModel(
     fun completedResponse(outcome: RsvpOutcome) {
         val profile = (snapshot.value.session as? SessionState.Authenticated)?.profile ?: return
         if (profile.id != outcome.profileId) return
+        val source = (route.value as? AppRoute.Invitation)?.model?.takeIf {
+            it.state.value.details?.preview?.meetingId == outcome.meetingId
+        }?.target
+        val originToken = when (source) {
+            is InvitationTarget.Token -> source.value
+            is InvitationTarget.Meeting -> source.originToken
+            else -> null
+        }
         viewModelScope.launch {
             try {
                 runtime.invitationContext.save(null)
@@ -251,7 +259,7 @@ internal class AppViewModel(
             when (outcome.answer) {
                 RsvpAnswer.Going -> {
                     selectHomeTab(0)
-                    open(outcome.meetingId)
+                    showInvitation(InvitationTarget.Meeting(outcome.meetingId, originToken))
                 }
                 RsvpAnswer.Maybe -> {
                     clearRoute()

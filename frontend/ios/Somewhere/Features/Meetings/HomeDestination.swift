@@ -1,6 +1,6 @@
 import Foundation
 
 enum HomeDestination: Hashable {
-    case meeting(UUID)
+    case meeting(UUID, publicToken: String? = nil)
     case declined(String)
 }

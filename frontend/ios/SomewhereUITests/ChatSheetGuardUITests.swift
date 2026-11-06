@@ -20,10 +20,8 @@ final class ChatSheetGuardUITests: XCTestCase {
         app.scrollViews["action-form-scroll"].swipeDown()
         let afterSwipe = try counts(trace)
         XCTAssertEqual(afterSwipe, before, "Dragging the sheet body must not start any request")
-        if app.staticTexts["action-form-header"].exists {
-            ChatSheetTestSupport.dismissBySwipe(app)
-        }
-        ChatSheetTestSupport.openAction("new-place-poll", app: app)
+        XCTAssertTrue(app.staticTexts["action-form-header"].exists)
+        ChatSheetTestSupport.stayAfterDirtySwipe(app)
         XCTAssertEqual(field.value as? String, "Сохраняем кафе у метро")
         ExperienceScreenshot.save("sheet-controls-body-draft", test: self)
     }

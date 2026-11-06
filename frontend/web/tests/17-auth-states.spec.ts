@@ -160,7 +160,14 @@ test('return retries a failed session read without another OAuth attempt', async
       starts++;
     }
   });
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.route('**/api/v1/me', async (route) => {
+    if (new URL(route.request().frame().url()).pathname !== '/auth/return') {
+      await route.continue();
+
+      return;
+    }
+
     reads++;
 
     if (reads === 1) {
@@ -172,7 +179,6 @@ test('return retries a failed session read without another OAuth attempt', async
       await route.continue();
     }
   });
-  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/auth/return?kind=home');
   await expect(page.getByRole('heading', { name: 'Не удалось войти' })).toBeVisible();
   await page.screenshot({ path: 'test-results/auth-error-390.png' });

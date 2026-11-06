@@ -66,7 +66,7 @@ struct InvitationScreen: View {
             if allowed, owner.completedResponseID == nil, case .token = owner.target,
                 let id = owner.preview?.meetingID
             {
-                complete(.going(id))
+                complete(.going(id, publicToken: owner.publicToken))
             }
         }
         .onChange(

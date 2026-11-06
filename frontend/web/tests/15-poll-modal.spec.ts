@@ -67,9 +67,22 @@ for (const width of [320, 390, 1440]) {
     await expect(page.getByLabel('Сообщение', { exact: true })).toHaveValue(
       'Черновик разговора',
     );
-    await expect(open).toBeFocused();
-    await open.click();
-    await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
+
+    if (width < 740) {
+      const guard = page.getByRole('dialog', {
+        name: 'Выйти без сохранения?',
+        exact: true,
+      });
+
+      await guard
+        .getByRole('button', { name: 'Продолжить редактирование', exact: true })
+        .click();
+    } else {
+      await expect(open).toBeFocused();
+      await open.click();
+      await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
+    }
+
     await expectSelectedDate();
     await first.press('Alt+ArrowDown');
     await expect(popup).toBeVisible();
@@ -77,11 +90,35 @@ for (const width of [320, 390, 1440]) {
     await expect(popup).not.toBeVisible();
     await expect(screen).toBeVisible();
     await page.keyboard.press('Escape');
-    await expect(screen).not.toBeVisible();
-    await expect(open).toBeFocused();
-    await page.goForward();
-    await expect(screen).toBeVisible();
-    await expectSelectedDate();
+
+    if (width < 740) {
+      const guard = page.getByRole('dialog', {
+        name: 'Выйти без сохранения?',
+        exact: true,
+      });
+
+      await guard
+        .getByRole('button', { name: 'Продолжить редактирование', exact: true })
+        .click();
+      await expectSelectedDate();
+      await screen.getByRole('button', { name: 'Закрыть', exact: true }).click();
+      await guard
+        .getByRole('button', { name: 'Выйти без сохранения', exact: true })
+        .click();
+      await expect(screen).not.toBeVisible();
+      await expect(open).toBeFocused();
+      await open.click();
+      await page.getByRole('menuitem', { name: 'Предложить дату', exact: true }).click();
+      await expect(screen).toBeVisible();
+      await expect(first).not.toHaveAttribute('data-date', '27.10.2026');
+    } else {
+      await expect(screen).not.toBeVisible();
+      await expect(open).toBeFocused();
+      await page.goForward();
+      await expect(screen).toBeVisible();
+      await expectSelectedDate();
+    }
+
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     await page.screenshot({
       path: `test-results/action-date-${width}.png`,

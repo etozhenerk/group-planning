@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@/shared/lib/media';
 import { useIsMutating } from '@tanstack/react-query';
 import styles from '@/widgets/session-gate/ui/SessionGate/SessionGate.module.css';
 import type { ReactNode } from 'react';
@@ -14,14 +15,17 @@ export type SessionGateProps = {
   children: (session: Session) => ReactNode;
   context?: ReturnContext;
   loading?: ReactNode;
+  anonymous?: ReactNode;
 };
 
 export const SessionGate = ({
   children,
   context = { kind: 'home' },
   loading = <LoadingScreen />,
+  anonymous,
 }: SessionGateProps) => {
   const session = useSession();
+  const mobile = useMobileLayout();
   const leaving = useIsMutating({ mutationKey: ['logout'] }) > 0;
 
   if (session.isPending || (leaving && !session.data)) {
@@ -42,6 +46,10 @@ export const SessionGate = ({
   }
 
   if (!session.data) {
+    if (mobile && context.kind === 'home' && anonymous) {
+      return anonymous;
+    }
+
     return (
       <main id="main" className={[styles['entry-page'], styles['stack']].join(' ')}>
         <Brand />

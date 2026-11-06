@@ -1,3 +1,4 @@
+import { MobileOnboarding } from '@/widgets/onboarding';
 import { useParams } from 'react-router';
 import { SessionGate } from '@/widgets/session-gate';
 import { SkeletonDetails } from '@/shared/ui/SkeletonDetails';
@@ -9,6 +10,7 @@ export const SavedInvitationPage = () => {
 
   return (
     <SessionGate
+      anonymous={<MobileOnboarding />}
       context={{ kind: 'invitation', token }}
       loading={
         <SavedInvitationLayout>

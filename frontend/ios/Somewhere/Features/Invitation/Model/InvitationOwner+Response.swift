@@ -13,7 +13,7 @@ extension InvitationOwner {
             case .token(let token):
                 request = try InvitationRequests.respond(
                     token, input: pending.input, key: pending.key)
-            case .meeting(let id):
+            case .meeting(let id, _):
                 request = try InvitationRequests.respond(
                     to: id, input: pending.input, key: pending.key)
             }
@@ -30,7 +30,8 @@ extension InvitationOwner {
             canAccess = false
             session.updateMeetingAccess(result.meetingID, allowed: result.canAccessFeed)
             completedResponse = RSVPOutcome(
-                answer: result.rsvp, meetingID: result.meetingID, title: preview?.title ?? "")
+                answer: result.rsvp, meetingID: result.meetingID, title: preview?.title ?? "",
+                publicToken: publicToken)
             completedResponseID = pending.key
             if result.canAccessFeed {
                 await loadPrivate(version: version)

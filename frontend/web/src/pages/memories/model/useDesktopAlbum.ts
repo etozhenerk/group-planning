@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { PointerEvent, KeyboardEvent } from 'react';
 import { designTokens } from '@/shared/config/design-tokens';
 
@@ -21,6 +21,24 @@ export const useDesktopAlbum = (count: number) => {
   const pointer = useRef<{ id: number; x: number; y: number } | null>(null);
   const select = (value: number) =>
     setIndex(count ? ((value % count) + count) % count : 0);
+
+  const restore = useCallback(
+    (value: number, showGrid: boolean) => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+        timer.current = null;
+      }
+
+      pointer.current = null;
+      moved.current = false;
+      setIndex(count ? ((value % count) + count) % count : 0);
+      setGrid(showGrid);
+      setOffset(0);
+      setMoving(false);
+      setResetting(false);
+    },
+    [count],
+  );
 
   const advance = (step: number, width: number, fromSwipe = false) => {
     if (count < 2 || timer.current) {
@@ -150,6 +168,7 @@ export const useDesktopAlbum = (count: number) => {
   return {
     index,
     select,
+    restore,
     offset,
     grid,
     moving,

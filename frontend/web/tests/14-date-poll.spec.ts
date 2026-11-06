@@ -9,6 +9,7 @@ import {
   writeHeaders,
 } from '@tests/helpers';
 import { datePollSchema } from '@/shared/api';
+import { designTokens } from '@/shared/config/design-tokens';
 
 const join = async (page: Page, url: string) => {
   await page.goto(url);
@@ -91,7 +92,9 @@ test('create with settings and apply live majority in two chats', async ({
     const bounds = await toggle.boundingBox();
     expect(bounds?.width).toBeCloseTo(38, 1);
     expect(bounds?.height).toBeCloseTo(24, 1);
-    expect((await toggle.locator('..').boundingBox())?.height).toBeGreaterThanOrEqual(48);
+    expect((await toggle.locator('..').boundingBox())?.height).toBeGreaterThanOrEqual(
+      Number.parseFloat(designTokens.targetWeb),
+    );
   }
 
   const dateField = form.getByRole('button', { name: 'Вариант 1', exact: true });
@@ -117,10 +120,16 @@ test('create with settings and apply live majority in two chats', async ({
   const card = page.getByRole('region', { name: 'Опрос о дате' });
   const other = friend.getByRole('region', { name: 'Опрос о дате' });
   await expect(other).toBeVisible({ timeout: 10000 });
-  await expect(card).toHaveCSS('background-color', 'rgb(224, 220, 232)');
+  await expect(card).toHaveCSS('background-color', 'rgb(51, 52, 58)');
   await expect(other).toHaveCSS('background-color', 'rgb(51, 52, 58)');
-  await expect(card).toHaveCSS('border-top-left-radius', '20px');
-  await expect(card).toHaveCSS('border-top-right-radius', '6px');
+  await expect(card).toHaveCSS(
+    'border-top-left-radius',
+    designTokens.componentMobileMessageCornerRadius,
+  );
+  await expect(card).toHaveCSS(
+    'border-top-right-radius',
+    designTokens.componentMobileDecisionCardRadius,
+  );
   await expect(other).toHaveCSS('border-top-left-radius', '6px');
   await expect(other).toHaveCSS('border-top-right-radius', '20px');
 

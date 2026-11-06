@@ -42,13 +42,19 @@ final class AccountDeletionUITests: XCTestCase {
             NSPredicate(format: "label CONTAINS %@", "История остаётся участникам")
         ).firstMatch
         XCTAssertTrue(message.waitForExistence(timeout: 10))
-        XCTAssertTrue(message.label.contains("Организатор до удаления"))
+        let row = app.descendants(matching: .any).matching(
+            identifier: "chat-row-" + messageKey
+        ).firstMatch
+        XCTAssertTrue(row.staticTexts["История остаётся участникам"].exists)
+        XCTAssertTrue(row.staticTexts["Организатор до удаления"].exists)
         _ = try await owner.request("me", method: "DELETE")
         let anonymized = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label CONTAINS %@", "Удалённый аккаунт"),
-            object: message)
+            predicate: NSPredicate(format: "exists == true"),
+            object: row.staticTexts["Удалённый аккаунт"])
         let result = await XCTWaiter.fulfillment(of: [anonymized], timeout: 15)
         XCTAssertEqual(result, .completed)
+        XCTAssertTrue(row.staticTexts["История остаётся участникам"].exists)
+        XCTAssertFalse(row.staticTexts["Организатор до удаления"].exists)
         let current = try await survivor.request("me")
         let profile = try XCTUnwrap(current["user"] as? [String: Any])
         let details = try await survivor.request("meetings/" + id)
@@ -67,7 +73,7 @@ final class AccountDeletionUITests: XCTestCase {
         app.launch()
         ChatSheetTestSupport.openChat(app, id: id)
         XCTAssertTrue(message.waitForExistence(timeout: 10))
-        XCTAssertTrue(message.label.contains("Удалённый аккаунт"))
+        XCTAssertTrue(row.staticTexts["Удалённый аккаунт"].exists)
     }
 
     func testProfileHasNoDeleteEntryAndLogoutRemainsReachable() {

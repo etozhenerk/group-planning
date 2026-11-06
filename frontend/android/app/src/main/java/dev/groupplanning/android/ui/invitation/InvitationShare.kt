@@ -1,6 +1,5 @@
 package dev.groupplanning.android.ui.invitation
 
-import android.content.Intent
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -19,11 +18,7 @@ internal fun InvitationShare(url: String, showLabel: Boolean = false) {
     val context = LocalContext.current
     val title = stringResource(R.string.invitation_share)
     val share = {
-        val send = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, url)
-        }
-        context.startActivity(Intent.createChooser(send, title))
+        launchInvitationShare(context, url, title)
     }
     if (showLabel) {
         InvitationShareAction(

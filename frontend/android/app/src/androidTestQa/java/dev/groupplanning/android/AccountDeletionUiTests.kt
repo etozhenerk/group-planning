@@ -86,7 +86,9 @@ class AccountDeletionUiTests {
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
             fixture.waitText("Вход через Яндекс ID")
-            val cookies = compose.onNodeWithText(fixture.context.getString(R.string.cookies_title))
+            val cookies = compose.onNodeWithText(
+                fixture.context.getString(R.string.profile_cookie_short),
+            )
             cookies.performScrollTo()
             check(
                 cookies.fetchSemanticsNode().boundsInRoot.bottom <=

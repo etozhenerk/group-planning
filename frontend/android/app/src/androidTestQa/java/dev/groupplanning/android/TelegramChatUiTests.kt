@@ -178,10 +178,16 @@ class TelegramChatUiTests {
     @Test fun holdingAReactionOpensItsPeopleWithoutToggling() {
         fixture.launch("design").use {
             openChat()
-            val chip = compose.onNodeWithText("❤️ 2")
-            chip.performScrollTo().performClick()
-            fixture.waitText("❤️ 3 ✓")
-            val selectedChip = compose.onNodeWithText("❤️ 3 ✓")
+            val reactions = ReactionUiFixture(compose)
+            var baseline = reactions.state("❤️")
+            if (baseline.second) {
+                reactions.chip("❤️").performScrollTo().performClick()
+                reactions.waitState("❤️", baseline.first - 1, false)
+                baseline = reactions.state("❤️")
+            }
+            reactions.chip("❤️").performScrollTo().performClick()
+            reactions.waitState("❤️", baseline.first + 1, true)
+            val selectedChip = reactions.chip("❤️")
             selectedChip.performTouchInput { longClick() }
             fixture.waitTag("reaction-people")
             compose.onNodeWithTag("reaction-filter-❤️").assertIsSelected()
@@ -194,8 +200,9 @@ class TelegramChatUiTests {
             compose.onAllNodesWithContentDescription(
                 fixture.context.getString(R.string.reaction_people),
             ).assertCountEquals(0)
+            reactions.waitState("❤️", baseline.first + 1, true)
             selectedChip.performClick()
-            fixture.waitText("❤️ 2")
+            reactions.waitState("❤️", baseline.first, false)
             fixture.screenshot("telegram-reaction-hold-people")
         }
     }
@@ -228,7 +235,7 @@ class TelegramChatUiTests {
             compose.onNodeWithTag("settings-save").assertIsDisplayed()
             fixture.closeActionSheet()
             fixture.waitTag("meeting-information")
-            compose.onNodeWithTag("information-share").performScrollTo().performClick()
+            compose.onNodeWithTag("information-share").assertIsDisplayed().performClick()
             check(
                 fixture.device.wait(
                     androidx.test.uiautomator.Until.hasObject(
@@ -250,6 +257,9 @@ class TelegramChatUiTests {
 
     private fun assertSettingsFieldOrder() {
         val fieldPositions = listOf(
+            compose.onNodeWithText(fixture.context.getString(R.string.cover_title))
+                .fetchSemanticsNode().positionInRoot.y,
+        ) + listOf(
             R.string.meeting_title_field,
             R.string.meeting_description_field,
             R.string.meeting_day_field,
@@ -257,10 +267,9 @@ class TelegramChatUiTests {
         ).map { label ->
             compose.onNodeWithContentDescription(fixture.context.getString(label))
                 .fetchSemanticsNode().positionInRoot.y
-        } + compose.onNodeWithText(fixture.context.getString(R.string.cover_title))
-            .fetchSemanticsNode().positionInRoot.y
+        }
         assertTrue(
-            "Settings must show title, description, date, place and cover in that order",
+            "Settings must show cover, title, description, date and place in that order",
             fieldPositions.zipWithNext().all { (before, after) -> before < after },
         )
     }

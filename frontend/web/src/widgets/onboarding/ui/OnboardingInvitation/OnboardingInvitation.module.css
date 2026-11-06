@@ -1,0 +1,50 @@
+.invitation {
+  width: 100%;
+  min-height: var(--ds-component-mobile-onboarding-artwork-height);
+  padding-top: var(--ds-component-mobile-onboarding-invitation-response-top);
+  position: relative;
+}
+
+.photo {
+  position: absolute;
+  top: 0;
+  left: var(--ds-component-mobile-onboarding-invitation-photo-inset);
+  right: var(--ds-component-mobile-onboarding-invitation-photo-inset);
+  height: var(--ds-component-mobile-onboarding-invitation-photo-height);
+  transform: rotate(
+    calc(var(--ds-component-mobile-onboarding-invitation-photo-angle) * 1deg)
+  );
+  overflow: hidden;
+  border: var(--ds-component-mobile-onboarding-photo-frame-width) solid
+    var(--ds-color-photo-frame);
+  border-radius: var(--ds-radius-cover);
+  box-shadow: 0 var(--ds-component-mobile-onboarding-photo-shadow-offset)
+    var(--ds-component-mobile-onboarding-photo-shadow-blur)
+    var(--ds-color-mobile-vibe-photo-shadow);
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card {
+  position: absolute;
+  top: var(--ds-component-mobile-onboarding-invitation-card-top);
+  left: 0;
+  right: 0;
+}
+
+.response {
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo {
+    transform: none;
+  }
+}

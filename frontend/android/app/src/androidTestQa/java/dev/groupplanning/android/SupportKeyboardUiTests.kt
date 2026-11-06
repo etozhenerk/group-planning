@@ -5,6 +5,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -88,9 +91,13 @@ class SupportKeyboardUiTests {
             fixture.waitText("Обращение принято")
             compose.onNodeWithTag("support-done").assertDoesNotExist()
             compose.onNodeWithTag("support-success-back").performClick()
-            fixture.waitText(
-                fixture.context.getString(dev.groupplanning.android.R.string.help_title_new),
-            )
+            fixture.waitTag("service-page")
+            compose.waitUntil(10_000) {
+                compose.onAllNodes(
+                    hasText(fixture.context.getString(R.string.help_title)) and
+                        hasAnyAncestor(hasTestTag("service-page")),
+                ).fetchSemanticsNodes().isNotEmpty()
+            }
             compose.onNodeWithContentDescription("Назад").performClick()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()

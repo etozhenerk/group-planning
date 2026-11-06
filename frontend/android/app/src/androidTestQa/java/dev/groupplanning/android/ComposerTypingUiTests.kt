@@ -119,7 +119,7 @@ class ComposerTypingUiTests {
         fixture.launch("calendar").use {
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             compose.onNodeWithText("Сообщить о проблеме").performScrollTo().performClick()
             fixture.waitTag("support-description")
             val input = compose.onNodeWithTag("support-description")

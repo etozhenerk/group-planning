@@ -2,9 +2,12 @@ package dev.groupplanning.android
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
@@ -125,9 +128,20 @@ class FeedUiTests {
             compose.onNodeWithContentDescription("Название").assertTextContains("Моя встреча")
             compose.onNodeWithTag("settings-save").assertIsDisplayed().performClick()
             fixture.waitTag("settings-reload")
-            compose.onNodeWithTag("settings-reload").performScrollTo()
+            compose.onNodeWithTag("settings-reload").assertIsDisplayed()
             fixture.screenshot("feed-settings-conflict")
-            compose.onNodeWithTag("settings-reload").performScrollTo().performClick()
+            compose.onNodeWithTag("settings-reload").assertIsDisplayed().performClick()
+            fixture.waitText(fixture.context.getString(R.string.settings_current_facts))
+            val api = ChatReadLiveApi(fixture.context)
+            val meetingId = api.request("feed-owner", "invitations/RERERERERERERERERERERA")
+                .getString("meeting_id")
+            val currentTitle = api.request("feed-owner", "meetings/$meetingId").getString("title")
+            compose.onNode(
+                hasText(currentTitle) and hasAnyAncestor(hasTestTag("chat-action-sheet")),
+            )
+                .assertIsDisplayed()
+            compose.onNodeWithText(fixture.context.getString(R.string.settings_resume_review))
+                .assertIsDisplayed().performClick()
             compose.waitUntil(10_000) {
                 compose.onNodeWithContentDescription("Название").fetchSemanticsNode()
                     .config[androidx.compose.ui.semantics.SemanticsProperties.EditableText].text ==

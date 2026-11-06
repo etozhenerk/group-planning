@@ -9,20 +9,8 @@ struct ActionFormButton: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title).designFont(DesignTokens.typographySizeButton, weight: .semibold)
-                .fixedSize(horizontal: false, vertical: true).opacity(busy ? 0 : 1)
-                .padding(.vertical, DesignTokens.componentMobileSheetButtonInsetBlock)
-                .padding(.horizontal, DesignTokens.componentMobileSheetButtonInsetInline)
-                .frame(
-                    maxWidth: .infinity, minHeight: minimumHeight
-                )
-                .foregroundStyle(DesignTokens.colorActionText)
-                .background(
-                    DesignTokens.colorAction,
-                    in: RoundedRectangle(
-                        cornerRadius: cornerRadius)
-                )
-                .overlay { if busy { ProgressView().tint(DesignTokens.colorActionText) } }
+            ActionFormButtonLabel(
+                title: title, busy: busy, minimumHeight: minimumHeight, cornerRadius: cornerRadius)
         }.buttonStyle(.plain).disabled(busy)
             .accessibilityLabel(title).accessibilityValue(busy ? "Выполняется" : "")
     }

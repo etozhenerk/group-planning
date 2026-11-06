@@ -13,9 +13,15 @@ struct MeetingInfoFooter: View {
 
     var body: some View {
         if owner.invitation.organizer {
-            ActionFormButton(title: "Пригласить друзей") {
-                owner.openSheet(.share, child: true)
-            }.accessibilityIdentifier("meeting-info-share")
+            if let url = owner.invitation.shareURL {
+                ShareLink(item: url, preview: SharePreview(owner.meeting?.title ?? "Встреча")) {
+                    ActionFormButtonLabel(title: "Пригласить друзей")
+                }.buttonStyle(.plain).accessibilityIdentifier("meeting-info-share")
+            } else {
+                ActionFormButton(title: "Пригласить друзей") {
+                    owner.openSheet(.share, child: true)
+                }.accessibilityIdentifier("meeting-info-share")
+            }
         } else {
             HStack(spacing: DesignTokens.spaceS12) {
                 Image(systemName: "checkmark").font(

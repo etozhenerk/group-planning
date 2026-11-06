@@ -34,7 +34,7 @@ final class EntryUITests: XCTestCase {
         }
     }
     private func expectSlide(_ index: Int, _ app: XCUIApplication) {
-        let expected = String(index) + " из 5"
+        let expected = String(index) + " из 8"
         let match = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "value == %@", expected),
             object: app.pageIndicators["onboarding-progress"])
@@ -79,45 +79,41 @@ final class EntryUITests: XCTestCase {
         if done.exists { done.tap() }
     }
     private func reveal(_ button: XCUIElement, _ app: XCUIApplication) {
-        for _ in 0..<5 {
-            if button.isHittable { return }
-            app.scrollViews.firstMatch.swipeUp()
-        }
-        XCTAssertTrue(button.isHittable)
+        ChatSheetTestSupport.reveal(button, in: app.scrollViews.firstMatch, app: app)
     }
     func testOnboardingAndLoginFailure() {
         let app = launch("onboarding")
         XCTAssertTrue(
-            app.staticTexts["Назначьте встречу.\nОтправьте ссылку."].waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["Попробовать"].exists)
+            app.staticTexts["Позовите друзей\nна встречу."].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Войти через Яндекс ID"].exists)
         expectOnboardingChrome(app)
         app.swipeLeft()
         expectSlide(2, app)
-        XCTAssertTrue(app.staticTexts["Разговор —\nвнутри встречи."].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            app.staticTexts["Ваши встречи\nв списке и календаре."].waitForExistence(timeout: 3))
         app.swipeRight()
         expectSlide(1, app)
-        for index in 0..<5 {
+        for index in 0..<8 {
             expectSlide(index + 1, app)
             let brand = app.descendants(matching: .any)["brand-wordmark"].firstMatch
             XCTAssertGreaterThanOrEqual(brand.frame.minY, app.frame.minY)
             XCTAssertLessThan(brand.frame.maxY, app.frame.minY + 200)
-            expectOnboardingChrome(app, last: index == 4)
+            expectOnboardingChrome(app, last: index == 7)
             capture("onboarding-\(index + 1)", app)
-            if index < 4 { app.buttons["Далее"].tap() }
+            if index < 7 { app.buttons["Далее"].tap() }
         }
         app.buttons["Предыдущий слайд"].tap()
-        expectSlide(4, app)
-        XCTAssertTrue(app.staticTexts["Кто закажет пиццу?\nПредложите задачу."].exists)
+        expectSlide(7, app)
+        XCTAssertTrue(app.staticTexts["Соберите фотографии\nвстречи."].exists)
         app.buttons["Пропустить знакомство"].tap()
-        expectSlide(5, app)
+        expectSlide(8, app)
         app.swipeRight()
-        expectSlide(4, app)
+        expectSlide(7, app)
         app.swipeLeft()
-        expectSlide(5, app)
-        app.buttons["Попробовать"].tap()
-        XCTAssertTrue(app.alerts["Не удалось войти"].waitForExistence(timeout: 3))
-        app.buttons["Понятно"].tap()
-        XCTAssertTrue(app.buttons["Попробовать"].isEnabled)
+        expectSlide(8, app)
+        app.buttons["Войти через Яндекс ID"].tap()
+        XCTAssertTrue(app.staticTexts["Не удалось открыть вход"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["Войти через Яндекс ID"].isEnabled)
         XCTAssertFalse(app.buttons["Войти как Саша"].exists)
     }
     func testOnboardingAtLargeText() {
@@ -135,34 +131,28 @@ final class EntryUITests: XCTestCase {
         expectOnboardingChrome(app)
         capture("onboarding-large-first", app)
         revealOnboardingText(
-            "Друзья ответят «Приду», «Возможно» или «Не смогу». Вы увидите, кого ждать.",
+            "Назначьте дату и отправьте ссылку.\nПо ответам друзей будет понятно, кого ждать.",
             slide: 0, app: app)
         capture("onboarding-large-first-body", app)
         XCTAssertTrue(skip.isHittable)
         skip.tap()
-        let trial = app.buttons["Попробовать"]
+        let trial = app.buttons["Войти через Яндекс ID"]
         XCTAssertTrue(trial.waitForExistence(timeout: 3))
         XCTAssertTrue(trial.isHittable)
         XCTAssertGreaterThanOrEqual(trial.frame.minX, app.frame.minX)
         XCTAssertLessThanOrEqual(trial.frame.maxX, app.frame.maxX)
-        expectSlide(5, app)
+        expectSlide(8, app)
         expectOnboardingChrome(app, last: true)
         capture("onboarding-large-text", app)
         revealOnboardingText(
-            "После входа откроются ваши встречи. Отдельная регистрация не нужна.",
-            slide: 4, app: app)
+            "Отдельная регистрация не нужна.",
+            slide: 7, app: app)
         capture("onboarding-large-last-body", app)
-        let note = app.staticTexts["Вход через Яндекс ID"]
-        let lastScroll = app.scrollViews["onboarding-slide-4"]
-        if !lastScroll.frame.contains(note.frame) { lastScroll.swipeUp() }
-        XCTAssertTrue(note.isHittable)
-        XCTAssertTrue(lastScroll.frame.contains(note.frame))
         XCTAssertTrue(trial.isHittable)
         XCTAssertTrue(app.frame.contains(trial.frame))
-        XCTAssertFalse(note.frame.intersects(trial.frame))
         capture("onboarding-large-last-end", app)
         trial.tap()
-        XCTAssertTrue(app.alerts["Не удалось войти"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Не удалось открыть вход"].waitForExistence(timeout: 5))
     }
     func testEmptyListHasOneCreateAction() {
         let app = launch("empty")
@@ -185,7 +175,7 @@ final class EntryUITests: XCTestCase {
         XCTAssertTrue(gate.requested)
         capture("list-error", app)
         try gate.release()
-        app.buttons["Попробовать ещё раз"].tap()
+        app.buttons["Повторить загрузку"].tap()
         XCTAssertTrue(app.staticTexts["Нет предстоящих встреч"].waitForExistence(timeout: 10))
         capture("list-recovered", app)
     }
@@ -193,7 +183,7 @@ final class EntryUITests: XCTestCase {
         let app = launch("draft")
         create(app)
         title("Черновик встречи", app)
-        app.buttons["Закрыть"].tap()
+        app.buttons["Вернуться к встречам"].tap()
         capture("discard-dialog", app)
         let tree = XCTAttachment(string: app.debugDescription)
         tree.name = "discard-dialog-tree"
@@ -204,7 +194,7 @@ final class EntryUITests: XCTestCase {
         XCTAssertEqual(
             app.descendants(matching: .any).matching(identifier: "meeting-title").firstMatch.value
                 as? String, "Черновик встречи")
-        app.buttons["Закрыть"].tap()
+        app.buttons["Вернуться к встречам"].tap()
         app.buttons["Выйти"].tap()
         XCTAssertTrue(app.scrollViews["meetings-list"].waitForExistence(timeout: 5))
         app.terminate()
@@ -242,7 +232,7 @@ final class EntryUITests: XCTestCase {
                 .isEnabled)
         let retry = app.buttons["create-submit"]
         reveal(retry, app)
-        XCTAssertEqual(retry.label, "Повторить сохранение")
+        XCTAssertEqual(retry.label, "Повторить отправку")
         retry.tap()
         XCTAssertTrue(app.staticTexts["feed-title"].waitForExistence(timeout: 15))
         capture("created", app)
