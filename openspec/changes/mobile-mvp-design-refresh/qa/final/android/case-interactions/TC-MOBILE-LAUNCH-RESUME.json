@@ -1,0 +1,24 @@
+{
+  "caseId": "TC-MOBILE-LAUNCH-RESUME",
+  "planId": "mobile-refresh-final-android-r9-2026-11-06",
+  "sourceHash": "7f4f7abb9edff2c89b179dd4c6ac48de0c104fdf3fe47b17e91c86b00fade9fe",
+  "artifact": "a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Замедлить восстановление входа тестовым fixture более чем на 1,2 с; дождаться окончания оборота, свернуть и вернуть приложение, повторить с пересозданием Activity на Android.",
+      "expected": "Второй оборот и вымышленный прогресс отсутствуют; возвращение не повторяет вступление и не теряет контекст входа.",
+      "actual": "Собственный свежий Go fixture SIGSTOP дольше1.2s: после одного оборота подпись остаётся статичной, нет процентов/второго поворота; resumed API открывает личный список. Home/resume и реальное изменение fontScale1.1 не повторяют заставку. На обоих viewport отдельно выполнен текущий EntryUiTests launchCompletesOnceAcrossRecreationAndBackground: same ViewModel/completed elapsed/recreate/background assertions PASS.",
+      "evidence": [
+        "launch-review/interactions.json",
+        "launch-review/environment.json",
+        "launch-review/small-phone-restore-long.png",
+        "launch-review/small-phone-recreation-instrumentation.txt",
+        "launch-review/standard-phone-restore-long.png",
+        "launch-review/standard-phone-recreation-instrumentation.txt"
+      ]
+    }
+  ],
+  "scope": "Fresh R9 actual only;3launch cases. Required suites remain separate, no other case passed."
+}

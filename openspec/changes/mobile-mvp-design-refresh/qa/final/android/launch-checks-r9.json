@@ -1,0 +1,144 @@
+[
+  {
+    "id": "TC-MOBILE-LAUNCH-COLD/android-phone/manual",
+    "status": "passed",
+    "defect": "",
+    "executor": {
+      "kind": "agent",
+      "id": "android-independent-vibe-review-resume"
+    },
+    "startedAt": "2026-11-06T18:18:42.314034+00:00",
+    "finishedAt": "2026-11-06T18:20:35.749Z",
+    "actual": "На обоих native phone viewport выполнен реальный force-stop→cold start. Просмотрена последовательность реальных кадров: системный placeholder графитовый без crop слова в mask; затем целая подпись44sp/mark53dp/gap16dp, слово неподвижно, знак совершает ровно один оборот. После1200ms и готового API restore открыты реальные личные встречи. Native insets адаптируют декоративную raw-рамку.",
+    "evidence": [
+      {
+        "path": "launch-review/interactions.json",
+        "kind": "interaction",
+        "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+      },
+      {
+        "path": "launch-review/environment.json",
+        "kind": "log",
+        "sha256": "c042de4d7792ff832a48329ccb4015c4a599f1a4b8ee889a8d22ba079c36ea63"
+      },
+      {
+        "path": "launch-review/small-phone-fast-ready.png",
+        "kind": "screenshot",
+        "sha256": "755c1dc967895e685958977a94f8d19f567a1e098948f624bfb1064d9faf6c1c"
+      },
+      {
+        "path": "launch-review/standard-phone-fast-ready.png",
+        "kind": "screenshot",
+        "sha256": "63546900437268fd9e4a000fad206152b788c0353406681ad7357525acc02d8c"
+      },
+      {
+        "path": "case-interactions/TC-MOBILE-LAUNCH-COLD.json",
+        "kind": "interaction",
+        "sha256": "5a9268ad80149ba17dc13e4480294bf65304a57d411dfe9fcf93c8dd451e0031"
+      }
+    ]
+  },
+  {
+    "id": "TC-MOBILE-LAUNCH-RESUME/android-phone/manual",
+    "status": "passed",
+    "defect": "",
+    "executor": {
+      "kind": "agent",
+      "id": "android-independent-vibe-review-resume"
+    },
+    "startedAt": "2026-11-06T18:18:42.314034+00:00",
+    "finishedAt": "2026-11-06T18:20:35.751Z",
+    "actual": "Собственный свежий Go fixture SIGSTOP дольше1.2s: после одного оборота подпись остаётся статичной, нет процентов/второго поворота; resumed API открывает личный список. Home/resume и реальное изменение fontScale1.1 не повторяют заставку. На обоих viewport отдельно выполнен текущий EntryUiTests launchCompletesOnceAcrossRecreationAndBackground: same ViewModel/completed elapsed/recreate/background assertions PASS.",
+    "evidence": [
+      {
+        "path": "launch-review/interactions.json",
+        "kind": "interaction",
+        "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+      },
+      {
+        "path": "launch-review/environment.json",
+        "kind": "log",
+        "sha256": "c042de4d7792ff832a48329ccb4015c4a599f1a4b8ee889a8d22ba079c36ea63"
+      },
+      {
+        "path": "launch-review/small-phone-restore-long.png",
+        "kind": "screenshot",
+        "sha256": "8a09615ddc992691f2e9de0bd073ff2f4e340e9604cf4fd2698bd6e9301744a8"
+      },
+      {
+        "path": "launch-review/small-phone-recreation-instrumentation.txt",
+        "kind": "interaction",
+        "sha256": "f6aeda7390c1c0de5cdfbb941fe4ed5c9a147aa53a35bef281b90b2401d72706"
+      },
+      {
+        "path": "launch-review/standard-phone-restore-long.png",
+        "kind": "screenshot",
+        "sha256": "14131a969582315f1b7cf4708bfc8d78dd7b0b7136dc494bee2222f0849b95ca"
+      },
+      {
+        "path": "launch-review/standard-phone-recreation-instrumentation.txt",
+        "kind": "interaction",
+        "sha256": "f30a93a290aab99a21bdc38bcf32bd5acb36d24f289e29dac46adf6decae94c9"
+      },
+      {
+        "path": "case-interactions/TC-MOBILE-LAUNCH-RESUME.json",
+        "kind": "interaction",
+        "sha256": "373748915fcf0d72c7bae58cd6b63c4d197f9710f2cbb173dbeb5bec9d5b138d"
+      }
+    ]
+  },
+  {
+    "id": "TC-MOBILE-LAUNCH-REDUCED/android-phone/manual",
+    "status": "passed",
+    "defect": "",
+    "executor": {
+      "kind": "agent",
+      "id": "android-independent-vibe-review-resume"
+    },
+    "startedAt": "2026-11-06T18:18:42.314034+00:00",
+    "finishedAt": "2026-11-06T18:20:35.752Z",
+    "actual": "На обоих viewport выставлены три системных animation scale0: статичная подпись и знак. Дополнительно на360x800 реально bound TalkBack enabled=true+touchExploration=true с UiAutomation dontSuppress: доступно имя somewhere, приложение загружается; ACTION_ACCESSIBILITY_FOCUS accepted. Фактический locale ru/Activity metadata рядом. Settings/a11y/размер восстановлены. Проверка не является VoiceOver или TTS audio audit.",
+    "evidence": [
+      {
+        "path": "launch-review/interactions.json",
+        "kind": "interaction",
+        "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+      },
+      {
+        "path": "launch-review/environment.json",
+        "kind": "log",
+        "sha256": "c042de4d7792ff832a48329ccb4015c4a599f1a4b8ee889a8d22ba079c36ea63"
+      },
+      {
+        "path": "launch-review/small-phone-disabled-static.png",
+        "kind": "screenshot",
+        "sha256": "7d47b8fa9928374c91b95f46e53d0b5d1a5d683b1c5a1abbbc02d9d941b71cf1"
+      },
+      {
+        "path": "launch-review/standard-phone-disabled-static.png",
+        "kind": "screenshot",
+        "sha256": "14131a969582315f1b7cf4708bfc8d78dd7b0b7136dc494bee2222f0849b95ca"
+      },
+      {
+        "path": "launch-review/talkback/talkback-launch-reduced.png",
+        "kind": "screenshot",
+        "sha256": "8d9bf7c567428deb198f5dea00f4df5503bc61509f67d25dff112145989af97e"
+      },
+      {
+        "path": "launch-review/talkback/interaction.json",
+        "kind": "interaction",
+        "sha256": "b2a2e62a1a57ef22061e71dc9038ac81c8d4469474cad2d1a35525b19e93108f"
+      },
+      {
+        "path": "launch-review/talkback/talkback.log",
+        "kind": "log",
+        "sha256": "aa5d47af5918ff097144ddab1c90bf2bfde7a06051faf50ea6a938da08eb7cc5"
+      },
+      {
+        "path": "case-interactions/TC-MOBILE-LAUNCH-REDUCED.json",
+        "kind": "interaction",
+        "sha256": "0e20232cfc1fa283423cd38eeabf5297e40f106ae11a3f89563a065c82b0dace"
+      }
+    ]
+  }
+]

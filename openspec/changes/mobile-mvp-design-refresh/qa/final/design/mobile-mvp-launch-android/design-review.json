@@ -1,0 +1,660 @@
+{
+  "schemaVersion": 1,
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/launch-android.json",
+  "inputHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+  "reviewer": "android-independent-vibe-review-resume",
+  "reviewedAt": "2026-11-06T18:20:35.704Z",
+  "mode": "live",
+  "environment": "R9 immutable a0dd…; one emulator5554;320x568/360x800 dp,density320;own real Go HTTPS memory fixture;normal/scale0;native locale ru/timezoneEuropeMoscow;original settings restored in interactions.json",
+  "summary": "16 declared launch states independently reviewed against unchanged approved launch-r1 and Android platform adaptation. Actual frames, controlled long restore, Home/resume, real configuration change and current canonical recreation test executed after plan.createdAt. No pixel baseline or precise frame benchmark claimed. VoiceOver irrelevant to Android; accessible launch name inspected in live hierarchy. Required full suites still gate feature completion. Fresh R9 real bound TalkBack on360x800 with touchExploration; loading name focused, actualActivitylocale ru, settings restored. No old actual/pass transferred.",
+  "checks": [
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "system-mask-small-phone",
+      "status": "pass",
+      "observations": "Просмотрена реальная системная стадия: прозрачный placeholder на графитовом фоне, без слова внутри icon mask; затем полная Compose-подпись.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:18:43.862239+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-cold-01.png",
+          "kind": "actual",
+          "sha256": "1c700f21c7b2c3b33244facef4e84f97cd621574ab1e189b087ae068f4e15c17"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-start-small-phone",
+      "status": "pass",
+      "observations": "Полная подпись по центру; знак слева, геометрия44sp/53dp/16dp согласуется с raw launch-r1 и published mobileLaunch. Нативная safe area заменяет декоративную рамку макета.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:18:44.721513+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-cold-06.png",
+          "kind": "actual",
+          "sha256": "cadf14ac6dfda318325cd19a0a94f84d5a56bb65275f33373c53a5b578d2fba1"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-mid-turn-small-phone",
+      "status": "pass",
+      "observations": "Просмотрена последовательность cold PNG: один поворот знака вокруг центра, слово не двигается и не масштабируется. Время1200ms подтверждено текущими unit/реальным once-completion сценарием; screenshots не являются точным frame-time benchmark.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:18:45.193320+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-cold-09.png",
+          "kind": "actual",
+          "sha256": "019ac37bdd57b80728971439ff4f892a97bcb3cf22ac008212fc646d63faebb1"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-complete-small-phone",
+      "status": "pass",
+      "observations": "При готовом восстановлении после единственного вступления показаны реальные личные встречи; масштаб подписи не меняется на выходе.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:01.329312+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-fast-ready.png",
+          "kind": "actual",
+          "sha256": "755c1dc967895e685958977a94f8d19f567a1e098948f624bfb1064d9faf6c1c"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "restore-long-small-phone",
+      "status": "pass",
+      "observations": "Собственный API process временно SIGSTOP >1.2s; после окончания одного оборота подпись статична. Повторного оборота/процентов нет. API resumed, затем показано реальное содержимое.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:18:48.924381+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-restore-long.png",
+          "kind": "actual",
+          "sha256": "8a09615ddc992691f2e9de0bd073ff2f4e340e9604cf4fd2698bd6e9301744a8"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "resume-small-phone",
+      "status": "pass",
+      "observations": "Home→возврат к существующему Activity не повторяет заставку и сохраняет личный список.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:18:54.069659+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-resume-06.png",
+          "kind": "actual",
+          "sha256": "efbc1765c56a47c6a3ce407fdd41372edf5c393705f36d260daea5489901debe"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "recreation-small-phone",
+      "status": "pass",
+      "observations": "Настоящая configuration change и отдельный canonical ActivityScenario.recreate/moveToState run: сохранён завершённый elapsed и тот же ViewModel, новый launch отсутствует.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.1,
+        "capturedAt": "2026-11-06T18:18:55.237763+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-recreation.png",
+          "kind": "actual",
+          "sha256": "d38bf7ae5d15075309c84411f668ad4633c23fcf341e9d5e56ac86fc2ee01091"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-recreation-instrumentation.txt",
+          "kind": "interaction",
+          "sha256": "f6aeda7390c1c0de5cdfbb941fe4ed5c9a147aa53a35bef281b90b2401d72706"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "animations-disabled-small-phone",
+      "status": "pass",
+      "observations": "Фактически установлены системные scale0. Статичная целая подпись/неподвижный знак, hierarchy содержит «somewhere, приложение загружается»; settings восстановлены.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "640x1136px; 320x568dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:04.036293+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/small-phone-disabled-static.png",
+          "kind": "actual",
+          "sha256": "7d47b8fa9928374c91b95f46e53d0b5d1a5d683b1c5a1abbbc02d9d941b71cf1"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/talkback/talkback-launch-reduced.png",
+          "kind": "actual",
+          "sha256": "8d9bf7c567428deb198f5dea00f4df5503bc61509f67d25dff112145989af97e"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/talkback/interaction.json",
+          "kind": "interaction",
+          "sha256": "b2a2e62a1a57ef22061e71dc9038ac81c8d4469474cad2d1a35525b19e93108f"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/talkback/talkback.log",
+          "kind": "interaction",
+          "sha256": "aa5d47af5918ff097144ddab1c90bf2bfde7a06051faf50ea6a938da08eb7cc5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "system-mask-standard-phone",
+      "status": "pass",
+      "observations": "Просмотрена реальная системная стадия: прозрачный placeholder на графитовом фоне, без слова внутри icon mask; затем полная Compose-подпись.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:09.088133+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-cold-01.png",
+          "kind": "actual",
+          "sha256": "a572415016e15e3683f7a15801800c7b864b52d79d8bef556bba6d602a74264d"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-start-standard-phone",
+      "status": "pass",
+      "observations": "Полная подпись по центру; знак слева, геометрия44sp/53dp/16dp согласуется с raw launch-r1 и published mobileLaunch. Нативная safe area заменяет декоративную рамку макета.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:09.467564+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-cold-03.png",
+          "kind": "actual",
+          "sha256": "590857d5bedc285fe16fc40c491057ed9cd9275e73d9035776a9ed3a21315506"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-mid-turn-standard-phone",
+      "status": "pass",
+      "observations": "Просмотрена последовательность cold PNG: один поворот знака вокруг центра, слово не двигается и не масштабируется. Время1200ms подтверждено текущими unit/реальным once-completion сценарием; screenshots не являются точным frame-time benchmark.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:10.186685+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-cold-07.png",
+          "kind": "actual",
+          "sha256": "83d69341a8c1e320416f90d5d29980b3c4baa646898ecd4c5ec675aa1efc7e9b"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "cold-complete-standard-phone",
+      "status": "pass",
+      "observations": "При готовом восстановлении после единственного вступления показаны реальные личные встречи; масштаб подписи не меняется на выходе.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:26.313339+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-fast-ready.png",
+          "kind": "actual",
+          "sha256": "63546900437268fd9e4a000fad206152b788c0353406681ad7357525acc02d8c"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "restore-long-standard-phone",
+      "status": "pass",
+      "observations": "Собственный API process временно SIGSTOP >1.2s; после окончания одного оборота подпись статична. Повторного оборота/процентов нет. API resumed, затем показано реальное содержимое.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:13.869899+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-restore-long.png",
+          "kind": "actual",
+          "sha256": "14131a969582315f1b7cf4708bfc8d78dd7b0b7136dc494bee2222f0849b95ca"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "resume-standard-phone",
+      "status": "pass",
+      "observations": "Home→возврат к существующему Activity не повторяет заставку и сохраняет личный список.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:19.189295+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-resume-06.png",
+          "kind": "actual",
+          "sha256": "63546900437268fd9e4a000fad206152b788c0353406681ad7357525acc02d8c"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "recreation-standard-phone",
+      "status": "pass",
+      "observations": "Настоящая configuration change и отдельный canonical ActivityScenario.recreate/moveToState run: сохранён завершённый elapsed и тот же ViewModel, новый launch отсутствует.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1.1,
+        "capturedAt": "2026-11-06T18:19:20.269979+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-recreation.png",
+          "kind": "actual",
+          "sha256": "713cd558db841e97e043e1b6bfd74cf0046ed5d49ddb5959f4b68e2cef0edda7"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-recreation-instrumentation.txt",
+          "kind": "interaction",
+          "sha256": "f30a93a290aab99a21bdc38bcf32bd5acb36d24f289e29dac46adf6decae94c9"
+        }
+      ]
+    },
+    {
+      "screen": "launch",
+      "platform": "android",
+      "state": "animations-disabled-standard-phone",
+      "status": "pass",
+      "observations": "Фактически установлены системные scale0. Статичная целая подпись/неподвижный знак, hierarchy содержит «somewhere, приложение загружается»; settings восстановлены.",
+      "capture": {
+        "sourceHash": "44277319178e9702ee0782cefd30328dd465a6bdcf5989458c372c79462912af",
+        "fixtureHash": "b252ce8c917215ece1f1e56d09e981eddc9102c3e0cdcccf19f286be750313dc",
+        "runtime": "Frozen QA product APK a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e; real native MainActivity on selected emulator-5554, current Go memory fixture",
+        "os": "Android16/API36 sdk_gphone64_arm64",
+        "viewport": "720x1600px; 360x800dp; density320; actual native safe areas",
+        "fonts": [
+          "Android system sans-serif (Typeface.DEFAULT); exact glyph face not instrumented by adb launch capture"
+        ],
+        "locale": "ru (MainActivity attachBaseContext); system locale separately recorded",
+        "timezone": "Europe/Moscow",
+        "textScale": 1,
+        "capturedAt": "2026-11-06T18:19:29.060899+00:00"
+      },
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/standard-phone-disabled-static.png",
+          "kind": "actual",
+          "sha256": "14131a969582315f1b7cf4708bfc8d78dd7b0b7136dc494bee2222f0849b95ca"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/reference-raw.png",
+          "kind": "reference",
+          "sha256": "077fd75dc7f650aff261adcb64468f9a3932e39f11f75b960d8aea1b72dc45b3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/interactions.json",
+          "kind": "interaction",
+          "sha256": "8eff4b523d3fe15814d83e8cd335069db12fd3aaca3dbf1cb4c0a58de71380c5"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/talkback/talkback-launch-reduced.png",
+          "kind": "actual",
+          "sha256": "8d9bf7c567428deb198f5dea00f4df5503bc61509f67d25dff112145989af97e"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/talkback/interaction.json",
+          "kind": "interaction",
+          "sha256": "b2a2e62a1a57ef22061e71dc9038ac81c8d4469474cad2d1a35525b19e93108f"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/android/launch-review/talkback/talkback.log",
+          "kind": "interaction",
+          "sha256": "aa5d47af5918ff097144ddab1c90bf2bfde7a06051faf50ea6a938da08eb7cc5"
+        }
+      ]
+    }
+  ]
+}

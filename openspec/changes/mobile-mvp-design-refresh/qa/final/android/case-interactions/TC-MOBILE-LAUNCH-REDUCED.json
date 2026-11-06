@@ -1,0 +1,25 @@
+{
+  "caseId": "TC-MOBILE-LAUNCH-REDUCED",
+  "planId": "mobile-refresh-final-android-r9-2026-11-06",
+  "sourceHash": "7f4f7abb9edff2c89b179dd4c6ac48de0c104fdf3fe47b17e91c86b00fade9fe",
+  "artifact": "a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Включить уменьшение/отключение системной анимации, запустить приложение и прочитать заставку экранным диктором.",
+      "expected": "Подпись целая и статичная, знак не вращается; доступное имя сообщает загрузку.",
+      "actual": "На обоих viewport выставлены три системных animation scale0: статичная подпись и знак. Дополнительно на360x800 реально bound TalkBack enabled=true+touchExploration=true с UiAutomation dontSuppress: доступно имя somewhere, приложение загружается; ACTION_ACCESSIBILITY_FOCUS accepted. Фактический locale ru/Activity metadata рядом. Settings/a11y/размер восстановлены. Проверка не является VoiceOver или TTS audio audit.",
+      "evidence": [
+        "launch-review/interactions.json",
+        "launch-review/environment.json",
+        "launch-review/small-phone-disabled-static.png",
+        "launch-review/standard-phone-disabled-static.png",
+        "launch-review/talkback/talkback-launch-reduced.png",
+        "launch-review/talkback/interaction.json",
+        "launch-review/talkback/talkback.log"
+      ]
+    }
+  ],
+  "scope": "Fresh R9 actual only;3launch cases. Required suites remain separate, no other case passed."
+}
