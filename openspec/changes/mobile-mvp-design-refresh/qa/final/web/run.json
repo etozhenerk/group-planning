@@ -1,0 +1,556 @@
+{
+  "schemaVersion": 1,
+  "planHash": "007158369a8964b35e902f2bc1675a8fe8237fd8efedd55c1bb55fa1c255c8a4",
+  "checks": [
+    {
+      "id": "TC-MOBILE-ONBOARD-NAV/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.951Z",
+      "actual": "Coldguest all8 pages, Next/Back/range/refresh/Skip, trusted horizontal drag/cancel and vertical scroll executed. Skip ends explicit sign-in without auth/RSVP/mutations. Copy matched current onboarding-copy.json.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/onboarding/pages-observations.json",
+          "sha256": "56b46307c3818d22a3803b78b640a2c2cb71042d89243d9677feef58a5c6fe80",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/onboarding/interaction-observations.json",
+          "sha256": "1cae975f041b2ec8c4f3430cb41df6852ea3641eb0537f0b367f9a853cd8f6a7",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/onboarding/w390-slide8-actual.png",
+          "sha256": "04ae5d5105e0c4a2986d9b7b515e7bdd0b8e070adb4f7d941d3c93bb82b2c57a",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-WEB-BOUNDARY/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.953Z",
+      "actual": "Fresh coldguest320/390/739 mobile;740/1100/1440 Chromium/WebKit desktop preserved route entry. Six-width authenticated root+reload session restored directly to meetings without onboarding. Desktop invitation baseline additionally compared to historical3e25d63c with per-file binding.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/onboarding/access-boundary.json",
+          "sha256": "fdaaef0ee2569ab1fdd96454761d245bcada8f709dfcc7a6660023e8e834e052",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions/observations.json",
+          "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/priority-extensions/session-restored-1440.png",
+          "sha256": "7f6c1a59fa1b697dc0cdf27f7f190f412e7746d61b17343e23f705dcf87fb788",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-ENTRY-SIGNIN/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.953Z",
+      "actual": "One explicit auth attempt while busy (controls disabled); cancellation, real transport error, exact user retry and fixture OAuth success→personal meetings. Chromium and WebKit executed. This is the isolated test OAuth provider, not real Yandex consent.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/onboarding/interaction-observations.json",
+          "sha256": "1cae975f041b2ec8c4f3430cb41df6852ea3641eb0537f0b367f9a853cd8f6a7",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/entry-complete/observations.json",
+          "sha256": "3011093ec4f7b005bd3f40c2a8983a02d45ec0c89ed9847b7cb315e3e3435fff",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/entry-complete/busy-w390-actual.png",
+          "sha256": "3fed2df719b141dfeb581b4dbe3c7f28b758b81cec83fef5a317e67a3b3dbff4",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-ENTRY-INVITATION/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.954Z",
+      "actual": "Direct valid invitation bypassed mandatory onboarding; fixture OAuth returned to original token with my_rsvp null. Three mobile widths; no autoGoing mutation.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/onboarding/interaction-observations.json",
+          "sha256": "1cae975f041b2ec8c4f3430cb41df6852ea3641eb0537f0b367f9a853cd8f6a7",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/entry-complete/observations.json",
+          "sha256": "3011093ec4f7b005bd3f40c2a8983a02d45ec0c89ed9847b7cb315e3e3435fff",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/entry-complete/invitation-return-w390-actual.png",
+          "sha256": "aa2ace202a04d7f0b9e014fd1802bd8f625fef90524eac5561d5ff671f3b1d67",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-ONBOARD-ACCESS/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.955Z",
+      "actual": "Keyboard-only eight pages and sign-in; accessible region/range names, reduced motion and CSSzoom200 rendering stress at320/390/739, WebKit320. Sign-in reachable and starts actual busy. No VoiceOver or OS/browserchrome zoom claimed; shortviewport390×430 no editableIME field.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/onboarding/access-boundary.json",
+          "sha256": "fdaaef0ee2569ab1fdd96454761d245bcada8f709dfcc7a6660023e8e834e052",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/entry-css-zoom/observations.json",
+          "sha256": "e5433ef66856a51da14fd782048e10339a653c4980825289f093dc3d6047baff",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/entry-css-zoom/large-text-w320-actual.png",
+          "sha256": "69e6e5dd7ea698703a4dbe901eccc3e0ca1edee0e3847fdc9c775552cf1d0e23",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-ONBOARD-EXAMPLES/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.956Z",
+      "actual": "Calendar toggles operational locally. Physical clicks on date/task/album artwork remain inert with writes[] and downloads[]; no synthetic API operation. Current illustrated features are reachable in working client and current API fixtures; copy does not mark implemented features as future. Real RSVP/current task/poll availability also exercised by fresh canonical suite (separate raw environment).",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/onboarding/pages-observations.json",
+          "sha256": "56b46307c3818d22a3803b78b640a2c2cb71042d89243d9677feef58a5c6fe80",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions/observations.json",
+          "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/priority-extensions/inert-task.png",
+          "sha256": "dd2662ccf1c7bbb6f49a2776d9e6b5ce8b7a170e271d9ccb1bb85cdfc7957d77",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-ROUTE-GOING/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.957Z",
+      "actual": "Direct Going only after APIACK→same meeting chat at all6 widths. Saved Maybe→Going and Info→Going repeated390/1100; feed200. No OpenMeeting interstitial.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/rsvp/interactions/response-route--going-chat-w390.json",
+          "sha256": "e0b752acc6ac9dbfe7da900a66cedacbcc23ed3ed50e8d7b3fbf7db0f4d7954c",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp-wide/interactions/response-route--going-chat-w1100.json",
+          "sha256": "c09db5b747f9bdafef0eeaced2e3813f1ae0d40a6f76a7f84f414932b195198d",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions/observations.json",
+          "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions-wide/observations.json",
+          "sha256": "3176282779fce02a019eaa90b61b31e1aae333fbad06d350284dbbbebf4d1153",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/priority-extensions/saved-maybe-to-going.png",
+          "sha256": "53449795b6357ece50c5167c7484981553b30c06fb5e5826acd84c28d88a114a",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-ROUTE-MAYBE/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.957Z",
+      "actual": "Maybe from Info/private member→canonical invitations, saved card present, private feed403/composer0. Direct Maybe and saved-card change additionally390/1100; no premature destination during heldACK. All6widths inspected.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+          "sha256": "1f8c9ed7f9ca3c1a6f550ac898a514b1c81033e7ffeaeb98e2845a729e21a2dd",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp-wide/interactions/response-route--maybe-invitations-w1100.json",
+          "sha256": "8f95a031e37bba5d84d62bac089c609b5d030778bc95a20cc5ead792d3b2ee51",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions/observations.json",
+          "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions-wide/observations.json",
+          "sha256": "3176282779fce02a019eaa90b61b31e1aae333fbad06d350284dbbbebf4d1153",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp/actual/response-route--maybe-invitations-w390.png",
+          "sha256": "91f00ee7b0a07f5163daeb11b664f7f45e2aba2ff5ac591003bc0b0d5ae0b86e",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-ROUTE-DECLINED/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.958Z",
+      "actual": "Saved answer change and direct first decline390/1100→declined confirmation with title and one primary action→personal list. Declined meeting absent in both personal and saved lists. Core all6 widths confirmed narrow/wide composition and longtitle.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/first-decline/observations.json",
+          "sha256": "91236c211d3440e41f5068a04597a31e39490185cfeaa836fb7d3629bc5a2afb",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp/interactions/declined-result--meetings-action-w390.json",
+          "sha256": "1a2a5c0a20f535a736b857d79b3fb4b48936c9a45f7393b0e029cdf088263491",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp-wide/interactions/declined-result--confirmed-w1100.json",
+          "sha256": "feaebcbaf62bb21843645890fabd9641909a434503ea1f4e5a1cfdbbb0bb8221",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/first-decline/first-declined-390.png",
+          "sha256": "4cc1d20b0fb8a26e94adb7b3b09fb74afc5f3ef36d4db8402a092834ca501575",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-UNCONFIRMED/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.959Z",
+      "actual": "Precommit error and lostACK aftercommit, early realtime revoke, public facts preserved/private feed403/composer0, same intent retry→canonical destination and one event. All6widths. Separate390/1100 sessionchange before heldACK: current actorKatya, my_rsvp null, composer0/feed403; stale ACK does not grant old actor access.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/rsvp-extra/extras-progress.json",
+          "sha256": "e53416f0fa0e5b75e44947f8d528c26b70d7394d66ef307daad721d83aa52ae0",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions/observations.json",
+          "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions-wide/observations.json",
+          "sha256": "3176282779fce02a019eaa90b61b31e1aae333fbad06d350284dbbbebf4d1153",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp-extra/actual/response-recovery--error-w390.png",
+          "sha256": "01a2e12af7c820156ddb0ce8fc542d37f267bd86caf24e791579eee1746e58dd",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-EXISTING-ACCESS/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.960Z",
+      "actual": "Confirmed Going member and organizer direct invite→chat without new RSVP/event at all6widths. Fresh-storage roleGETerror390/1100 composer0 and PUT0; explicit retry→samechat PUT0 for bothroles. Client automatic GET retries accounted for by persistent held error until explicit recovery.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "publication-safe/manual/priority-extensions/observations.json",
+          "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+          "kind": "interaction"
+        },
+        {
+          "path": "publication-safe/manual/priority-extensions-wide/observations.json",
+          "sha256": "3176282779fce02a019eaa90b61b31e1aae333fbad06d350284dbbbebf4d1153",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp/interactions/rsvp-system-event--reopen-no-event-w390.json",
+          "sha256": "fb0527b96df2cf5867952f059d168ff33a1d871001b77c4c5f80aac8d9a6cecb",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/priority-extensions/role-error-member.png",
+          "sha256": "f3f37aab758d6218f5e2c01221d13af16c7b50d6a6c95250e4b08dd0a3bfb017",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-SYSTEM-EVENT/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:52.961Z",
+      "actual": "Organizer witness sees actual Going/Maybe/NotGoing actor+answer+time systemrows. Server event IDs/counts checked after repeated intent/reopen/lostACKretry. Direct firstdecline390/1100 produces exactly one rsvp_changed answernot_going previousnull, no participant_joined; reload keeps event ID. No bubble/check/reactions on systemrow.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/rsvp/interactions/rsvp-system-event--not-going-w390.json",
+          "sha256": "e3ae8f808973b914ac77a029e8be7d2f8d2e7cfc9e2212d9e23c8a5ab35660f5",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp-wide/interactions/rsvp-system-event--retry-dedup-w1100.json",
+          "sha256": "ebc2831be0b9abb3cc1cd8c877dc5f65626f0df6e6a1812d7ec829c790509d55",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/first-decline/observations.json",
+          "sha256": "91236c211d3440e41f5068a04597a31e39490185cfeaa836fb7d3629bc5a2afb",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/first-decline/first-decline-event-390.png",
+          "sha256": "c2257ed908a9b0143c3578fc8445d0dd819c105ea6c759278960b701adbedb51",
+          "kind": "screenshot"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-WEB-SCOPE/web-browser-matrix/manual",
+      "status": "passed",
+      "executor": {
+        "kind": "agent",
+        "id": "codex-independent-web-r6-reviewer"
+      },
+      "startedAt": "2026-11-06T18:20:35.084Z",
+      "finishedAt": "2026-11-06T18:30:53.003Z",
+      "actual": "Six CSS widths320/390/739/740/1100/1440:16 normal routes each (meetings,invitations,create,chat,share,upload,album,profile,help,support,about,privacy,cookies,date/place/task);110 initial route observations, document overflow0. Settled Info/Settings and real3-photo ended-meeting album supplement mobile+wide (API setup only, not create/upload acceptance). Mobile composition ends739, desktop legacy sidebar/forms/service composition begins740; current coarse844x390 onboarding remains mobile then portrait return retains intro3. Shared RSVP destinations verified all6widths. Historical3e25d63c entry/invitation controls compared freshly; desktop forms retain published legacy composition. This is route-boundary acceptance only, not all states/behaviors of these screens.",
+      "defect": "",
+      "evidence": [
+        {
+          "path": "manual/scope-routes/observations.json",
+          "sha256": "9a06353f2db7de0b484c09863330a509c62ea38d11efa336073f842bed74eb71",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/scope-surfaces/observations.json",
+          "sha256": "bedd3aba05c8286162ba81f387ee964730eb3b684b97f1e278c724af98b82904",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/scope-surfaces-wide/observations.json",
+          "sha256": "9503c6d14e4e59e0efa832265f18fc06bf22016e75731c80522d306276c31a2e",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/onboarding/access-boundary.json",
+          "sha256": "fdaaef0ee2569ab1fdd96454761d245bcada8f709dfcc7a6660023e8e834e052",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp/progress.json",
+          "sha256": "c391e9410dee311ea27b8653cb3ceebde183e8ba3bd5453759e2c06553925fb0",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/rsvp-wide/progress.json",
+          "sha256": "03dcfea5e929bd93e5da31c607b8f58212b81f794b64c4b5905d514e8fc066f1",
+          "kind": "interaction"
+        },
+        {
+          "path": "manual/scope-routes/review-320.png",
+          "sha256": "305e18be8eb9e65d3cda97ec7a88e93a0e3981372b19498d36020cdb4561f59c",
+          "kind": "screenshot"
+        },
+        {
+          "path": "manual/scope-routes/review-740.png",
+          "sha256": "49568ce844243dfb37995d3161dd7b1d19e519ecf4e9d5394ee8377584f9d6d2",
+          "kind": "screenshot"
+        },
+        {
+          "path": "manual/scope-surfaces/album-ready-739.png",
+          "sha256": "e747699f0e42c3c4da024472a9d1f1d5e2b4824afd995d8c6ffc911f9f45c8c0",
+          "kind": "screenshot"
+        },
+        {
+          "path": "manual/scope-surfaces-wide/album-ready-740.png",
+          "sha256": "7f88c0cdee7cafa4ccaf322daf93edf9082c7115424773f16bc5113cf40f2598",
+          "kind": "screenshot"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "web-check",
+      "status": "passed",
+      "commandHash": "f5fbb86ed6c006dfc55fb8b05dff26dfba04d258df5c7a6d5f3ec530e24b31b2",
+      "startedAt": "2026-11-06T18:21:58.159Z",
+      "finishedAt": "2026-11-06T18:22:33.245Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "publication-safe/suites/web-check-1793989318160.txt",
+          "kind": "log",
+          "sha256": "e245436d665babd3c189ddd7cba3c09ab376e46e4d5caa02555b10062c7ebfdf"
+        }
+      ]
+    },
+    {
+      "id": "web-e2e",
+      "status": "passed",
+      "commandHash": "76feb4f92d0a823c3cc654ad6d5aaf2dc5d6e63969aef5b8aa7a801f30d63875",
+      "startedAt": "2026-11-06T18:23:08.264Z",
+      "finishedAt": "2026-11-06T18:37:43.244Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "publication-safe/suites/web-e2e-1793989388266.txt",
+          "kind": "log",
+          "sha256": "6af0b7960c7e154e995a13155f48063be35ae9ccb14dd2787043f66d39bd86be"
+        }
+      ]
+    },
+    {
+      "id": "web-chat-e2e",
+      "status": "passed",
+      "commandHash": "234c6638b019e30c97a0b11dd1d68a672fabe3fb27778bdc37c425a3d10c82f5",
+      "startedAt": "2026-11-06T18:38:04.131Z",
+      "finishedAt": "2026-11-06T18:40:58.945Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "publication-safe/suites/web-chat-e2e-1793990284132.txt",
+          "kind": "log",
+          "sha256": "f4bd1f7586bdc04098b0833a6c8c0a16b94bb705ebe8cf92b56eaf5e9cad8c01"
+        }
+      ]
+    },
+    {
+      "id": "web-read-e2e",
+      "status": "passed",
+      "commandHash": "1adaf00352ab99c135a1a5b77d2ae731eb568fd92b6f242faae4dc5877057484",
+      "startedAt": "2026-11-06T18:41:16.380Z",
+      "finishedAt": "2026-11-06T18:43:24.773Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "publication-safe/suites/web-read-e2e-1793990476381.txt",
+          "kind": "log",
+          "sha256": "8afb8dfac980d4ecd1b07ed0209e1d3ac4c95b1abd05fd08077f6778e849d580"
+        }
+      ]
+    },
+    {
+      "id": "web-rsvp-e2e",
+      "status": "passed",
+      "commandHash": "2ebf98aee35bda165a842b84ddf159a6967997259e15fd58b1c3d3545522e23e",
+      "startedAt": "2026-11-06T18:43:41.463Z",
+      "finishedAt": "2026-11-06T18:45:15.378Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "publication-safe/suites/web-rsvp-e2e-1793990621464.txt",
+          "kind": "log",
+          "sha256": "946869d98d962b5aa29313cd9a76859a10623261b090a88e1f567449d5c58d1b"
+        }
+      ]
+    },
+    {
+      "id": "web-window-e2e",
+      "status": "passed",
+      "commandHash": "da75e042f5ed15e11606514aa198ba721950fe337a2590a7e4a3c367728e9a5e",
+      "startedAt": "2026-11-06T18:45:32.124Z",
+      "finishedAt": "2026-11-06T18:45:57.345Z",
+      "exitCode": 0,
+      "actual": "Process exit: 0",
+      "evidence": [
+        {
+          "path": "publication-safe/suites/web-window-e2e-1793990732125.txt",
+          "kind": "log",
+          "sha256": "f141d84427d48aaa896fd0b60f35dcc40262f19268abc45289a74b31f01b82ca"
+        }
+      ]
+    }
+  ]
+}

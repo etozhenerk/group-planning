@@ -1,0 +1,238 @@
+[
+  {
+    "caseId": "TC-MOBILE-ONBOARD-NAV",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Открыть общий вход без сессии; пройти согласованную последовательность тем встреч и входа кнопками, вернуться, выбрать страницу индикатором, выполнить свайп и Пропустить.",
+        "expected": "Рассказ содержит создание/приглашения, список/календарь, чат с фото/файлами/реакциями, выбор даты и места, подготовку и фотоальбом. Профиль, помощь и управление аккаунтом не являются отдельными темами. Последний шаг ведёт к явному входу; Пропустить не авторизует, не создаёт встречу и не меняет RSVP.",
+        "observed": "Coldguest all8 pages, Next/Back/range/refresh/Skip, trusted horizontal drag/cancel and vertical scroll executed. Skip ends explicit sign-in without auth/RSVP/mutations. Copy matched current onboarding-copy.json.",
+        "evidence": [
+          "manual/onboarding/pages-observations.json",
+          "manual/onboarding/interaction-observations.json",
+          "manual/onboarding/w390-slide8-actual.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-MOBILE-WEB-BOUNDARY",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Открыть общий web-вход при 320/390/739 CSS px, затем 740/1100/1440; сравнить широкие состояния с исходным desktop, повторить восстановление сессии.",
+        "expected": "Узкий web использует мобильное знакомство без обязательного native-splash 1,2 с; широкий сохраняет прежний desktop без изменений структуры/стилей/действий.",
+        "observed": "Fresh coldguest320/390/739 mobile;740/1100/1440 Chromium/WebKit desktop preserved route entry. Six-width authenticated root+reload session restored directly to meetings without onboarding. Desktop invitation baseline additionally compared to historical3e25d63c with per-file binding.",
+        "evidence": [
+          "manual/onboarding/access-boundary.json",
+          "publication-safe/manual/priority-extensions/observations.json",
+          "manual/priority-extensions/session-restored-1440.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-MOBILE-ENTRY-SIGNIN",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Дойти до последнего слайда, нажать вход повторно во время ожидания; отменить, воспроизвести ошибку, повторить и успешно войти существующим OAuth-путём.",
+        "expected": "Переход Яндекс ID один на попытку, busy доступен; отмена/ошибка позволяют повтор, успех открывает личные встречи. Прототип и test provider явно отличены от реального OAuth.",
+        "observed": "One explicit auth attempt while busy (controls disabled); cancellation, real transport error, exact user retry and fixture OAuth success→personal meetings. Chromium and WebKit executed. This is the isolated test OAuth provider, not real Yandex consent.",
+        "evidence": [
+          "manual/onboarding/interaction-observations.json",
+          "manual/entry-complete/observations.json",
+          "manual/entry-complete/busy-w390-actual.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-MOBILE-ENTRY-INVITATION",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Открыть действующее приглашение без сессии, войти, проверить адрес/ID приглашения и ответ участия.",
+        "expected": "Обязательное знакомство не перехватывает путь; после входа открывается исходное приглашение, Приду не сохраняется автоматически.",
+        "observed": "Direct valid invitation bypassed mandatory onboarding; fixture OAuth returned to original token with my_rsvp null. Three mobile widths; no autoGoing mutation.",
+        "evidence": [
+          "manual/onboarding/interaction-observations.json",
+          "manual/entry-complete/observations.json",
+          "manual/entry-complete/invitation-return-w390-actual.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-MOBILE-ONBOARD-ACCESS",
+    "steps": [
+      {
+        "step": 1,
+        "action": "На узком экране включить большой текст и reduced motion, пройти восемь страниц и действие входа клавиатурой/экранным диктором без swipe.",
+        "expected": "Текст читается, кнопки не обрезаны и доступны без жестов, страницы имеют доступные имена, декоративные перемещения отключены.",
+        "observed": "Keyboard-only eight pages and sign-in; accessible region/range names, reduced motion and CSSzoom200 rendering stress at320/390/739, WebKit320. Sign-in reachable and starts actual busy. No VoiceOver or OS/browserchrome zoom claimed; shortviewport390×430 no editableIME field.",
+        "evidence": [
+          "manual/onboarding/access-boundary.json",
+          "manual/entry-css-zoom/observations.json",
+          "manual/entry-css-zoom/large-text-w320-actual.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-MOBILE-ONBOARD-EXAMPLES",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Просмотреть примеры опроса, задачи и календаря; попробовать элементы иллюстраций, сверить текст с реальной доступностью функций точного кандидата.",
+        "expected": "Иллюстрации не создают реальные операции; слова и состояния достоверны, доступные функции не обозначены как будущие и недоступные не обещаны как готовые.",
+        "observed": "Calendar toggles operational locally. Physical clicks on date/task/album artwork remain inert with writes[] and downloads[]; no synthetic API operation. Current illustrated features are reachable in working client and current API fixtures; copy does not mark implemented features as future. Real RSVP/current task/poll availability also exercised by fresh canonical suite (separate raw environment).",
+        "evidence": [
+          "manual/onboarding/pages-observations.json",
+          "publication-safe/manual/priority-extensions/observations.json",
+          "manual/priority-extensions/inert-task.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-RSVP-ROUTE-GOING",
+    "steps": [
+      {
+        "step": 1,
+        "action": "С действующей сессией выбрать «Приду» по ссылке; затем повторить смену ответа из приглашений и сведений.",
+        "expected": "Только после API-подтверждения открыт чат нужной встречи без «Открыть встречу»; состав и доступ актуальны.",
+        "observed": "Direct Going only after APIACK→same meeting chat at all6 widths. Saved Maybe→Going and Info→Going repeated390/1100; feed200. No OpenMeeting interstitial.",
+        "evidence": [
+          "manual/rsvp/interactions/response-route--going-chat-w390.json",
+          "manual/rsvp-wide/interactions/response-route--going-chat-w1100.json",
+          "publication-safe/manual/priority-extensions/observations.json",
+          "publication-safe/manual/priority-extensions-wide/observations.json",
+          "manual/priority-extensions/saved-maybe-to-going.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-RSVP-ROUTE-MAYBE",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Сохранить «Возможно» по ссылке и из формы изменения ответа.",
+        "expected": "Открыт список приглашений с этой встречей; уже открытый список остаётся, форма закрывается; чат закрыт.",
+        "observed": "Maybe from Info/private member→canonical invitations, saved card present, private feed403/composer0. Direct Maybe and saved-card change additionally390/1100; no premature destination during heldACK. All6widths inspected.",
+        "evidence": [
+          "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+          "manual/rsvp-wide/interactions/response-route--maybe-invitations-w1100.json",
+          "publication-safe/manual/priority-extensions/observations.json",
+          "publication-safe/manual/priority-extensions-wide/observations.json",
+          "manual/rsvp/actual/response-route--maybe-invitations-w390.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-RSVP-ROUTE-DECLINED",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Сохранить «Не смогу» по ссылке и при смене ответа, затем нажать «К моим встречам».",
+        "expected": "Сначала видны подтверждение отказа, название встречи и одна основная кнопка; затем личный список без отказанной встречи; ни чат, ни приглашения её не показывают.",
+        "observed": "Saved answer change and direct first decline390/1100→declined confirmation with title and one primary action→personal list. Declined meeting absent in both personal and saved lists. Core all6 widths confirmed narrow/wide composition and longtitle.",
+        "evidence": [
+          "manual/first-decline/observations.json",
+          "manual/rsvp/interactions/declined-result--meetings-action-w390.json",
+          "manual/rsvp-wide/interactions/declined-result--confirmed-w1100.json",
+          "manual/first-decline/first-declined-390.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-RSVP-UNCONFIRMED",
+    "steps": [
+      {
+        "step": 1,
+        "action": "На своём fixture воспроизвести ошибку до сохранения, затем потерю ACK после сохранения; выполнить повтор/сверку.",
+        "expected": "Нет преждевременного успеха или расширения доступа; ранний revoke убирает приватный чат/состав, но сохраняет публичные факты, ошибку и повтор того же intent. ACK ведёт к новому результату, повтор не дублирует RSVP/событие; старый ответ после смены сессии не применяется.",
+        "observed": "Precommit error and lostACK aftercommit, early realtime revoke, public facts preserved/private feed403/composer0, same intent retry→canonical destination and one event. All6widths. Separate390/1100 sessionchange before heldACK: current actorKatya, my_rsvp null, composer0/feed403; stale ACK does not grant old actor access.",
+        "evidence": [
+          "manual/rsvp-extra/extras-progress.json",
+          "publication-safe/manual/priority-extensions/observations.json",
+          "publication-safe/manual/priority-extensions-wide/observations.json",
+          "manual/rsvp-extra/actual/response-recovery--error-w390.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-RSVP-EXISTING-ACCESS",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Открыть ссылку как уже ответивший «Приду» и как организатор; повторить при ошибке определения роли.",
+        "expected": "Подтверждённый доступ ведёт сразу в чат; нет записи нового ответа/события. При ошибке роль не угадывается, доступна проверка повторно.",
+        "observed": "Confirmed Going member and organizer direct invite→chat without new RSVP/event at all6widths. Fresh-storage roleGETerror390/1100 composer0 and PUT0; explicit retry→samechat PUT0 for bothroles. Client automatic GET retries accounted for by persistent held error until explicit recovery.",
+        "evidence": [
+          "publication-safe/manual/priority-extensions/observations.json",
+          "publication-safe/manual/priority-extensions-wide/observations.json",
+          "manual/rsvp/interactions/rsvp-system-event--reopen-no-event-w390.json",
+          "manual/priority-extensions/role-error-member.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-RSVP-SYSTEM-EVENT",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Вторым участником открыть чат; первым последовательно сохранить три разных ответа. Проверить также повтор запроса, reload и первый отказ.",
+        "expected": "Для каждого действительного изменения ровно одна системная строка с именем, точным ответом и временем; без пузыря/галочек/реакций. Первый отказ не означает присоединение, доступ/состав актуальны; повтор и reload не создают дублей.",
+        "observed": "Organizer witness sees actual Going/Maybe/NotGoing actor+answer+time systemrows. Server event IDs/counts checked after repeated intent/reopen/lostACKretry. Direct firstdecline390/1100 produces exactly one rsvp_changed answernot_going previousnull, no participant_joined; reload keeps event ID. No bubble/check/reactions on systemrow.",
+        "evidence": [
+          "manual/rsvp/interactions/rsvp-system-event--not-going-w390.json",
+          "manual/rsvp-wide/interactions/rsvp-system-event--retry-dedup-w1100.json",
+          "manual/first-decline/observations.json",
+          "manual/first-decline/first-decline-event-390.png"
+        ]
+      }
+    ],
+    "environment": "https://127.0.0.1:9153; frozen R6 afe876…; fixture memory/nildelivery; canonical availability evidence explicitly separate dynamic suite origin"
+  },
+  {
+    "caseId": "TC-MOBILE-WEB-SCOPE",
+    "steps": [
+      {
+        "step": 1,
+        "action": "те же маршруты открыты в mobile web на320/390/739 и desktop на740/1100/1440, а также в landscape/coarse-pointer конфигурации действующего routing-контракта",
+        "expected": "Мобильная композиция новая, desktop baseline сохранён; единый результат RSVP действует на всех ширинах без произвольной смены ветки.",
+        "observed": "Six CSS widths320/390/739/740/1100/1440:16 normal routes each (meetings,invitations,create,chat,share,upload,album,profile,help,support,about,privacy,cookies,date/place/task);110 initial route observations, document overflow0. Settled Info/Settings and real3-photo ended-meeting album supplement mobile+wide (API setup only, not create/upload acceptance). Mobile composition ends739, desktop legacy sidebar/forms/service composition begins740; current coarse844x390 onboarding remains mobile then portrait return retains intro3. Shared RSVP destinations verified all6widths. Historical3e25d63c entry/invitation controls compared freshly; desktop forms retain published legacy composition. This is route-boundary acceptance only, not all states/behaviors of these screens.",
+        "evidence": [
+          "manual/scope-routes/observations.json",
+          "manual/scope-surfaces/observations.json",
+          "manual/scope-surfaces-wide/observations.json",
+          "manual/onboarding/access-boundary.json",
+          "manual/rsvp/progress.json",
+          "manual/rsvp-wide/progress.json",
+          "manual/scope-routes/review-320.png",
+          "manual/scope-routes/review-740.png",
+          "manual/scope-surfaces/album-ready-739.png",
+          "manual/scope-surfaces-wide/album-ready-740.png"
+        ]
+      }
+    ],
+    "limits": "Route/control branch comparison; all other case/design states remain separately unaccepted until checked."
+  }
+]

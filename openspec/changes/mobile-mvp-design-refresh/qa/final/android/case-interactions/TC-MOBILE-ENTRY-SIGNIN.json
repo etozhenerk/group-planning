@@ -1,0 +1,27 @@
+{
+  "caseId": "TC-MOBILE-ENTRY-SIGNIN",
+  "planId": "mobile-refresh-final-android-r9-2026-11-06",
+  "sourceHash": "7f4f7abb9edff2c89b179dd4c6ac48de0c104fdf3fe47b17e91c86b00fade9fe",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Дойти до последнего слайда, нажать вход повторно во время ожидания; отменить, воспроизвести ошибку, повторить и успешно войти существующим OAuth-путём.",
+      "expected": "Переход Яндекс ID один на попытку, busy доступен; отмена/ошибка позволяют повтор, успех открывает личные встречи. Прототип и test provider явно отличены от реального OAuth.",
+      "actual": "Реальный profile-fields OnboardingScreen: explicit signin→HTTP start, existing delay10000 держит busy; CTA/range/Back disabled, bounds неизменны, повтор rejected, SDK monitor ровно1. Synthetic SDK RESULT_CANCELED вернул page8 без ложной ошибки. Затем synthetic invalid token дал реальную HTTP exchange ошибку и inline retry, valid-token повтор выполнил real start/exchange/me/meetings и показал Home. Это проверка native SDK boundary+реального loopbackHTTP, не реального OAuth provider.",
+      "evidence": [
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-standard/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-standard/busy-early.png",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-standard/cancel-return.png",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-standard/success-home.png",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-small/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-small/busy-early.png",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-small/cancel-return.png",
+        "entry-review/probe-captures/files/entry-final-r9-auth-settled-small/success-home.png",
+        "entry-review/auth-settled-standard.log",
+        "entry-review/auth-settled-small.log"
+      ]
+    }
+  ],
+  "boundary": "SyntheticSDK;realHTTP;isolated memory fixtures. Full suites separate, not blanket acceptance."
+}

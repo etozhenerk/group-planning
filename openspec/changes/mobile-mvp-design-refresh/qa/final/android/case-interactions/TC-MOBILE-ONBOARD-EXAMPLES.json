@@ -1,0 +1,27 @@
+{
+  "caseId": "TC-MOBILE-ONBOARD-EXAMPLES",
+  "planId": "mobile-refresh-final-android-r9-2026-11-06",
+  "sourceHash": "7f4f7abb9edff2c89b179dd4c6ac48de0c104fdf3fe47b17e91c86b00fade9fe",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Просмотреть примеры опроса, задачи и календаря; попробовать элементы иллюстраций, сверить текст с реальной доступностью функций точного кандидата.",
+      "expected": "Иллюстрации не создают реальные операции; слова и состояния достоверны, доступные функции не обозначены как будущие и недоступные не обещаны как готовые.",
+      "actual": "В действующем OnboardingScreen просмотрены реальные card components: poll current-selection, offered task Взять на себя и accepted Выполняете, calendar/list. Физические taps на illustration не создали APIrequests; отдельный local calendar toggle проверен через доступную кнопку, только локальная демонстрация. В текущем full99 реальные poll/task/media workflows прошли, функции не обозначены будущими. Chat dinner photo+👍3/outgoingPDF и shared ChatReceiptAX4 соответствуют текущему common contract.",
+      "evidence": [
+        "entry-review/probe-captures/files/entry-final-r9-navigation-standard/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r9-navigation-standard/slide-4.png",
+        "entry-review/probe-captures/files/entry-final-r9-navigation-standard/slide-6.png",
+        "entry-review/probe-captures/files/entry-final-r9-navigation-standard/calendar-local.png",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/slide-4.png",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/slide-6.png",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/calendar-local.png",
+        "ui-results/TEST-Somewhere_API_36(AVD) - 16-_app-.xml",
+        "entry-review/examples-capability-mapping.json"
+      ]
+    }
+  ],
+  "boundary": "SyntheticSDK;realHTTP;isolated memory fixtures. Full suites separate, not blanket acceptance."
+}

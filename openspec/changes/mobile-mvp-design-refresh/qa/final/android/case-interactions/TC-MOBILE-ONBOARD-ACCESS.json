@@ -1,0 +1,21 @@
+{
+  "caseId": "TC-MOBILE-ONBOARD-ACCESS",
+  "planId": "mobile-refresh-final-android-r9-2026-11-06",
+  "sourceHash": "7f4f7abb9edff2c89b179dd4c6ac48de0c104fdf3fe47b17e91c86b00fade9fe",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "На узком экране включить большой текст и reduced motion, пройти восемь страниц и действие входа клавиатурой/экранным диктором без swipe.",
+      "expected": "Текст читается, кнопки не обрезаны и доступны без жестов, страницы имеют доступные имена, декоративные перемещения отключены.",
+      "actual": "320x568dp,fontScale1.8,scale0, фактические AccessibilityManager enabled=true+touchExploration=true. Пройдены8страниц через accessible range ACTION_SET_PROGRESS без swipe; настоящие a11y focus actions и имена страниц записаны. Body первой/последней и промежуточных страниц прокручен до конца. Явная CTA доступна, оборачивается без обрезки, после действия показана доступная inline error и повтор. TalkBack settings возвращены.",
+      "evidence": [
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/slide-1-scrolled.png",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/slide-8-scrolled.png",
+        "entry-review/probe-captures/files/entry-final-r9-talkback-small/error.png"
+      ]
+    }
+  ],
+  "boundary": "SyntheticSDK;realHTTP;isolated memory fixtures. Full suites separate, not blanket acceptance."
+}
