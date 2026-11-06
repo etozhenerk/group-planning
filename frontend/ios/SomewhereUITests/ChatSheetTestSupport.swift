@@ -35,8 +35,11 @@ enum ChatSheetTestSupport {
         XCTAssertTrue(app.buttons["meeting-add"].waitForExistence(timeout: 10))
     }
 
-    static func reveal(_ element: XCUIElement, in scroll: XCUIElement, app: XCUIApplication) {
-        for _ in 0..<12 {
+    static func reveal(
+        _ element: XCUIElement, in scroll: XCUIElement, app: XCUIApplication,
+        maximumScrolls: Int = 12
+    ) {
+        for _ in 0..<maximumScrolls {
             var viewport = scroll.frame.intersection(app.frame)
             let tab = app.buttons["home-tab-calendar"]
             if tab.exists && tab.isHittable {
@@ -63,11 +66,17 @@ enum ChatSheetTestSupport {
                 return
             }
             guard bottom - top > 40 else { break }
-            let frame = element.frame
-            let desired =
-                !element.exists || frame.midY >= bottom
-                ? min(max(frame.midY - bottom + 24, 40), (bottom - top) * 0.55)
-                : max(min(frame.midY - top - 24, -40), -(bottom - top) * 0.55)
+            let desired: CGFloat
+            if element.exists {
+                let frame = element.frame
+                desired =
+                    frame.midY >= bottom
+                    ? min(max(frame.midY - bottom + 24, 40), (bottom - top) * 0.55)
+                    : max(min(frame.midY - top - 24, -40), -(bottom - top) * 0.55)
+            } else {
+                // Lazy grids expose the target only after its row enters the viewport.
+                desired = (bottom - top) * 0.55
+            }
             let origin = app.coordinate(withNormalizedOffset: .zero)
             let middle = (top + bottom) / 2
             let start = origin.withOffset(CGVector(dx: viewport.maxX - 8, dy: middle + desired / 2))

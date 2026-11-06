@@ -64,6 +64,11 @@ test('a late confirmed reaction cannot restore the chat after real RSVP withdraw
     await guest.getByRole('button', { name: '👍', exact: true }).click();
     await started;
     await guest.getByRole('button', { name: 'Информация о встрече' }).click();
+
+    if ((guest.viewportSize()?.width ?? 1280) < 740) {
+      await guest.getByRole('button', { name: 'Изменить', exact: true }).click();
+    }
+
     await guest.getByRole('button', { name: 'Возможно', exact: true }).click();
     await expect(
       guest.getByRole('textbox', { name: 'Сообщение', exact: true }),
@@ -119,7 +124,7 @@ test('public support receives a real reference and retries a lost response witho
   });
   await page.goto('/support?kind=question');
   await page
-    .getByLabel(mobile ? 'Сообщение' : 'Ваше сообщение', { exact: true })
+    .getByRole('textbox', { name: mobile ? 'Сообщение' : 'Ваше сообщение', exact: true })
     .fill('Как добавить фотографии после встречи?');
   await page
     .getByRole('button', {

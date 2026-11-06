@@ -23,10 +23,18 @@ export const FeedMessageMetadata = ({
     {!mobile && <strong>{entry.actor.displayName}</strong>}
     <time dateTime={entry.occurredAt}>{clockLabel(entry.occurredAt)}</time>
     {own &&
-      (!mobile || entry.delivery ? (
-        <MessagePendingIndicator state={entry.delivery} createdAt={entry.occurredAt} />
+      (mobile ? (
+        <span className={styles.delivery}>
+          <span className={styles.pending}>
+            <MessagePendingIndicator
+              state={entry.delivery}
+              createdAt={entry.occurredAt}
+            />
+          </span>
+          {!entry.delivery && <ReadReceipt mobile count={count} open={show} />}
+        </span>
       ) : (
-        mobile && <ReadReceipt mobile count={count} open={show} />
+        <MessagePendingIndicator state={entry.delivery} createdAt={entry.occurredAt} />
       ))}
   </div>
 );

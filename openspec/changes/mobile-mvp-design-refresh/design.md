@@ -104,7 +104,8 @@ design-review и feature-test выполняются отдельными нез
 
 ## Open Questions
 
-- Номера релизов/RC и CI identity каждой платформы фиксируются в 4.3 до сборки 13, без изменения продуктового объёма.
+- Задача4.3 закрыта: [целевые версии и CI identity](preparation/target-versions.md).
+  Web0.1.0-rc.16, iOS/Android0.1.0-rc.1; публикация тегов и выпуск требуют4.2.
 
 Публикация6.3: [привязки компактного ответа и native navigation](preparation/mobile-response-navigation-bindings-6.3.json), [влияние](preparation/publication-impact-6.3.json). Независимые отчёты6.2 сохранены; задачи7.1/7.4 остаются открытыми.
 

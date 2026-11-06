@@ -78,10 +78,19 @@ test('read marker waits behind overlay; zero menu and live readers preserve focu
     first_unread: null,
   });
   await page.bringToFront();
-  await expect(
-    bubble.getByRole('button', { name: 'Прочитали 1', exact: true }),
-  ).toBeVisible();
-  await bubble.getByRole('button', { name: 'Прочитали 1', exact: true }).click();
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
+  const receipt = bubble.getByRole('button', {
+    name: mobile ? 'Прочитали 1. Открыть сведения' : 'Прочитали 1',
+    exact: true,
+  });
+
+  await expect(receipt).toBeVisible();
+  await receipt.click();
+
+  if (mobile) {
+    await page.getByRole('button', { name: 'Прочитали 1', exact: true }).click();
+  }
+
   await expect(dialog.getByText('Лена', { exact: true })).toBeVisible();
   await page.screenshot({ path: test.info().outputPath('readers-ready.png') });
   await page.keyboard.press('Escape');

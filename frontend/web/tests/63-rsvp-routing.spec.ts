@@ -36,6 +36,11 @@ for (const width of [320, 390, 739, 740, 1100, 1440]) {
       await guest
         .getByRole('button', { name: 'Информация о встрече', exact: true })
         .click();
+
+      if (width < 740) {
+        await guest.getByRole('button', { name: 'Изменить', exact: true }).click();
+      }
+
       await guest.getByRole('button', { name: 'Возможно', exact: true }).click();
       await expect(guest).toHaveURL('/invitations');
       await expect(guest.getByLabel('Сообщение', { exact: true })).toHaveCount(0);

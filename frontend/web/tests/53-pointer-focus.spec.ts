@@ -16,7 +16,7 @@ for (const width of [390, 1440]) {
     await expect(email).toBeFocused();
     await expect(email).toHaveCSS('outline-style', 'solid');
     const description = page.getByRole('textbox', {
-      name: 'Ваше сообщение',
+      name: width < 740 ? 'Сообщение' : 'Ваше сообщение',
       exact: true,
     });
 

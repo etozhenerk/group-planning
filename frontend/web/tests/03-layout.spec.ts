@@ -5,7 +5,9 @@ for (const width of [320, 390, 768, 1440]) {
   test(`layout and keyboard at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Кто придёт');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(
+      width < 740 ? 'Позовите друзей на встречу.' : 'Кто придёт',
+    );
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(36, 37, 42)');
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
     await page.keyboard.press('Tab');
@@ -54,10 +56,17 @@ for (const width of [320, 390, 768, 1440]) {
     const add = page.getByRole('button', { name: 'Добавить к встрече' });
     const addBounds = await add.boundingBox();
     const plus = await add.locator('svg').boundingBox();
-    expect(plus?.width).toBe(24);
-    expect(plus?.height).toBe(24);
-    expect((plus?.x ?? 0) + 12).toBeCloseTo((addBounds?.x ?? 0) + 22, 0);
-    expect((plus?.y ?? 0) + 12).toBeCloseTo((addBounds?.y ?? 0) + 22, 0);
+    const iconSize = 24;
+    expect(plus?.width).toBe(iconSize);
+    expect(plus?.height).toBe(iconSize);
+    expect((plus?.x ?? 0) + (plus?.width ?? 0) / 2).toBeCloseTo(
+      (addBounds?.x ?? 0) + (addBounds?.width ?? 0) / 2,
+      0,
+    );
+    expect((plus?.y ?? 0) + (plus?.height ?? 0) / 2).toBeCloseTo(
+      (addBounds?.y ?? 0) + (addBounds?.height ?? 0) / 2,
+      0,
+    );
 
     if (width >= 740) {
       const shareIcon = await share.locator('svg').boundingBox();

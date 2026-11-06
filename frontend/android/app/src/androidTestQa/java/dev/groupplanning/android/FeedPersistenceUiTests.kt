@@ -1,9 +1,11 @@
 package dev.groupplanning.android
 
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.Before
@@ -47,6 +49,10 @@ class FeedPersistenceUiTests {
         QaResponseGate.rejectMessage = true
         try {
             fixture.launch("feed-persistence").use {
+                fixture.waitTag("meetings-list")
+                val meeting = "meeting-eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee"
+                compose.onNodeWithTag("meetings-list").performScrollToNode(hasTestTag(meeting))
+                compose.onNodeWithTag(meeting).assertIsDisplayed().performClick()
                 fixture.waitTag("message-retry")
                 compose.onNodeWithTag("message-composer").assertTextContains("И черновик тоже")
                 fixture.screenshot("feed-restored-after-process-death")

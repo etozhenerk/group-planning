@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
-import { apiCreate, login, writeHeaders } from '@tests/helpers';
+import { apiCreate, login, meetingInfoSurface, writeHeaders } from '@tests/helpers';
 
 test.use({ hasTouch: true });
 
@@ -89,7 +89,7 @@ for (const width of [1440, 390, 320]) {
     });
     await select();
     await activate(page.getByRole('button', { name: 'Информация о встрече' }));
-    const info = page.getByRole('dialog', { name: meeting.title, exact: true });
+    const info = meetingInfoSurface(page, meeting.title);
     await expect(info).toBeVisible();
     await composer.evaluate((element) => (element.dataset['focusReturns'] = '0'));
     await activate(info.getByRole('button', { name: 'Закрыть', exact: true }));

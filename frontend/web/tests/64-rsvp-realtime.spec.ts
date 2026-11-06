@@ -45,6 +45,11 @@ for (const width of [390, 1440]) {
           await guest
             .getByRole('button', { name: 'Информация о встрече', exact: true })
             .click();
+
+          if (width < 740) {
+            await guest.getByRole('button', { name: 'Изменить', exact: true }).click();
+          }
+
           await guest.route(endpoint, async (route) => {
             keys.push(route.request().headers()['idempotency-key'] ?? '');
             const response = await route.fetch();

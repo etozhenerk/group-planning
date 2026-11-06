@@ -171,6 +171,7 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
         val metrics = DisplayMetrics()
         var activityClass = ""
         var activityStage = ""
+        var hostKind = ""
         instrumentation.runOnMainSync {
             val monitor = ActivityLifecycleMonitorRegistry.getInstance()
             val actual = listOf(
@@ -181,19 +182,23 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
                 Stage.CREATED,
             )
                 .firstNotNullOfOrNull { stage ->
-                    monitor.getActivitiesInStage(stage).firstOrNull { it is MainActivity }
-                        ?.let { it to stage }
+                    val hosts = monitor.getActivitiesInStage(stage)
+                    val host = hosts.firstOrNull { it is MainActivity }
+                        ?: hosts.firstOrNull { it.packageName == context.packageName }
+                    host?.let { it to stage }
                 }
-            checkNotNull(actual) { "Capture has no actual MainActivity configuration" }
+            checkNotNull(actual) { "Capture has no actual target Activity configuration" }
             configuration = Configuration(actual.first.resources.configuration)
             metrics.setTo(actual.first.resources.displayMetrics)
             activityClass = actual.first.javaClass.name
+            hostKind = if (actual.first is MainActivity) "product" else "component"
             activityStage = actual.second.name
         }
         val metadata = JSONObject().apply {
             put("schemaVersion", 1)
             put("contextSource", "activity")
             put("activityClass", activityClass)
+            put("hostKind", hostKind)
             put("activityLifecycleStage", activityStage)
             put("image", image.name)
             put("captureStartedAt", startedAt)

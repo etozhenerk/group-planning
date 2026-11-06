@@ -66,8 +66,9 @@ class PlacePollUiTests {
             compose.onNodeWithTag("place-poll-create").assertIsDisplayed().performClick()
             fixture.waitTag("place-vote-for")
             compose.onNodeWithText("Есть стол на всех и тихий зал").assertExists()
-            compose.onNodeWithTag("feed-timeline").performScrollToNode(hasText("Опрос"))
-            compose.onNodeWithText("Опрос").assertIsDisplayed()
+            val caption = fixture.context.getString(R.string.place_poll_caption)
+            compose.onNodeWithTag("feed-timeline").performScrollToNode(hasText(caption))
+            compose.onNodeWithText(caption).assertIsDisplayed()
             compose.onNodeWithTag("feed-timeline").performScrollToNode(hasTestTag("place-vote-for"))
             assertTrue(
                 "Poll deadline must follow the vote controls",

@@ -34,6 +34,7 @@ test('new meeting goes directly to chat; composer panels preserve cursor and dra
 });
 
 test('profile distinguishes a failed request from missing contacts', async ({ page }) => {
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
   await login(page, 'Саша');
   const session = sessionSchema.parse(
     await (await page.request.get('/api/v1/me')).json(),
@@ -63,11 +64,23 @@ test('profile distinguishes a failed request from missing contacts', async ({ pa
   });
   await page.getByRole('link', { name: 'Профиль', exact: true }).click();
   await expect(
-    page.getByRole('heading', { name: 'Не удалось загрузить профиль' }),
+    page.getByRole('heading', {
+      name: mobile ? 'Профиль не загрузился' : 'Не удалось загрузить профиль',
+    }),
   ).toBeVisible();
   await expect(page.getByText('Не указан', { exact: true })).toHaveCount(0);
   failed = false;
-  await page.getByRole('button', { name: 'Попробовать снова' }).click();
+  await page
+    .getByRole('button', {
+      name: mobile ? 'Повторить' : 'Попробовать снова',
+      exact: true,
+    })
+    .click();
+
+  if (mobile) {
+    await page.getByRole('button', { name: /^Данные аккаунта/ }).click();
+  }
+
   await expect(page.getByText('Не указан', { exact: true })).toBeVisible();
   await expect(page.getByText('Не указана', { exact: true })).toBeVisible();
   await expect(page.getByRole('textbox')).toHaveCount(0);
@@ -79,6 +92,12 @@ test('profile distinguishes a failed request from missing contacts', async ({ pa
 test('support keeps input after error, retries the same request, and returns server reference', async ({
   page,
 }) => {
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
+  const message = page.getByRole('textbox', {
+    name: mobile ? 'Сообщение' : 'Ваше сообщение',
+    exact: true,
+  });
+
   const requests: { key: string; body: unknown }[] = [];
   await page.route('**/api/v1/support/feedback', async (route) => {
     requests.push({
@@ -104,17 +123,27 @@ test('support keeps input after error, retries the same request, and returns ser
     );
   });
   await page.goto('/support?kind=idea&screen=meeting_chat');
+  await message.fill('Предлагаю улучшить выбор фото в разговоре.');
   await page
-    .getByLabel('Ваше сообщение')
-    .fill('Предлагаю улучшить выбор фото в разговоре.');
-  await page.getByRole('button', { name: 'Отправить сообщение ↗', exact: true }).click();
-  await expect(page.getByRole('alert')).toContainText('Не удалось отправить');
-  await expect(page.getByLabel('Ваше сообщение')).toHaveValue(
-    'Предлагаю улучшить выбор фото в разговоре.',
+    .getByRole('button', {
+      name: mobile ? 'Отправить обращение' : 'Отправить сообщение ↗',
+      exact: true,
+    })
+    .click();
+  await expect(page.getByRole('alert')).toContainText(
+    mobile ? 'Отправка не подтверждена' : 'Не удалось отправить',
   );
-  await page.getByRole('button', { name: 'Отправить сообщение ↗', exact: true }).click();
+  await expect(message).toHaveValue('Предлагаю улучшить выбор фото в разговоре.');
+  await page
+    .getByRole('button', {
+      name: mobile ? 'Повторить отправку' : 'Отправить сообщение ↗',
+      exact: true,
+    })
+    .click();
   await expect(page.getByRole('heading', { name: 'Обращение принято' })).toBeVisible();
-  await expect(page.getByText('Номер SW-TEST-42')).toBeVisible();
+  await expect(
+    page.getByText(mobile ? 'SW-TEST-42' : 'Номер SW-TEST-42', { exact: true }),
+  ).toBeVisible();
   expect(requests[0]?.key).toBe(requests[1]?.key);
   expect(requests[0]?.body).toMatchObject({
     kind: 'idea',
@@ -231,7 +260,16 @@ test('private profile displays provider fields without inventing a birth year', 
     }),
   );
   await page.goto('/profile');
-  const details = page.getByRole('region', { name: 'Личные данные' });
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
+
+  if (mobile) {
+    await page.getByRole('button', { name: /^Данные аккаунта/ }).click();
+  }
+
+  const details = mobile
+    ? page.getByRole('dialog', { name: 'Данные аккаунта', exact: true })
+    : page.getByRole('region', { name: 'Личные данные' });
+
   await expect(details).toContainText('sasha');
   await expect(details).toContainText('Александр');
   await expect(details).toContainText('Иванов');

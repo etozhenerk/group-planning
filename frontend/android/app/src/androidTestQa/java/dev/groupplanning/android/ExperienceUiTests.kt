@@ -216,7 +216,9 @@ class ExperienceUiTests {
             compose.onNodeWithTag("support-description")
                 .assertTextContains("Проверка формы обращения из Android QA")
             fixture.screenshot("refresh-support-restored")
-            compose.onNodeWithTag("support-send").assertIsDisplayed()
+            compose.onNodeWithText(
+                fixture.context.getString(R.string.support_send_new),
+            ).assertIsDisplayed()
                 .performSemanticsAction(SemanticsActions.OnClick) { it() }
             fixture.waitText("Обращение принято")
             fixture.screenshot("refresh-support-success")

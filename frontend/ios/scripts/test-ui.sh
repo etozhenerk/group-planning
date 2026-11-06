@@ -1,6 +1,14 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")/.."
+if [ "${1:-all}" = "all" ]; then
+    # Revocation deletes the shared fixture actor; give that case its own server.
+    # Each child acquires and releases the same simulator lock independently.
+    somewhere_all_status=0
+    sh scripts/test-ui.sh all-main || somewhere_all_status=$?
+    sh scripts/test-ui.sh album-preload-failure || somewhere_all_status=$?
+    exit "$somewhere_all_status"
+fi
 sh scripts/check-toolchain.sh
 sh scripts/check-emoji.sh
 . ./Config/toolchain.env
@@ -66,7 +74,7 @@ case "${1:-all}" in
     experience) somewhere_filter=-only-testing:SomewhereUITests/ExperienceUITests; somewhere_scope=accessibility ;;
     account) somewhere_filter=-only-testing:SomewhereUITests/AccountDeletionUITests; somewhere_scope=account ;;
     profile) somewhere_filter=-only-testing:SomewhereUITests/ProfileFieldsUITests; somewhere_scope=profile ;;
-    all) somewhere_filter=-skip-testing:SomewhereUITests/ChatSheetMotionUITests; somewhere_chat=1 ;;
+    all-main) somewhere_filter=-skip-testing:SomewhereUITests/ChatSheetMotionUITests; somewhere_auth_filter=-skip-testing:SomewhereUITests/AlbumPreloadFailureUITests; somewhere_chat=1 ;;
     auth) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAndLoginFailure; somewhere_auth_filter=-only-testing:SomewhereUITests/InvitationUITests/testAnonymousColdAndWarmInvitationWithoutPrivateContent; somewhere_scope=auth ;;
     onboarding-large) somewhere_filter=-only-testing:SomewhereUITests/EntryUITests/testOnboardingAtLargeText; somewhere_scope=accessibility ;;
     invitation) somewhere_filter=-only-testing:SomewhereUITests/InvitationUITests; somewhere_scope=invitation ;;
@@ -142,7 +150,7 @@ fi
 somewhere_prepare_software_keyboard
 
 case "${1:-all}" in
-    all|native-vibe-delayed|native-vibe-upload|native-picker-photo-more|native-picker-selection|native-usability|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|sheet-media|media|media-native|covers|covers-large)
+    all-main|native-vibe-delayed|native-vibe-upload|native-picker-photo-more|native-picker-selection|native-usability|chat-controls|experience-a11y|profile-a11y|experience-recovery|experience-revocation|media-batch|sheet-media|media|media-native|covers|covers-large)
         somewhere_photo=../../openspec/changes/meeting-experience-refresh/assets/boardgame.png
         printf 'QA_PHOTO_SOURCE=%s\n' "$somewhere_photo"
         shasum -a 256 "$somewhere_photo"
@@ -197,7 +205,7 @@ xcrun simctl install "$somewhere_simulator" .build/UITestDerivedData/Build/Produ
 somewhere_container=$(xcrun simctl get_app_container "$somewhere_simulator" dev.groupplanning.ios.uitesthost data)
 cp "$somewhere_temporary/config.json" "$somewhere_container/tmp/ui-fixture.json"
 chmod 600 "$somewhere_container/tmp/ui-fixture.json"
-if [ "${1:-all}" = "native-pdf-delayed" ] || [ "${1:-all}" = "native-picker-selection" ] || [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "chat-controls" ] || [ "${1:-all}" = "all" ]; then
+if [ "${1:-all}" = "native-pdf-delayed" ] || [ "${1:-all}" = "native-picker-selection" ] || [ "${1:-all}" = "sheet-media" ] || [ "${1:-all}" = "media-native" ] || [ "${1:-all}" = "native-usability" ] || [ "${1:-all}" = "chat-controls" ] || [ "${1:-all}" = "all-main" ]; then
     python3 scripts/seed-ui-document.py "$somewhere_container/Documents"
 fi
 

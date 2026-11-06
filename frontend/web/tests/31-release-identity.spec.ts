@@ -6,8 +6,10 @@ test.describe('onboarding on a landscape phone', () => {
 
   test('footer stays hidden above the desktop width breakpoint', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('footer')).toHaveCount(1);
-    await expect(page.locator('footer')).not.toBeVisible();
+    await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(1);
+    await expect(
+      page.getByRole('contentinfo', { includeHidden: true }),
+    ).not.toBeVisible();
   });
 });
 
@@ -16,12 +18,14 @@ test('demo identity is explicit; footer appears only on desktop onboarding', asy
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
-  await expect(page.locator('footer')).toHaveCount(1);
+  await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(1);
   await expect(
-    page.locator('footer').getByRole('link', { name: 'Демо', exact: true }),
+    page
+      .getByRole('contentinfo', { includeHidden: true })
+      .getByRole('link', { name: 'Демо', exact: true }),
   ).toBeVisible();
   await page.setViewportSize({ width: 390, height: 900 });
-  await expect(page.locator('footer')).not.toBeVisible();
+  await expect(page.getByRole('contentinfo', { includeHidden: true })).not.toBeVisible();
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/about');
   await expect(page.getByRole('link', { name: 'Профиль', exact: true })).toHaveAttribute(
@@ -30,13 +34,13 @@ test('demo identity is explicit; footer appears only on desktop onboarding', asy
   );
   await expect(page.locator('dl').getByText('Демо', { exact: true })).toBeVisible();
   await expect(page.getByRole('term').filter({ hasText: /^Сборка$/ })).toHaveCount(0);
-  await expect(page.locator('footer')).toHaveCount(0);
+  await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(0);
   await login(page, 'Саша');
   const created = await apiCreate(page, 'Версия в сервисных экранах');
   const id = created.meeting.id;
   await page.goto(`/meetings/${id}`);
   await expect(page.getByLabel('Сообщение', { exact: true })).toBeVisible();
-  await expect(page.locator('footer')).toHaveCount(0);
+  await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(0);
   const changed = await page.request.patch(`/api/v1/meetings/${id}`, {
     headers: await writeHeaders(page),
     data: {
@@ -51,7 +55,7 @@ test('demo identity is explicit; footer appears only on desktop onboarding', asy
   await expect.poll(async () => (await apiMeeting(page, id)).period).toBe('past');
   await page.goto(`/meetings/${id}/memories`);
   await expect(page.getByRole('heading', { name: 'Как всё прошло?' })).toBeVisible();
-  await expect(page.locator('footer')).toHaveCount(0);
+  await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(0);
 });
 
 test('mobile bottom navigation belongs only to meeting lists, invitations and main profile', async ({
@@ -104,7 +108,7 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(
       page.getByRole('heading', { name: 'Политика конфиденциальности', exact: true }),
     ).toBeVisible();
-    await expect(page.locator('footer')).toHaveCount(0);
+    await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(0);
 
     const links = page.locator('main a');
 
@@ -118,7 +122,7 @@ for (const width of [320, 390, 768, 1440]) {
       })
       .click();
     await expect(page.getByText('До 30 дней', { exact: true })).toBeVisible();
-    await expect(page.locator('footer')).toHaveCount(0);
+    await expect(page.getByRole('contentinfo', { includeHidden: true })).toHaveCount(0);
     await page
       .getByRole('link', {
         name:

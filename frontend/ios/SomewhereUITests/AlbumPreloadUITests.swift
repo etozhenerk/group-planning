@@ -35,7 +35,8 @@ final class AlbumPreloadUITests: XCTestCase {
         try gate.failMediaContent(pathPrefix: "/api/v1/meetings/")
         app.buttons["Показать сеткой"].tap()
         let last = app.buttons["Открыть фото 103"]
-        ChatSheetTestSupport.reveal(last, in: app.scrollViews["memories-scroll"], app: app)
+        ChatSheetTestSupport.reveal(
+            last, in: app.scrollViews["memories-scroll"], app: app, maximumScrolls: 40)
         last.tap()
         XCTAssertTrue(app.staticTexts["103 / 103"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["Закрыть просмотр"].isHittable)
@@ -43,7 +44,8 @@ final class AlbumPreloadUITests: XCTestCase {
         ExperienceScreenshot.save("album-preload-103-offline", test: self)
         app.buttons["Закрыть просмотр"].tap()
         let stack = app.buttons["Показать стопкой"]
-        ChatSheetTestSupport.reveal(stack, in: app.scrollViews["memories-scroll"], app: app)
+        ChatSheetTestSupport.reveal(
+            stack, in: app.scrollViews["memories-scroll"], app: app, maximumScrolls: 40)
         stack.tap()
         let photo = app.buttons["Открыть фото 103"]
         ChatSheetTestSupport.reveal(photo, in: app.scrollViews["memories-scroll"], app: app)

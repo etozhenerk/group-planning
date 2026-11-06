@@ -211,17 +211,55 @@ test('rejected intent retry keeps its key and restore never overwrites a newer d
     .getByTestId('feed-message')
     .filter({ hasText: 'Сохранённое исходящее' });
 
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
+  const actions = page.getByRole('dialog').filter({
+    has: page.getByRole('button', { name: 'Повторить отправку', exact: true }),
+  });
+
   await expect(row).toHaveAttribute('data-delivery', 'rejected');
-  await row.getByRole('button', { name: 'Повторить' }).click();
+
+  if (mobile) {
+    await row.getByTestId('message-delivery').click();
+  }
+
+  await (
+    mobile
+      ? actions.getByRole('button', { name: 'Повторить отправку', exact: true })
+      : row.getByRole('button', { name: 'Повторить', exact: true })
+  ).click();
   await expect.poll(() => keys.length).toBe(2);
   expect(keys[0]).toBeTruthy();
   expect(keys[1]).toBe(keys[0]);
   await expect(row).toHaveAttribute('data-delivery', 'rejected');
+
+  if (mobile) {
+    await page.keyboard.press('Escape');
+  }
+
   await input.fill('Новый черновик');
-  await expect(row.getByRole('button', { name: 'Вернуть текст' })).toBeDisabled();
+
+  if (mobile) {
+    await row.getByTestId('message-delivery').click();
+  }
+
+  const restore = mobile
+    ? actions.getByRole('button', { name: 'Вернуть текст в поле', exact: true })
+    : row.getByRole('button', { name: 'Вернуть текст', exact: true });
+
+  await expect(restore).toBeDisabled();
   await expect(input).toHaveValue('Новый черновик');
+
+  if (mobile) {
+    await page.keyboard.press('Escape');
+  }
+
   await input.fill('');
-  await row.getByRole('button', { name: 'Вернуть текст' }).click();
+
+  if (mobile) {
+    await row.getByTestId('message-delivery').click();
+  }
+
+  await restore.click();
   await expect(input).toHaveValue('Сохранённое исходящее');
   await expect(row).toHaveCount(0);
 });

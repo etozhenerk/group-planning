@@ -221,8 +221,14 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   const y = bounds.y + bounds.height / 2;
   await page.mouse.move(x, y);
   await page.mouse.down();
-  await page.mouse.move(x - 24, y, { steps: 4 });
+
+  for (let step = 1; step <= 4; step++) {
+    await page.mouse.move(x - step * 6, y);
+    await page.waitForTimeout(40);
+  }
+
   await expect(stack).toHaveAttribute('data-dragging', 'true');
+  await page.waitForTimeout(120);
   await page.mouse.up();
   await expect(stack).toHaveAttribute('data-phase', 'idle');
   await expect(page.getByTestId('album-counter')).toHaveText(/1\s*\/\s*2/);

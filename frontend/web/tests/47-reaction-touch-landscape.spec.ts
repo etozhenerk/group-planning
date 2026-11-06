@@ -38,7 +38,7 @@ test('touch landscape can hold a message, scroll the full picker and tap a whole
     )
     .toBeGreaterThan(390);
   const reading = await history.evaluate((node) => node.scrollTop);
-  const rect = await target.boundingBox();
+  const rect = await message.getByText('История 1', { exact: true }).boundingBox();
 
   if (!rect) {
     throw new Error('Message must have a visible bounding box');

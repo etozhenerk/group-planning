@@ -16,7 +16,8 @@ internal class QaAppLocaleRule(private val persistentNamespace: String? = null) 
     private var manager: LocaleManager? = null
     private val observed = mutableListOf<Pair<String, String>>()
     private val activityLocale = ActivityLifecycleCallback { activity, stage ->
-        if (activity is MainActivity && stage == Stage.RESUMED) {
+        val targetPackage = InstrumentationRegistry.getInstrumentation().targetContext.packageName
+        if (stage == Stage.RESUMED && activity.packageName == targetPackage) {
             observed +=
                 activity.javaClass.name to activity.resources.configuration.locales.toLanguageTags()
         }
@@ -63,7 +64,7 @@ internal class QaAppLocaleRule(private val persistentNamespace: String? = null) 
                 ActivityLifecycleMonitorRegistry.getInstance().removeLifecycleCallback(
                     activityLocale,
                 )
-                check(observed.isNotEmpty()) { "No MainActivity locale was observed" }
+                check(observed.isNotEmpty()) { "No target Activity locale was observed" }
                 check(
                     observed.all { (_, tags) ->
                         LocaleList.forLanguageTags(tags)[0].language ==
