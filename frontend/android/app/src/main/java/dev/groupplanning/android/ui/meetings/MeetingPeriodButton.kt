@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,9 +22,9 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.MeetingPeriod
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
@@ -49,7 +50,11 @@ internal fun MeetingPeriodButton(
     ) {
         Column {
             Row(
-                Modifier.padding(vertical = 12.dp),
+                Modifier.heightIn(min = DesignTokens.componentMobileMeetingsPeriodMinimumHeight)
+                    .padding(
+                        top = DesignTokens.componentMobileMeetingsPeriodInsetTop,
+                        bottom = DesignTokens.componentMobileMeetingsPeriodInsetBottom,
+                    ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
@@ -57,13 +62,13 @@ internal fun MeetingPeriodButton(
                     title,
                     Modifier.weight(1f, fill = false),
                     color = if (active) Palette.text else Palette.muted,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
+                    fontWeight = FontWeight(DesignTokens.typographyWeightMedium.toInt()),
+                    fontSize = DesignTokens.typographySizeSmall,
                 )
                 Text(
                     count?.toString() ?: "—",
                     color = Palette.muted,
-                    fontSize = 12.sp,
+                    fontSize = DesignTokens.typographySizeLabel,
                 )
             }
             Box(

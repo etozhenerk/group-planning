@@ -1,0 +1,57 @@
+{
+  "reviewedAt": "2026-11-06T20:25:25.681722+00:00",
+  "platform": "android",
+  "tasks": [
+    "7.3",
+    "7.6"
+  ],
+  "manifest": "design/meetings-android.json",
+  "plan": "mobile-refresh-final-android-r9-2026-11-06",
+  "status": "needs-fixes",
+  "scope": {
+    "cases": 57,
+    "states": 86,
+    "complete": false
+  },
+  "actualCounts": {
+    "network-final-actual": 2,
+    "visual-actual": 8,
+    "invitations-final-actual": 18,
+    "visual-final-actual": 11,
+    "common-navigation-actual": 10,
+    "invitations-actual": 14,
+    "dense-actual": 4,
+    "clock-actual": 2,
+    "reference": 86
+  },
+  "productFindings": [
+    "F1: period label splits mid-word at320dp/font1 and counter77"
+  ],
+  "positiveActual": [
+    "TC-LIST-FE4C30B8 real server transition/sdk/day preserved",
+    "Dense20 reachable and51 unique after revision conflict/reload",
+    "CommonNavigation moving pixels/RM/Back OK1test10.158s",
+    "Invitation transport states and confirmed Going prefix both sizes captured; inspect before accepting"
+  ],
+  "notClaimed": [
+    "57case pass",
+    "86state pass",
+    "app hang: delayed logcat showed later progress before operator stop",
+    "unfinished empty/declined/other manual gaps",
+    "old checkpoint pass"
+  ],
+  "evidence": [
+    "findings-r9.md",
+    "defects/f1/binding.json",
+    "clock-actual",
+    "dense-actual",
+    "common-navigation.log",
+    "visual-final.log",
+    "network-final.log",
+    "invitations-final.log",
+    "grouped-runtime.json",
+    "bounded-stop.json"
+  ],
+  "device": "own host force-stopped; wm reset/font1/animator original null restored",
+  "fixtures": "supplemental clock stopped; own standard57121 still idle to preserve seed; source/Gradle/device released"
+}

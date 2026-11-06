@@ -10,6 +10,12 @@ export const CoverEditorLabel = ({
   className,
 }: CoverEditorLabelProps) => (
   <span className={className}>
-    Обложка{(!compact || optionalHint) && <small>необязательно</small>}
+    Обложка
+    {(!compact || optionalHint) && (
+      <>
+        {' '}
+        <small>необязательно</small>
+      </>
+    )}
   </span>
 );
