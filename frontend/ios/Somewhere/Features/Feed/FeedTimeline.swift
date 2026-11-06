@@ -28,7 +28,7 @@ struct FeedTimeline: View {
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
                     VStack(spacing: 0) {
-                        LazyVStack(spacing: 20) {
+                        LazyVStack(spacing: DesignTokens.spaceS16 + DesignTokens.spaceS2) {
                             if owner.loadingHistory {
                                 ChatConversationSkeleton(count: 2)
                             } else if owner.hasHistory && owner.historyProblem == nil {

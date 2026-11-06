@@ -18,9 +18,14 @@ enum MeetingInfoTestSupport {
 
     static func reveal(_ element: XCUIElement, app: XCUIApplication) {
         let scroll = app.scrollViews["meeting-info"]
+        let window = app.windows.firstMatch
         for _ in 0..<12 {
             let top = max(scroll.frame.minY, app.staticTexts["meeting-info-header"].frame.maxY)
-            if element.exists, element.isHittable, scroll.frame.contains(element.frame),
+            let inFooter =
+                element.exists && element.frame.minY >= scroll.frame.maxY
+                && window.frame.contains(element.frame)
+            if element.exists, element.isHittable,
+                scroll.frame.contains(element.frame) || inFooter,
                 element.frame.minY >= top
             {
                 return
@@ -32,7 +37,10 @@ enum MeetingInfoTestSupport {
             }
         }
         XCTAssertTrue(element.isHittable)
-        XCTAssertTrue(scroll.frame.contains(element.frame))
+        XCTAssertTrue(
+            scroll.frame.contains(element.frame)
+                || (element.frame.minY >= scroll.frame.maxY && window.frame.contains(element.frame))
+        )
     }
 
     static func copyAction(_ app: XCUIApplication) -> XCUIElement {

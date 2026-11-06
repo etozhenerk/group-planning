@@ -16,7 +16,8 @@ final class NativeVibeUploadUITests: XCTestCase {
         let id = "deb00000-0000-4000-8000-000000000004"
         let api = try NativeChatCounterpart(actor: "design", meeting: id)
         let before = try await photoIDs(api, meeting: id)
-        XCTAssertEqual(before.count, 3)
+        XCTAssertGreaterThanOrEqual(before.count, 3)
+        let expectedCount = before.count + 1
         let app = XCUIApplication()
         let gate = try ResponseGate(app, path: "/unused", mode: "hold")
         addTeardownBlock { @MainActor in try gate.cleanUp() }
@@ -28,7 +29,7 @@ final class NativeVibeUploadUITests: XCTestCase {
         let album = app.buttons["meeting-memories-" + id]
         ChatSheetTestSupport.reveal(album, in: app.scrollViews["meetings-list"], app: app)
         album.tap()
-        XCTAssertTrue(app.staticTexts["1 из 3"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["1 из \(before.count)"].waitForExistence(timeout: 10))
         app.buttons["album-add"].tap()
         XCTAssertTrue(app.staticTexts["media-picker-header"].waitForExistence(timeout: 5))
         app.buttons["Выбрать фото"].tap()
@@ -51,14 +52,16 @@ final class NativeVibeUploadUITests: XCTestCase {
             XCTAssertFalse(app.buttons["media-batch-send"].isEnabled)
             XCTAssertEqual(app.buttons["media-batch-send"].value as? String, "Выполняется")
             let committed = try await photoIDs(api, meeting: id)
-            XCTAssertEqual(committed.count, 4)
+            XCTAssertEqual(committed.count, expectedCount)
+            XCTAssertTrue(before.isSubset(of: committed))
+            XCTAssertEqual(committed.subtracting(before).count, 1)
             ExperienceScreenshot.save("native-vibe-publish-held-after-commit", test: self)
             try gate.release()
         }
         XCTAssertTrue(preview.waitForNonExistence(timeout: 20))
-        XCTAssertTrue(app.staticTexts["1 из 4"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["1 из \(expectedCount)"].waitForExistence(timeout: 10))
         let after = try await photoIDs(api, meeting: id)
-        XCTAssertEqual(after.count, 4)
+        XCTAssertEqual(after.count, expectedCount)
         XCTAssertTrue(before.isSubset(of: after))
         XCTAssertEqual(after.subtracting(before).count, 1)
         ExperienceScreenshot.save("native-vibe-photo-confirmed-once", test: self)

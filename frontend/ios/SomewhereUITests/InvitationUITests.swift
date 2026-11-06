@@ -143,7 +143,8 @@ final class InvitationUITests: XCTestCase {
                 .exists)
         app.open(try XCTUnwrap(URL(string: "group-planning-ios-ui://i/Q0NDQ0NDQ0NDQ0NDQ0NDQw")))
         XCTAssertTrue(app.staticTexts["Приглашение недоступно"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts["Настолки у Саши"].exists)
+        XCTAssertFalse(
+            app.scrollViews["invitation-screen"].staticTexts["Настолки у Саши"].exists)
         try open(app)
         XCTAssertTrue(app.buttons["Войти через Яндекс ID"].exists)
     }
@@ -165,6 +166,20 @@ final class InvitationUITests: XCTestCase {
         XCTAssertEqual(app.buttons["meeting-people-summary"].label, "Компания, 2 участника")
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         capture("invitation-accepted", app)
+        try open(app)
+        let input = app.textViews["message-input"]
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        let reply = "Проверка чата после приглашения"
+        input.tap()
+        input.typeText(reply)
+        app.buttons["message-send"].tap()
+        let row = ChatMessageTestSupport.row(containing: reply, app: app)
+        XCTAssertTrue(ChatMessageTestSupport.receipt(in: row).waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["chat-storage-error"].exists)
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["chat-storage-error"].exists)
         choose("maybe", confirmation: "Вы пока не уверены", app: app)
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch

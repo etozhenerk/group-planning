@@ -31,7 +31,11 @@ struct InvitationScreen: View {
             if owner.canAccess, let value = owner.preview, let session = owner.session,
                 !session.privateData.denied.contains(value.meetingID)
             {
-                MeetingFeedScreen(id: value.meetingID, session: session, invitation: owner)
+                if case .token = owner.target, completion != nil {
+                    InvitationLoadingView()
+                } else {
+                    MeetingFeedScreen(id: value.meetingID, session: session, invitation: owner)
+                }
             } else if allowsPullToRefresh {
                 invitation.refreshable { await owner.load() }
             } else {
