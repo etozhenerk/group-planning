@@ -7,7 +7,7 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.isPopup
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -46,11 +46,12 @@ class SupportBoundaryUiTests {
     @Before fun configure() {
         fixture.configure()
         QaChatProbe.reset()
+        QaSupportAck.reset()
     }
 
     @Test fun nineAfterTrimAndThreeThousandAndOneCodePointsNeverReachTheApi() {
         fixture.launch("calendar").use { activity ->
-            openForm()
+            openForm(activity)
             selectContext(activity)
             assertInvalid(activity, 9, R.string.support_description_short)
             assertInvalid(activity, 3001, R.string.support_description_long)
@@ -59,10 +60,11 @@ class SupportBoundaryUiTests {
 
     @Test fun tenAndThreeThousandCodePointsGetDistinctRealReceiptsOnCleanForms() {
         fixture.launch("calendar").use { activity ->
-            openForm()
+            openForm(activity)
             selectContext(activity)
             val first = assertAccepted(activity, 10, 1)
-            compose.onNodeWithText(fixture.context.getString(R.string.support_another))
+            compose.onNodeWithTag("support-success-back").performClick()
+            compose.onNodeWithText(fixture.context.getString(R.string.support_write))
                 .performScrollTo().performClick()
             fixture.waitTag("support-description")
             assertEquals("", editableDescription())
@@ -72,17 +74,47 @@ class SupportBoundaryUiTests {
             assertNotEquals(first.id, second.id)
             assertNotEquals(first.reference, second.reference)
             compose.onNodeWithTag("support-success-back").performClick()
+            fixture.waitText(fixture.context.getString(R.string.help_title_new))
+            compose.onNodeWithContentDescription("Назад").performClick()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()
         }
     }
 
-    private fun openForm() {
+    @Test fun lostAcknowledgementRetriesTheSameBodyKeyAndActualReceipt() {
+        fixture.launch("calendar").use { activity ->
+            openForm(activity)
+            selectContext(activity)
+            enterDescription(20)
+            QaSupportAck.loseNext = true
+            submit()
+            fixture.waitText(fixture.context.getString(R.string.support_unknown))
+            assertTrue(state(activity).frozen)
+            assertNull(state(activity).receipt)
+            val first = QaSupportAck.entries.single()
+            assertTrue(!first.key.isNullOrBlank())
+            compose.onNodeWithText(fixture.context.getString(R.string.support_retry))
+                .assertIsDisplayed().performClick()
+            fixture.waitText("Обращение принято")
+            val retry = QaSupportAck.entries.last()
+            assertEquals(2, QaSupportAck.entries.size)
+            assertEquals(first.key, retry.key)
+            assertEquals(first.bodyHash, retry.bodyHash)
+            assertEquals(first.id, retry.id)
+            assertEquals(first.reference, retry.reference)
+            assertEquals(first.reference, state(activity).receipt?.reference)
+            compose.onNodeWithText(first.reference).performScrollTo().assertIsDisplayed()
+            fixture.screenshot("support-lost-ack-same-receipt")
+        }
+    }
+
+    private fun openForm(activity: ActivityScenario<MainActivity>) {
         fixture.waitTag("meetings-list")
         compose.onNodeWithTag("home-profile").performClick()
-        fixture.waitText("Яндекс ID")
+        fixture.waitText("Вход через Яндекс ID")
         compose.onNodeWithText("Сообщить о проблеме").performScrollTo().performClick()
         fixture.waitTag("support-description")
+        compose.waitUntil(5_000) { !state(activity).busy }
         assertEquals("", editableDescription())
     }
 
@@ -100,7 +132,8 @@ class SupportBoundaryUiTests {
             hasText(fixture.context.getString(label)) and insideForm,
         ).performScrollTo().performClick()
         compose.onNode(
-            hasText(fixture.context.getString(R.string.screen_chat)) and hasAnyAncestor(isPopup()),
+            hasText(fixture.context.getString(R.string.screen_chat)) and
+                hasAnyAncestor(hasTestTag("support-section-sheet")),
         ).performClick()
         assertEquals("idea", state(activity).kind)
         assertEquals("meeting_chat", state(activity).screen)
@@ -119,7 +152,7 @@ class SupportBoundaryUiTests {
         assertEquals("idea", actual.kind)
         assertEquals("meeting_chat", actual.screen)
         assertNull(actual.receipt)
-        compose.onNodeWithText("Спасибо, что рассказали").assertDoesNotExist()
+        compose.onNodeWithText("Обращение принято").assertDoesNotExist()
         assertEquals(0, postCount())
         record(length, false, actual, value)
     }
@@ -133,7 +166,7 @@ class SupportBoundaryUiTests {
         assertNull(state(activity).receipt)
         assertEquals(expectedPosts - 1, postCount())
         submit()
-        fixture.waitText("Спасибо, что рассказали")
+        fixture.waitText("Обращение принято")
         // Read only the DTO produced by the real HTTP response; do not edit or submit the model.
         val actual = state(activity)
         val receipt = checkNotNull(actual.receipt)
@@ -141,7 +174,7 @@ class SupportBoundaryUiTests {
         assertNotEquals(UUID(0, 0), receipt.id)
         assertTrue(receipt.reference.isNotBlank())
         compose.onNodeWithText(
-            fixture.context.getString(R.string.support_reference, receipt.reference),
+            receipt.reference,
         ).performScrollTo().assertIsDisplayed()
         assertEquals(expectedPosts, postCount())
         assertEquals("", actual.email)
@@ -164,7 +197,7 @@ class SupportBoundaryUiTests {
     }
 
     private fun submit() = compose.onNodeWithText("Отправить обращение")
-        .performScrollTo().performClick()
+        .assertIsDisplayed().performClick()
 
     private fun hideKeyboard() {
         if (compose.onAllNodes(hasTestTag("support-done")).fetchSemanticsNodes().isEmpty()) return

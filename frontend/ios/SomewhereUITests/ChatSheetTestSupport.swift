@@ -37,19 +37,39 @@ enum ChatSheetTestSupport {
 
     static func reveal(_ element: XCUIElement, in scroll: XCUIElement, app: XCUIApplication) {
         for _ in 0..<12 {
-            let bottom =
-                app.buttons["home-tab-calendar"].exists
-                ? app.buttons["home-tab-calendar"].frame.minY : app.frame.maxY - 30
-            if element.exists, element.isHittable, element.frame.midY > app.frame.minY + 80,
-                element.frame.midY < bottom - 10
+            var viewport = scroll.frame.intersection(app.frame)
+            let tab = app.buttons["home-tab-calendar"]
+            if tab.exists && tab.isHittable {
+                viewport.size.height = min(viewport.maxY, tab.frame.minY) - viewport.minY
+            }
+            let keyboard = app.keyboards.firstMatch
+            if keyboard.exists {
+                viewport.size.height = min(viewport.maxY, keyboard.frame.minY) - viewport.minY
+            }
+            let submit = app.buttons["support-submit"]
+            if submit.exists && submit.isHittable && element != submit {
+                viewport.size.height = min(viewport.maxY, submit.frame.minY - 8) - viewport.minY
+            }
+            let top = viewport.minY + 8
+            let bottom = viewport.maxY - 8
+            if element.exists, element.isHittable, element.frame.midY > top,
+                element.frame.midY < bottom
             {
                 return
             }
-            if element.exists && element.frame.midY < app.frame.minY + 80 {
-                scroll.swipeDown()
-            } else {
-                scroll.swipeUp()
-            }
+            guard bottom - top > 40 else { break }
+            let frame = element.frame
+            let desired =
+                !element.exists || frame.midY >= bottom
+                ? min(max(frame.midY - bottom + 24, 40), (bottom - top) * 0.55)
+                : max(min(frame.midY - top - 24, -40), -(bottom - top) * 0.55)
+            let origin = app.coordinate(withNormalizedOffset: .zero)
+            let middle = (top + bottom) / 2
+            let start = origin.withOffset(CGVector(dx: viewport.maxX - 8, dy: middle + desired / 2))
+            let finish = origin.withOffset(
+                CGVector(dx: viewport.maxX - 8, dy: middle - desired / 2))
+            start.press(
+                forDuration: 0.1, thenDragTo: finish, withVelocity: .slow, thenHoldForDuration: 0)
         }
         if !element.isHittable { print("SOMEWHERE_REVEAL_FAILURE_TREE=" + app.debugDescription) }
         XCTAssertTrue(element.isHittable)

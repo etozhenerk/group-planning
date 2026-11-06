@@ -23,7 +23,12 @@ for (const width of [390, 1440]) {
     await second.click();
     await expect(answer).toHaveAttribute('aria-hidden', 'true');
     await expect(answer).toHaveCSS('opacity', '0');
-    await page.getByRole('link', { name: 'Задать вопрос ↗', exact: true }).click();
+    await page
+      .getByRole('link', {
+        name: width < 740 ? 'Написать в поддержку' : 'Задать вопрос ↗',
+        exact: true,
+      })
+      .click();
     await backTo('Вернуться к помощи').click();
     await expect(page).toHaveURL(/\/help$/);
     await backTo('Вернуться в профиль').click();

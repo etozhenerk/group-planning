@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -37,6 +38,7 @@ internal fun ServiceDialog(
     navigate: (String) -> Unit,
     close: () -> Unit,
 ) {
+    val pageState = rememberSaveableStateHolder()
     var history by rememberSaveable { mutableStateOf<List<String>>(emptyList()) }
     val go: (String) -> Unit = { target ->
         if (target != page) {
@@ -47,7 +49,11 @@ internal fun ServiceDialog(
     }
     val back = {
         val previous = history.lastOrNull()
-        if (previous == null) {
+        if (page == "support" && support?.state?.value?.receipt != null) {
+            support.reset()
+            history = history.filter { it != "support" && it != "help" }
+            navigate("help")
+        } else if (previous == null) {
             close()
         } else {
             history = history.dropLast(1)
@@ -63,60 +69,83 @@ internal fun ServiceDialog(
     ) {
         Surface(Modifier.fillMaxSize().testTag("service-page"), color = Palette.background) {
             Box(Modifier.fillMaxSize().safeDrawingPadding()) {
-                Column {
-                    MeetingsHeader()
-                    Box(
-                        Modifier.padding(
-                            start = DesignTokens.spaceS20,
-                            top = DesignTokens.spaceS24,
-                        ),
-                    ) {
-                        PageBack(close = back)
-                    }
-                    if (page == "support" &&
-                        support != null
-                    ) {
-                        SupportForm(support, { go("privacy") }, back)
-                    } else {
-                        Column(
-                            Modifier.verticalScroll(rememberScrollState()).padding(
-                                start = 20.dp,
-                                end = 20.dp,
-                                top = 10.dp,
-                                bottom = 24.dp,
-                            ),
-                            verticalArrangement = Arrangement.spacedBy(24.dp),
-                        ) {
-                            val title = when (page) {
-                                "about" -> R.string.about_title
-                                "privacy" -> R.string.privacy_title
-                                "cookies" -> R.string.cookies_title
-                                else -> R.string.help_heading
+                pageState.SaveableStateProvider(page) {
+                    Column {
+                        if (page != "help" && page != "support") MeetingsHeader()
+                        if (page != "help" && page != "support") {
+                            Box(
+                                Modifier.padding(
+                                    start = DesignTokens.spaceS20,
+                                    top = DesignTokens.spaceS24,
+                                ),
+                            ) {
+                                PageBack(close = back)
                             }
-                            Text(
-                                stringResource(title),
-                                fontSize = 28.sp,
-                                fontWeight = FontWeight.Bold,
-                            )
-                            when (page) {
-                                "about" -> {
-                                    Text(
-                                        stringResource(R.string.service_tagline),
-                                        fontSize = 13.sp,
-                                        color = Palette.muted,
-                                    )
-                                    AboutContent { go("support") }
-                                }
-                                "privacy", "cookies" -> LegalContent(page == "cookies", go)
-                                else -> {
-                                    Text(
-                                        stringResource(R.string.help_intro),
-                                        fontSize = 13.sp,
-                                        color = Palette.muted,
-                                    )
+                        }
+                        if (page == "support" &&
+                            support != null
+                        ) {
+                            SupportForm(support, { go("privacy") }, back, {
+                                history = history.filter { it != "support" && it != "help" }
+                                navigate("help")
+                            })
+                        } else if (page == "help") {
+                            Column(Modifier.verticalScroll(rememberScrollState())) {
+                                ServiceScreenHeader(
+                                    stringResource(R.string.help_title_new),
+                                    back = back,
+                                )
+                                Column(
+                                    Modifier.padding(horizontal = DesignTokens.spaceS20)
+                                        .padding(bottom = DesignTokens.spaceS40),
+                                ) {
                                     HelpContent {
                                         support?.edit { it.copy(kind = "question") }
                                         go("support")
+                                    }
+                                }
+                            }
+                        } else {
+                            Column(
+                                Modifier.verticalScroll(rememberScrollState()).padding(
+                                    start = 20.dp,
+                                    end = 20.dp,
+                                    top = 10.dp,
+                                    bottom = 24.dp,
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(24.dp),
+                            ) {
+                                val title = when (page) {
+                                    "about" -> R.string.about_title
+                                    "privacy" -> R.string.privacy_title
+                                    "cookies" -> R.string.cookies_title
+                                    else -> R.string.help_heading
+                                }
+                                Text(
+                                    stringResource(title),
+                                    fontSize = 28.sp,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                                when (page) {
+                                    "about" -> {
+                                        Text(
+                                            stringResource(R.string.service_tagline),
+                                            fontSize = 13.sp,
+                                            color = Palette.muted,
+                                        )
+                                        AboutContent { go("support") }
+                                    }
+                                    "privacy", "cookies" -> LegalContent(page == "cookies", go)
+                                    else -> {
+                                        Text(
+                                            stringResource(R.string.help_intro),
+                                            fontSize = 13.sp,
+                                            color = Palette.muted,
+                                        )
+                                        HelpContent {
+                                            support?.edit { it.copy(kind = "question") }
+                                            go("support")
+                                        }
                                     }
                                 }
                             }

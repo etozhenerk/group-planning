@@ -14,7 +14,7 @@ final class HelpDisclosureUITests: XCTestCase {
     }
 
     private func revealAnswer(_ answer: XCUIElement, page: XCUIElement, app: XCUIApplication) {
-        let top = app.staticTexts["brand-wordmark"].frame.maxY + 20
+        let top = page.frame.minY + 20
         let bottom = app.frame.maxY - 30
         XCTAssertLessThanOrEqual(answer.frame.height, bottom - top)
         for _ in 0..<8 {

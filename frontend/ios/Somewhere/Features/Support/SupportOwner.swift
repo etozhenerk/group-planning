@@ -12,6 +12,7 @@ final class SupportOwner {
     var screenshot: PendingMedia?
     var diagnostics = false
     var sending = false
+    var frozen = false
     var problem: String?
     var reference: String?
     var fieldErrors: [String: String] = [:]
@@ -31,7 +32,7 @@ final class SupportOwner {
     }
     private var validationErrors: [String: String] {
         var errors: [String: String] = [:]
-        let count = description.trimmingCharacters(in: .whitespacesAndNewlines).count
+        let count = description.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars.count
         if count < 10 {
             errors["description"] = "Расскажите подробнее — нужно хотя бы 10 символов."
         } else if count > 3000 {
@@ -128,12 +129,14 @@ final class SupportOwner {
             guard result.status == "accepted", !result.reference.isEmpty else {
                 throw ClientFailure.invalidResponse
             }
+            frozen = false
             reference = result.reference
         } catch {
             guard version == generation, !(error is CancellationError) else { return }
             if case .http(_, let details) = error as? ClientFailure {
                 fieldErrors = details?.fieldErrors ?? [:]
             }
+            frozen = ![400, 422].contains((error as? ClientFailure)?.statusCode ?? 0)
             problem =
                 (error as? ClientFailure)?.statusCode == 429
                 ? "Слишком много обращений. Попробуйте отправить позже."

@@ -1,3 +1,5 @@
+import { useMobileLayout } from '@/shared/lib/media';
+import { MobileHelp } from '@/pages/service/ui/MobileHelp/MobileHelp';
 import { PageBack } from '@/shared/ui/PageBack';
 import { readReturnLocation, returnLocationLabel } from '@/shared/lib/navigation';
 import { useLocation } from 'react-router';
@@ -12,11 +14,20 @@ import { PolicyContent } from '@/pages/service/ui/PolicyContent';
 import styles from '@/pages/service/ui/ServicePage/ServicePage.module.css';
 
 export const ServicePage = () => {
+  const mobile = useMobileLayout();
   const session = useSession();
   const location = useLocation();
   const kind = location.pathname.slice(1) as ServiceKind;
   const content = serviceContent[kind] ?? serviceContent.about;
   const back = readReturnLocation(location.state);
+
+  if (mobile && kind === 'help') {
+    return (
+      <Workspace navigation={null} screen mobileBrand={false}>
+        <MobileHelp />
+      </Workspace>
+    );
+  }
 
   return (
     <Workspace navigation={<Navigation session={session.data ?? null} />}>

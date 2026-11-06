@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
+import { useFeedbackDraft } from '@/features/support-feedback/model/useFeedbackDraft';
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { ApiError, request, writeOptions } from '@/shared/api';
@@ -16,21 +17,37 @@ import type {
   Screenshot,
 } from '@/features/support-feedback/model/types';
 
-export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackScreen) => {
+export const useFeedback = (
+  initialKind: FeedbackKind,
+  initialScreen: FeedbackScreen,
+  mobile = false,
+) => {
+  const draft = useFeedbackDraft(initialKind, initialScreen, mobile);
   const formRef = useRef<HTMLFormElement>(null);
-  const [kind, setKind] = useState(initialKind);
-  const [screen, setScreen] = useState(initialScreen);
-  const [description, setDescription] = useState('');
+  const kind = draft.value.kind;
+  const setKind = (value: FeedbackKind) => draft.edit({ kind: value });
+  const screen = draft.value.screen;
+  const setScreen = (value: FeedbackScreen) => draft.edit({ screen: value });
+  const description = draft.value.description;
+  const setDescription = (value: string) => draft.edit({ description: value });
   const [attempted, setAttempted] = useState(false);
-  const [email, setEmail] = useState('');
-  const [diagnostics, setDiagnostics] = useState(false);
-  const [screenshot, setScreenshot] = useState<Screenshot | null>(null);
+  const [emailProblem, setEmailProblem] = useState('');
+  const email = draft.value.email;
+  const setEmail = (value: string) => {
+    setEmailProblem('');
+    draft.edit({ email: value });
+  };
+
+  const diagnostics = draft.value.diagnostics;
+  const setDiagnostics = (value: boolean) => draft.edit({ diagnostics: value });
+  const screenshot = draft.value.screenshot;
+  const setScreenshot = (value: Screenshot | null) => draft.edit({ screenshot: value });
   const [fileError, setFileError] = useState('');
   const [reading, setReading] = useState(false);
   const intent = useIntent();
   const mutation = useMutation({
     mutationFn: async () => {
-      const content = {
+      const content = draft.value.pending?.content ?? {
         kind,
         screen,
         description: trimDescription(description),
@@ -46,20 +63,52 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
           : null,
       };
 
-      const key = intent(content);
+      const key = draft.value.pending?.key ?? intent(content);
 
-      return request(
-        z.object({ id: z.uuid(), reference: z.string(), status: z.literal('accepted') }),
-        '/support/feedback',
-        writeOptions('POST', null, { ...content, client_request_id: key }, key),
-        true,
-      );
+      if (mobile) {
+        draft.patch({ pending: { content, key }, busy: true, error: null });
+      }
+
+      try {
+        const receipt = await request(
+          z.object({
+            id: z.uuid(),
+            reference: z.string(),
+            status: z.literal('accepted'),
+          }),
+          '/support/feedback',
+          writeOptions('POST', null, { ...content, client_request_id: key }, key),
+          true,
+        );
+
+        if (mobile) {
+          draft.patch({ receipt, pending: null, error: null });
+        }
+
+        return receipt;
+      } catch (error) {
+        if (mobile) {
+          draft.patch({
+            error: error instanceof Error ? error : new Error('invalid_response'),
+            pending:
+              error instanceof ApiError && [400, 422].includes(error.status)
+                ? null
+                : { content, key },
+          });
+        }
+
+        throw error;
+      } finally {
+        if (mobile) {
+          draft.patch({ busy: false });
+        }
+      }
     },
     retry: false,
   });
 
   const choose = async (file: File | undefined) => {
-    if (!file) {
+    if (!file || (mobile && !!draft.value.pending)) {
       return;
     }
 
@@ -85,12 +134,24 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
       return;
     }
 
-    if (!reading && !mutation.isPending) {
+    const emailField = formRef.current?.querySelector<HTMLInputElement>('[name="email"]');
+
+    if (mobile && emailField && !emailField.validity.valid) {
+      setEmailProblem('Проверьте адрес почты.');
+      emailField.focus();
+
+      return;
+    }
+
+    setEmailProblem('');
+
+    if (!reading && !mutation.isPending && !draft.value.busy) {
       mutation.mutate();
     }
   };
 
-  const fields = mutation.error instanceof ApiError ? mutation.error.fields : {};
+  const failure = mobile ? draft.value.error : mutation.error;
+  const fields = failure instanceof ApiError ? failure.fields : {};
 
   useEffect(() => {
     if (mutation.error instanceof ApiError) {
@@ -111,9 +172,12 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
     screen,
     setScreen,
     description,
-    descriptionError: attempted ? descriptionProblem(description) : '',
+    descriptionError:
+      (attempted ? descriptionProblem(description) : '') ||
+      (fields.description ? 'Проверьте сообщение — от 10 до 3000 символов.' : ''),
     setDescription,
     email,
+    emailProblem: emailProblem || (fields.email ? 'Проверьте адрес почты.' : ''),
     setEmail,
     diagnostics,
     setDiagnostics,
@@ -123,7 +187,17 @@ export const useFeedback = (initialKind: FeedbackKind, initialScreen: FeedbackSc
     reading,
     choose,
     submit,
-    mutation,
+    mutation: mobile
+      ? {
+          ...mutation,
+          data: draft.value.receipt,
+          error: failure,
+          isPending: draft.value.busy,
+        }
+      : mutation,
+    frozen: mobile && !!draft.value.pending && !draft.value.busy,
+    scroll: draft.scroll,
+    reset: draft.reset,
     fields,
   };
 };

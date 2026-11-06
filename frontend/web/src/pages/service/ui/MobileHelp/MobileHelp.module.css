@@ -1,0 +1,80 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.content {
+  padding: 0 var(--ds-space-s20) var(--ds-space-s40);
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-s10);
+}
+
+.contact {
+  margin-top: calc(var(--ds-space-s24) + var(--ds-space-s6));
+  padding: var(--ds-space-s24) 0 0;
+  border-top: var(--ds-space-s1) solid var(--ds-color-line);
+}
+
+.contact > svg {
+  color: var(--ds-color-accent);
+  margin-bottom: var(--ds-component-mobile-service-field-radius);
+}
+
+.contact h2 {
+  font-size: var(--ds-space-s20);
+  line-height: var(--ds-component-mobile-support-switch-height);
+  font-weight: 600;
+  margin: 0 0 var(--ds-space-s16);
+}
+
+.contact a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-s10);
+  min-height: var(--ds-component-mobile-service-action-height);
+  padding: var(--ds-space-s10) var(--ds-component-mobile-service-field-radius);
+  box-sizing: border-box;
+  border-radius: var(--ds-component-mobile-service-field-radius);
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-size: var(--ds-typography-size-body);
+  line-height: var(--ds-space-s20);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.header {
+  padding: env(safe-area-inset-top) var(--ds-space-s20)
+    calc(var(--ds-space-s24) + var(--ds-space-s4));
+}
+
+.header h1 {
+  font-size: var(--ds-component-mobile-service-title-size);
+  line-height: var(--ds-component-mobile-service-title-line-height);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-service-title-tracking));
+  font-weight: 650;
+  margin: var(--ds-component-mobile-service-field-radius) 0 0;
+}
+
+.header p {
+  font-size: var(--ds-typography-size-caption);
+  line-height: calc(var(--ds-space-s16) + var(--ds-space-s2));
+  color: var(--ds-color-muted);
+  margin: var(--ds-space-s10) 0 0;
+}
+
+.required {
+  color: var(--ds-color-error);
+  font-size: var(--ds-component-mobile-service-hint-line-height);
+  font-weight: 650;
+}

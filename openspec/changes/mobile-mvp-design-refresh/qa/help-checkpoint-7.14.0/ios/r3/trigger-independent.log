@@ -1,0 +1,662 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/help714-independent-r3.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/HelpCheckpoint714R3Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/help714-independent-r3.xcresult
+
+2026-11-06 12:50:01.881 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:03.129670+0300 SomewhereUITests-Runner[97740:22003243] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-06 12:50:05.914.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 12:50:05.915.
+Test Suite 'HelpCheckpoint714R3Tests' started at 2026-11-06 12:50:05.915.
+Test Case '-[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance]' started.
+    t =     0.00s Start Test at 2026-11-06 12:50:05.917
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-06 12:50:06.014 xcodebuild[97695:22002806] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-06 12:50:06.014 xcodebuild[97695:22002806] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-06 12:50:06.044 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.52s         Setting up automation session
+    t =     2.79s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.05s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.13s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.13s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.26s Tap "home-tab-person.crop.circle" Button
+    t =     5.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.27s     Find the "home-tab-person.crop.circle" Button
+    t =     5.29s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =     5.32s     Synthesize event
+    t =     5.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.64s Find the "profile-screen" ScrollView
+    t =     5.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.72s Checking existence of `"home-tab-calendar" Button`
+    t =     5.74s Find the "home-tab-calendar" Button
+    t =     5.77s Find the "home-tab-calendar" Button
+    t =     5.79s Checking existence of `Keyboard (First Match)`
+    t =     5.82s Checking existence of `"support-submit" Button`
+    t =     5.83s Checking existence of `"Сообщить о проблеме" Button`
+    t =     5.85s Find the "Сообщить о проблеме" Button
+    t =     5.87s Find the "Сообщить о проблеме" Button
+    t =     5.90s Find the "Сообщить о проблеме" Button
+    t =     5.92s Tap "Сообщить о проблеме" Button
+    t =     5.92s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.92s     Find the "Сообщить о проблеме" Button
+    t =     5.94s     Check for interrupting elements affecting "Сообщить о проблеме" Button
+    t =     5.96s     Synthesize event
+    t =     6.25s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.26s Waiting 6.0s for "support-description" TextView to exist
+    t =     7.34s     Checking `Expect predicate `existsNoRetry == 1` for object "support-description" TextView`
+    t =     7.34s         Checking existence of `"support-description" TextView`
+    t =     7.42s Tap "support-description" TextView
+    t =     7.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.43s     Find the "support-description" TextView
+    t =     7.46s     Check for interrupting elements affecting "support-description" TextView
+    t =     7.49s     Synthesize event
+    t =     7.78s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.04s Type 'Проверка формы обр...' into "support-description" TextView
+    t =     8.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.41s     Find the "support-description" TextView
+    t =     8.50s     Check for interrupting elements affecting "support-description" TextView
+    t =     8.54s     Synthesize event
+    t =     9.74s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.74s Find the "support-scroll" ScrollView
+    t =     9.80s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.83s Checking existence of `"home-tab-calendar" Button`
+    t =     9.87s Find the "home-tab-calendar" Button
+    t =     9.93s Checking existence of `Keyboard (First Match)`
+    t =     9.94s Find the Keyboard (First Match)
+    t =     9.96s Checking existence of `"support-submit" Button`
+    t =    10.00s Find the "support-submit" Button
+    t =    10.05s Find the "support-submit" Button
+    t =    10.10s Checking existence of `Button (First Match)`
+    t =    10.15s Find the Button (First Match)
+    t =    10.23s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.29s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    10.34s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 404.7) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 295.3) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    10.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.35s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.38s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    10.42s     Synthesize event
+    t =    10.42s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.45s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.48s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.51s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.54s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.36s Find the "support-scroll" ScrollView
+    t =    11.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.45s Checking existence of `"home-tab-calendar" Button`
+    t =    11.49s Find the "home-tab-calendar" Button
+    t =    11.55s Checking existence of `Keyboard (First Match)`
+    t =    11.56s Find the Keyboard (First Match)
+    t =    11.58s Checking existence of `"support-submit" Button`
+    t =    11.62s Find the "support-submit" Button
+    t =    11.68s Find the "support-submit" Button
+    t =    11.73s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    11.79s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    11.86s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    11.92s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    11.98s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    11.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.99s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.02s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    12.06s     Synthesize event
+    t =    12.06s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.09s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.12s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.15s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.18s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.34s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.20s Find the "support-scroll" ScrollView
+    t =    14.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.28s Checking existence of `"home-tab-calendar" Button`
+    t =    14.33s Find the "home-tab-calendar" Button
+    t =    14.39s Checking existence of `Keyboard (First Match)`
+    t =    14.40s Find the Keyboard (First Match)
+    t =    14.42s Checking existence of `"support-submit" Button`
+    t =    14.46s Find the "support-submit" Button
+    t =    14.52s Find the "support-submit" Button
+    t =    14.57s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    14.63s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    14.70s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    14.77s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    14.83s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    14.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.83s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.86s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    14.90s     Synthesize event
+    t =    14.90s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.93s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.97s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.00s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.03s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    16.18s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.94s Find the "support-scroll" ScrollView
+    t =    17.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.04s Checking existence of `"home-tab-calendar" Button`
+    t =    17.09s Find the "home-tab-calendar" Button
+    t =    17.15s Checking existence of `Keyboard (First Match)`
+    t =    17.17s Find the Keyboard (First Match)
+    t =    17.19s Checking existence of `"support-submit" Button`
+    t =    17.24s Find the "support-submit" Button
+    t =    17.30s Find the "support-submit" Button
+    t =    17.35s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    17.43s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    17.51s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    17.59s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    17.67s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    17.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.67s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.71s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    17.75s     Synthesize event
+    t =    17.75s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.78s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.82s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.85s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.89s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.04s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.89s Find the "support-scroll" ScrollView
+    t =    19.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.01s Checking existence of `"home-tab-calendar" Button`
+    t =    20.06s Find the "home-tab-calendar" Button
+    t =    20.12s Checking existence of `Keyboard (First Match)`
+    t =    20.14s Find the Keyboard (First Match)
+    t =    20.16s Checking existence of `"support-submit" Button`
+    t =    20.21s Find the "support-submit" Button
+    t =    20.27s Find the "support-submit" Button
+    t =    20.32s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    20.40s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    20.48s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    20.56s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    20.64s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    20.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.65s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.68s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    20.73s     Synthesize event
+    t =    20.73s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.76s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.80s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.83s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    20.86s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    22.86s Find the "support-scroll" ScrollView
+    t =    22.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.96s Checking existence of `"home-tab-calendar" Button`
+    t =    23.01s Find the "home-tab-calendar" Button
+    t =    23.07s Checking existence of `Keyboard (First Match)`
+    t =    23.09s Find the Keyboard (First Match)
+    t =    23.11s Checking existence of `"support-submit" Button`
+    t =    23.16s Find the "support-submit" Button
+    t =    23.22s Find the "support-submit" Button
+    t =    23.27s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    23.35s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    23.43s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    23.51s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    23.59s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    23.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.59s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.63s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    23.67s     Synthesize event
+    t =    23.67s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.74s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.77s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.81s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    24.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.84s Find the "support-scroll" ScrollView
+    t =    25.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.95s Checking existence of `"home-tab-calendar" Button`
+    t =    26.00s Find the "home-tab-calendar" Button
+    t =    26.07s Checking existence of `Keyboard (First Match)`
+    t =    26.08s Find the Keyboard (First Match)
+    t =    26.10s Checking existence of `"support-submit" Button`
+    t =    26.15s Find the "support-submit" Button
+    t =    26.21s Find the "support-submit" Button
+    t =    26.27s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    26.35s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    26.43s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    26.52s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    26.59s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    26.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.60s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.63s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    26.68s     Synthesize event
+    t =    26.68s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.75s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.78s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.82s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.84s Find the "support-scroll" ScrollView
+    t =    28.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.96s Checking existence of `"home-tab-calendar" Button`
+    t =    29.01s Find the "home-tab-calendar" Button
+    t =    29.07s Checking existence of `Keyboard (First Match)`
+    t =    29.09s Find the Keyboard (First Match)
+    t =    29.11s Checking existence of `"support-submit" Button`
+    t =    29.16s Find the "support-submit" Button
+    t =    29.22s Find the "support-submit" Button
+    t =    29.27s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    29.35s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    29.43s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    29.51s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    29.59s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    29.59s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    29.60s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.63s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    29.67s     Synthesize event
+    t =    29.67s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.74s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.77s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    29.81s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    30.97s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    31.83s Find the "support-scroll" ScrollView
+    t =    31.89s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    31.92s Checking existence of `"home-tab-calendar" Button`
+    t =    31.97s Find the "home-tab-calendar" Button
+    t =    32.04s Checking existence of `Keyboard (First Match)`
+    t =    32.05s Find the Keyboard (First Match)
+    t =    32.07s Checking existence of `"support-submit" Button`
+    t =    32.12s Find the "support-submit" Button
+    t =    32.18s Find the "support-submit" Button
+    t =    32.23s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    32.31s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    32.39s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    32.48s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    32.55s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    32.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.56s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    32.59s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    32.64s     Synthesize event
+    t =    32.64s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    32.67s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    32.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    32.74s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    32.78s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    33.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.79s Find the "support-scroll" ScrollView
+    t =    34.87s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    34.91s Checking existence of `"home-tab-calendar" Button`
+    t =    34.96s Find the "home-tab-calendar" Button
+    t =    35.03s Checking existence of `Keyboard (First Match)`
+    t =    35.04s Find the Keyboard (First Match)
+    t =    35.06s Checking existence of `"support-submit" Button`
+    t =    35.11s Find the "support-submit" Button
+    t =    35.17s Find the "support-submit" Button
+    t =    35.22s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    35.30s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    35.38s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    35.46s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    35.54s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    35.54s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    35.54s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.58s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    35.62s     Synthesize event
+    t =    35.62s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.66s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.69s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.73s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    35.76s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    36.92s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    37.77s Find the "support-scroll" ScrollView
+    t =    37.85s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    37.89s Checking existence of `"home-tab-calendar" Button`
+    t =    37.95s Find the "home-tab-calendar" Button
+    t =    38.01s Checking existence of `Keyboard (First Match)`
+    t =    38.03s Find the Keyboard (First Match)
+    t =    38.05s Checking existence of `"support-submit" Button`
+    t =    38.10s Find the "support-submit" Button
+    t =    38.16s Find the "support-submit" Button
+    t =    38.21s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    38.29s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    38.37s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    38.45s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    38.53s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    38.53s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    38.53s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.57s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    38.61s     Synthesize event
+    t =    38.61s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.65s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.68s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.75s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    39.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    40.77s Find the "support-scroll" ScrollView
+    t =    40.84s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    40.88s Checking existence of `"home-tab-calendar" Button`
+    t =    40.93s Find the "home-tab-calendar" Button
+    t =    40.99s Checking existence of `Keyboard (First Match)`
+    t =    41.00s Find the Keyboard (First Match)
+    t =    41.02s Checking existence of `"support-submit" Button`
+    t =    41.07s Find the "support-submit" Button
+    t =    41.13s Find the "support-submit" Button
+    t =    41.18s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    41.26s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    41.35s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    41.43s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    41.50s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 283.9) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (201.0, 88.1) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    41.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    41.51s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.54s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    41.58s     Synthesize event
+    t =    41.59s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.62s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.66s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.69s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    41.73s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    42.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    43.75s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    43.86s Requesting snapshot of accessibility hierarchy for app with pid 97750
+    t =    44.20s Requesting snapshot of accessibility hierarchy for app with pid 97750
+SOMEWHERE_REVEAL_FAILURE_TREE=Attributes: Application, 0x106c7a440, pid: 97750, label: 'somewhere QA'
+Element subtree:
+ →Application, 0x106c7a440, pid: 97750, label: 'somewhere QA'
+    Window (Main), 0x106c7b5c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x106c7a580, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x106c78c80, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x106c7a940, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x106c7ad00, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x106c7abc0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x106c7bc00, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x106c7aa80, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x106c79f40, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x106c7af80, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x106c7a1c0, {{0.0, 0.0}, {402.0, 874.0}}
+                        ScrollView, 0x106c79180, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'profile-screen'
+                          Other, 0x106c7bd40, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x106c79400, {{0.0, 0.0}, {402.0, 102.0}}
+                          Other, 0x106c79540, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x106c7a800, {{0.0, 62.0}, {402.0, 615.0}}
+                            StaticText, 0x106c78780, {{20.0, 68.0}, {118.7, 33.7}}, label: 'Профиль'
+                            StaticText, 0x106c78000, {{128.0, 147.7}, {72.0, 33.7}}, label: 'Саша'
+                            StaticText, 0x106c7a080, {{128.0, 189.3}, {128.0, 14.3}}, label: 'Вход через Яндекс ID'
+                            Button, 0x106c79900, {{20.0, 245.7}, {362.0, 75.3}}, identifier: 'profile-account-data', label: 'Данные аккаунта, Личные данные и контакты · только вам'
+                              StaticText, 0x106c7a6c0, {{72.0, 265.7}, {130.0, 18.0}}, label: 'Данные аккаунта'
+                              Other, 0x106c78500, {{39.8, 274.3}, {14.4, 18.1}}
+                              Image, 0x106c78a00, {{349.0, 279.3}, {14.7, 8.3}}, identifier: 'chevron.down', label: 'Перейти Вниз'
+                              StaticText, 0x106c79680, {{72.0, 287.7}, {219.7, 13.3}}, label: 'Личные данные и контакты · только вам'
+                            Button, 0x106c79cc0, {{20.0, 349.0}, {362.0, 58.0}}, label: 'Помощь'
+                              Image, 0x106c78b40, {{20.3, 367.3}, {21.7, 21.7}}, identifier: 'questionmark.circle', label: 'Вопросительный Знак В Круге'
+                              StaticText, 0x106c78640, {{56.0, 369.5}, {56.0, 17.0}}, label: 'Помощь'
+                              Image, 0x106c797c0, {{373.3, 371.3}, {7.7, 13.3}}, identifier: 'chevron.right', label: 'Вперед'
+                            Button, 0x106c788c0, {{20.0, 407.0}, {362.0, 58.0}}, label: 'Сообщить о проблеме'
+                              Image, 0x106c792c0, {{19.3, 425.0}, {23.3, 22.0}}, identifier: 'exclamationmark.bubble', label: 'Внимание'
+                              StaticText, 0x106c7b840, {{56.0, 427.5}, {152.3, 17.0}}, label: 'Сообщить о проблеме'
+                              Image, 0x106c78f00, {{373.3, 429.3}, {7.7, 13.3}}, identifier: 'chevron.right', label: 'Вперед'
+                            Button, 0x106c79b80, {{20.0, 465.0}, {362.0, 58.0}}, label: 'О приложении'
+                              Image, 0x106c7ae40, {{20.3, 483.3}, {21.7, 21.7}}, identifier: 'info.circle', label: 'Информация'
+                              StaticText, 0x106c7b480, {{56.0, 485.5}, {99.0, 17.0}}, label: 'О приложении'
+                              Image, 0x106c7a300, {{373.3, 487.3}, {7.7, 13.3}}, identifier: 'chevron.right', label: 'Вперед'
+                            Button, 0x106c7be80, {{20.0, 553.8}, {127.3, 14.3}}, label: 'Конфиденциальность'
+                            Button, 0x106c7b200, {{167.3, 553.8}, {39.3, 14.3}}, label: 'Cookie'
+                            Button, 0x106c78140, {{19.5, 604.5}, {363.0, 49.0}}, label: 'Выйти из аккаунта'
+                              Image, 0x106c79e00, {{125.3, 618.7}, {24.3, 21.0}}, identifier: 'rectangle.portrait.and.arrow.right', label: 'Вертикальный Прямоугольник Со Стрелкой Вправо'
+                              StaticText, 0x106c7b0c0, {{160.5, 621.2}, {118.7, 15.7}}, label: 'Выйти из аккаунта'
+                          Other, 0x106c79a40, {{369.0, 62.0}, {30.0, 340.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 0 %
+                            Other, 0x106c78dc0, {{396.0, 65.0}, {3.0, 254.0}}
+                          Other, 0x106c7b980, {{369.0, 62.0}, {30.0, 340.0}}, label: 'Вертикальная полоса прокрутки, 2 страницы', value: 0 %
+                            Other, 0x106c7bac0, {{396.0, 65.0}, {3.0, 254.0}}
+                        Button, 0x106c7b340, {{7.0, 409.0}, {129.3, 48.0}}, identifier: 'home-tab-calendar', label: 'Встречи'
+                          StaticText, 0x106031e00, {{7.0, 409.0}, {129.3, 48.0}}, label: 'Встречи'
+                          Other, 0x1032988c0, {{63.9, 418.2}, {15.6, 15.6}}
+                        Button, 0x103299040, {{136.3, 409.0}, {129.3, 48.0}}, identifier: 'home-tab-envelope', label: 'Приглашения'
+                          StaticText, 0x10329a580, {{136.3, 409.0}, {129.3, 48.0}}, label: 'Приглашения'
+                          Other, 0x10329ae40, {{193.2, 419.8}, {15.6, 12.4}}
+                        Other, 0x10329af80, {{265.7, 409.0}, {129.3, 48.0}}
+                        Button, 0x10329a800, {{265.7, 409.0}, {129.3, 48.0}}, identifier: 'home-tab-person.crop.circle', label: 'Профиль', Selected
+                          StaticText, 0x10329ad00, {{265.7, 409.0}, {129.3, 48.0}}, label: 'Профиль'
+                          Other, 0x10329b0c0, {{323.3, 419.0}, {14.1, 14.9}}
+                Toolbar, 0x10329b340, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x10329b480, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x10329b5c0, {{201.0, 263.0}, {0.0, 0.0}}
+      Other, 0x10329b840, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10329b980, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x10329b700, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x107a8c000, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x107a8c140, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x107a8c280, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x107a8c3c0, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x107a8c500, {{0.0, 0.0}, {402.0, 874.0}}
+                      ScrollView, 0x107a8c640, {{0.0, 0.0}, {402.0, 372.0}}, identifier: 'support-scroll'
+                        Other, 0x107a8c780, {{0.0, -37.0}, {402.0, 923.3}}
+                          Button, 0x107a8c8c0, {{20.0, -37.0}, {44.0, 44.0}}, label: 'Назад'
+                            Image, 0x107a8ca00, {{20.0, -37.0}, {44.0, 44.0}}, label: 'ChatLeft'
+                          StaticText, 0x107a8cb40, {{20.0, 21.0}, {296.3, 33.7}}, label: 'Написать в поддержку'
+                          StaticText, 0x107a8cc80, {{20.0, 64.7}, {135.7, 14.3}}, label: '* — обязательное поле'
+                          StaticText, 0x107a8cdc0, {{20.0, 107.0}, {33.3, 15.7}}, label: 'Тема'
+                          Button, 0x107a8cf00, {{24.0, 136.7}, {115.3, 44.0}}, label: 'Проблема', Selected
+                          Button, 0x107a8d040, {{179.0, 151.5}, {44.0, 14.3}}, label: 'Вопрос'
+                          Button, 0x107a8d180, {{305.3, 151.5}, {30.0, 14.3}}, label: 'Идея'
+                          StaticText, 0x107a8d2c0, {{20.0, 210.7}, {86.3, 15.7}}, label: 'Сообщение *'
+                          TextView, 0x107a8d400, {{28.0, 244.3}, {346.0, 128.0}}, identifier: 'support-description', label: 'Сообщение', value: Проверка формы обр..., Keyboard Focused
+                            Other, 0x107a8d540, {{28.0, 244.3}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+                              Other, 0x107a8d680, {{28.0, 244.3}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                                Other, 0x107a8d7c0, {{20.8, 230.8}, {16.5, 16.5}}
+                                Other, 0x107a8d900, {{28.0, 244.3}, {2.0, 0.0}}
+                              Other, 0x107a8da40, {{28.0, 244.3}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                                Other, 0x107a8db80, {{20.8, 230.8}, {16.5, 16.5}}
+                                Other, 0x107a8dcc0, {{28.0, 244.3}, {2.0, 0.0}}
+                            Other, 0x107a8de00, {{341.0, 244.3}, {30.0, 128.0}}, label: 'Вертикальная полоса прокрутки, 1 страница', value: 0 %
+                              Other, 0x107a8df40, {{368.0, 320.3}, {3.0, 49.0}}
+                          StaticText, 0x107a8e080, {{20.0, 388.3}, {134.0, 13.3}}, label: 'От 10 до 3000 символов'
+                          StaticText, 0x107a8e1c0, {{20.0, 425.7}, {132.0, 15.7}}, label: 'Раздел приложения'
+                          Button, 0x107a8e300, {{19.5, 450.8}, {363.0, 49.0}}, identifier: 'support-section-trigger', label: 'Раздел приложения', value: Профиль
+                            StaticText, 0x107a8e440, {{34.0, 465.7}, {68.3, 19.3}}, label: 'Профиль'
+                            Image, 0x107a8e580, {{352.3, 471.7}, {13.7, 7.7}}, identifier: 'chevron.down', label: 'Перейти Вниз'
+                          StaticText, 0x107a8e6c0, {{20.0, 523.3}, {113.3, 15.7}}, label: 'Почта для ответа'
+                          TextField, 0x107a8e800, {{19.5, 548.5}, {363.0, 49.0}}, label: 'Почта для ответа', placeholderValue: 'mail@example.com'
+                          StaticText, 0x107a8e940, {{20.0, 605.0}, {186.3, 13.3}}, label: 'Оставьте почту, если нужен ответ'
+                          Button, 0x107a8ea80, {{19.5, 641.8}, {363.0, 73.0}}, label: 'Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ'
+                            Image, 0x107a8ebc0, {{35.7, 666.7}, {21.0, 23.3}}, identifier: 'paperclip', label: 'Вложения'
+                            StaticText, 0x107a8ed00, {{70.7, 661.8}, {142.3, 15.7}}, label: 'Прикрепить скриншот'
+                            StaticText, 0x107a8ee40, {{70.7, 681.5}, {157.0, 13.3}}, label: 'PNG, JPG или WebP, до 5 МБ'
+                          Switch, 0x107a8ef80, {{20.0, 740.3}, {362.0, 60.0}}, label: 'Данные об устройстве, Версия приложения и системы', value: 0
+                            StaticText, 0x107a8f0c0, {{20.0, 753.8}, {147.0, 15.7}}, label: 'Данные об устройстве'
+                            StaticText, 0x107a8f200, {{20.0, 773.5}, {170.7, 13.3}}, label: 'Версия приложения и системы'
+                          Button, 0x107a8f340, {{20.0, 833.7}, {173.3, 13.3}}, label: 'Политика конфиденциальности'
+                        Other, 0x107a8f480, {{0.0, 0.0}, {402.0, 372.0}}
+                          Other, 0x107a8f5c0, {{0.0, 0.0}, {402.0, 102.0}}
+                        Other, 0x107a8f700, {{0.0, 0.0}, {402.0, 372.0}}
+                          Other, 0x107a8f840, {{0.0, 0.0}, {402.0, 102.0}}
+                        Other, 0x107a8f980, {{369.0, 62.0}, {30.0, 310.0}}, label: 'Вертикальная полоса прокрутки, 3 страницы', value: 16 %
+                          Other, 0x107a8fac0, {{396.0, 95.7}, {3.0, 114.7}}
+                        Other, 0x107a8fc00, {{369.0, 62.0}, {30.0, 310.0}}, label: 'Вертикальная полоса прокрутки, 3 страницы', value: 16 %
+                          Other, 0x107a8fd40, {{396.0, 95.7}, {3.0, 114.7}}
+                      Button, 0x107a8fe80, {{20.0, 388.0}, {362.0, 48.0}}, identifier: 'support-submit', label: 'Отправить обращение'
+              Toolbar, 0x107aa4000, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                Other, 0x107aa4140, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107aa4280, {{0.0, 0.0}, {402.0, 874.0}}
+    Window, 0x107aa43c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107aa4500, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107aa4640, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107aa4780, {{0.0, 498.0}, {402.0, 376.0}}
+          Other, 0x107aa48c0, {{0.0, 498.0}, {402.0, 48.0}}
+            Other, 0x107aa4a00, {{0.0, 498.0}, {402.0, 48.0}}
+              Other, 0x107aa4b40, {{0.0, 498.0}, {402.0, 48.0}}
+                Toolbar, 0x107aa4c80, {{0.0, 498.0}, {402.0, 48.0}}, identifier: 'Toolbar', label: 'Панель инструментов'
+                  Other, 0x107aa4dc0, {{0.0, 498.0}, {402.0, 48.0}}
+                    Other, 0x107aa4f00, {{16.0, 498.0}, {370.0, 48.0}}
+                      Other, 0x107aa5040, {{16.0, 498.0}, {370.0, 48.0}}
+                        Other, 0x107aa5180, {{16.0, 498.0}, {0.0, 0.0}}
+                          Other, 0x107aa52c0, {{300.7, 498.0}, {85.3, 48.0}}
+                            Other, 0x107aa5400, {{300.7, 498.0}, {85.3, 48.0}}
+                              Other, 0x107aa5540, {{305.7, 504.0}, {75.3, 36.0}}
+                                Other, 0x107aa5680, {{305.7, 504.0}, {75.3, 36.0}}
+                                  Other, 0x107aa57c0, {{305.7, 504.0}, {75.3, 36.0}}
+                                    Other, 0x107aa5900, {{305.7, 504.0}, {75.3, 36.0}}
+                                      Button, 0x107aa5a40, {{305.7, 504.0}, {75.3, 36.0}}, identifier: 'support-keyboard-done', label: 'Готово'
+          Other, 0x107aa5b80, {{0.0, 546.0}, {402.0, 328.0}}, identifier: 'inputView'
+      Other, 0x107aa5cc0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107aa5e00, {{19.7, 287.3}, {366.3, 44.0}}
+          Other, 0x107aa5f40, {{19.7, 287.3}, {374.3, 44.0}}
+            Other, 0x107aa6080, {{19.7, 287.3}, {366.3, 44.0}}
+              Other, 0x107aa61c0, {{23.7, 287.3}, {366.3, 44.0}}
+                CollectionView, 0x107aa6300, {{19.7, 287.3}, {374.3, 44.0}}
+                  MenuItem, 0x107aa6440, {{23.7, 287.3}, {93.7, 44.0}}, label: 'Выбрать'
+                    Other, 0x107aa6580, {{39.7, 300.3}, {61.7, 18.0}}
+                      StaticText, 0x107aa66c0, {{39.7, 300.3}, {61.7, 18.0}}, label: 'Выбрать'
+                  Other, 0x107aa6800, {{117.3, 287.3}, {1.0, 44.0}}
+                    Other, 0x107aa6940, {{117.3, 300.3}, {1.0, 18.0}}
+                  MenuItem, 0x107aa6a80, {{117.3, 287.3}, {122.3, 44.0}}, label: 'Выбрать все'
+                    Other, 0x107aa6bc0, {{133.3, 300.3}, {90.3, 18.0}}
+                      StaticText, 0x107aa6d00, {{133.3, 300.3}, {90.3, 18.0}}, label: 'Выбрать все'
+                  Other, 0x107aa6e40, {{239.7, 287.3}, {1.0, 44.0}}
+                    Other, 0x107aa6f80, {{239.7, 300.3}, {1.0, 18.0}}
+                  MenuItem, 0x107aa70c0, {{239.7, 287.3}, {150.3, 44.0}}, label: 'Автозаполнение'
+                    Other, 0x107aa7200, {{255.7, 300.3}, {118.3, 18.0}}
+                      StaticText, 0x107aa7340, {{255.7, 300.3}, {118.3, 18.0}}, label: 'Автозаполнение'
+              Button, 0x107aa7480, {{-11.3, 291.3}, {36.0, 36.0}}, label: 'Предыдущая страница'
+              Button, 0x107aa75c0, {{390.0, 291.3}, {36.0, 36.0}}, label: 'Следующая страница'
+              Other, 0x107aa7700, {{19.7, 287.3}, {0.0, 0.0}}
+                Other, 0x107aa7840, {{19.7, 287.3}, {0.0, 0.0}}
+            Other, 0x107aa7980, {{19.7, 287.3}, {374.3, 44.0}}
+              Other, 0x107aa7ac0, {{19.7, 287.3}, {374.3, 44.0}}
+                Other, 0x107aa7c00, {{19.7, 287.3}, {374.3, 44.0}}
+                  Other, 0x107aa7d40, {{19.7, 287.3}, {374.3, 44.0}}
+                    Other, 0x107aa7e80, {{19.7, 287.3}, {374.3, 44.0}}
+                      Other, 0x107aac000, {{19.7, 287.3}, {374.3, 44.0}}
+                  Other, 0x107aac140, {{19.7, 287.3}, {374.3, 44.0}}
+                    Other, 0x107aac280, {{19.7, 287.3}, {374.3, 44.0}}
+    Window, 0x107aac3c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107aac500, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107aac640, {{0.0, 464.0}, {402.0, 410.0}}
+          Other, 0x107aac780, {{0.0, 464.0}, {402.0, 82.0}}
+          Other, 0x107aac8c0, {{0.0, 546.0}, {402.0, 44.0}}, identifier: 'SystemInputAssistantView'
+            Other, 0x107aaca00, {{0.0, 546.0}, {402.0, 44.0}}
+              Other, 0x107aacb40, {{0.0, 546.0}, {402.0, 44.0}}, identifier: 'CenterPageView'
+                Other, 0x107aacc80, {{0.0, -54.0}, {402.0, 1244.0}}
+                  ScrollView, 0x107aacdc0, {{0.0, 546.0}, {402.0, 44.0}}
+                Other, 0x107aacf00, {{0.0, 546.0}, {402.0, 44.0}}
+                  Other, 0x107aad040, {{0.0, 546.0}, {402.0, 44.0}}
+                    Other, 0x107aad180, {{0.0, 546.0}, {402.0, 44.0}}, label: 'Варианты ввода'
+                      Other, 0x107aad2c0, {{0.0, 546.0}, {402.0, 44.0}}
+                        Other, 0x107aad400, {{0.0, 546.0}, {402.0, 44.0}}
+                          Button, 0x107aad540, {{0.0, 546.0}, {134.0, 44.0}}, label: '«обраще»'
+                          Button, 0x107aad680, {{134.0, 546.0}, {134.0, 44.0}}, label: 'обращения'
+                          Button, 0x107aad7c0, {{268.0, 546.0}, {134.0, 44.0}}, label: 'обращение'
+          Other, 0x107aad900, {{0.0, 546.0}, {402.0, 329.0}}
+            Other, 0x107aada40, {{0.0, 546.0}, {402.0, 329.0}}
+              Other, 0x107aadb80, {{0.0, 546.0}, {402.0, 329.0}}
+          Other, 0x107aadcc0, {{0.0, 590.0}, {402.0, 226.0}}
+            Keyboard, 0x107aade00, {{0.0, 590.0}, {402.0, 226.0}}
+              Other, 0x107aadf40, {{0.0, 590.0}, {402.0, 226.0}}
+                Other, 0x107aae080, {{0.0, 590.0}, {402.0, 226.0}}, identifier: 'UIKeyboardLayoutStar Preview'
+                  Key, 0x107aae1c0, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Left'
+                  Key, 0x107aae300, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Right'
+                  Key, 0x107aae440, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Left'
+                  Key, 0x107aae580, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Right'
+                  Key, 0x107aae6c0, {{4.7, 597.0}, {35.7, 54.0}}, label: 'й'
+                  Key, 0x107aae800, {{40.3, 597.0}, {36.0, 54.0}}, label: 'ц'
+                  Key, 0x107aae940, {{76.3, 597.0}, {36.0, 54.0}}, label: 'у'
+                  Key, 0x107aaea80, {{112.3, 597.0}, {35.7, 54.0}}, label: 'к'
+                  Key, 0x107aaebc0, {{148.0, 597.0}, {36.0, 54.0}}, label: 'е'
+                  Key, 0x107aaed00, {{184.0, 597.0}, {36.0, 54.0}}, label: 'н'
+                  Key, 0x107aaee40, {{220.0, 597.0}, {36.0, 54.0}}, label: 'г'
+                  Key, 0x107aaef80, {{256.0, 597.0}, {35.7, 54.0}}, label: 'ш'
+                  Key, 0x107aaf0c0, {{291.7, 597.0}, {36.0, 54.0}}, label: 'щ'
+                  Key, 0x107aaf200, {{327.7, 597.0}, {36.0, 54.0}}, label: 'з'
+                  Key, 0x107aaf340, {{363.7, 597.0}, {36.0, 54.0}}, label: 'х'
+                  Key, 0x107aaf480, {{4.7, 651.0}, {35.7, 54.0}}, label: 'ф'
+                  Key, 0x107aaf5c0, {{40.3, 651.0}, {36.0, 54.0}}, label: 'ы'
+                  Key, 0x107aaf700, {{76.3, 651.0}, {36.0, 54.0}}, label: 'в'
+                  Key, 0x107aaf840, {{112.3, 651.0}, {35.7, 54.0}}, label: 'а'
+                  Key, 0x107aaf980, {{148.0, 651.0}, {36.0, 54.0}}, label: 'п'
+                  Key, 0x107aafac0, {{184.0, 651.0}, {36.0, 54.0}}, label: 'р'
+                  Key, 0x107aafc00, {{220.0, 651.0}, {36.0, 54.0}}, label: 'о'
+                  Key, 0x107aafd40, {{256.0, 651.0}, {35.7, 54.0}}, label: 'л'
+                  Key, 0x107aafe80, {{291.7, 651.0}, {36.0, 54.0}}, label: 'д'
+                  Key, 0x107ac0000, {{327.7, 651.0}, {36.0, 54.0}}, label: 'ж'
+                  Key, 0x107ac0140, {{363.7, 651.0}, {36.0, 54.0}}, label: 'э'
+                  Button, 0x107ac0280, {{4.7, 705.0}, {35.7, 54.0}}, identifier: 'shift', label: 'сдвиг'
+                  Key, 0x107ac03c0, {{40.3, 705.0}, {36.0, 54.0}}, label: 'я'
+                  Key, 0x107ac0500, {{76.3, 705.0}, {36.0, 54.0}}, label: 'ч'
+                  Key, 0x107ac0640, {{112.3, 705.0}, {35.7, 54.0}}, label: 'с'
+                  Key, 0x107ac0780, {{148.0, 705.0}, {36.0, 54.0}}, label: 'м'
+                  Key, 0x107ac08c0, {{184.0, 705.0}, {36.0, 54.0}}, label: 'и'
+                  Key, 0x107ac0a00, {{220.0, 705.0}, {36.0, 54.0}}, label: 'т'
+                  Key, 0x107ac0b40, {{256.0, 705.0}, {35.7, 54.0}}, label: 'ь'
+                  Key, 0x107ac0c80, {{291.7, 705.0}, {36.0, 54.0}}, label: 'б'
+                  Key, 0x107ac0dc0, {{327.7, 705.0}, {36.0, 54.0}}, label: 'ю'
+                  Key, 0x107ac0f00, {{363.7, 705.0}, {36.0, 54.0}}, identifier: 'delete', label: 'Удалить'
+                  Key, 0x107ac1040, {{4.7, 759.0}, {49.3, 54.0}}, identifier: 'more', label: 'цифры'
+                  Button, 0x107ac1180, {{54.0, 759.0}, {49.3, 54.0}}, identifier: 'emoji', label: 'Эмодзи'
+                  Key, 0x107ac12c0, {{103.3, 759.0}, {197.3, 54.0}}, identifier: 'space', label: 'пробел'
+                  Button, 0x107ac1400, {{300.7, 759.0}, {99.0, 54.0}}, identifier: 'Return', label: 'Ввод'
+          Other, 0x107ac1540, {{0.0, 590.0}, {402.0, 284.0}}
+            Button, 0x107ac1680, {{8.5, 805.7}, {68.1, 68.7}}, label: 'Следующая клавиатура', value: English (UK)
+              StaticText, 0x107ac17c0, {{8.5, 805.7}, {0.0, 0.0}}
+            Button, 0x107ac1900, {{325.4, 805.4}, {68.1, 68.7}}, identifier: 'dictation', label: 'Диктовать'
+              StaticText, 0x107ac1a40, {{325.4, 805.4}, {0.0, 0.0}}
+            Button, 0x107ac1b80, {{325.4, 805.4}, {68.1, 68.7}}, identifier: 'dictation', label: 'Диктовать'
+              StaticText, 0x107ac1cc0, {{325.4, 805.4}, {0.0, 0.0}}
+Path to element:
+ →Application, 0x106c7a440, pid: 97750, label: 'somewhere QA'
+Query chain:
+ →Find: Target Application 'dev.groupplanning.ios.uitesthost'
+  Output: {
+    Application, 0x107ac1e00, pid: 97750, label: 'somewhere QA'
+  }
+
+    t =    44.29s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+<unknown>:0: warning: -[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance] : Invalid frame dimension (negative or non-finite).
+/tmp/invitation-ios-independent-7.4/frontend/ios/SomewhereUITests/ChatSheetTestSupport.swift:74: error: -[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance] : XCTAssertTrue failed
+    t =    44.49s Tear Down
+Test Case '-[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance]' failed (44.573 seconds).
+2026-11-06 12:50:50.489938+0300 SomewhereUITests-Runner[97740:22003243] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-06 12:50:50.490097+0300 SomewhereUITests-Runner[97740:22003299] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-06 12:50:50.507 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:50.508 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:50.508 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:50.777 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:50.784 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:50.784 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:50.785 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:51.699941+0300 SomewhereUITests-Runner[97913:22005372] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-06 12:50:54.382.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 12:50:54.383.
+Test Suite 'HelpCheckpoint714R3Tests' started at 2026-11-06 12:50:54.383.
+Test Suite 'HelpCheckpoint714R3Tests' passed at 2026-11-06 12:50:54.383.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-06 12:50:54.383.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-06 12:50:54.383.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+2026-11-06 12:50:54.399 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:54.400 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:54.401 xcodebuild[97695:22002806] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 12:50:54.676 xcodebuild[97695:22002806] [MT] IDETestOperationsObserverDebug: 52.831 elapsed -- Testing started completed.
+2026-11-06 12:50:54.677 xcodebuild[97695:22002806] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-06 12:50:54.677 xcodebuild[97695:22002806] [MT] IDETestOperationsObserverDebug: 52.831 sec, +52.831 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/help714-independent-r3.xcresult
+
+Failing tests:
+	HelpCheckpoint714R3Tests.testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance()
+
+** TEST EXECUTE FAILED **
+
+Testing started

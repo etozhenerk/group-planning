@@ -101,6 +101,7 @@ test('public support receives a real reference and retries a lost response witho
   await page.setExtraHTTPHeaders({
     'X-Somewhere-Test-Feedback-Scope': `support-retry-${info.project.name}`,
   });
+  const mobile = (page.viewportSize()?.width ?? 1280) < 740;
   const keys: string[] = [];
   const references: string[] = [];
   await page.route('**/api/v1/support/feedback', async (route) => {
@@ -117,15 +118,31 @@ test('public support receives a real reference and retries a lost response witho
     }
   });
   await page.goto('/support?kind=question');
-  await page.getByLabel('Ваше сообщение').fill('Как добавить фотографии после встречи?');
-  await page.getByRole('button', { name: 'Отправить сообщение ↗', exact: true }).click();
-  await expect(page.getByRole('alert')).toContainText('Не удалось отправить');
-  await page.getByRole('button', { name: 'Отправить сообщение ↗', exact: true }).click();
+  await page
+    .getByLabel(mobile ? 'Сообщение' : 'Ваше сообщение', { exact: true })
+    .fill('Как добавить фотографии после встречи?');
+  await page
+    .getByRole('button', {
+      name: mobile ? 'Отправить обращение' : 'Отправить сообщение ↗',
+      exact: true,
+    })
+    .click();
+  await expect(page.getByRole('alert')).toContainText(
+    mobile ? 'Отправка не подтверждена' : 'Не удалось отправить',
+  );
+  await page
+    .getByRole('button', {
+      name: mobile ? 'Повторить отправку' : 'Отправить сообщение ↗',
+      exact: true,
+    })
+    .click();
   await expect(page.getByRole('heading', { name: 'Обращение принято' })).toBeVisible();
   expect(references).toHaveLength(2);
   expect(references[0]).toBe(references[1]);
   expect(keys[0]).toBe(keys[1]);
-  await expect(page.getByText(`Номер ${references[0]}`)).toBeVisible();
+  await expect(
+    page.getByText(mobile ? references[0]! : `Номер ${references[0]}`, { exact: true }),
+  ).toBeVisible();
 });
 
 test('failed reaction restores confirmed state and retries the same intent', async ({

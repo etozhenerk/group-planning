@@ -1,8 +1,16 @@
 import { z } from 'zod';
 
 const route = z.union([
-  z.enum(['/profile', '/help', '/about', '/privacy', '/cookies', '/meetings']),
-  z.string().regex(/^\/meetings\?[^#]*$/),
+  z.enum([
+    '/profile',
+    '/help',
+    '/about',
+    '/privacy',
+    '/cookies',
+    '/meetings',
+    '/support',
+  ]),
+  z.string().regex(/^\/(meetings|support)\?[^#]*$/),
 ]);
 
 const state = z.object({
@@ -21,6 +29,10 @@ export const readReturnLocation = (value: unknown, fallback = '/meetings') => {
 export const returnLocationLabel = (path: string) => {
   if (path === '/profile') {
     return 'Вернуться в профиль';
+  }
+
+  if (path.startsWith('/support')) {
+    return 'Вернуться к обращению';
   }
 
   if (path === '/help') {

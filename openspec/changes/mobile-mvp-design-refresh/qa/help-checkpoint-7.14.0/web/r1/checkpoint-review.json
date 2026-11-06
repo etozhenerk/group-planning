@@ -1,0 +1,44 @@
+{
+  "kind": "independent short screen checkpoint; not final design/feature gate",
+  "status": "blocked-invalid-stale-artifact",
+  "scope": "Help/support mobile web R1",
+  "candidate": {
+    "sourceHash": "7496378e2870cd08520f07001ca60939f1fa5555bc7b9285ce2319f795152d8f",
+    "sourceAfter": "7496378e2870cd08520f07001ca60939f1fa5555bc7b9285ce2319f795152d8f",
+    "artifactHash": "7e448cfb38fb3a8c9d464c7d58abaf2912ec2b6928480e997ebd489a69391bea",
+    "candidateSha256": "d337ff2a29411c7e3addec0494b13699903bd5de4afcede18d68f3ce6aec1324"
+  },
+  "runtime": "https://127.0.0.1:9135",
+  "finding": {
+    "id": "H0",
+    "priority": "P1",
+    "category": "candidate binding",
+    "observed": "Frozen artifact contains old Help UI, although frozen source contains new MobileHelp/Support implementation. Actual390 title Нужна подсказка?, old brand and Задать вопрос ↗. service-DJ5qPAGy.js disk/live same bytes, no new support CTA.",
+    "expected": "Rebuild current frozen source and issue new candidate before reviewing new Help.",
+    "evidence": [
+      "help390-old-artifact-actual.png",
+      "observations.json",
+      "binding.json",
+      "help-reference.png",
+      "form-reference.png"
+    ]
+  },
+  "coverage": {
+    "actual": [
+      "Old artifact Help390 rendered",
+      "Disk artifact and live entry/service bytes matched",
+      "Source before/after unchanged"
+    ],
+    "notRun": [
+      "New FAQ/section behavior",
+      "Email422/correction",
+      "Privacy draft/file/scroll return",
+      "Real receipt and known/unknown exact retry",
+      "320/large/reduced/desktop new UI"
+    ]
+  },
+  "sourceAudit": "../setup/source-audit.md; email and glyph observations unconfirmed at runtime",
+  "safety": "No support POST or external delivery; isolated Go memory fixture.",
+  "sourceReleased": true,
+  "rootConfirmation": "Freeze-path bug confirmed: build:demo outputs .cache/web-demo; old frontend/web/dist was frozen."
+}

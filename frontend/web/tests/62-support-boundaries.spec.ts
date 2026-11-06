@@ -19,8 +19,14 @@ for (const width of [390, 1440]) {
     });
 
     await page.goto('/support?kind=idea&screen=profile');
-    const description = page.getByRole('textbox', { name: 'Ваше сообщение' });
-    const submit = page.getByRole('button', { name: 'Отправить сообщение ↗' });
+    const description = page.getByRole('textbox', {
+      name: width < 740 ? 'Сообщение' : 'Ваше сообщение',
+    });
+
+    const submit = page.getByRole('button', {
+      name: width < 740 ? 'Отправить обращение' : 'Отправить сообщение ↗',
+    });
+
     const short = `\u0085\u00a0${'🙂'.repeat(9)} \u3000`;
 
     await description.fill(short);
@@ -31,7 +37,15 @@ for (const width of [390, 1440]) {
     await expect(description).toHaveValue(short);
     await expect(description).toBeFocused();
     await expect(page.getByRole('radio', { name: 'Идея' })).toBeChecked();
-    await expect(page.getByRole('combobox', { name: 'Раздел' })).toHaveValue('profile');
+
+    if (width < 740) {
+      await expect(
+        page.getByRole('button', { name: 'Раздел приложения: Профиль' }),
+      ).toBeVisible();
+    } else {
+      await expect(page.getByRole('combobox', { name: 'Раздел' })).toHaveValue('profile');
+    }
+
     expect(requests).toHaveLength(0);
 
     const long = '🙂'.repeat(3001);

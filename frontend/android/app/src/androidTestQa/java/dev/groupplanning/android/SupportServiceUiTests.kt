@@ -9,6 +9,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -71,9 +72,20 @@ class SupportServiceUiTests {
                 openProfile()
                 compose.onNodeWithText("Сообщить о проблеме").performScrollTo().performClick()
                 fixture.waitTag("support-description")
+                compose.waitUntil(5_000) {
+                    var loading = true
+                    activity.onActivity {
+                        loading = checkNotNull(
+                            ViewModelProvider(it)[AppViewModel::class.java]
+                                .support,
+                        ).state.value.busy
+                    }
+                    !loading
+                }
                 val description = "Скриншот через системный выбор Android"
                 compose.onNodeWithTag("support-description").performClick()
                     .performTextInput(description)
+                compose.onNodeWithTag("support-description").assertTextContains(description)
                 fixture.device.pressBack()
                 repeat(2) {
                     openPicker()
@@ -141,7 +153,9 @@ class SupportServiceUiTests {
                     decoded.recycle()
                 }
                 fixture.screenshot("support-system-screenshot-selected")
-                compose.onNodeWithText(fixture.context.getString(R.string.experience_remove))
+                compose.onNodeWithContentDescription(
+                    fixture.context.getString(R.string.support_remove_attachment),
+                )
                     .performScrollTo().performClick()
                 compose.onNode(preview).assertDoesNotExist()
                 compose.onNodeWithTag("support-description").assertTextContains(description)
@@ -175,17 +189,17 @@ class SupportServiceUiTests {
     private fun openProfile() {
         fixture.waitTag("meetings-list")
         compose.onNodeWithTag("home-profile").performClick()
-        fixture.waitText("Яндекс ID")
+        fixture.waitText("Вход через Яндекс ID")
     }
 
     private fun backToProfile() {
-        compose.onNodeWithText("Назад").performClick()
+        compose.onNodeWithContentDescription("Назад").performClick()
         fixture.waitAbsent("service-page")
         compose.onNodeWithTag("home-profile").assertIsSelected()
     }
 
     private fun openPicker() {
-        compose.onNodeWithText(fixture.context.getString(R.string.support_screenshot))
+        compose.onNodeWithText(fixture.context.getString(R.string.support_attach))
             .performScrollTo().performClick()
         assertTrue(
             fixture.device.wait(

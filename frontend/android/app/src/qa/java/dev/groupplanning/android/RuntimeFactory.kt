@@ -96,6 +96,7 @@ internal object RuntimeFactory {
                     if (scenario == "list-error") {
                         QaResponseGate.observeListFailure(chain.request(), response.code)
                     }
+                    QaSupportAck.after(chain.request(), response)
                     QaResponseGate.after(chain.request())
                     QaAlbumDownloadProbe.after(response)
                     if (scenario ==

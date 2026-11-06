@@ -10,6 +10,23 @@ struct ServiceInformationScreen: View {
             ? "Нужна подсказка?" : document == .about ? "О приложении" : document.title
     }
     var body: some View {
+        Group {
+            if document == .help {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                        ServiceScreenHeader(title: "Помощь") { dismiss() }
+                        HelpContent { support = .question }
+                    }
+                }.accessibilityIdentifier("service-information-scroll")
+            } else {
+                legacyDocument
+            }
+        }.background(AppPalette.background).toolbar(.hidden, for: .navigationBar)
+            .fullScreenCover(item: $support) { kind in
+                SupportScreen(api: api, kind: kind, screen: "other", accepted: { support = nil })
+            }
+    }
+    private var legacyDocument: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 PageBackButton { dismiss() }
@@ -30,30 +47,6 @@ struct ServiceInformationScreen: View {
                 ).padding(.bottom, document == .help ? 29 : 32)
                 if document == .about {
                     AboutPanel { support = .problem }
-                } else if document == .help {
-                    VStack(spacing: 12) {
-                        ForEach(Array(document.sections.enumerated()), id: \.offset) {
-                            index, section in
-                            HelpQuestion(
-                                title: section.0, answer: section.1, initiallyOpen: index == 0)
-                        }
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Не нашли ответ?").designFont(20, weight: .bold)
-                            Text("Напишите, с чем нужна помощь.").designFont(13)
-                                .foregroundStyle(AppPalette.muted)
-                            Button("Задать вопрос") { support = .question }.font(
-                                .system(size: 14, weight: .semibold)
-                            )
-                            .frame(minHeight: 46).padding(.horizontal, 18).foregroundStyle(
-                                AppPalette.actionText
-                            )
-                            .background(AppPalette.action, in: RoundedRectangle(cornerRadius: 13))
-                            .padding(.top, 10)
-                        }.padding(20).frame(maxWidth: .infinity, alignment: .leading)
-                            .background(
-                                Color(designHex: 0x38313d), in: RoundedRectangle(cornerRadius: 20)
-                            ).padding(.top, 22)
-                    }
                 } else {
                     VStack(alignment: .leading, spacing: 26) {
                         ForEach(Array(document.sections.enumerated()), id: \.offset) {
@@ -80,9 +73,5 @@ struct ServiceInformationScreen: View {
                 ServicePageHeader(symbolOnly: document == .about)
             }
 
-            .fullScreenCover(item: $support) { kind in
-                SupportScreen(api: api, kind: kind, screen: "other")
-
-            }
     }
 }

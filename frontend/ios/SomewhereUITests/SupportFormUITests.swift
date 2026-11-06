@@ -22,7 +22,7 @@ final class SupportFormUITests: XCTestCase {
         app.buttons["support-keyboard-done"].tap()
         XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
         let scroll = app.scrollViews["support-scroll"]
-        let send = app.buttons["Отправить"]
+        let send = app.buttons["support-submit"]
         ChatSheetTestSupport.reveal(send, in: scroll, app: app)
         XCTAssertTrue(send.isEnabled)
         send.tap()
@@ -59,7 +59,9 @@ final class SupportFormUITests: XCTestCase {
         send.tap()
         XCTAssertTrue(app.staticTexts["Обращение принято"].waitForExistence(timeout: 15))
         ExperienceScreenshot.save("support-keyboard-validation-success", test: self)
+        app.buttons["К помощи"].tap()
+        XCTAssertTrue(app.staticTexts["Помощь"].waitForExistence(timeout: 5))
         app.buttons["Назад"].tap()
-        XCTAssertTrue(app.staticTexts["Яндекс ID"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Вход через Яндекс ID"].waitForExistence(timeout: 5))
     }
 }

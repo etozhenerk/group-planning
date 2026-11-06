@@ -6,3 +6,5 @@ export type {
   FeedbackKind,
   FeedbackScreen,
 } from '@/features/support-feedback/model/types';
+
+export { MobileFeedbackPage } from '@/features/support-feedback/ui/MobileFeedbackPage/MobileFeedbackPage';

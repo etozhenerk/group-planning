@@ -1,0 +1,105 @@
+.section {
+  margin-bottom: var(--ds-space-s24);
+}
+
+.label {
+  display: block;
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-space-s20);
+  font-weight: 600;
+  margin-bottom: var(--ds-space-s10);
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-component-mobile-service-field-radius);
+  width: 100%;
+  min-height: var(--ds-component-mobile-service-action-height);
+  padding: var(--ds-space-s12) var(--ds-component-mobile-service-field-radius);
+  background: var(--ds-color-surface);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-service-field-radius);
+  color: var(--ds-color-text);
+  text-align: left;
+  font: var(--ds-typography-weight-regular) var(--ds-typography-size-mobile-web-input) /
+    var(--ds-component-mobile-service-field-line-height)
+    var(--ds-typography-family-mobile-chat);
+}
+
+.trigger svg {
+  flex: none;
+  color: var(--ds-color-muted);
+}
+
+.trigger[aria-expanded='true'] {
+  border-color: var(--ds-color-accent);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-s4);
+  padding: 0 0 var(--ds-space-s12);
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-component-mobile-service-field-radius);
+  min-height: var(--ds-component-mobile-support-section-option-height);
+  padding: var(--ds-space-s12) var(--ds-component-mobile-service-field-radius);
+  box-sizing: border-box;
+  border-radius: var(--ds-space-s12);
+  font-size: var(--ds-component-mobile-support-section-option-size);
+  line-height: var(--ds-component-mobile-service-field-line-height);
+  cursor: pointer;
+}
+
+.option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.option > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.option > svg {
+  flex: none;
+  color: var(--ds-color-accent);
+  visibility: hidden;
+}
+
+.option:has(input:checked) {
+  background: var(--ds-color-background);
+}
+
+.option:has(input:checked) > svg {
+  visibility: visible;
+}
+
+.option:has(input:focus-visible) {
+  outline: var(--ds-space-s2) solid var(--ds-color-accent);
+  outline-offset: calc(-1 * var(--ds-space-s2));
+}
+
+.option:active {
+  background: var(--ds-color-background);
+}
+
+.options .option {
+  font-weight: 400;
+}
+
+.options .option:has(input:checked) > span {
+  font-weight: 600;
+}

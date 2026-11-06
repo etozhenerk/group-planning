@@ -1,0 +1,136 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.kinds {
+  margin: 0 0 var(--ds-component-mobile-support-switch-height);
+  padding: 0;
+  border: 0;
+}
+
+.kinds legend {
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-space-s20);
+  font-weight: 600;
+  margin-bottom: var(--ds-space-s10);
+}
+
+.kinds > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ds-space-s4);
+  background: var(--ds-color-surface);
+  padding: var(--ds-space-s4);
+  border-radius: var(--ds-component-mobile-service-field-radius);
+}
+
+.kinds label {
+  position: relative;
+  min-width: 0;
+}
+
+.kinds input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.kinds span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ds-target-ios);
+  border-radius: var(--ds-typography-size-label);
+  font-size: var(--ds-typography-size-caption);
+  line-height: calc(var(--ds-space-s16) + var(--ds-space-s2));
+  color: var(--ds-color-muted);
+}
+
+.kinds input:checked + span {
+  background: var(--ds-color-action);
+  color: var(--ds-color-action-text);
+  font-weight: 600;
+}
+
+.kinds input:focus-visible + span {
+  outline: var(--ds-space-s2) solid var(--ds-color-accent);
+  outline-offset: var(--ds-space-s2);
+}
+
+.field {
+  display: block;
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-space-s20);
+  font-weight: 600;
+}
+
+.field textarea,
+.field input {
+  display: block;
+  margin-top: var(--ds-space-s10);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: var(--ds-component-mobile-service-action-height);
+  padding: var(--ds-space-s12) var(--ds-component-mobile-service-field-radius);
+  background: var(--ds-color-surface);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-service-field-radius);
+  color: var(--ds-color-text);
+  font: var(--ds-typography-weight-regular) var(--ds-typography-size-mobile-web-input) /
+    var(--ds-component-mobile-service-field-line-height)
+    var(--ds-typography-family-mobile-chat);
+}
+
+.field textarea {
+  resize: none;
+  min-height: var(--ds-component-mobile-support-textarea-minimum-height);
+}
+
+.field [aria-invalid='true'] {
+  border-color: var(--ds-color-error);
+}
+
+.field textarea::placeholder,
+.field input::placeholder {
+  color: var(--ds-color-muted);
+}
+
+.required {
+  color: var(--ds-color-error);
+  font-size: calc(var(--ds-space-s16) + var(--ds-space-s2));
+  font-weight: 650;
+}
+
+.hint {
+  margin: var(--ds-space-s8) 0 var(--ds-space-s24);
+  font-size: var(--ds-typography-size-label);
+  line-height: var(--ds-component-mobile-service-hint-line-height);
+  color: var(--ds-color-muted);
+}
+
+.error {
+  font-size: var(--ds-typography-size-caption);
+  line-height: calc(var(--ds-space-s16) + var(--ds-space-s2));
+  margin: var(--ds-space-s8) 0 var(--ds-space-s24);
+  padding: var(--ds-space-s10) var(--ds-space-s12);
+  background: var(--ds-color-surface);
+  color: var(--ds-color-text);
+  border-left: var(--ds-space-s2) solid var(--ds-color-error);
+  border-radius: 0 var(--ds-space-s10) var(--ds-space-s10) 0;
+}
+
+.field input[type='email'] {
+  background: var(--ds-color-surface);
+  border: var(--ds-space-s1) solid var(--ds-color-border-strong);
+  border-radius: var(--ds-component-mobile-service-field-radius);
+}
+
+.field input[type='email'][aria-invalid='true'] {
+  border-color: var(--ds-color-error);
+}

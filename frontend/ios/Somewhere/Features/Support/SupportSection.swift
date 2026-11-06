@@ -7,14 +7,14 @@ enum SupportSection: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .meetings: "Мои встречи"
+        case .meetings: "Список встреч"
         case .calendar: "Календарь"
         case .invitation: "Приглашение"
         case .meetingChat: "Чат встречи"
         case .profile: "Профиль"
         case .memories: "Вайб встречи"
         case .signIn: "Вход"
-        case .other: "Другое"
+        case .other: "Другой экран"
         }
     }
 }

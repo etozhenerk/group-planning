@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -37,7 +38,7 @@ class SupportKeyboardUiTests {
         fixture.launch("calendar").use { activity ->
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             compose.onNodeWithText("Сообщить о проблеме").performScrollTo().performClick()
             fixture.waitTag("support-description")
             compose.onNodeWithTag("support-done").assertDoesNotExist()
@@ -69,7 +70,7 @@ class SupportKeyboardUiTests {
             fixture.waitTag("support-done")
             compose.onNodeWithTag("support-done").performClick()
             fixture.waitAbsent("support-done")
-            compose.onNodeWithText("Отправить обращение").performScrollTo().performClick()
+            compose.onNodeWithText("Отправить обращение").assertIsDisplayed().performClick()
             fixture.waitTag("support-description-error")
             compose.onNodeWithTag("support-description-error")
                 .assertTextContains("Добавьте описание — хотя бы 10 символов.")
@@ -83,10 +84,14 @@ class SupportKeyboardUiTests {
             fixture.waitTag("support-done")
             compose.onNodeWithTag("support-done").performClick()
             fixture.waitAbsent("support-done")
-            compose.onNodeWithText("Отправить обращение").performScrollTo().performClick()
-            fixture.waitText("Спасибо, что рассказали")
+            compose.onNodeWithText("Отправить обращение").assertIsDisplayed().performClick()
+            fixture.waitText("Обращение принято")
             compose.onNodeWithTag("support-done").assertDoesNotExist()
             compose.onNodeWithTag("support-success-back").performClick()
+            fixture.waitText(
+                fixture.context.getString(dev.groupplanning.android.R.string.help_title_new),
+            )
+            compose.onNodeWithContentDescription("Назад").performClick()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()
         }
@@ -104,9 +109,7 @@ class SupportKeyboardUiTests {
     }
 
     private fun assertHeaderBelowStatusBar(statusBarBottom: Int) {
-        val brand = checkNotNull(fixture.device.findObject(By.text("somewhere")))
-        val back = checkNotNull(fixture.device.findObject(By.text("Назад")))
-        assertTrue("Brand is behind the status bar", brand.visibleBounds.top >= statusBarBottom)
+        val back = checkNotNull(fixture.device.findObject(By.desc("Назад")))
         assertTrue("Back is behind the status bar", back.visibleBounds.top >= statusBarBottom)
     }
 }

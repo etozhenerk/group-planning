@@ -1,0 +1,302 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/help714-independent-r6.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/HelpCheckpoint714R6Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+
+Writing result bundle at path:
+	/private/tmp/help714-independent-r6.xcresult
+
+2026-11-06 13:31:39.115 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:31:40.373317+0300 SomewhereUITests-Runner[14214:22077023] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-06 13:31:44.217.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 13:31:44.218.
+Test Suite 'HelpCheckpoint714R6Tests' started at 2026-11-06 13:31:44.218.
+Test Case '-[SomewhereUITests.HelpCheckpoint714R6Tests testRealServerEmail422ShowsHumanCopyAndFocus]' started.
+    t =     0.00s Start Test at 2026-11-06 13:31:44.220
+    t =     0.02s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-06 13:31:44.311 xcodebuild[14180:22076730] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-06 13:31:44.311 xcodebuild[14180:22076730] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-06 13:31:44.341 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.51s         Setting up automation session
+objc[14214]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x101d04398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105b30310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.79s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.18s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.25s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.25s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.38s Tap "home-tab-person.crop.circle" Button
+    t =     5.38s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.38s     Find the "home-tab-person.crop.circle" Button
+    t =     5.40s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =     5.43s     Synthesize event
+    t =     5.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.76s Find the "profile-screen" ScrollView
+    t =     5.81s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.82s Checking existence of `"home-tab-calendar" Button`
+    t =     5.84s Find the "home-tab-calendar" Button
+    t =     5.87s Find the "home-tab-calendar" Button
+    t =     5.89s Checking existence of `Keyboard (First Match)`
+    t =     5.92s Checking existence of `"support-submit" Button`
+    t =     5.93s Checking existence of `"Сообщить о проблеме" Button`
+    t =     5.95s Find the "Сообщить о проблеме" Button
+    t =     5.98s Find the "Сообщить о проблеме" Button
+    t =     6.00s Find the "Сообщить о проблеме" Button
+    t =     6.02s Tap "Сообщить о проблеме" Button
+    t =     6.02s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.02s     Find the "Сообщить о проблеме" Button
+    t =     6.04s     Check for interrupting elements affecting "Сообщить о проблеме" Button
+    t =     6.06s     Synthesize event
+    t =     6.35s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.84s Waiting 6.0s for "support-description" TextView to exist
+    t =     7.92s     Checking `Expect predicate `existsNoRetry == 1` for object "support-description" TextView`
+    t =     7.92s         Checking existence of `"support-description" TextView`
+    t =     8.00s Tap "support-description" TextView
+    t =     8.00s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.01s     Find the "support-description" TextView
+    t =     8.04s     Check for interrupting elements affecting "support-description" TextView
+    t =     8.07s     Synthesize event
+    t =     8.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.64s Type 'Проверка формы обр...' into "support-description" TextView
+    t =     8.64s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.00s     Find the "support-description" TextView
+    t =     9.07s     Check for interrupting elements affecting "support-description" TextView
+    t =     9.11s     Synthesize event
+    t =    10.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.31s Waiting 2.0s for "support-keyboard-done" Button to exist
+    t =    11.38s     Checking `Expect predicate `existsNoRetry == 1` for object "support-keyboard-done" Button`
+    t =    11.38s         Checking existence of `"support-keyboard-done" Button`
+    t =    11.44s Find the "support-keyboard-done" Button
+    t =    11.50s Find the "support-scroll" ScrollView
+    t =    11.55s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    11.58s Checking existence of `"home-tab-calendar" Button`
+    t =    11.63s Find the "home-tab-calendar" Button
+    t =    11.69s Checking existence of `Keyboard (First Match)`
+    t =    11.70s Find the Keyboard (First Match)
+    t =    11.72s Checking existence of `"support-submit" Button`
+    t =    11.77s Find the "support-submit" Button
+    t =    11.83s Find the "support-submit" Button
+    t =    11.87s Checking existence of `"Почта для ответа" TextField`
+    t =    11.92s Find the "Почта для ответа" TextField
+    t =    11.97s Find the "mail@example.com" TextField
+    t =    12.02s Checking existence of `"mail@example.com" TextField`
+    t =    12.06s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (394.0, 276.1) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (394.0, 85.8) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    12.06s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    12.07s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.10s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    12.13s     Synthesize event
+    t =    12.14s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.16s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.20s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.22s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    12.26s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.40s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.41s Find the "support-scroll" ScrollView
+    t =    13.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    13.51s Checking existence of `"home-tab-calendar" Button`
+    t =    13.55s Find the "home-tab-calendar" Button
+    t =    13.61s Checking existence of `Keyboard (First Match)`
+    t =    13.63s Find the Keyboard (First Match)
+    t =    13.64s Checking existence of `"support-submit" Button`
+    t =    13.69s Find the "support-submit" Button
+    t =    13.74s Find the "support-submit" Button
+    t =    13.79s Checking existence of `"mail@example.com" TextField`
+    t =    13.83s Find the "mail@example.com" TextField
+    t =    13.89s Find the "mail@example.com" TextField
+    t =    13.94s Checking existence of `"mail@example.com" TextField`
+    t =    13.98s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (394.0, 255.3) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (394.0, 106.7) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    13.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.99s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.02s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    14.06s     Synthesize event
+    t =    14.06s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.09s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.12s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.15s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    14.18s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.16s Find the "support-scroll" ScrollView
+    t =    15.21s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    15.24s Checking existence of `"home-tab-calendar" Button`
+    t =    15.28s Find the "home-tab-calendar" Button
+    t =    15.34s Checking existence of `Keyboard (First Match)`
+    t =    15.35s Find the Keyboard (First Match)
+    t =    15.37s Checking existence of `"support-submit" Button`
+    t =    15.41s Find the "support-submit" Button
+    t =    15.47s Find the "support-submit" Button
+    t =    15.52s Checking existence of `"mail@example.com" TextField`
+    t =    15.56s Find the "mail@example.com" TextField
+    t =    15.61s Find the "mail@example.com" TextField
+    t =    15.66s Find the "mail@example.com" TextField
+    t =    15.71s Tap "mail@example.com" TextField
+    t =    15.71s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.71s     Find the "mail@example.com" TextField
+    t =    15.76s     Check for interrupting elements affecting "mail@example.com" TextField
+    t =    15.80s     Synthesize event
+    t =    16.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.10s Type 'a@@example.test' into "mail@example.com" TextField
+    t =    16.10s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.10s     Find the "mail@example.com" TextField
+    t =    16.15s     Check for interrupting elements affecting "mail@example.com" TextField
+    t =    16.19s     Synthesize event
+    t =    16.65s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.68s Waiting 2.0s for "support-keyboard-done" Button to exist
+    t =    17.76s     Checking `Expect predicate `existsNoRetry == 1` for object "support-keyboard-done" Button`
+    t =    17.76s         Checking existence of `"support-keyboard-done" Button`
+    t =    17.81s Find the "support-keyboard-done" Button
+    t =    17.87s Tap "support-keyboard-done" Button
+    t =    17.87s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.04s     Find the "support-keyboard-done" Button
+    t =    18.11s     Check for interrupting elements affecting "support-keyboard-done" Button
+    t =    18.15s     Synthesize event
+    t =    18.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.71s Find the "mail@example.com" TextField
+    t =    18.75s Find the "mail@example.com" TextField
+    t =    18.78s Find the "support-submit" Button
+    t =    18.82s Tap "support-submit" Button
+    t =    18.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.83s     Find the "support-submit" Button
+    t =    18.86s     Check for interrupting elements affecting "support-submit" Button
+    t =    18.89s     Synthesize event
+    t =    19.19s     Wait for dev.groupplanning.ios.uitesthost to idle
+<unknown>:0: warning: -[SomewhereUITests.HelpCheckpoint714R6Tests testRealServerEmail422ShowsHumanCopyAndFocus] : Invalid frame dimension (negative or non-finite).
+    t =    20.24s Checking existence of `"Обращение принято" StaticText`
+    t =    20.27s Checking existence of `"Обращение принято" StaticText`
+    t =    20.30s Waiting 8.0s for "Проверьте адрес почты или оставьте поле пустым." StaticText to exist
+    t =    21.37s     Checking `Expect predicate `existsNoRetry == 1` for object "Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    21.37s         Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    21.42s Find the Window (First Match)
+    t =    21.43s Checking existence of `Keyboard (First Match)`
+    t =    21.44s Find the Keyboard (First Match)
+    t =    21.45s Checking existence of `"support-keyboard-done" Button`
+    t =    21.50s Find the "support-keyboard-done" Button
+    t =    21.55s Checking existence of `"mail@example.com" TextField`
+    t =    21.59s Find the "mail@example.com" TextField
+    t =    21.64s Checking existence of `"support-submit" Button`
+    t =    21.68s Find the "support-submit" Button
+    t =    21.73s Checking existence of `"support-scroll" ScrollView`
+    t =    21.78s Find the "support-scroll" ScrollView
+    t =    21.82s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    21.87s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    22.03s Find the Window (First Match)
+    t =    22.04s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    22.06s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    22.08s Checking existence of `"support-keyboard-done" Button`
+    t =    22.12s Find the "support-keyboard-done" Button
+    t =    22.17s Checking existence of `"mail@example.com" TextField`
+    t =    22.21s Find the "mail@example.com" TextField
+    t =    22.26s Checking existence of `"support-submit" Button`
+    t =    22.31s Find the "support-submit" Button
+    t =    22.36s Checking existence of `"support-scroll" ScrollView`
+    t =    22.40s Find the "support-scroll" ScrollView
+    t =    22.45s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    22.50s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    22.65s Find the Window (First Match)
+    t =    22.66s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    22.68s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    22.69s Checking existence of `"support-keyboard-done" Button`
+    t =    22.74s Find the "support-keyboard-done" Button
+    t =    22.79s Checking existence of `"mail@example.com" TextField`
+    t =    22.83s Find the "mail@example.com" TextField
+    t =    22.88s Checking existence of `"support-submit" Button`
+    t =    22.92s Find the "support-submit" Button
+    t =    22.97s Checking existence of `"support-scroll" ScrollView`
+    t =    23.01s Find the "support-scroll" ScrollView
+    t =    23.06s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    23.10s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    23.25s Find the Window (First Match)
+    t =    23.27s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    23.28s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.30s Checking existence of `"support-keyboard-done" Button`
+    t =    23.34s Find the "support-keyboard-done" Button
+    t =    23.39s Checking existence of `"mail@example.com" TextField`
+    t =    23.43s Find the "mail@example.com" TextField
+    t =    23.48s Checking existence of `"support-submit" Button`
+    t =    23.53s Find the "support-submit" Button
+    t =    23.58s Checking existence of `"support-scroll" ScrollView`
+    t =    23.62s Find the "support-scroll" ScrollView
+    t =    23.67s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    23.71s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    23.87s Find the Window (First Match)
+    t =    23.88s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    23.89s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    23.91s Checking existence of `"support-keyboard-done" Button`
+    t =    23.95s Find the "support-keyboard-done" Button
+    t =    24.00s Checking existence of `"mail@example.com" TextField`
+    t =    24.04s Find the "mail@example.com" TextField
+    t =    24.10s Checking existence of `"support-submit" Button`
+    t =    24.14s Find the "support-submit" Button
+    t =    24.19s Checking existence of `"support-scroll" ScrollView`
+    t =    24.23s Find the "support-scroll" ScrollView
+    t =    24.28s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    24.33s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    24.38s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    24.42s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    24.47s Requesting snapshot of accessibility hierarchy for app with pid 14229
+    t =    24.74s Requesting snapshot of accessibility hierarchy for app with pid 14229
+    t =    25.81s Find the Window (First Match)
+    t =    25.97s Added attachment named 'help714r6-server-email-error-focus-before-assert'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/15C668E9-6D2F-4C19-957F-1457D61A266D/tmp/somewhere-design-verification/help714r6-server-email-error-focus-before-assert.png
+    t =    25.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.00s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.03s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    26.06s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/15C668E9-6D2F-4C19-957F-1457D61A266D/tmp/somewhere-design-verification/help714r6-server-email-error-focus-before-assert.json
+    t =    26.11s Checking existence of `"Проверьте адрес почты или оставьте поле пустым." StaticText`
+    t =    26.16s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    26.21s Find the "mail@example.com" TextField
+    t =    26.27s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    26.32s Find the "support-scroll" ScrollView
+    t =    26.37s Find the "mail@example.com" TextField
+    t =    26.42s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    26.48s Requesting snapshot of accessibility hierarchy for app with pid 14229
+    t =    26.75s Requesting snapshot of accessibility hierarchy for app with pid 14229
+    t =    26.82s Find the "mail@example.com" TextField
+    t =    26.87s Checking existence of `Keyboard (First Match)`
+    t =    26.88s Find the "mail@example.com" TextField
+    t =    26.93s Find the "support-description" TextView
+    t =    26.97s Checking existence of `"invalid" StaticText`
+    t =    27.01s Checking existence of `"Обращение принято" StaticText`
+    t =    27.06s Checking existence of `StaticText (First Match)`
+    t =    27.16s Find the "Проверьте адрес почты или оставьте поле пустым." StaticText
+    t =    27.20s Find the "mail@example.com" TextField
+    t =    27.24s Find the "support-description" TextView
+    t =    27.29s Terminate dev.groupplanning.ios.uitesthost:14229
+2026-11-06 13:32:11.518 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:32:11.518 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:32:11.519 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    28.39s Tear Down
+Test Case '-[SomewhereUITests.HelpCheckpoint714R6Tests testRealServerEmail422ShowsHumanCopyAndFocus]' passed (28.491 seconds).
+Test Suite 'HelpCheckpoint714R6Tests' passed at 2026-11-06 13:32:12.712.
+	 Executed 1 test, with 0 failures (0 unexpected) in 28.491 (28.494) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-06 13:32:12.713.
+	 Executed 1 test, with 0 failures (0 unexpected) in 28.491 (28.495) seconds
+Test Suite 'Selected tests' passed at 2026-11-06 13:32:12.716.
+	 Executed 1 test, with 0 failures (0 unexpected) in 28.491 (28.499) seconds
+2026-11-06 13:32:12.765 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:32:12.766 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:32:12.766 xcodebuild[14180:22076730] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:32:13.042 xcodebuild[14180:22076730] [MT] IDETestOperationsObserverDebug: 33.961 elapsed -- Testing started completed.
+2026-11-06 13:32:13.042 xcodebuild[14180:22076730] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-06 13:32:13.042 xcodebuild[14180:22076730] [MT] IDETestOperationsObserverDebug: 33.961 sec, +33.961 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/help714-independent-r6.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

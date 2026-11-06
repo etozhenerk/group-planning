@@ -1,0 +1,98 @@
+{
+  "kind": "independent screen checkpoint; not final design/feature gate",
+  "status": "needs-fixes",
+  "platform": "web",
+  "scope": "Help/support only, compact previously unrun R2 smoke",
+  "runtime": {
+    "url": "https://127.0.0.1:9136",
+    "processRecord": "../../../vibe-checkpoint-7.13.0/web/setup/app-9136-process.json",
+    "candidate": {
+      "sourceHash": "13f4443732539f1d0261ca90fad62cc34d2b0231f4d986ec36192b4342b6ba1b",
+      "sourceAfter": "13f4443732539f1d0261ca90fad62cc34d2b0231f4d986ec36192b4342b6ba1b",
+      "artifactHash": "c9f6328849769cb2691cd0c6aa6423992e6cba4a1918b5b98676156892b4fd46",
+      "designInputHash": "c9f75bda5f2e25c551e0d655472589e403fdf30647897e91aa1d6ee09cafc713",
+      "candidateSha256": "f688f1c0ad686a60933140ec97bba49ed7c495ddab4e1e775448cce81ecf78fa"
+    },
+    "binding": {
+      "stable": true,
+      "diskFiles": 268,
+      "liveEntries": 39,
+      "html": "backend metadata transform allowed; entries and explicit candidate bytes hashed"
+    }
+  },
+  "findings": [
+    {
+      "id": "H1",
+      "priority": "P3",
+      "title": "Иконка прикрепления скриншота отличается от published raw",
+      "actual": {
+        "icon": "ImagePlus",
+        "width": 24,
+        "height": 24,
+        "strokeWidth": 2
+      },
+      "expected": {
+        "icon": "Paperclip",
+        "width": 21,
+        "height": 21,
+        "strokeWidth": 1.6
+      },
+      "actualSource": "frontend/web/src/features/support-feedback/ui/MobileFeedbackAttachment/MobileFeedbackAttachment.tsx:29",
+      "referenceSource": "openspec/changes/mobile-mvp-design-refresh/assets/help-r2/src/pages/help/ui/FeedbackAttachment/FeedbackAttachment.tsx:40",
+      "evidence": [
+        "attachment390-actual.png",
+        "attachment390-reference.png",
+        "ui-spots.json"
+      ]
+    }
+  ],
+  "checked": [
+    "Actual frozen artifact contains new Help/form",
+    "Description9emoji local POST0 +focus",
+    "Malformed email local POST0 +human inline +focus",
+    "Known canonical email422 injected response maps to human inline/focus; correction unlocks form",
+    "Section8 choices; Arrow/Home/End focus without selection; Escape cancel+returnfocus; Enter/Space commit",
+    "PNG selected through real fileinput/FileReader, decoded original hash saved; privacy return preserves message/email/section/file",
+    "Diagnostics pointer enabled after controlled query state settles",
+    "Real isolated endpoint201 then lostACK; unknown preserves draft; privacy remount +320 resize; retry same key/clientID/body SHA/receipt ID/reference",
+    "Real accepted reference rendered in320 UI",
+    "320/390 no horizontal overflow",
+    "390x1100 footer unpinned/no radius/no shadow; overflowing390/320 footer pinned48button",
+    "Reduced motion transition0 and section Escape focus",
+    "Desktop1100 preserved old support composition",
+    "WebKit320 section Escape +description validation/focus/no horizontal overflow"
+  ],
+  "realRetry": {
+    "requestCount": 2,
+    "key": "e1a2a2e1-8cc5-4f08-a3fa-137e560baaa4",
+    "bodySha256": "71d77cc8b36aab745b051dbbe8d28fd871a8965c948bce822b532d5e993a9e56",
+    "statuses": [
+      201,
+      201
+    ],
+    "receipt": {
+      "id": "e4f7f311-cb4e-410c-9dc7-298f53d490ad",
+      "reference": "SW-E4F7F311CB4E",
+      "status": "accepted"
+    },
+    "diagnosticsViewportSnapshot": {
+      "width": 390,
+      "height": 844
+    },
+    "pngSHA256": "303d064aa6d7b142efa0993a1bb11ddd3eee4506e076e390148bed82c3de2e00"
+  },
+  "limits": [
+    "No final manifest/case gates or full matrix",
+    "Known422 deliberately injected canonical API response; successful receipts from actual isolated memory endpoint",
+    "Success→К помощи/reset not completed: QA selector matched header and body links; receipt itself verified. Do not claim clear/reset pass",
+    "Help FAQ disclosure toggled, but backscroll restoration not completed; not claimed pass",
+    "CSS zoom200 screenshot records synthetic layout stress only; topic labels cramped. Real browser zoom/OS text size/physical IME not accepted",
+    "No real support delivery; fixture support.New(memory.NewSupport(),nil,time.Now)",
+    "No VO/native/help privacy redesign or profile business repeated",
+    "UI spots after business use fresh anonymous context; business runs authenticated Katya",
+    "QA timing/envelope/selector failures preserved, not product findings"
+  ],
+  "referenceNormalization": "Reference only: header fake status62→demo32, safearea0, matching question via raw control; screenshots may have different scroll offsets, glyph comparison uses DOM sizes",
+  "sourceReleased": true,
+  "filesChanged": "QA output only; no product/tests/tokens/tasks/Git writes"
+}

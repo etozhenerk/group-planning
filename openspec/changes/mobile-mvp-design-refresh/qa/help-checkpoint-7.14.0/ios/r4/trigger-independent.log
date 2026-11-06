@@ -1,0 +1,499 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/help714-independent-r4.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/HelpCheckpoint714R3Tests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/help714-independent-r4.xcresult
+
+2026-11-06 13:06:57.785 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:06:59.045926+0300 SomewhereUITests-Runner[5592:22036247] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-06 13:07:01.803.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 13:07:01.803.
+Test Suite 'HelpCheckpoint714R3Tests' started at 2026-11-06 13:07:01.804.
+Test Case '-[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance]' started.
+    t =     0.00s Start Test at 2026-11-06 13:07:01.805
+    t =     0.03s Set Up
+    t =     0.03s Open dev.groupplanning.ios.uitesthost
+    t =     0.03s     Launch dev.groupplanning.ios.uitesthost
+2026-11-06 13:07:01.897 xcodebuild[5558:22035949] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-06 13:07:01.897 xcodebuild[5558:22035949] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-06 13:07:01.927 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.52s         Setting up automation session
+    t =     2.74s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     3.99s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.07s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.07s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.17s Tap "home-tab-person.crop.circle" Button
+    t =     5.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.18s     Find the "home-tab-person.crop.circle" Button
+    t =     5.20s     Check for interrupting elements affecting "home-tab-person.crop.circle" Button
+    t =     5.22s     Synthesize event
+    t =     5.55s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.55s Find the "profile-screen" ScrollView
+    t =     5.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     5.62s Checking existence of `"home-tab-calendar" Button`
+    t =     5.65s Find the "home-tab-calendar" Button
+    t =     5.67s Find the "home-tab-calendar" Button
+    t =     5.69s Checking existence of `Keyboard (First Match)`
+    t =     5.72s Checking existence of `"support-submit" Button`
+    t =     5.74s Checking existence of `"Сообщить о проблеме" Button`
+    t =     5.75s Find the "Сообщить о проблеме" Button
+    t =     5.78s Find the "Сообщить о проблеме" Button
+    t =     5.80s Find the "Сообщить о проблеме" Button
+    t =     5.82s Tap "Сообщить о проблеме" Button
+    t =     5.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.82s     Find the "Сообщить о проблеме" Button
+    t =     5.84s     Check for interrupting elements affecting "Сообщить о проблеме" Button
+    t =     5.86s     Synthesize event
+    t =     6.16s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.67s Waiting 6.0s for "support-description" TextView to exist
+    t =     7.74s     Checking `Expect predicate `existsNoRetry == 1` for object "support-description" TextView`
+    t =     7.74s         Checking existence of `"support-description" TextView`
+    t =     7.81s Waiting 6.0s for "support-description" TextView to exist
+    t =     8.88s     Checking `Expect predicate `existsNoRetry == 1` for object "support-description" TextView`
+    t =     8.88s         Checking existence of `"support-description" TextView`
+    t =     8.91s Find the "support-scroll" ScrollView
+    t =     8.94s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     8.96s Checking existence of `"home-tab-calendar" Button`
+    t =     8.99s Find the "home-tab-calendar" Button
+    t =     9.03s Checking existence of `Keyboard (First Match)`
+    t =     9.08s Checking existence of `"support-submit" Button`
+    t =     9.11s Find the "support-submit" Button
+    t =     9.14s Find the "support-submit" Button
+    t =     9.17s Checking existence of `Button (First Match)`
+    t =     9.20s Find the Button (First Match)
+    t =     9.24s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =     9.28s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =     9.31s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =     9.34s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =     9.37s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 404.7) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 343.3) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =     9.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.37s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.40s     Check for interrupting elements affecting "somewhere QA" Application
+    t =     9.42s     Synthesize event
+    t =     9.42s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.44s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.46s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.48s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     9.51s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.11s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.22s Find the "support-scroll" ScrollView
+    t =    10.26s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    10.28s Checking existence of `"home-tab-calendar" Button`
+    t =    10.31s Find the "home-tab-calendar" Button
+    t =    10.35s Checking existence of `Keyboard (First Match)`
+    t =    10.40s Checking existence of `"support-submit" Button`
+    t =    10.42s Find the "support-submit" Button
+    t =    10.46s Find the "support-submit" Button
+    t =    10.49s Checking existence of `"Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button`
+    t =    10.52s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.56s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.59s Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.62s Tap "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.63s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.63s     Find the "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.66s     Check for interrupting elements affecting "Прикрепить скриншот, PNG, JPG или WebP, до 5 МБ" Button
+    t =    10.69s     Synthesize event
+    t =    10.98s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    11.46s Waiting 10.0s for "PXGGridLayout-Info" Image to exist
+    t =    12.54s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    12.54s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    12.62s         Capturing element debug description
+    t =    13.47s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    13.47s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    13.55s         Capturing element debug description
+    t =    14.52s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    14.52s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    14.70s Tap "PXGGridLayout-Info" Image
+    t =    14.70s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.71s     Find the "PXGGridLayout-Info" Image
+    t =    14.80s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    14.86s     Synthesize event
+    t =    15.15s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.21s Waiting 1.0s for "Add" Button to exist
+    t =    16.22s     Checking `Expect predicate `existsNoRetry == 1` for object "Add" Button`
+    t =    16.22s         Checking existence of `"Add" Button`
+    t =    16.29s         Capturing element debug description
+    t =    16.29s     Checking existence of `"Add" Button`
+    t =    16.32s Collecting debug information to assist test failure triage
+    t =    16.32s     Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    16.37s Waiting 10.0s for "Убрать скриншот" Button to exist
+    t =    17.44s     Checking `Expect predicate `existsNoRetry == 1` for object "Убрать скриншот" Button`
+    t =    17.44s         Checking existence of `"Убрать скриншот" Button`
+    t =    17.50s Find the "support-scroll" ScrollView
+    t =    17.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    17.56s Checking existence of `"home-tab-calendar" Button`
+    t =    17.59s Find the "home-tab-calendar" Button
+    t =    17.63s Checking existence of `Keyboard (First Match)`
+    t =    17.68s Checking existence of `"support-submit" Button`
+    t =    17.71s Find the "support-submit" Button
+    t =    17.74s Find the "support-submit" Button
+    t =    17.78s Checking existence of `"support-description" TextView`
+    t =    17.80s Find the "support-description" TextView
+    t =    17.84s Find the "support-description" TextView
+    t =    17.87s Find the "support-description" TextView
+    t =    17.91s Tap "support-description" TextView
+    t =    17.91s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    17.91s     Find the "support-description" TextView
+    t =    17.94s     Check for interrupting elements affecting "support-description" TextView
+    t =    17.97s     Synthesize event
+    t =    18.26s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.42s Type 'Проверка формы обр...' into "support-description" TextView
+    t =    18.42s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    18.81s     Find the "support-description" TextView
+    t =    18.89s     Check for interrupting elements affecting "support-description" TextView
+    t =    18.94s     Synthesize event
+    t =    20.13s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    20.13s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    21.21s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    21.21s         Checking existence of `Keyboard (First Match)`
+    t =    21.23s Find the "support-scroll" ScrollView
+    t =    21.28s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.31s Checking existence of `"home-tab-calendar" Button`
+    t =    21.36s Find the "home-tab-calendar" Button
+    t =    21.42s Checking existence of `Keyboard (First Match)`
+    t =    21.43s Find the Keyboard (First Match)
+    t =    21.45s Checking existence of `"support-submit" Button`
+    t =    21.50s Find the "support-submit" Button
+    t =    21.55s Find the "support-submit" Button
+    t =    21.62s Checking existence of `"Политика конфиденциальности" Button`
+    t =    21.66s Find the "Политика конфиденциальности" Button
+    t =    21.73s Find the "Политика конфиденциальности" Button
+    t =    21.78s Checking existence of `"Политика конфиденциальности" Button`
+    t =    21.83s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 276.1) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 85.8) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    21.83s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.83s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.86s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    21.90s     Synthesize event
+    t =    21.90s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.93s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.96s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    21.99s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    22.02s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.17s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.18s Find the "support-scroll" ScrollView
+    t =    23.25s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.28s Checking existence of `"home-tab-calendar" Button`
+    t =    23.32s Find the "home-tab-calendar" Button
+    t =    23.38s Checking existence of `Keyboard (First Match)`
+    t =    23.39s Find the Keyboard (First Match)
+    t =    23.41s Checking existence of `"support-submit" Button`
+    t =    23.45s Find the "support-submit" Button
+    t =    23.51s Find the "support-submit" Button
+    t =    23.56s Checking existence of `"Политика конфиденциальности" Button`
+    t =    23.60s Find the "Политика конфиденциальности" Button
+    t =    23.65s Find the "Политика конфиденциальности" Button
+    t =    23.70s Checking existence of `"Политика конфиденциальности" Button`
+    t =    23.75s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 276.1) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 85.8) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    23.75s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    23.75s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.78s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    23.82s     Synthesize event
+    t =    23.83s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.85s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.89s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.92s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    23.95s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.09s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.10s Find the "support-scroll" ScrollView
+    t =    25.17s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.21s Checking existence of `"home-tab-calendar" Button`
+    t =    25.25s Find the "home-tab-calendar" Button
+    t =    25.31s Checking existence of `Keyboard (First Match)`
+    t =    25.32s Find the Keyboard (First Match)
+    t =    25.34s Checking existence of `"support-submit" Button`
+    t =    25.38s Find the "support-submit" Button
+    t =    25.44s Find the "support-submit" Button
+    t =    25.48s Checking existence of `"Политика конфиденциальности" Button`
+    t =    25.53s Find the "Политика конфиденциальности" Button
+    t =    25.58s Find the "Политика конфиденциальности" Button
+    t =    25.63s Checking existence of `"Политика конфиденциальности" Button`
+    t =    25.68s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 276.1) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 85.8) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    25.68s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.68s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.71s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    25.75s     Synthesize event
+    t =    25.75s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.78s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.81s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.84s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.87s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.01s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.02s Find the "support-scroll" ScrollView
+    t =    27.09s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.12s Checking existence of `"home-tab-calendar" Button`
+    t =    27.17s Find the "home-tab-calendar" Button
+    t =    27.22s Checking existence of `Keyboard (First Match)`
+    t =    27.24s Find the Keyboard (First Match)
+    t =    27.26s Checking existence of `"support-submit" Button`
+    t =    27.30s Find the "support-submit" Button
+    t =    27.35s Find the "support-submit" Button
+    t =    27.40s Checking existence of `"Политика конфиденциальности" Button`
+    t =    27.45s Find the "Политика конфиденциальности" Button
+    t =    27.51s Find the "Политика конфиденциальности" Button
+    t =    27.56s Checking existence of `"Политика конфиденциальности" Button`
+    t =    27.60s Press Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 201.0) for 0.1 seconds, then drag to Target Application 'dev.groupplanning.ios.uitesthost'[0.00, 0.00] -> (12.0, 161.0) with velocity of 250.00 pixels per second, and then hold for 0.0 seconds 
+    t =    27.60s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    27.60s     Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.64s     Check for interrupting elements affecting "somewhere QA" Application
+    t =    27.68s     Synthesize event
+    t =    27.68s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.71s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.74s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.78s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    27.82s         Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.36s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    28.37s Find the "support-scroll" ScrollView
+    t =    28.42s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.45s Checking existence of `"home-tab-calendar" Button`
+    t =    28.50s Find the "home-tab-calendar" Button
+    t =    28.57s Checking existence of `Keyboard (First Match)`
+    t =    28.58s Find the Keyboard (First Match)
+    t =    28.60s Checking existence of `"support-submit" Button`
+    t =    28.65s Find the "support-submit" Button
+    t =    28.70s Find the "support-submit" Button
+    t =    28.75s Checking existence of `"Политика конфиденциальности" Button`
+    t =    28.79s Find the "Политика конфиденциальности" Button
+    t =    28.85s Find the "Политика конфиденциальности" Button
+    t =    28.90s Find the "Политика конфиденциальности" Button
+    t =    28.94s Find the Window (First Match)
+    t =    28.95s Checking existence of `"Политика конфиденциальности" Button`
+    t =    29.00s Find the "Политика конфиденциальности" Button
+<unknown>:0: warning: -[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance] : Invalid frame dimension (negative or non-finite).
+    t =    29.15s Find the Window (First Match)
+    t =    29.16s Checking existence of `"Политика конфиденциальности" Button`
+    t =    29.20s Find the "Политика конфиденциальности" Button
+    t =    29.35s Find the Window (First Match)
+    t =    29.36s Checking existence of `"Политика конфиденциальности" Button`
+    t =    29.41s Find the "Политика конфиденциальности" Button
+objc[5592]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10611c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106254310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =    29.56s Find the Window (First Match)
+    t =    29.57s Checking existence of `"Политика конфиденциальности" Button`
+    t =    29.62s Find the "Политика конфиденциальности" Button
+    t =    29.78s Find the Window (First Match)
+    t =    29.78s Checking existence of `"Политика конфиденциальности" Button`
+    t =    29.83s Find the "Политика конфиденциальности" Button
+    t =    29.98s Find the Window (First Match)
+    t =    29.99s Checking existence of `"Политика конфиденциальности" Button`
+    t =    30.05s Find the "Политика конфиденциальности" Button
+    t =    30.10s Checking existence of `"Политика конфиденциальности" Button`
+    t =    30.15s Find the "Политика конфиденциальности" Button
+    t =    30.20s Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    30.48s Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    31.55s Find the Window (First Match)
+    t =    31.68s Added attachment named 'help714r3-focused-before-policy'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/1C09FD88-3AFB-410B-8E4E-B6DF80098779/tmp/somewhere-design-verification/help714r3-focused-before-policy.png
+    t =    31.68s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    31.71s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    31.74s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    31.77s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/1C09FD88-3AFB-410B-8E4E-B6DF80098779/tmp/somewhere-design-verification/help714r3-focused-before-policy.json
+    t =    31.82s Checking existence of `"Политика конфиденциальности" Button`
+    t =    31.87s Find the "Политика конфиденциальности" Button
+    t =    31.92s Find the Window (First Match)
+    t =    31.93s Find the "support-scroll" ScrollView
+    t =    31.98s Find the "support-submit" Button
+    t =    32.03s Find the "support-submit" Button
+    t =    32.08s Checking existence of `Keyboard (First Match)`
+    t =    32.09s Checking existence of `"support-keyboard-done" Button`
+    t =    32.14s Find the "Политика конфиденциальности" Button
+    t =    32.20s Find the "Политика конфиденциальности" Button
+    t =    32.25s Checking existence of `Keyboard (First Match)`
+    t =    32.26s Find the Keyboard (First Match)
+    t =    32.27s Checking existence of `"support-keyboard-done" Button`
+    t =    32.32s Find the "support-keyboard-done" Button
+    t =    32.37s Tap "Политика конфиденциальности" Button
+    t =    32.37s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    32.37s     Find the "Политика конфиденциальности" Button
+    t =    32.42s     Check for interrupting elements affecting "Политика конфиденциальности" Button
+    t =    32.46s     Synthesize event
+    t =    32.76s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    33.14s Waiting 5.0s for "service-information-scroll" ScrollView to exist
+    t =    34.22s     Checking `Expect predicate `existsNoRetry == 1` for object "service-information-scroll" ScrollView`
+    t =    34.22s         Checking existence of `"service-information-scroll" ScrollView`
+    t =    34.25s Get all elements bound by index for: Elements matching predicate 'label IN {"Назад", "К помощи", "К профилю"}'
+    t =    34.28s Find the Button (Element at index 0)
+    t =    34.31s Tap "Назад" Button
+    t =    34.31s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.31s     Find the "Назад" Button
+    t =    34.34s     Check for interrupting elements affecting "Назад" Button
+    t =    34.37s     Synthesize event
+    t =    34.67s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    34.99s Waiting 5.0s for "support-scroll" ScrollView to exist
+    t =    36.02s     Checking `Expect predicate `existsNoRetry == 1` for object "support-scroll" ScrollView`
+    t =    36.03s         Checking existence of `"support-scroll" ScrollView`
+    t =    36.08s Waiting 5.0s for Keyboard (First Match) to not exist
+    t =    37.14s     Checking `Expect predicate `existsNoRetry == 0` for object Keyboard (First Match)`
+    t =    37.15s         Checking existence of `Keyboard (First Match)`
+    t =    37.20s Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    37.37s Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    38.42s Find the Window (First Match)
+    t =    38.56s Added attachment named 'help714r3-after-policy-pop-before-assert'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/1C09FD88-3AFB-410B-8E4E-B6DF80098779/tmp/somewhere-design-verification/help714r3-after-policy-pop-before-assert.png
+    t =    38.57s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.59s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.61s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    38.63s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/1C09FD88-3AFB-410B-8E4E-B6DF80098779/tmp/somewhere-design-verification/help714r3-after-policy-pop-before-assert.json
+    t =    38.65s Find the Window (First Match)
+    t =    38.66s Find the "support-scroll" ScrollView
+    t =    38.69s Find the "support-submit" Button
+    t =    38.72s Find the "support-submit" Button
+    t =    38.76s Checking existence of `Keyboard (First Match)`
+    t =    38.82s Checking existence of `"support-keyboard-done" Button`
+    t =    38.85s Find the "Политика конфиденциальности" Button
+    t =    38.89s Find the "Политика конфиденциальности" Button
+    t =    38.92s Checking existence of `Keyboard (First Match)`
+    t =    38.97s Checking existence of `"support-keyboard-done" Button`
+    t =    39.00s Find the "support-description" TextView
+    t =    39.03s Checking existence of `"Убрать скриншот" Button`
+    t =    39.06s Find the "support-description" TextView
+    t =    39.09s Checking existence of `"Убрать скриншот" Button`
+    t =    39.12s Find the "Политика конфиденциальности" Button
+    t =    39.16s Find the "support-scroll" ScrollView
+    t =    39.19s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    39.21s Checking existence of `"home-tab-calendar" Button`
+    t =    39.24s Find the "home-tab-calendar" Button
+    t =    39.28s Checking existence of `Keyboard (First Match)`
+    t =    39.34s Checking existence of `"support-submit" Button`
+    t =    39.37s Find the "support-submit" Button
+    t =    39.40s Find the "support-submit" Button
+    t =    39.44s Checking existence of `"support-description" TextView`
+    t =    39.47s Find the "support-description" TextView
+    t =    39.50s Find the "support-description" TextView
+    t =    39.54s Find the "support-description" TextView
+    t =    39.57s Tap "support-description" TextView
+    t =    39.57s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    39.57s     Find the "support-description" TextView
+    t =    39.60s     Check for interrupting elements affecting "support-description" TextView
+    t =    39.63s     Synthesize event
+    t =    39.93s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    40.27s Waiting 5.0s for Keyboard (First Match) to exist
+    t =    41.29s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    41.29s         Checking existence of `Keyboard (First Match)`
+    t =    41.32s Waiting 5.0s for "support-keyboard-done" Button to exist
+    t =    42.39s     Checking `Expect predicate `existsNoRetry == 1` for object "support-keyboard-done" Button`
+    t =    42.39s         Checking existence of `"support-keyboard-done" Button`
+    t =    42.47s Find the Window (First Match)
+    t =    42.48s Checking existence of `"support-scroll" ScrollView`
+    t =    42.53s Find the "support-scroll" ScrollView
+    t =    42.58s Checking existence of `"support-keyboard-done" Button`
+    t =    42.63s Find the "support-keyboard-done" Button
+    t =    42.68s Checking existence of `Keyboard (First Match)`
+    t =    42.69s Find the Keyboard (First Match)
+    t =    42.70s Checking existence of `"support-submit" Button`
+    t =    42.75s Find the "support-submit" Button
+    t =    42.80s Find the "support-submit" Button
+    t =    42.96s Find the Window (First Match)
+    t =    42.97s Checking existence of `"support-scroll" ScrollView`
+    t =    43.02s Find the "support-scroll" ScrollView
+    t =    43.07s Checking existence of `"support-keyboard-done" Button`
+    t =    43.12s Find the "support-keyboard-done" Button
+    t =    43.17s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    43.18s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    43.20s Checking existence of `"support-submit" Button`
+    t =    43.24s Find the "support-submit" Button
+    t =    43.29s Find the "support-submit" Button
+    t =    43.45s Find the Window (First Match)
+    t =    43.46s Checking existence of `"support-scroll" ScrollView`
+    t =    43.52s Find the "support-scroll" ScrollView
+    t =    43.57s Checking existence of `"support-keyboard-done" Button`
+    t =    43.61s Find the "support-keyboard-done" Button
+    t =    43.66s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    43.68s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    43.69s Checking existence of `"support-submit" Button`
+    t =    43.74s Find the "support-submit" Button
+    t =    43.79s Find the "support-submit" Button
+    t =    43.95s Find the Window (First Match)
+    t =    43.96s Checking existence of `"support-scroll" ScrollView`
+    t =    44.01s Find the "support-scroll" ScrollView
+    t =    44.06s Checking existence of `"support-keyboard-done" Button`
+    t =    44.11s Find the "support-keyboard-done" Button
+    t =    44.17s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    44.18s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    44.19s Checking existence of `"support-submit" Button`
+    t =    44.24s Find the "support-submit" Button
+    t =    44.29s Find the "support-submit" Button
+    t =    44.45s Find the Window (First Match)
+    t =    44.46s Checking existence of `"support-scroll" ScrollView`
+    t =    44.52s Find the "support-scroll" ScrollView
+    t =    44.57s Checking existence of `"support-keyboard-done" Button`
+    t =    44.62s Find the "support-keyboard-done" Button
+    t =    44.67s Checking existence of `Keyboard at {{0.0, 590.0}, {402.0, 226.0}}`
+    t =    44.68s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    44.70s Checking existence of `"support-submit" Button`
+    t =    44.74s Find the "support-submit" Button
+    t =    44.79s Find the "support-submit" Button
+    t =    44.84s Checking existence of `"support-submit" Button`
+    t =    44.89s Find the "support-submit" Button
+    t =    44.94s Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    45.22s Requesting snapshot of accessibility hierarchy for app with pid 5603
+    t =    46.30s Find the Window (First Match)
+    t =    46.45s Added attachment named 'help714r3-refocused-footer-before-assert'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/1C09FD88-3AFB-410B-8E4E-B6DF80098779/tmp/somewhere-design-verification/help714r3-refocused-footer-before-assert.png
+    t =    46.45s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    46.48s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    46.51s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    46.54s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/1C09FD88-3AFB-410B-8E4E-B6DF80098779/tmp/somewhere-design-verification/help714r3-refocused-footer-before-assert.json
+    t =    46.57s Checking existence of `"support-submit" Button`
+    t =    46.62s Find the "support-submit" Button
+    t =    46.67s Find the Window (First Match)
+    t =    46.67s Find the "support-scroll" ScrollView
+    t =    46.72s Find the "support-submit" Button
+    t =    46.77s Find the "support-submit" Button
+    t =    46.83s Checking existence of `Keyboard (First Match)`
+    t =    46.84s Checking existence of `"support-keyboard-done" Button`
+    t =    46.88s Find the "Политика конфиденциальности" Button
+    t =    46.94s Find the "Политика конфиденциальности" Button
+    t =    46.98s Checking existence of `Keyboard (First Match)`
+    t =    47.00s Find the Keyboard (First Match)
+    t =    47.01s Checking existence of `"support-keyboard-done" Button`
+    t =    47.06s Find the "support-keyboard-done" Button
+    t =    47.11s Find the "support-submit" Button
+    t =    47.17s Find the "support-submit" Button
+    t =    47.22s Find the "support-keyboard-done" Button
+    t =    47.27s Find the "support-submit" Button
+    t =    47.32s Find the Keyboard at {{0.0, 590.0}, {402.0, 226.0}}
+    t =    47.34s Find the "support-description" TextView
+    t =    47.38s Checking existence of `"Убрать скриншот" Button`
+    t =    47.43s Terminate dev.groupplanning.ios.uitesthost:5603
+2026-11-06 13:07:49.250 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:07:49.250 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:07:49.251 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    48.48s Tear Down
+Test Case '-[SomewhereUITests.HelpCheckpoint714R3Tests testPrivacyClearsFocusAndRefocusPreservesKeyboardAvoidance]' passed (48.545 seconds).
+Test Suite 'HelpCheckpoint714R3Tests' passed at 2026-11-06 13:07:50.351.
+	 Executed 1 test, with 0 failures (0 unexpected) in 48.545 (48.547) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-06 13:07:50.352.
+	 Executed 1 test, with 0 failures (0 unexpected) in 48.545 (48.548) seconds
+Test Suite 'Selected tests' passed at 2026-11-06 13:07:50.353.
+	 Executed 1 test, with 0 failures (0 unexpected) in 48.545 (48.550) seconds
+2026-11-06 13:07:50.382 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:07:50.382 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:07:50.383 xcodebuild[5558:22035949] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 13:07:50.653 xcodebuild[5558:22035949] [MT] IDETestOperationsObserverDebug: 52.903 elapsed -- Testing started completed.
+2026-11-06 13:07:50.653 xcodebuild[5558:22035949] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-06 13:07:50.653 xcodebuild[5558:22035949] [MT] IDETestOperationsObserverDebug: 52.903 sec, +52.903 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/help714-independent-r4.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

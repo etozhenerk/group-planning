@@ -5,6 +5,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -94,7 +95,7 @@ class AccountDeletionUiTests {
             fixture.screenshot("profile-cookies-above-navigation")
             cookies.performClick()
             fixture.waitTag("service-page")
-            compose.onNodeWithText("Назад").performClick()
+            compose.onNodeWithContentDescription("Назад").performClick()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()
             compose.onNodeWithText("Удалить аккаунт").assertDoesNotExist()
@@ -130,7 +131,7 @@ class AccountDeletionUiTests {
             compose.onNodeWithText(question).performClick()
             compose.onNodeWithText(answer).assertIsDisplayed()
             fixture.screenshot("profile-help-disclosure-open")
-            compose.onNodeWithText("Назад").performClick()
+            compose.onNodeWithContentDescription("Назад").performClick()
             fixture.waitAbsent("service-page")
             compose.onNodeWithTag("home-profile").assertIsSelected()
         }

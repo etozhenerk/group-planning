@@ -16,7 +16,7 @@ extension SupportFormUITests {
         app.buttons["support-keyboard-done"].tap()
         let scroll = app.scrollViews["support-scroll"]
         let screenshot = app.buttons.matching(
-            NSPredicate(format: "label CONTAINS %@", "Добавить скриншот")
+            NSPredicate(format: "label CONTAINS %@", "Прикрепить скриншот")
         ).firstMatch
         ChatSheetTestSupport.reveal(screenshot, in: scroll, app: app)
         screenshot.tap()
@@ -30,11 +30,11 @@ extension SupportFormUITests {
         let photo = app.images.matching(identifier: "PXGGridLayout-Info").firstMatch
         XCTAssertTrue(photo.waitForExistence(timeout: 10))
         photo.tap()
-        let remove = app.buttons["Убрать"]
+        let remove = app.buttons["Убрать скриншот"]
         XCTAssertTrue(remove.waitForExistence(timeout: 10))
         remove.tap()
         XCTAssertFalse(remove.exists)
-        let send = app.buttons["Отправить"]
+        let send = app.buttons["support-submit"]
         ChatSheetTestSupport.reveal(send, in: scroll, app: app)
         send.tap()
         let failure = app.staticTexts[
@@ -52,6 +52,8 @@ extension SupportFormUITests {
         send.tap()
         XCTAssertTrue(app.staticTexts["Обращение принято"].waitForExistence(timeout: 15))
         ExperienceScreenshot.save("support-retry-accepted", test: self)
+        app.buttons["К помощи"].tap()
+        XCTAssertTrue(app.staticTexts["Помощь"].waitForExistence(timeout: 5))
         app.buttons["Назад"].tap()
         XCTAssertTrue(app.scrollViews["profile-screen"].waitForExistence(timeout: 5))
     }
@@ -68,7 +70,7 @@ extension SupportFormUITests {
         description.tap()
         description.typeText("Проверяем закрытие формы во время отправки обращения")
         app.buttons["support-keyboard-done"].tap()
-        let send = app.buttons["Отправить"]
+        let send = app.buttons["support-submit"]
         ChatSheetTestSupport.reveal(send, in: app.scrollViews["support-scroll"], app: app)
         send.tap()
         let requested = XCTNSPredicateExpectation(
@@ -90,8 +92,7 @@ extension SupportFormUITests {
         let app = ChatSheetTestSupport.launch(large: true)
         app.buttons["home-tab-person.crop.circle"].tap()
         let profile = app.scrollViews["profile-screen"]
-        for title in ["Помощь", "О приложении", "Конфиденциальность", "Cookie и данные устройства"]
-        {
+        for title in ["Помощь", "О приложении", "Конфиденциальность", "Cookie"] {
             let link = app.buttons[title]
             ChatSheetTestSupport.reveal(link, in: profile, app: app)
             link.tap()

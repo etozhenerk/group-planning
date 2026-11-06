@@ -1,0 +1,82 @@
+{
+  "kind": "targeted independent feature checkpoint; not final gate",
+  "status": "no-findings-in-requested-R5-delta",
+  "scope": "Only confirmed receipt consumed via browserBack and new preset; unconfirmed draft Back/reopen",
+  "findings": [],
+  "runtime": "https://127.0.0.1:9139",
+  "candidate": {
+    "sourceBefore": "fda0075451ee5efb28fef053ee7e757ed968c8a87f90f56106cd8a244fc17a7f",
+    "sourceAfter": "fda0075451ee5efb28fef053ee7e757ed968c8a87f90f56106cd8a244fc17a7f",
+    "artifactHash": "2f4d563f00e5f84afbaa78ec751cf1f6ffe3c901f6099c56091ee62cd202c44d",
+    "candidateSha256": "2a61b0dadbf143f44d94567a1df1cd330ba7ba41932f00e5ce1013002ebd1145",
+    "designInputHash": "0939f1a05366941ae2b9994c8cc53585826d5be0f40c38d7c3f36620c24e6857",
+    "designContextMatches": true
+  },
+  "binding": {
+    "valid": true,
+    "diskFiles": 268,
+    "liveEntries": 39
+  },
+  "flow": [
+    {
+      "name": "profile-problem-preset",
+      "state": {
+        "url": "/support?screen=profile",
+        "description": "",
+        "email": "",
+        "kind": "problem",
+        "section": "Раздел приложения: Профиль",
+        "files": 0
+      }
+    },
+    {
+      "name": "clean-question-preset",
+      "state": {
+        "url": "/support?kind=question",
+        "description": "",
+        "email": "",
+        "kind": "question",
+        "section": "Раздел приложения: Другой экран",
+        "files": 0
+      }
+    },
+    {
+      "name": "unfinished-back-reopen",
+      "state": {
+        "url": "/support?kind=question",
+        "description": "Незавершённый вопрос: сохранить этот черновик при Back.",
+        "email": "",
+        "kind": "question",
+        "section": "Раздел приложения: Другой экран",
+        "files": 0
+      },
+      "postCount": 1
+    }
+  ],
+  "posts": [
+    {
+      "status": 201,
+      "receipt": {
+        "id": "8fcfa33f-0534-452f-9ef1-dd088aea1482",
+        "reference": "SW-8FCFA33F0534",
+        "status": "accepted"
+      }
+    }
+  ],
+  "errors": [],
+  "evidence": [
+    "receipt390.png",
+    "clean-question390.png",
+    "unfinished-restored390.png",
+    "observations.json",
+    "binding.json",
+    "design-context.json"
+  ],
+  "limits": [
+    "Only requested390 flow; no lostACK/email/desktop/styles/FAQ repeated",
+    "One real201 receipt from isolated memory support/nilDelivery; no external delivery",
+    "Initial QA assertion used absent radio value attribute(default on); fixed QA selector reads visiblelabel; original observation saved, not product finding",
+    "No final manifest/case gate; no inherited old source pass"
+  ],
+  "sourceReleased": true
+}
