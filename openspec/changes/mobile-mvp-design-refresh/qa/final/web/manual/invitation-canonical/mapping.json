@@ -1,0 +1,295 @@
+{
+  "planId": "mobile-refresh-final-web-r6-2026-11-06",
+  "suite": "web-e2e",
+  "observedOrigin": "https://127.0.0.1:8444",
+  "log": {
+    "path": "openspec/changes/mobile-mvp-design-refresh/qa/final/web/publication-safe/suites/web-e2e-1793989388266.txt",
+    "sha256": "6af0b7960c7e154e995a13155f48063be35ae9ccb14dd2787043f66d39bd86be"
+  },
+  "records": [
+    {
+      "source": "frontend/web/tests/01-flow.spec.ts",
+      "sourceSha256": "9e7be166f7d216783fce509146e194bdeddb0a9bf76f9d0a904f5314facea415",
+      "tests": [
+        {
+          "title": "create, retry, invite, join, chat and revoke across two profiles",
+          "line": 11
+        }
+      ],
+      "actualPassedTestLines": [
+        {
+          "line": 1017,
+          "text": "  ✓    1 [chromium] › tests/01-flow.spec.ts:11:1 › create, retry, invite, join, chat and revoke across two profiles (9.1s)",
+          "project": "chromium"
+        }
+      ],
+      "sourceSnapshot": "01-flow.spec.source.txt",
+      "note": "Exact source assertions tied to independently executed R6 required suite. A green process alone is not case proof; actual test title/project/line records listed. Each manual case mapping cites the corresponding assertions/actions and supplemental HTTP/UI."
+    },
+    {
+      "source": "frontend/web/tests/02-reliability.spec.ts",
+      "sourceSha256": "27955e8f4dd8a3231adc19a3257322ac5d265356156c4eeb73932e1091fcbfe1",
+      "tests": [
+        {
+          "title": "draft survives an error, back warns and sharing returns to the chat",
+          "line": 15
+        },
+        {
+          "title": "message retry after a lost response keeps its ID and confirms once",
+          "line": 80
+        },
+        {
+          "title": "history and a stale settings form preserve authoritative state",
+          "line": 127
+        },
+        {
+          "title": "a revoked session closes private content and keeps invitation entry",
+          "line": 172
+        },
+        {
+          "title": "cancelled invitation sign-in stays on the invitation without an answer",
+          "line": 218
+        }
+      ],
+      "actualPassedTestLines": [
+        {
+          "line": 1397,
+          "text": "  ✓    2 [chromium] › tests/02-reliability.spec.ts:15:1 › draft survives an error, back warns and sharing returns to the chat (3.0s)",
+          "project": "chromium"
+        },
+        {
+          "line": 1690,
+          "text": "  ✓    3 [chromium] › tests/02-reliability.spec.ts:80:1 › message retry after a lost response keeps its ID and confirms once (5.0s)",
+          "project": "chromium"
+        },
+        {
+          "line": 3193,
+          "text": "  ✓    4 [chromium] › tests/02-reliability.spec.ts:127:1 › history and a stale settings form preserve authoritative state (2.1s)",
+          "project": "chromium"
+        },
+        {
+          "line": 3495,
+          "text": "  ✓    5 [chromium] › tests/02-reliability.spec.ts:172:1 › a revoked session closes private content and keeps invitation entry (4.2s)",
+          "project": "chromium"
+        },
+        {
+          "line": 3814,
+          "text": "  ✓    6 [chromium] › tests/02-reliability.spec.ts:218:1 › cancelled invitation sign-in stays on the invitation without an answer (1.5s)",
+          "project": "chromium"
+        }
+      ],
+      "sourceSnapshot": "02-reliability.spec.source.txt",
+      "note": "Exact source assertions tied to independently executed R6 required suite. A green process alone is not case proof; actual test title/project/line records listed. Each manual case mapping cites the corresponding assertions/actions and supplemental HTTP/UI."
+    },
+    {
+      "source": "frontend/web/tests/07-share-preview.spec.ts",
+      "sourceSha256": "b971b272398600ab71f58c5a28d6f0194c4426cff6312384f645f76729836461",
+      "tests": [
+        {
+          "title": "short invitation provides fresh metadata and PNG without JavaScript",
+          "line": 13
+        },
+        {
+          "title": "home exposes one complete preview to a crawler without JavaScript",
+          "line": 95
+        },
+        {
+          "title": "public invitation preview follows cover add, replacement and removal",
+          "line": 150
+        }
+      ],
+      "actualPassedTestLines": [
+        {
+          "line": 8460,
+          "text": "  ✓   23 [chromium] › tests/07-share-preview.spec.ts:13:1 › short invitation provides fresh metadata and PNG without JavaScript (586ms)",
+          "project": "chromium"
+        },
+        {
+          "line": 8559,
+          "text": "  ✓   24 [chromium] › tests/07-share-preview.spec.ts:95:1 › home exposes one complete preview to a crawler without JavaScript (186ms)",
+          "project": "chromium"
+        },
+        {
+          "line": 9012,
+          "text": "  ✓   25 [chromium] › tests/07-share-preview.spec.ts:150:1 › public invitation preview follows cover add, replacement and removal (580ms)",
+          "project": "chromium"
+        }
+      ],
+      "sourceSnapshot": "07-share-preview.spec.source.txt",
+      "note": "Exact source assertions tied to independently executed R6 required suite. A green process alone is not case proof; actual test title/project/line records listed. Each manual case mapping cites the corresponding assertions/actions and supplemental HTTP/UI."
+    },
+    {
+      "source": "frontend/web/tests/17-auth-states.spec.ts",
+      "sourceSha256": "76e17247f6fe0d7cd5abe71b74022c6ba2397fa9479891d977ba48304d8fac41",
+      "tests": [
+        {
+          "title": "sign-in stays busy through slow API and navigation without changing its size",
+          "line": 5
+        },
+        {
+          "title": "restoring a cached page unlocks sign-in and failed starts can be retried",
+          "line": 80
+        },
+        {
+          "title": "return shows only the branded loader at all widths, respects reduced motion and proceeds",
+          "line": 113
+        },
+        {
+          "title": "return retries a failed session read without another OAuth attempt",
+          "line": 152
+        },
+        {
+          "title": "missing session offers a fresh sign-in that preserves the invitation without RSVP",
+          "line": 190
+        }
+      ],
+      "actualPassedTestLines": [
+        {
+          "line": 18589,
+          "text": "  ✓   53 [chromium] › tests/17-auth-states.spec.ts:5:1 › sign-in stays busy through slow API and navigation without changing its size (940ms)",
+          "project": "chromium"
+        },
+        {
+          "line": 18676,
+          "text": "  ✓   54 [chromium] › tests/17-auth-states.spec.ts:80:1 › restoring a cached page unlocks sign-in and failed starts can be retried (528ms)",
+          "project": "chromium"
+        },
+        {
+          "line": 18851,
+          "text": "  ✓   55 [chromium] › tests/17-auth-states.spec.ts:113:1 › return shows only the branded loader at all widths, respects reduced motion and proceeds (1.5s)",
+          "project": "chromium"
+        },
+        {
+          "line": 18967,
+          "text": "  ✓   56 [chromium] › tests/17-auth-states.spec.ts:152:1 › return retries a failed session read without another OAuth attempt (671ms)",
+          "project": "chromium"
+        },
+        {
+          "line": 19271,
+          "text": "  ✓   57 [chromium] › tests/17-auth-states.spec.ts:190:1 › missing session offers a fresh sign-in that preserves the invitation without RSVP (1.3s)",
+          "project": "chromium"
+        }
+      ],
+      "sourceSnapshot": "17-auth-states.spec.source.txt",
+      "note": "Exact source assertions tied to independently executed R6 required suite. A green process alone is not case proof; actual test title/project/line records listed. Each manual case mapping cites the corresponding assertions/actions and supplemental HTTP/UI."
+    },
+    {
+      "source": "frontend/web/tests/25-own-invitation.spec.ts",
+      "sourceSha256": "ad27f8cb3f4ac847db2b3289a784298442923f28bdfe66aa8e649144fd6c2fc7",
+      "tests": [
+        {
+          "title": "organizer opens own invitation after login without RSVP or duplicate membership",
+          "line": 4
+        },
+        {
+          "title": "role check shows a skeleton and retries a network failure before offering actions",
+          "line": 45
+        }
+      ],
+      "actualPassedTestLines": [
+        {
+          "line": 33706,
+          "text": "  ✓   93 [chromium] › tests/25-own-invitation.spec.ts:4:1 › organizer opens own invitation after login without RSVP or duplicate membership (1.9s)",
+          "project": "chromium"
+        },
+        {
+          "line": 33868,
+          "text": "  ✓   94 [chromium] › tests/25-own-invitation.spec.ts:45:1 › role check shows a skeleton and retries a network failure before offering actions (708ms)",
+          "project": "chromium"
+        }
+      ],
+      "sourceSnapshot": "25-own-invitation.spec.source.txt",
+      "note": "Exact source assertions tied to independently executed R6 required suite. A green process alone is not case proof; actual test title/project/line records listed. Each manual case mapping cites the corresponding assertions/actions and supplemental HTTP/UI."
+    },
+    {
+      "source": "frontend/web/tests/63-rsvp-routing.spec.ts",
+      "sourceSha256": "294f71b36ca3191fb39bd280973f051c4e25470d4ae69ac782b37954a7945de9",
+      "tests": [],
+      "actualPassedTestLines": [
+        {
+          "line": 82515,
+          "text": "  ✓  210 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 320px (2.9s)",
+          "project": "chromium"
+        },
+        {
+          "line": 83008,
+          "text": "  ✓  211 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 390px (2.9s)",
+          "project": "chromium"
+        },
+        {
+          "line": 83499,
+          "text": "  ✓  212 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 739px (2.8s)",
+          "project": "chromium"
+        },
+        {
+          "line": 83981,
+          "text": "  ✓  213 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 740px (2.7s)",
+          "project": "chromium"
+        },
+        {
+          "line": 84463,
+          "text": "  ✓  214 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 1100px (2.5s)",
+          "project": "chromium"
+        },
+        {
+          "line": 84948,
+          "text": "  ✓  215 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 1440px (2.7s)",
+          "project": "chromium"
+        },
+        {
+          "line": 85249,
+          "text": "  ✓  216 [chromium] › tests/63-rsvp-routing.spec.ts:121:3 › unconfirmed RSVP stays and retries the same intent without duplicate events at 390px (1.3s)",
+          "project": "chromium"
+        },
+        {
+          "line": 85533,
+          "text": "  ✓  217 [chromium] › tests/63-rsvp-routing.spec.ts:121:3 › unconfirmed RSVP stays and retries the same intent without duplicate events at 1440px (1.1s)",
+          "project": "chromium"
+        },
+        {
+          "line": 136079,
+          "text": "  ✓  329 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 320px (4.7s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 136604,
+          "text": "  ✓  330 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 390px (4.7s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 137124,
+          "text": "  ✓  331 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 739px (4.8s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 137633,
+          "text": "  ✓  332 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 740px (4.2s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 138139,
+          "text": "  ✓  333 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 1100px (4.4s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 138641,
+          "text": "  ✓  334 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 1440px (4.3s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 138970,
+          "text": "  ✓  335 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:121:3 › unconfirmed RSVP stays and retries the same intent without duplicate events at 390px (2.4s)",
+          "project": "mobile-webkit"
+        },
+        {
+          "line": 139279,
+          "text": "  ✓  336 [mobile-webkit] › tests/63-rsvp-routing.spec.ts:121:3 › unconfirmed RSVP stays and retries the same intent without duplicate events at 1440px (2.3s)",
+          "project": "mobile-webkit"
+        }
+      ],
+      "sourceSnapshot": "63-rsvp-routing.spec.source.txt",
+      "note": "Exact source assertions tied to independently executed R6 required suite. A green process alone is not case proof; actual test title/project/line records listed. Each manual case mapping cites the corresponding assertions/actions and supplemental HTTP/UI."
+    }
+  ],
+  "warning": "Different dynamic canonical fixture origin from primary manual9153; both use current frozen source/artifact. Projects are exactly listed, no implicit second-engine claim."
+}

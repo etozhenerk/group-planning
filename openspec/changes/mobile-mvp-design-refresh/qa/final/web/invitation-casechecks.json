@@ -1,0 +1,1099 @@
+[
+  {
+    "id": "TC-INV-F7D14B7B/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.383Z",
+    "actual": "Guest opens real public link: meeting title/description/date/place/real dinner cover/organizer visible, no composer; public feed403. Three mobile widths and cold bypass preserved.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--guest-w390.json",
+        "sha256": "4ad670e68382e6a194dec5c9accd1d3486e8518983a9262803d992acb32f8e9c",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--guest-w390.png",
+        "sha256": "6b22bc49cb744574d2ecc2447fae7dfb1f8117ef996ca1bcea745080ed595b50",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/rsvp/interactions/response-route--auth-no-rsvp-w390.json",
+        "sha256": "6a79d4fb7f5b64b5b6cb01d40adf70f9d062d21aaeb3130a4b1b122c11940df2",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-D788A9C2/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.387Z",
+    "actual": "Guest cannot answer before session. Explicit sign-in alone returns same invitation with my_rsvp null, no auto RSVP; protected feed403. Busy/cancel/error did not grant access.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--guest-w390.json",
+        "sha256": "4ad670e68382e6a194dec5c9accd1d3486e8518983a9262803d992acb32f8e9c",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/entry-complete/observations.json",
+        "sha256": "3011093ec4f7b005bd3f40c2a8983a02d45ec0c89ed9847b7cb315e3e3435fff",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--guest-w390.png",
+        "sha256": "6b22bc49cb744574d2ecc2447fae7dfb1f8117ef996ca1bcea745080ed595b50",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-1BABADA3/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.388Z",
+    "actual": "Authenticated invitee sees separate answer buttons on original public invitation; Going opens exact chat only after server confirmation, no extra OAuth.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--ready-w390.json",
+        "sha256": "d1d63f64f2ad1f1a35844957eba3dbba201340942d123842a92da275fcb8d071",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/interactions/response-route--going-chat-w390.json",
+        "sha256": "e0b752acc6ac9dbfe7da900a66cedacbcc23ed3ed50e8d7b3fbf7db0f4d7954c",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--ready-w390.png",
+        "sha256": "8e3c37fef4f8a75aa7e368a13094615212b2f1c65f16fcd15fc847a646aff223",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-EE3B32D9/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.389Z",
+    "actual": "Organizer opening own real link after role verification immediately gets own chat with PUT0 and no duplicate membership; canonical25 confirms count1/revision unchanged across320/390/1440.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--organizer-w390.json",
+        "sha256": "4df377f38c6937eb02fef42dafdafe246d85e2aa35eebd10a9c44c2b7ed190b2",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--organizer-w390.png",
+        "sha256": "f2a87198ac0c285522e5bbcc9c6e153cb0a3c9cd11235d6954789ca4b9dbf7ff",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-BE2ABEB1/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.390Z",
+    "actual": "Fixture OAuth from invitation returns to same token/title with no answer and feed403. Same result at320/390/739; direct link never forced through onboarding.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/entry-complete/observations.json",
+        "sha256": "3011093ec4f7b005bd3f40c2a8983a02d45ec0c89ed9847b7cb315e3e3435fff",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/entry-complete/invitation-return-w390-actual.png",
+        "sha256": "aa2ace202a04d7f0b9e014fd1802bd8f625fef90524eac5561d5ff671f3b1d67",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation/interactions/invite--guest-w390.json",
+        "sha256": "4ad670e68382e6a194dec5c9accd1d3486e8518983a9262803d992acb32f8e9c",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-01BC1377/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.391Z",
+    "actual": "Actual provider cancellation leaves same public invitation and no answer; aborted sign-in start shows action-local error with retry. No optimistic success/chat.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--sign-in-cancelled-w390.json",
+        "sha256": "58a2ce0193498c714d2215b368cef9308bfc94fedb3f1a95fd6a1816bbd3cda2",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/interactions/invite--auth-error-w390.json",
+        "sha256": "ad805dbda392ed145deea51612afd02192a61da6c3270e6baed2c9370b6f2257",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--auth-error-w390.png",
+        "sha256": "38bd6d022ffe44abd7a23cb7f3eeee89a43375e14cd3576a978880c1ad037963",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-14E94338/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.392Z",
+    "actual": "Explicit Going confirmed by APIACK routes to same chat; private feed200/composer enabled, participant count and system event reflect one confirmed membership.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/rsvp/interactions/response-route--going-chat-w390.json",
+        "sha256": "e0b752acc6ac9dbfe7da900a66cedacbcc23ed3ed50e8d7b3fbf7db0f4d7954c",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/interactions/rsvp-system-event--going-w390.json",
+        "sha256": "264d21d1e71303c2250c02e2246c030df6bc36616cc33dcf976d54b66a7fc0f4",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/actual/response-route--going-chat-w390.png",
+        "sha256": "1b4095ea5fd16f10e1fb44b0d02893748549bab2a2b20c768279888f6d687bbf",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-F54ED6C1/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.392Z",
+    "actual": "Explicit first NotGoing leads to separate confirmation, eventanswer not_going previousnull, no participant_joined; own/saved lists omit declined meeting and feed403.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/first-decline/observations.json",
+        "sha256": "91236c211d3440e41f5068a04597a31e39490185cfeaa836fb7d3629bc5a2afb",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/first-decline/first-decline-event-390.png",
+        "sha256": "c2257ed908a9b0143c3578fc8445d0dd819c105ea6c759278960b701adbedb51",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/rsvp/interactions/response-route--declined-confirmation-w390.json",
+        "sha256": "2ff3c703209eba33820dae4a6b9140ebd50c1d404c221fd1277a8cd1414957fb",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-9CE1DE4C/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.393Z",
+    "actual": "Explicit Maybe routes to saved invitations with matching card; answer retained after reload, feed403/composer absent, not counted as confirmed participant.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+        "sha256": "1f8c9ed7f9ca3c1a6f550ac898a514b1c81033e7ffeaeb98e2845a729e21a2dd",
+        "kind": "interaction"
+      },
+      {
+        "path": "publication-safe/manual/priority-extensions/observations.json",
+        "sha256": "6bcdc874d75939e58ee0c0dc26b1af763a613a2016a7c1bd755c5974f86a34c3",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/actual/response-route--maybe-invitations-w390.png",
+        "sha256": "91f00ee7b0a07f5163daeb11b664f7f45e2aba2ff5ac591003bc0b0d5ae0b86e",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-A8232BFB/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.394Z",
+    "actual": "After confirmed Going two real profiles exchange real text; guest reads/sends only after ACK, organizer sees text, text containing HTML remains inert. Current canonical01 exact actions/assertions completed; fresh manual Going chat also visible.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/interactions/response-route--going-chat-w390.json",
+        "sha256": "e0b752acc6ac9dbfe7da900a66cedacbcc23ed3ed50e8d7b3fbf7db0f4d7954c",
+        "kind": "interaction"
+      },
+      {
+        "path": "suite-originals/web-e2e/test-results/flow-mobile.png",
+        "sha256": "42151dc674c106118e88f21c5ac147adc730d8c5f7ec0f0708a5dd5b573b9085",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-967EBE4C/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.395Z",
+    "actual": "Guest without answer and with Maybe/NotGoing has no composer/privatefeed403. Canonical01 explicitly checks denied feed and removes chat after withdrawal.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/rsvp/interactions/response-route--auth-no-rsvp-w390.json",
+        "sha256": "6a79d4fb7f5b64b5b6cb01d40adf70f9d062d21aaeb3130a4b1b122c11940df2",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+        "sha256": "1f8c9ed7f9ca3c1a6f550ac898a514b1c81033e7ffeaeb98e2845a729e21a2dd",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/actual/response-route--auth-no-rsvp-w390.png",
+        "sha256": "2efec1ea9e501ac7201657ada7ab66b5599bd5f28ecf03c22d5f686d4bf3aae6",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-A1B0667E/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.396Z",
+    "actual": "Actual response aborted before server leaves original public facts, current selection and one action error; no chat navigation. Commit/lostACK retains same source until exact retry confirms once.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--response-error-w390.json",
+        "sha256": "910ea038dc7caa481ac8ecb9689b09902245da1ebc7045daaea451643ae86411",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/interactions/invite--response-unknown-w390.json",
+        "sha256": "28d687fc6755f4cda27919e7ae0e2ca76b13836e915802b720ad8e3fbd7adf04",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/interactions/response-route--unknown-stays-w390.json",
+        "sha256": "3825c2af1821f78dfeec24a768b874809f975a0779109451483959ce688a35ad",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--response-error-w390.png",
+        "sha256": "6877e661b9dfaf066f85ba9dfee196569037e68305b7f0ee218cff76ce01dba8",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-38B3DC35/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.397Z",
+    "actual": "Organizer witness sees server Going event with actor/time/id; participant count changes only after confirmed reply. Canonical01 observes updated roster count2.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/rsvp/interactions/rsvp-system-event--going-w390.json",
+        "sha256": "264d21d1e71303c2250c02e2246c030df6bc36616cc33dcf976d54b66a7fc0f4",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/actual/rsvp-system-event--going-w390.png",
+        "sha256": "fba92097fdc9de1702c927a1ddb259ef055a02b294a587afff68b0d1eced3f20",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-0BDDE341/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.397Z",
+    "actual": "Organizer sees first NotGoing as rsvp_changed not_going without join, count unchanged; direct Going→NotGoing later decrementscount and preserves all prior event IDs.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/first-decline/observations.json",
+        "sha256": "91236c211d3440e41f5068a04597a31e39490185cfeaa836fb7d3629bc5a2afb",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/first-decline/first-decline-event-390.png",
+        "sha256": "c2257ed908a9b0143c3578fc8445d0dd819c105ea6c759278960b701adbedb51",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-289FC0C1/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.398Z",
+    "actual": "Current Going→Maybe closes conversation and routes saved invitations. Feed403, no composer/content; old Going idempotency replay does not restore withdrawn access.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+        "sha256": "1f8c9ed7f9ca3c1a6f550ac898a514b1c81033e7ffeaeb98e2845a729e21a2dd",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/actual/response-route--maybe-invitations-w390.png",
+        "sha256": "91f00ee7b0a07f5163daeb11b664f7f45e2aba2ff5ac591003bc0b0d5ae0b86e",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-968EF190/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.398Z",
+    "actual": "Real Lena directly changes Going→NotGoing, confirmed decline screen; participant_count2→1, privatefeed403, prior history IDs retained. Original completed record going-direct-decline.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/going-direct-decline.png",
+        "sha256": "4f225fd1a670d521ccec413f25ce8d78295f6d8e95214b351536f93a0aba89f0",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-A1BC322E/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.399Z",
+    "actual": "Real Lena after NotGoing chooses Going before cutoff; same meeting chat/composer returns, privatefeed200, participant_count2 and real new server event. Original record declined-returns-going.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/declined-returns-going.png",
+        "sha256": "cbd2fa3955c6fa8daf7419393f8e591ca22071d3391785ef89b406252aa06e00",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-234112E7/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.399Z",
+    "actual": "Actual aborted Going→Maybe request before commit leaves authoritative my_rsvp Going/feed200 and identical history. Failed action is not applied optimistically. Record going-change-fails-before-commit; subsequent driver-navigation mistakes retained separately.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/going-change-fails-before-commit.png",
+        "sha256": "3b0d53c446513be5a6f05196877a93484337990e63ab989527811bdd63f54e95",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-2BEDEB5C/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.399Z",
+    "actual": "Actual created invitation path matches /i/[A-Za-z0-9_-]{22}; public HTML canonical/og:url retain that absolute link. Distinct independent creates yield real opaque tokens; no session secret shortening claimed.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--share-w390.png",
+        "sha256": "29c6b62980e00495469910019d0cbc24378dbc9af172f3dcbc3bd601aae3ddb7",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-0ACF4522/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.400Z",
+    "actual": "Supplemental own9163 QA-only additive Go seed supplies canonical43 token. Old /invitations/token redirects /i/same43; real fixtureOAuth returns same legacy title/id/token, my_rsvp null, PUT0. Source/overlay/binary provenance independently hashed; own process stopped. This is data-fixture compatibility, not old-native/release/signedlink acceptance.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/legacy43/observations.json",
+        "sha256": "c45482e1baa0d4b120a2994b5117bec134f9da791202c61e5bf1dfb118f1c291",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/legacy43/process.json",
+        "sha256": "5785b452af62780f1796852e6df75b340512fd1edcac990b9975659a3ca954b0",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/legacy43/provenance/source-binding.json",
+        "sha256": "088b5678ff0043af887876a74c004d4c583cba3bba2c72ae06c014c7794239fa",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/legacy43/legacy43-after-auth.png",
+        "sha256": "51607f19f1ecfc88135461eafd7d738a96e08e470c1dcc789a947991aad05403",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-B9E5EC51/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.401Z",
+    "actual": "Real JavaScript-disabled anonymous HTML returns exactly one title/description/canonical and current invitation OGcover. No organizer_id/participant_count/email/phone/csrf data; decoded title/description remain exact text. GET/HEADimage200 with PNGdimensions.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/cover-initial.html",
+        "sha256": "e31bd45bcf0e885c6081fc041505bbcab7458abef060b832ec4fa97aa151373c",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/cover-removed-image.png",
+        "sha256": "82c874e857be2defdf0fd6a8b1f02394104bb35bbec617fcd6331461b8a90c11",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-623DEDA5/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.401Z",
+    "actual": "Unknown valid-shaped token anonymous HTML returns404 and zero existingmeeting og:title. UI invalidtoken error retries actualGET withoutRSVP.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/missing.html",
+        "sha256": "317bd4b7b54702e5c7d39dd6b13e06c4df1e4b584faa6923f2da51b0d2f053d8",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation/interactions/invite--unavailable-w390.json",
+        "sha256": "e1e3913607ad8824890e764c68f6f4ef9dfab928b37e773cc72fc70cdcfcc3a8",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--unavailable-w390.png",
+        "sha256": "1cff2b695d657750735391fbba6168c46aedb48a9a1b03f10802c05b7323c3f5",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-B28C9A8B/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.402Z",
+    "actual": "Created title with quotes/bold markup and description with script. Anonymous no-JS DOM metadata equals literal text, HTML escapes tags, inlineScript0; no executable element introduced. Current canonical07 asserts raw &lt;script&gt; and no script payload.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/cover-initial.html",
+        "sha256": "e31bd45bcf0e885c6081fc041505bbcab7458abef060b832ec4fa97aa151373c",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/escaped-html-metadata.png",
+        "sha256": "004f7f7f9fead41655b0d52f7667e7f58228e97762bd2431200f1ac24d5f5c02",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-84CC3D0C/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.402Z",
+    "actual": "Own fixture clock frozen t0. Actual new Going at starts=t0+3600001ms succeeds200/can_access_feed true, proving one millisecond before cutoff. Fixture clock restored.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/before-hour-member.png",
+        "sha256": "f82ab1de50431c46c788b70c582b2b9f1197178319e9fd821ae201fdc399c385",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-F8EEC653/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.402Z",
+    "actual": "At exact starts=t0+3600000ms, new Going rejected409 join_closed (published existing API contract), privatefeed403, UI shows Участие закрыто without fresh answer controls. No privatephotos/chat exposed.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-cutoff/exact-hour-denied.png",
+        "sha256": "3b05186f266e31acc53938a4e9d47e2282e997d6ac502ef7c5df04f53a05b5b2",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-235E4D53/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.402Z",
+    "actual": "Meeting with current starts_on only and no starts_at accepts new Going200; hour cutoff not applied to unspecified time.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/date-only-member.png",
+        "sha256": "f5f072455741fe6ebcdec140829693e37a0e40da7d58e5e477994515124bc889",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-F00F3753/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.403Z",
+    "actual": "Current confirmed member across exact cutoff retains feed200. Same pre-cutoff idempotencykey/body replay returns200 and unchanged event IDs. Fresh invitation closed-member states additionally open same chat.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/interactions/invite--closed-member-w390.json",
+        "sha256": "3924b16fa648d7251e2f2fbfde26a0b930c8bb8063b05fbd98835ac076604431",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--closed-member-w390.png",
+        "sha256": "1751b063272d77aafc1e7252ebc820a3776e978788a074e0b0b61d8a806ea7bd",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-82AE12A5/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.403Z",
+    "actual": "Former Going→NotGoing attempts Going at cutoff; real409 join_closed and authoritative response remains not_going. Same rejection as new participant.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/former-closed.png",
+        "sha256": "d5b59fc064bef751eb2763f2932b7dcbe531c48c2729311fe3167bcc866f4035",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-13F9DCAB/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.404Z",
+    "actual": "Page loaded before cutoff with enabled Going. Own fixture clock advanced to exact boundary, existing stale button clicked: server rejects, client refreshes closed state preserving title/public facts; privatefeed403. Clock restored in finally.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-cutoff/stale-before-cutoff.png",
+        "sha256": "f3b3d393ce1959a8754dca4366632c76388dd66aea7646931a9811b80e68eb63",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-cutoff/stale-submit-denied.png",
+        "sha256": "2e2dadbf3c024df8ca62aad4d5e86f4ca0830e84a9ac3d23b3353bcfad3e9c1a",
+        "kind": "screenshot"
+      }
+    ]
+  },
+  {
+    "id": "TC-INV-DEC030F5/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.404Z",
+    "actual": "Real legacy RSVP DTO answer+expected_revision sent after cutoff returns established409 codejoin_closed/field_errors/request_id; no new UI field required. Current client maps same semantic refusal to human closed-state UI. This is wire DTO compatibility, not execution of released native binary.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-cutoff/observations.json",
+        "sha256": "953bbc4141e61a8579a4769658f974cfe75dfa206e30fdac2e13ee230b00760b",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-cutoff/stale-submit-denied.png",
+        "sha256": "2e2dadbf3c024df8ca62aad4d5e86f4ca0830e84a9ac3d23b3353bcfad3e9c1a",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-SHARE-COVER/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.404Z",
+    "actual": "No-JS anonymous HTML with approved dinner cover→approved boardgame replacement→remove. Every state GET+HEADimage200, PNGMIME/dimensions, absolute versionedURL; replacement changes URL+bytes; remove returns branded1200×630. No private metadata.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/cover-initial.html",
+        "sha256": "e31bd45bcf0e885c6081fc041505bbcab7458abef060b832ec4fa97aa151373c",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation-boundaries/cover-replaced.html",
+        "sha256": "d9bfbe926b2ddf08e45cc9e051092ecdc129b31e862347a15ab2dfe626fb51b0",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation-boundaries/cover-removed.html",
+        "sha256": "7b4f704fdd4f4c1516bc59c04cbd5ccfbd8b62be070ab0492c79bfe9d27de920",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/cover-removed-image.png",
+        "sha256": "82c874e857be2defdf0fd6a8b1f02394104bb35bbec617fcd6331461b8a90c11",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-SHARE-HOME/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.405Z",
+    "actual": "Anonymous JS-disabled / returns one generic somewhere title/description/canonical/OGURL on trusted9153, brandedPNG1200×630 with realGET/HEAD200, no meeting data. Current canonical07 additionally asserts image version hash matches bytes.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation-boundaries/observations.json",
+        "sha256": "d78393120bb72f930b31fa0875ec7489c4008d986e4ecf2b6ef6475b67cb2a0f",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-boundaries/home.html",
+        "sha256": "cbf71e83be9548104df5e8aff504688f538338892017be6bc4cc8709d86cd255",
+        "kind": "raw"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation-proof-screens/home-metadata-image.png",
+        "sha256": "82c874e857be2defdf0fd6a8b1f02394104bb35bbec617fcd6331461b8a90c11",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-proof-screens/observations.json",
+        "sha256": "e320014066af7fa1c95e11fd018e15e47840bec8fe91481ce124aea64d7be6b7",
+        "kind": "interaction"
+      }
+    ]
+  },
+  {
+    "id": "TC-MOBILE-ACTION-ERROR/web-browser-matrix/manual",
+    "status": "passed",
+    "executor": {
+      "kind": "agent",
+      "id": "codex-independent-web-r6-reviewer"
+    },
+    "startedAt": "2026-11-06T18:20:35.084Z",
+    "finishedAt": "2026-11-06T19:14:22.405Z",
+    "actual": "RSVP form failure/unknown retains public facts and current selection, single related error/status and confirmed-only navigation. Exact same intent retry produces one serverevent; generic form-or-vote scenario exercised by this response form, not claim of every form type.",
+    "defect": "",
+    "evidence": [
+      {
+        "path": "manual/invitation/interactions/invite--response-error-w390.json",
+        "sha256": "910ea038dc7caa481ac8ecb9689b09902245da1ebc7045daaea451643ae86411",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/interactions/invite--response-unknown-w390.json",
+        "sha256": "28d687fc6755f4cda27919e7ae0e2ca76b13836e915802b720ad8e3fbd7adf04",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/rsvp/interactions/rsvp-system-event--retry-dedup-w390.json",
+        "sha256": "96197d2fd0981d397c92857752a36e16d4a4ba5c107f8610d62075d2c8ee0f04",
+        "kind": "interaction"
+      },
+      {
+        "path": "manual/invitation/actual/invite--response-error-w390.png",
+        "sha256": "6877e661b9dfaf066f85ba9dfee196569037e68305b7f0ee218cff76ce01dba8",
+        "kind": "screenshot"
+      },
+      {
+        "path": "manual/invitation-canonical/mapping.json",
+        "sha256": "bcbafec00af241f41a74423e24f6e201aa8a3775c8f8f69c66e8d6f4258856c9",
+        "kind": "interaction"
+      }
+    ]
+  }
+]

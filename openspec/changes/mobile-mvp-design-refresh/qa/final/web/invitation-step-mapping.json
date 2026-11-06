@@ -1,0 +1,829 @@
+{
+  "scopeTasks": [
+    "8.7",
+    "8.10"
+  ],
+  "cases": [
+    {
+      "caseId": "TC-INV-F7D14B7B",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL показывать по действительной ссылке приглашения название,\nдату, место и полное описание встречи до авторизации. Переписка SHALL NOT раскрываться\nна публичном приглашении."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена без сессии Somewhere открывает действительное приглашение",
+          "expected": "она видит основные детали и действие ответа, но не переписку",
+          "observed": "Guest opens real public link: meeting title/description/date/place/real dinner cover/organizer visible, no composer; public feed403. Three mobile widths and cold bypass preserved.",
+          "evidence": [
+            "manual/invitation/interactions/invite--guest-w390.json",
+            "manual/invitation/actual/invite--guest-w390.png",
+            "manual/rsvp/interactions/response-route--auth-no-rsvp-w390.json",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:public guest assertions"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-D788A9C2",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL требовать вход через Яндекс ID для сохранения ответа\nна приглашение. Пользователю с действующей сессией повторный вход не требуется."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена хочет ответить на приглашение без входа",
+          "expected": "ей предлагается Яндекс ID до сохранения ответа",
+          "observed": "Guest cannot answer before session. Explicit sign-in alone returns same invitation with my_rsvp null, no auto RSVP; protected feed403. Busy/cancel/error did not grant access.",
+          "evidence": [
+            "manual/invitation/interactions/invite--guest-w390.json",
+            "manual/entry-complete/observations.json",
+            "manual/invitation/actual/invite--guest-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:OAuth return/feed403",
+        "17-auth-states:missing session"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-1BABADA3",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL требовать вход через Яндекс ID для сохранения ответа\nна приглашение. Пользователю с действующей сессией повторный вход не требуется."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена открывает приглашение с действующей сессией",
+          "expected": "она может перейти к выбору ответа без повторной авторизации",
+          "observed": "Authenticated invitee sees separate answer buttons on original public invitation; Going opens exact chat only after server confirmation, no extra OAuth.",
+          "evidence": [
+            "manual/invitation/interactions/invite--ready-w390.json",
+            "manual/rsvp/interactions/response-route--going-chat-w390.json",
+            "manual/invitation/actual/invite--ready-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:authenticated response",
+        "63-rsvp-routing:confirmed routes"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-EE3B32D9",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL требовать вход через Яндекс ID для сохранения ответа\nна приглашение. Пользователю с действующей сессией повторный вход не требуется."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Саша после входа открывает в web приглашение созданной им встречи",
+          "expected": "веб-клиент проверяет организатора по защищённым деталям и предлагает открыть эту встречу вместо выбора RSVP открытие ссылки и переход не записывают ответ и не добавляют второго участника ошибка проверки роли допускает повтор, не подменяя роль организатора ролью приглашённого",
+          "observed": "Organizer opening own real link after role verification immediately gets own chat with PUT0 and no duplicate membership; canonical25 confirms count1/revision unchanged across320/390/1440.",
+          "evidence": [
+            "manual/invitation/interactions/invite--organizer-w390.json",
+            "manual/invitation/actual/invite--organizer-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "25-own-invitation:organizer opens own invitation after login without RSVP or duplicate membership"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-BE2ABEB1",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL сохранять контекст приглашения при переходе к Яндекс ID\nи после успешного входа возвращать к той же встрече. Сам вход SHALL NOT\nсохранять «Приду» или открывать переписку."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена успешно завершает первый вход из приглашения Саши",
+          "expected": "профиль создаётся автоматически и открывается выбор ответа",
+          "observed": "Fixture OAuth from invitation returns to same token/title with no answer and feed403. Same result at320/390/739; direct link never forced through onboarding.",
+          "evidence": [
+            "manual/entry-complete/observations.json",
+            "manual/entry-complete/invitation-return-w390-actual.png",
+            "manual/invitation/interactions/invite--guest-w390.json",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:return invitation without answer"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-01BC1377",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL сохранять контекст приглашения при переходе к Яндекс ID\nи после успешного входа возвращать к той же встрече. Сам вход SHALL NOT\nсохранять «Приду» или открывать переписку."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "вход из приглашения отменён либо завершился ошибкой",
+          "expected": "приглашение не теряется и Лена может повторить вход",
+          "observed": "Actual provider cancellation leaves same public invitation and no answer; aborted sign-in start shows action-local error with retry. No optimistic success/chat.",
+          "evidence": [
+            "manual/invitation/interactions/invite--sign-in-cancelled-w390.json",
+            "manual/invitation/interactions/invite--auth-error-w390.json",
+            "manual/invitation/actual/invite--auth-error-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "02-reliability:cancelled invitation sign-in stays on the invitation without an answer",
+        "17-auth-states:error retry"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-14E94338",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять авторизованному приглашённому ответить «Приду»,\n«Возможно» или «Не смогу» на встречу с назначенной датой, в том числе без\nточного времени, и SHALL подтверждать, какой ответ успешно сохранён."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена выбирает «Приду» и ответ успешно сохранён",
+          "expected": "она видит подтверждение участия и переход к разговору встречи",
+          "observed": "Explicit Going confirmed by APIACK routes to same chat; private feed200/composer enabled, participant count and system event reflect one confirmed membership.",
+          "evidence": [
+            "manual/rsvp/interactions/response-route--going-chat-w390.json",
+            "manual/rsvp/interactions/rsvp-system-event--going-w390.json",
+            "manual/rsvp/actual/response-route--going-chat-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:join/chat/participant_count",
+        "63-rsvp-routing:Going"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-F54ED6C1",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять авторизованному приглашённому ответить «Приду»,\n«Возможно» или «Не смогу» на встречу с назначенной датой, в том числе без\nточного времени, и SHALL подтверждать, какой ответ успешно сохранён."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена выбирает «Не смогу» и ответ успешно сохранён",
+          "expected": "она видит подтверждение «Не смогу», а не экран принятого приглашения",
+          "observed": "Explicit first NotGoing leads to separate confirmation, eventanswer not_going previousnull, no participant_joined; own/saved lists omit declined meeting and feed403.",
+          "evidence": [
+            "manual/first-decline/observations.json",
+            "manual/first-decline/first-decline-event-390.png",
+            "manual/rsvp/interactions/response-route--declined-confirmation-w390.json",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "63-rsvp-routing:declined"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-9CE1DE4C",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять авторизованному приглашённому ответить «Приду»,\n«Возможно» или «Не смогу» на встречу с назначенной датой, в том числе без\nточного времени, и SHALL подтверждать, какой ответ успешно сохранён."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена выбирает «Возможно» и ответ успешно сохранён",
+          "expected": "подтверждение показывает «Возможно» и не утверждает, что она придёт",
+          "observed": "Explicit Maybe routes to saved invitations with matching card; answer retained after reload, feed403/composer absent, not counted as confirmed participant.",
+          "evidence": [
+            "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+            "publication-safe/manual/priority-extensions/observations.json",
+            "manual/rsvp/actual/response-route--maybe-invitations-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "63-rsvp-routing:Maybe"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-A8232BFB",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL открывать переписку приглашённому после успешного сохранения\n«Приду». До этого, включая первый ответ «Возможно» или «Не смогу»,\nпереписка SHALL оставаться закрытой."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "первый ответ Лены «Приду» успешно сохранён",
+          "expected": "она может открыть разговор встречи",
+          "observed": "After confirmed Going two real profiles exchange real text; guest reads/sends only after ACK, organizer sees text, text containing HTML remains inert. Current canonical01 exact actions/assertions completed; fresh manual Going chat also visible.",
+          "evidence": [
+            "manual/invitation-canonical/mapping.json",
+            "manual/rsvp/interactions/response-route--going-chat-w390.json",
+            "suite-originals/web-e2e/test-results/flow-mobile.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:two-profile message exchange"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-967EBE4C",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL открывать переписку приглашённому после успешного сохранения\n«Приду». До этого, включая первый ответ «Возможно» или «Не смогу»,\nпереписка SHALL оставаться закрытой."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена пока не ответила либо её первый ответ «Возможно» или «Не смогу»",
+          "expected": "разговор встречи ей не раскрывается",
+          "observed": "Guest without answer and with Maybe/NotGoing has no composer/privatefeed403. Canonical01 explicitly checks denied feed and removes chat after withdrawal. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/rsvp/interactions/response-route--auth-no-rsvp-w390.json",
+            "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-canonical/mapping.json",
+            "manual/rsvp/actual/response-route--auth-no-rsvp-w390.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:unconfirmed/revoked access"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-A1B0667E",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL при неудачном сохранении ответа показывать ошибку и возможность\nповтора. Ошибка отправки «Приду» SHALL NOT показываться как подтверждённое\nучастие или открывать переписку."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "сохранение выбранного «Приду» завершилось ошибкой",
+          "expected": "Лена видит неуспешную отправку и может повторить тот же ответ",
+          "observed": "Actual response aborted before server leaves original public facts, current selection and one action error; no chat navigation. Commit/lostACK retains same source until exact retry confirms once.",
+          "evidence": [
+            "manual/invitation/interactions/invite--response-error-w390.json",
+            "manual/invitation/interactions/invite--response-unknown-w390.json",
+            "manual/rsvp/interactions/response-route--unknown-stays-w390.json",
+            "manual/invitation/actual/invite--response-error-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "63-rsvp-routing:unconfirmed same intent"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-38B3DC35",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL отражать успешно принятое приглашение в ленте организатора\nи актуальном составе участников. Первый отказ SHALL NOT отображаться\nкак присоединение к встрече."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "у новой встречи был только Саша и Лена успешно ответила «Приду»",
+          "expected": "лента отражает принятие и показывает двух участников",
+          "observed": "Organizer witness sees server Going event with actor/time/id; participant count changes only after confirmed reply. Canonical01 observes updated roster count2.",
+          "evidence": [
+            "manual/rsvp/interactions/rsvp-system-event--going-w390.json",
+            "manual/rsvp/actual/rsvp-system-event--going-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:organizer roster count",
+        "63-rsvp-routing:system events"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-0BDDE341",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL отражать успешно принятое приглашение в ленте организатора\nи актуальном составе участников. Первый отказ SHALL NOT отображаться\nкак присоединение к встрече."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "у новой встречи был только Саша и Лена впервые ответила «Не смогу»",
+          "expected": "её ответ не увеличивает число присоединившихся участников",
+          "observed": "Organizer sees first NotGoing as rsvp_changed not_going without join, count unchanged; direct Going→NotGoing later decrementscount and preserves all prior event IDs.",
+          "evidence": [
+            "manual/first-decline/observations.json",
+            "manual/invitation-boundaries/observations.json",
+            "manual/first-decline/first-decline-event-390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "63-rsvp-routing:notgoing event"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-289FC0C1",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять приглашённому изменить свой сохранённый ответ.\nПри смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ\nк чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»\nSHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена с ответом «Приду» успешно сохраняет «Возможно»",
+          "expected": "её текущий ответ изменён, она не считается пришедшей и больше не может читать или писать разговор",
+          "observed": "Current Going→Maybe closes conversation and routes saved invitations. Feed403, no composer/content; old Going idempotency replay does not restore withdrawn access.",
+          "evidence": [
+            "manual/rsvp/interactions/response-route--maybe-invitations-w390.json",
+            "manual/invitation-canonical/mapping.json",
+            "manual/rsvp/actual/response-route--maybe-invitations-w390.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:withdrawal and stale Going key"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-968EF190",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять приглашённому изменить свой сохранённый ответ.\nПри смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ\nк чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»\nSHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена успешно меняет «Приду» на «Не смогу»",
+          "expected": "переписка закрывается и число участников уменьшается без удаления истории встречи",
+          "observed": "Real Lena directly changes Going→NotGoing, confirmed decline screen; participant_count2→1, privatefeed403, prior history IDs retained. Original completed record going-direct-decline.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/going-direct-decline.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-A1BC322E",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять приглашённому изменить свой сохранённый ответ.\nПри смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ\nк чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»\nSHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Лена после «Не смогу» успешно сохраняет «Приду»",
+          "expected": "она снова получает доступ к разговору и учитывается в составе компании",
+          "observed": "Real Lena after NotGoing chooses Going before cutoff; same meeting chat/composer returns, privatefeed200, participant_count2 and real new server event. Original record declined-returns-going.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/declined-returns-going.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "01-flow:NotGoing→Going reopens history"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-234112E7",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Система SHALL позволять приглашённому изменить свой сохранённый ответ.\nПри смене «Приду» на «Возможно» или «Не смогу» система SHALL закрывать доступ\nк чтению и отправке сообщений встречи. Повторное успешно сохранённое «Приду»\nSHALL снова открывать разговор. Ошибка сохранения SHALL NOT менять подтверждённый доступ."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "запрос смены «Приду» завершился ошибкой до сохранения",
+          "expected": "подтверждённый ответ и его права не меняются из-за локального выбора",
+          "observed": "Actual aborted Going→Maybe request before commit leaves authoritative my_rsvp Going/feed200 and identical history. Failed action is not applied optimistically. Record going-change-fails-before-commit; subsequent driver-navigation mistakes retained separately.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/going-change-fails-before-commit.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-2BEDEB5C",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Новая ссылка SHALL иметь путь `/i/{token}` и 22 символа канонического\nbase64url из 16 случайных байт. Ранее выданные 43-символьные токены\nи путь `/invitations/{token}` SHALL оставаться доступными. Вход, возврат\nи RSVP SHALL работать с обоими форматами. Секреты сессий и PKCE SHALL NOT\nсокращаться вместе с токенами приглашений."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "организатор создаёт встречу или получает её приглашение",
+          "expected": "ссылка использует `/i/` и 22-символьный случайный токен",
+          "observed": "Actual created invitation path matches /i/[A-Za-z0-9_-]{22}; public HTML canonical/og:url retain that absolute link. Distinct independent creates yield real opaque tokens; no session secret shortening claimed. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation/actual/invite--share-w390.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "07-share-preview:short invitation provides fresh metadata and PNG without JavaScript"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-0ACF4522",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Новая ссылка SHALL иметь путь `/i/{token}` и 22 символа канонического\nbase64url из 16 случайных байт. Ранее выданные 43-символьные токены\nи путь `/invitations/{token}` SHALL оставаться доступными. Вход, возврат\nи RSVP SHALL работать с обоими форматами. Секреты сессий и PKCE SHALL NOT\nсокращаться вместе с токенами приглашений."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "друг открывает старый путь с 43-символьным токеном",
+          "expected": "открывается то же приглашение и вход не теряет его контекст",
+          "observed": "Supplemental own9163 QA-only additive Go seed supplies canonical43 token. Old /invitations/token redirects /i/same43; real fixtureOAuth returns same legacy title/id/token, my_rsvp null, PUT0. Source/overlay/binary provenance independently hashed; own process stopped. This is data-fixture compatibility, not old-native/release/signedlink acceptance.",
+          "evidence": [
+            "manual/legacy43/observations.json",
+            "manual/legacy43/process.json",
+            "manual/legacy43/provenance/source-binding.json",
+            "manual/legacy43/legacy43-after-auth.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-B9E5EC51",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Публичный HTML SHALL отдавать title/description, canonical и Open Graph\n(title, description, type, URL, image, MIME и размеры) без JavaScript и входа.\nПриглашение SHALL показывать название, полное описание либо дату/место и\nактуальную версионную обложку; без обложки — фирменную PNG 1200×630.\nГлавная страница SHALL показывать только общие метаданные сервиса."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "внешний клиент запрашивает публичное приглашение без JavaScript",
+          "expected": "HTML содержит заголовок встречи, описание и абсолютный URL текущей обложки либо фирменной PNG; без переписки, профилей и ответов участников.",
+          "observed": "Real JavaScript-disabled anonymous HTML returns exactly one title/description/canonical and current invitation OGcover. No organizer_id/participant_count/email/phone/csrf data; decoded title/description remain exact text. GET/HEADimage200 with PNGdimensions. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/cover-initial.html",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation-proof-screens/cover-removed-image.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "07-share-preview:short invitation metadata"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-623DEDA5",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Публичный HTML SHALL отдавать title/description, canonical и Open Graph\n(title, description, type, URL, image, MIME и размеры) без JavaScript и входа.\nПриглашение SHALL показывать название, полное описание либо дату/место и\nактуальную версионную обложку; без обложки — фирменную PNG 1200×630.\nГлавная страница SHALL показывать только общие метаданные сервиса."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "токен неизвестен или имеет неверный формат",
+          "expected": "сервер возвращает 404 без метаданных существующих встреч",
+          "observed": "Unknown valid-shaped token anonymous HTML returns404 and zero existingmeeting og:title. UI invalidtoken error retries actualGET withoutRSVP. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/missing.html",
+            "manual/invitation/interactions/invite--unavailable-w390.json",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation/actual/invite--unavailable-w390.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "07-share-preview:missing token404"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-B28C9A8B",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Публичный HTML SHALL отдавать title/description, canonical и Open Graph\n(title, description, type, URL, image, MIME и размеры) без JavaScript и входа.\nПриглашение SHALL показывать название, полное описание либо дату/место и\nактуальную версионную обложку; без обложки — фирменную PNG 1200×630.\nГлавная страница SHALL показывать только общие метаданные сервиса."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "название или описание содержит теги, кавычки или script",
+          "expected": "это остаётся текстом, метаданные не создают исполняемые элементы",
+          "observed": "Created title with quotes/bold markup and description with script. Anonymous no-JS DOM metadata equals literal text, HTML escapes tags, inlineScript0; no executable element introduced. Current canonical07 asserts raw &lt;script&gt; and no script payload. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/cover-initial.html",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation-proof-screens/escaped-html-metadata.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "07-share-preview:escaped script metadata"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-84CC3D0C",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Если встрече назначено точное время начала, сервер SHALL запрещать новое\nприсоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент\nпо абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL\nNOT включать эту отсечку. Базовые ограничения участия в прошедших встречах\nсохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "новый участник подтверждает «Приду» раньше чем за час до начала",
+          "expected": "применяется обычная проверка и подтверждается участие",
+          "observed": "Own fixture clock frozen t0. Actual new Going at starts=t0+3600001ms succeeds200/can_access_feed true, proving one millisecond before cutoff. Fixture clock restored. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation-proof-screens/before-hour-member.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-F8EEC653",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Если встрече назначено точное время начала, сервер SHALL запрещать новое\nприсоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент\nпо абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL\nNOT включать эту отсечку. Базовые ограничения участия в прошедших встречах\nсохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "новый участник подтверждает «Приду» ровно за час до начала или позже",
+          "expected": "сервер отклоняет присоединение, а клиент показывает «Присоединиться уже нельзя» переписка и закрытые фотографии не раскрываются",
+          "observed": "At exact starts=t0+3600000ms, new Going rejected409 join_closed (published existing API contract), privatefeed403, UI shows Участие закрыто without fresh answer controls. No privatephotos/chat exposed.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation-cutoff/exact-hour-denied.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-235E4D53",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Если встрече назначено точное время начала, сервер SHALL запрещать новое\nприсоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент\nпо абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL\nNOT включать эту отсечку. Базовые ограничения участия в прошедших встречах\nсохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "дата назначена, но точное время отсутствует",
+          "expected": "правило часовой отсечки не запрещает новое участие",
+          "observed": "Meeting with current starts_on only and no starts_at accepts new Going200; hour cutoff not applied to unspecified time. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation-proof-screens/date-only-member.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-F00F3753",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Если встрече назначено точное время начала, сервер SHALL запрещать новое\nприсоединение при `now >= startsAt - 1 hour`. Сервер SHALL определять момент\nпо абсолютному времени с учётом часового пояса встречи. Дата без времени SHALL\nNOT включать эту отсечку. Базовые ограничения участия в прошедших встречах\nсохраняются. Отсечка SHALL NOT отзывать доступ текущих участников и организатора."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "человек остаётся текущим участником на момент отсечки",
+          "expected": "сохраняет доступ к чату и доступным действиям своей роли повтор того же подтверждённого запроса не отменяет участие",
+          "observed": "Current confirmed member across exact cutoff retains feed200. Same pre-cutoff idempotencykey/body replay returns200 and unchanged event IDs. Fresh invitation closed-member states additionally open same chat.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation/interactions/invite--closed-member-w390.json",
+            "manual/invitation/actual/invite--closed-member-w390.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-82AE12A5",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Пользователь, ранее участвовавший и затем отказавшийся, SHALL считаться новым\nприсоединяющимся при возвращении. История участия SHALL NOT давать исключение."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "бывший участник с текущим ответом «Не приду» пытается снова выбрать «Приду» после отсечки",
+          "expected": "получает тот же отказ, что и новый участник",
+          "observed": "Former Going→NotGoing attempts Going at cutoff; real409 join_closed and authoritative response remains not_going. Same rejection as new participant. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation-proof-screens/former-closed.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-13F9DCAB",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Клиенты SHALL показывать закрытое состояние приглашения при наступлении отсечки,\nвозврате приложения на передний план и изменении времени встречи. Сервер SHALL\nповторять проверку в момент изменения RSVP независимо от версии клиента.\nЕсли время перенесено, возможность вступления SHALL пересчитываться по новому\nначалу с сохранением остальных ограничений базовой спецификации."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "отсечка наступила после загрузки страницы до отправки ответа",
+          "expected": "сервер не принимает устаревшее разрешение на вход клиент сохраняет детали приглашения и объясняет закрытие входа",
+          "observed": "Page loaded before cutoff with enabled Going. Own fixture clock advanced to exact boundary, existing stale button clicked: server rejects, client refreshes closed state preserving title/public facts; privatefeed403. Clock restored in finally.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation-cutoff/stale-before-cutoff.png",
+            "manual/invitation-cutoff/stale-submit-denied.png"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-INV-DEC030F5",
+      "preconditions": [
+        "Изолированное окружение и тестовые профили по testing/environments.md; зафиксированы сборка, API и время.",
+        "Клиенты SHALL показывать закрытое состояние приглашения при наступлении отсечки,\nвозврате приложения на передний план и изменении времени встречи. Сервер SHALL\nповторять проверку в момент изменения RSVP независимо от версии клиента.\nЕсли время перенесено, возможность вступления SHALL пересчитываться по новому\nначалу с сохранением остальных ограничений базовой спецификации."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "выпущенная версия клиента отправляет запрос после отсечки",
+          "expected": "сервер возвращает совместимую ошибку запрета с понятным сообщением не полагается на наличие нового интерфейса в этом клиенте",
+          "observed": "Real legacy RSVP DTO answer+expected_revision sent after cutoff returns established409 codejoin_closed/field_errors/request_id; no new UI field required. Current client maps same semantic refusal to human closed-state UI. This is wire DTO compatibility, not execution of released native binary. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-cutoff/observations.json",
+            "manual/invitation-cutoff/stale-submit-denied.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-SHARE-COVER",
+      "preconditions": [
+        "Изолированный fixture; свежая серверная сборка и production web bundle. Без настоящих пользователей.",
+        "Публичный HTML SHALL отдавать title/description, canonical и Open Graph\n(title, description, type, URL, image, MIME и размеры) без JavaScript и входа.\nПриглашение SHALL показывать название, полное описание либо дату/место и\nактуальную версионную обложку; без обложки — фирменную PNG 1200×630.\nГлавная страница SHALL показывать только общие метаданные сервиса."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Создать приглашение с обложкой, запросить HTML без сессии/JavaScript; GET и HEAD og:image.",
+          "expected": "Текущая публичная обложка, HTTP200, действительные MIME/размеры, абсолютный версионный URL.",
+          "observed": "No-JS anonymous HTML with approved dinner cover→approved boardgame replacement→remove. Every state GET+HEADimage200, PNGMIME/dimensions, absolute versionedURL; replacement changes URL+bytes; remove returns branded1200×630. No private metadata. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/cover-initial.html",
+            "manual/invitation-boundaries/cover-replaced.html",
+            "manual/invitation-boundaries/cover-removed.html",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation-proof-screens/cover-removed-image.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        },
+        {
+          "step": 2,
+          "action": "Заменить обложку, затем удалить и повторить запросы.",
+          "expected": "Новая версия/пиксели после замены; фирменная PNG1200×630 после удаления. Нет приватных данных.",
+          "observed": "No-JS anonymous HTML with approved dinner cover→approved boardgame replacement→remove. Every state GET+HEADimage200, PNGMIME/dimensions, absolute versionedURL; replacement changes URL+bytes; remove returns branded1200×630. No private metadata. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/cover-initial.html",
+            "manual/invitation-boundaries/cover-replaced.html",
+            "manual/invitation-boundaries/cover-removed.html",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation-proof-screens/cover-removed-image.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "07-share-preview:public invitation preview follows cover add, replacement and removal"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-SHARE-HOME",
+      "preconditions": [
+        "Изолированный fixture; свежая серверная сборка и production web bundle. Без настоящих пользователей.",
+        "Публичный HTML SHALL отдавать title/description, canonical и Open Graph\n(title, description, type, URL, image, MIME и размеры) без JavaScript и входа.\nПриглашение SHALL показывать название, полное описание либо дату/место и\nактуальную версионную обложку; без обложки — фирменную PNG 1200×630.\nГлавная страница SHALL показывать только общие метаданные сервиса."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Запросить / без JavaScript и входа, проверить HTML и картинку.",
+          "expected": "Общие title/description/canonical/OG, единственный title/description, PNG1200×630, trusted origin, без данных встреч.",
+          "observed": "Anonymous JS-disabled / returns one generic somewhere title/description/canonical/OGURL on trusted9153, brandedPNG1200×630 with realGET/HEAD200, no meeting data. Current canonical07 additionally asserts image version hash matches bytes. Supplemental screenshot is the actual matching public/member browser surface or anonymous OG image/view-source; HTTP assertions remain in original linked records.",
+          "evidence": [
+            "manual/invitation-boundaries/observations.json",
+            "manual/invitation-boundaries/home.html",
+            "manual/invitation-canonical/mapping.json",
+            "manual/invitation-proof-screens/home-metadata-image.png",
+            "manual/invitation-proof-screens/observations.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "07-share-preview:home exposes one complete preview to a crawler without JavaScript"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    },
+    {
+      "caseId": "TC-MOBILE-ACTION-ERROR",
+      "preconditions": [
+        "Изолированная работающая сборка нужной платформы/API с зафиксированным artifact hash; опубликованный пакет мобильного редизайна и тестовые профили.",
+        "Окружение соответствует testing/environments.md; не использовать HTML-прототип вместо клиента. Включить необходимые права/ошибки/размер текста только на собственном fixture."
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "отправка формы или голоса не удалась либо результат неизвестен",
+          "expected": "показан один относящийся к действию статус с корректным повтором, без ложного успеха и потери введённого; голос не получает два одинаковых сообщения об ошибке",
+          "observed": "RSVP form failure/unknown retains public facts and current selection, single related error/status and confirmed-only navigation. Exact same intent retry produces one serverevent; generic form-or-vote scenario exercised by this response form, not claim of every form type.",
+          "evidence": [
+            "manual/invitation/interactions/invite--response-error-w390.json",
+            "manual/invitation/interactions/invite--response-unknown-w390.json",
+            "manual/rsvp/interactions/rsvp-system-event--retry-dedup-w390.json",
+            "manual/invitation/actual/invite--response-error-w390.png",
+            "manual/invitation-canonical/mapping.json"
+          ]
+        }
+      ],
+      "canonicalAssertions": [
+        "63-rsvp-routing:unconfirmed same-intent retry"
+      ],
+      "environment": "Primarymanualhttps9153,R6AFE260files; canonical dynamichttps8444 explicitly separate; legacy43 additive QAseedhttps9163 stopped. Meeting clock restored; nil delivery/memory only."
+    }
+  ],
+  "toolingLimits": "Original initial setup timezone_mismatch and subsequent driver child→parent/incorrect feed shape/409 expectation errors retained. Only completed records are cited. Remaining cutoff executed fresh in own separate driver with published409 join_closed contract. No product defect observed. No whole305 pass."
+}

@@ -1,0 +1,330 @@
+{
+  "records": [
+    {
+      "name": "going-change-fails-before-commit",
+      "at": "2026-11-06T19:08:34.993Z",
+      "case": "TC-INV-234112E7",
+      "beforeRsvp": "going",
+      "afterRsvp": "going",
+      "privateFeedStatus": 200,
+      "feedUnchanged": true,
+      "url": "https://127.0.0.1:9153/meetings/c585a362-8c27-49bf-bc44-c18d5cc549cf",
+      "ax": "- link \"К содержимому\":\n  - /url: \"#main\"\n- text: Демостенд · данные хранятся до перезапуска\n- main:\n  - link \"К моим встречам\":\n    - /url: /meetings\n  - button \"Сведения о встрече «Independent invitation b79bcf»\":\n    - heading \"Independent invitation b79bcf\" [level=1]\n    - text: 8 ноября · 20:00 · 2 участника\n  - button \"Информация о встрече\"\n  - list \"Разговор встречи\":\n    - listitem:\n      - time: Сегодня · 21:18\n      - paragraph: Саша создал встречу\n    - listitem:\n      - time: Сегодня · 21:18\n      - paragraph: Лена ответил «Приду»\n  - button \"Добавить к встрече\"\n  - text: Сообщение\n  - textbox \"Сообщение\":\n    - /placeholder: Сообщение…\n  - button \"Выбрать эмодзи\"\n  - button \"Отправить сообщение\" [disabled]\n- dialog \"Изменить ответ\":\n  - button \"Закрыть\"\n  - heading \"Изменить ответ\" [level=2]\n  - button \"← К деталям встречи\"\n  - paragraph: Если выбрать «Возможно» или «Не смогу», доступ к чату закроется.\n  - button \"Приду\" [pressed]\n  - button \"Возможно\"\n  - button \"Не смогу\"\n  - alert: Не удалось получить ответ. Попробуйте ещё раз."
+    },
+    {
+      "name": "going-direct-decline",
+      "at": "2026-11-06T19:08:35.220Z",
+      "case": "TC-INV-968EF190",
+      "beforeCount": 2,
+      "afterCount": 1,
+      "privateFeedStatus": 403,
+      "historyPreserved": true,
+      "event": {
+        "id": "868a19f3-76f6-4379-bc45-f1eb2791442f",
+        "meeting_id": "c585a362-8c27-49bf-bc44-c18d5cc549cf",
+        "sequence": "3",
+        "kind": "participant_left",
+        "payload_version": 1,
+        "actor": {
+          "id": "dea00000-0000-4000-8000-000000000001",
+          "display_name": "Лена"
+        },
+        "occurred_at": "2026-11-06T18:18:14.274Z",
+        "payload": {
+          "previous_answer": "going",
+          "answer": "not_going"
+        },
+        "client_request_id": null
+      },
+      "url": "https://127.0.0.1:9153/meetings/c585a362-8c27-49bf-bc44-c18d5cc549cf/declined",
+      "ax": "- link \"К содержимому\":\n  - /url: \"#main\"\n- text: Демостенд · данные хранятся до перезапуска\n- banner:\n  - link \"Somewhere — на главную\":\n    - /url: /\n    - text: somewhere\n- main:\n  - heading \"Вы ответили «Не смогу»\" [level=1]\n  - paragraph: Independent invitation b79bcf\n  - paragraph: Организатор увидит ваш ответ.\n  - link \"К моим встречам\":\n    - /url: /meetings"
+    },
+    {
+      "name": "declined-returns-going",
+      "at": "2026-11-06T19:08:35.470Z",
+      "case": "TC-INV-A1BC322E",
+      "privateFeedStatus": 200,
+      "participantCount": 2,
+      "event": {
+        "id": "5928e120-803a-44a9-90a1-057035b0d66d",
+        "meeting_id": "c585a362-8c27-49bf-bc44-c18d5cc549cf",
+        "sequence": "4",
+        "kind": "participant_joined",
+        "payload_version": 1,
+        "actor": {
+          "id": "dea00000-0000-4000-8000-000000000001",
+          "display_name": "Лена"
+        },
+        "occurred_at": "2026-11-06T18:18:14.274Z",
+        "payload": {
+          "previous_answer": "not_going",
+          "answer": "going"
+        },
+        "client_request_id": null
+      },
+      "url": "https://127.0.0.1:9153/meetings/c585a362-8c27-49bf-bc44-c18d5cc549cf",
+      "ax": "- link \"К содержимому\":\n  - /url: \"#main\"\n- text: Демостенд · данные хранятся до перезапуска\n- main:\n  - link \"К моим встречам\":\n    - /url: /meetings\n  - button \"Сведения о встрече «Independent invitation b79bcf»\":\n    - heading \"Independent invitation b79bcf\" [level=1]\n    - text: 8 ноября · 20:00 · 2 участника\n  - button \"Информация о встрече\"\n  - list \"Разговор встречи\":\n    - listitem:\n      - time: Сегодня · 21:18\n      - paragraph: Саша создал встречу\n    - listitem:\n      - time: Сегодня · 21:18\n      - paragraph: Лена ответил «Приду»\n    - listitem:\n      - time: Сегодня · 21:18\n      - paragraph: Лена ответил «Не смогу»\n    - listitem:\n      - time: Сегодня · 21:18\n      - paragraph: Лена ответил «Приду»\n  - button \"Добавить к встрече\"\n  - text: Сообщение\n  - textbox \"Сообщение\":\n    - /placeholder: Сообщение…\n  - button \"Выбрать эмодзи\"\n  - button \"Отправить сообщение\" [disabled]"
+    },
+    {
+      "name": "cover-initial",
+      "at": "2026-11-06T19:08:35.742Z",
+      "cases": [
+        "TC-INV-B9E5EC51",
+        "TC-INV-B28C9A8B",
+        "TC-SHARE-COVER"
+      ],
+      "javascriptEnabled": false,
+      "status": 200,
+      "titles": [
+        "Настолки \"дома\" <b>встреча</b> — somewhere"
+      ],
+      "description": [
+        "Пицца & игры <script>window.injected=true</script> \"до ночи\""
+      ],
+      "canonical": [
+        "https://127.0.0.1:9153/i/EbJKcDyezicRMwuT6evXSg"
+      ],
+      "og": {
+        "og:title": "Настолки \"дома\" <b>встреча</b>",
+        "og:description": "Пицца & игры <script>window.injected=true</script> \"до ночи\"",
+        "og:type": "website",
+        "og:url": "https://127.0.0.1:9153/i/EbJKcDyezicRMwuT6evXSg",
+        "og:site_name": "somewhere",
+        "og:locale": "ru_RU",
+        "og:image": "https://127.0.0.1:9153/api/v1/invitations/EbJKcDyezicRMwuT6evXSg/cover?v=9974f145116eb56fc61b219b88124201d99488656353bb00eb087c56d77c4a4f",
+        "og:image:secure_url": "https://127.0.0.1:9153/api/v1/invitations/EbJKcDyezicRMwuT6evXSg/cover?v=9974f145116eb56fc61b219b88124201d99488656353bb00eb087c56d77c4a4f",
+        "og:image:type": "image/png",
+        "og:image:width": "1024",
+        "og:image:height": "1536",
+        "og:image:alt": "Настолки \"дома\" <b>встреча</b>"
+      },
+      "inlineScript": 0,
+      "renderedExecutable": 0,
+      "rawSha256": "e31bd45bcf0e885c6081fc041505bbcab7458abef060b832ec4fa97aa151373c",
+      "privateTermsPresent": false,
+      "image": {
+        "url": "https://127.0.0.1:9153/api/v1/invitations/EbJKcDyezicRMwuT6evXSg/cover?v=9974f145116eb56fc61b219b88124201d99488656353bb00eb087c56d77c4a4f",
+        "status": 200,
+        "headStatus": 200,
+        "headBodyBytes": 0,
+        "mime": "image/png",
+        "bytes": 2215433,
+        "sha256": "9974f145116eb56fc61b219b88124201d99488656353bb00eb087c56d77c4a4f",
+        "width": 1024,
+        "height": 1536
+      }
+    },
+    {
+      "name": "cover-replaced",
+      "at": "2026-11-06T19:08:35.982Z",
+      "cases": [
+        "TC-INV-B9E5EC51",
+        "TC-INV-B28C9A8B",
+        "TC-SHARE-COVER"
+      ],
+      "javascriptEnabled": false,
+      "status": 200,
+      "titles": [
+        "Настолки \"дома\" <b>встреча</b> — somewhere"
+      ],
+      "description": [
+        "Пицца & игры <script>window.injected=true</script> \"до ночи\""
+      ],
+      "canonical": [
+        "https://127.0.0.1:9153/i/EbJKcDyezicRMwuT6evXSg"
+      ],
+      "og": {
+        "og:title": "Настолки \"дома\" <b>встреча</b>",
+        "og:description": "Пицца & игры <script>window.injected=true</script> \"до ночи\"",
+        "og:type": "website",
+        "og:url": "https://127.0.0.1:9153/i/EbJKcDyezicRMwuT6evXSg",
+        "og:site_name": "somewhere",
+        "og:locale": "ru_RU",
+        "og:image": "https://127.0.0.1:9153/api/v1/invitations/EbJKcDyezicRMwuT6evXSg/cover?v=fa74dc9564a04d9ad311d4669567ec1247a8f2dc820dbd44b302b71a865761a3",
+        "og:image:secure_url": "https://127.0.0.1:9153/api/v1/invitations/EbJKcDyezicRMwuT6evXSg/cover?v=fa74dc9564a04d9ad311d4669567ec1247a8f2dc820dbd44b302b71a865761a3",
+        "og:image:type": "image/png",
+        "og:image:width": "1536",
+        "og:image:height": "1024",
+        "og:image:alt": "Настолки \"дома\" <b>встреча</b>"
+      },
+      "inlineScript": 0,
+      "renderedExecutable": 0,
+      "rawSha256": "d9bfbe926b2ddf08e45cc9e051092ecdc129b31e862347a15ab2dfe626fb51b0",
+      "privateTermsPresent": false,
+      "image": {
+        "url": "https://127.0.0.1:9153/api/v1/invitations/EbJKcDyezicRMwuT6evXSg/cover?v=fa74dc9564a04d9ad311d4669567ec1247a8f2dc820dbd44b302b71a865761a3",
+        "status": 200,
+        "headStatus": 200,
+        "headBodyBytes": 0,
+        "mime": "image/png",
+        "bytes": 2202699,
+        "sha256": "fa74dc9564a04d9ad311d4669567ec1247a8f2dc820dbd44b302b71a865761a3",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "name": "cover-removed",
+      "at": "2026-11-06T19:08:36.003Z",
+      "cases": [
+        "TC-INV-B9E5EC51",
+        "TC-INV-B28C9A8B",
+        "TC-SHARE-COVER"
+      ],
+      "javascriptEnabled": false,
+      "status": 200,
+      "titles": [
+        "Настолки \"дома\" <b>встреча</b> — somewhere"
+      ],
+      "description": [
+        "Пицца & игры <script>window.injected=true</script> \"до ночи\""
+      ],
+      "canonical": [
+        "https://127.0.0.1:9153/i/EbJKcDyezicRMwuT6evXSg"
+      ],
+      "og": {
+        "og:title": "Настолки \"дома\" <b>встреча</b>",
+        "og:description": "Пицца & игры <script>window.injected=true</script> \"до ночи\"",
+        "og:type": "website",
+        "og:url": "https://127.0.0.1:9153/i/EbJKcDyezicRMwuT6evXSg",
+        "og:site_name": "somewhere",
+        "og:locale": "ru_RU",
+        "og:image": "https://127.0.0.1:9153/share-card.png?v=ab6c200ef249fb11",
+        "og:image:secure_url": "https://127.0.0.1:9153/share-card.png?v=ab6c200ef249fb11",
+        "og:image:type": "image/png",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:image:alt": "somewhere — встречи с друзьями"
+      },
+      "inlineScript": 0,
+      "renderedExecutable": 0,
+      "rawSha256": "7b4f704fdd4f4c1516bc59c04cbd5ccfbd8b62be070ab0492c79bfe9d27de920",
+      "privateTermsPresent": false,
+      "image": {
+        "url": "https://127.0.0.1:9153/share-card.png?v=ab6c200ef249fb11",
+        "status": 200,
+        "headStatus": 200,
+        "headBodyBytes": 0,
+        "mime": "image/png",
+        "bytes": 45673,
+        "sha256": "ab6c200ef249fb11fe030b51b09ce24f1040db315cdbab440429136948aedcb1",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "name": "home-metadata",
+      "at": "2026-11-06T19:08:36.019Z",
+      "case": "TC-SHARE-HOME",
+      "javascriptEnabled": false,
+      "status": 200,
+      "titles": [
+        "somewhere — встречи с друзьями"
+      ],
+      "description": [
+        "Пригласите друзей на встречу. Ответы, детали и общий разговор — в somewhere."
+      ],
+      "canonical": [
+        "https://127.0.0.1:9153/"
+      ],
+      "og": {
+        "og:title": "somewhere — встречи с друзьями",
+        "og:description": "Пригласите друзей на встречу. Ответы, детали и общий разговор — в somewhere.",
+        "og:type": "website",
+        "og:url": "https://127.0.0.1:9153/",
+        "og:site_name": "somewhere",
+        "og:locale": "ru_RU",
+        "og:image": "https://127.0.0.1:9153/share-card.png?v=ab6c200ef249fb11",
+        "og:image:secure_url": "https://127.0.0.1:9153/share-card.png?v=ab6c200ef249fb11",
+        "og:image:type": "image/png",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:image:alt": "somewhere — встречи с друзьями"
+      },
+      "inlineScript": 0,
+      "renderedExecutable": 0,
+      "rawSha256": "cbf71e83be9548104df5e8aff504688f538338892017be6bc4cc8709d86cd255",
+      "privateTermsPresent": false,
+      "image": {
+        "url": "https://127.0.0.1:9153/share-card.png?v=ab6c200ef249fb11",
+        "status": 200,
+        "headStatus": 200,
+        "headBodyBytes": 0,
+        "mime": "image/png",
+        "bytes": 45673,
+        "sha256": "ab6c200ef249fb11fe030b51b09ce24f1040db315cdbab440429136948aedcb1",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "name": "missing-metadata",
+      "at": "2026-11-06T19:08:36.032Z",
+      "case": "TC-INV-623DEDA5",
+      "status": 404,
+      "titles": [
+        "Somewhere — встречи с друзьями"
+      ],
+      "description": [
+        "Пригласите друзей на встречу. Ответы, детали и общий разговор — в Somewhere."
+      ],
+      "canonical": [],
+      "og": {},
+      "inlineScript": 0,
+      "renderedExecutable": 0,
+      "rawSha256": "317bd4b7b54702e5c7d39dd6b13e06c4df1e4b584faa6923f2da51b0d2f053d8",
+      "privateTermsPresent": false
+    },
+    {
+      "name": "before-hour-and-current-member",
+      "at": "2026-11-06T19:08:36.048Z",
+      "cases": [
+        "TC-INV-84CC3D0C",
+        "TC-INV-F00F3753"
+      ],
+      "initialRequest": {
+        "status": 200,
+        "method": "put",
+        "path": "/api/v1/invitations/Fy65oJ6-zrDU9mrVJZZwkQ/rsvp",
+        "key": "9b616a96-ac3e-4566-9fdb-3b8aed2df7fb",
+        "body": {
+          "meeting_id": "ddd316be-1a37-4497-a86f-7890e30f8ef5",
+          "rsvp": "going",
+          "rsvp_revision": "1",
+          "can_access_feed": true,
+          "meeting_revision": "2"
+        }
+      },
+      "repeat": {
+        "status": 200,
+        "method": "put",
+        "path": "/api/v1/invitations/Fy65oJ6-zrDU9mrVJZZwkQ/rsvp",
+        "key": "0534fc43-bbe6-41e6-937d-30b4f2478d68",
+        "body": {
+          "meeting_id": "ddd316be-1a37-4497-a86f-7890e30f8ef5",
+          "rsvp": "going",
+          "rsvp_revision": "1",
+          "can_access_feed": true,
+          "meeting_revision": "2"
+        }
+      },
+      "clockBefore": "2026-11-06T18:18:14.274Z",
+      "clockAfter": "2026-11-06T18:18:14.275Z",
+      "feedUnchanged": true,
+      "feedStatus": 200
+    }
+  ],
+  "errors": [
+    {
+      "error": "Error: exact hour accepted\n    at check (file:///Users/misha/Documents/Codex/projects/group-planning/openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/web/setup/harness.mjs:10:62)\n    at file:///Users/misha/Documents/Codex/projects/group-planning/openspec/changes/mobile-mvp-design-refresh/qa/final/web/drivers/invitation-boundaries.mjs:13:117"
+    }
+  ],
+  "clockRestore": {
+    "status": 200,
+    "clock": {
+      "automatic_transitions": false,
+      "now": "2026-11-06T18:18:14.274Z"
+    }
+  },
+  "kind": "Fresh independent actual observations, not merged into frozen priority run"
+}

@@ -1,0 +1,149 @@
+{
+  "records": [
+    {
+      "name": "before-hour-and-current-member",
+      "at": "2026-11-06T19:09:48.376Z",
+      "cases": [
+        "TC-INV-84CC3D0C",
+        "TC-INV-F00F3753"
+      ],
+      "initialRequest": {
+        "status": 200,
+        "method": "put",
+        "path": "/api/v1/invitations/nNIuMcCnbPCLbBe-s5VI4Q/rsvp",
+        "key": "3cf01b01-9065-4f04-8559-bea3216e925e",
+        "body": {
+          "meeting_id": "ada2f59f-b310-4d61-a56b-11bfb086a04c",
+          "rsvp": "going",
+          "rsvp_revision": "1",
+          "can_access_feed": true,
+          "meeting_revision": "2"
+        }
+      },
+      "repeat": {
+        "status": 200,
+        "method": "put",
+        "path": "/api/v1/invitations/nNIuMcCnbPCLbBe-s5VI4Q/rsvp",
+        "key": "538812f5-8f80-4cde-b57b-7f87ec7e8c8a",
+        "body": {
+          "meeting_id": "ada2f59f-b310-4d61-a56b-11bfb086a04c",
+          "rsvp": "going",
+          "rsvp_revision": "1",
+          "can_access_feed": true,
+          "meeting_revision": "2"
+        }
+      },
+      "clockBefore": "2026-11-06T18:18:14.274Z",
+      "clockAfter": "2026-11-06T18:18:14.275Z",
+      "feedUnchanged": true,
+      "feedStatus": 200
+    },
+    {
+      "name": "exact-hour-denied",
+      "at": "2026-11-06T19:09:48.512Z",
+      "case": "TC-INV-F8EEC653",
+      "response": {
+        "status": 409,
+        "method": "put",
+        "path": "/api/v1/invitations/4efeFNy0KkJwBksAu7Frkg/rsvp",
+        "key": "5dffd8ab-d88b-4df1-bf03-c45f54ae4a59",
+        "body": {
+          "error": {
+            "code": "join_closed",
+            "field_errors": {},
+            "request_id": "9478bab0-74c1-4f43-9d56-c951b46e228e"
+          }
+        }
+      },
+      "clock": "2026-11-06T18:18:14.274Z",
+      "startsAt": "2026-11-06T19:18:14.274Z",
+      "privateFeedStatus": 403,
+      "url": "https://127.0.0.1:9153/i/4efeFNy0KkJwBksAu7Frkg",
+      "ax": "- link \"К содержимому\":\n  - /url: \"#main\"\n- text: Демостенд · данные хранятся до перезапуска\n- banner:\n  - link \"Somewhere — на главную\":\n    - /url: /\n    - text: somewhere\n  - button \"Выйти из аккаунта\"\n- main:\n  - article:\n    - paragraph: Приглашение на встречу\n    - heading \"Cutoff 256883\" [level=1]\n    - text: Приглашает\n    - strong: Саша\n    - status:\n      - strong: Участие закрыто\n      - paragraph: Новых участников больше не принимают.\n    - term: Когда\n    - definition: 6 ноября в 19:18 GMT+00:00\n    - term: Где\n    - definition: Место пока не выбрано\n  - link \"К приглашениям\":\n    - /url: /invitations"
+    },
+    {
+      "name": "date-only-join",
+      "at": "2026-11-06T19:09:48.517Z",
+      "case": "TC-INV-235E4D53",
+      "response": {
+        "status": 200,
+        "method": "put",
+        "path": "/api/v1/invitations/i5X7wfsCxd1V7s6GUgsgGg/rsvp",
+        "key": "6850cad3-1356-4279-b964-febc7410a520",
+        "body": {
+          "meeting_id": "8429036b-cdac-40a1-96f5-361713085cd4",
+          "rsvp": "going",
+          "rsvp_revision": "1",
+          "can_access_feed": true,
+          "meeting_revision": "2"
+        }
+      }
+    },
+    {
+      "name": "stale-before-cutoff",
+      "at": "2026-11-06T19:09:48.629Z",
+      "case": "TC-INV-13F9DCAB",
+      "clock": "2026-11-06T18:18:14.274Z",
+      "startsAt": "2026-11-06T20:18:14.274Z",
+      "url": "https://127.0.0.1:9153/i/4jkBwrAUtoAl4aOCm1LAQA",
+      "ax": "- link \"К содержимому\":\n  - /url: \"#main\"\n- text: Демостенд · данные хранятся до перезапуска\n- banner:\n  - link \"Somewhere — на главную\":\n    - /url: /\n    - text: somewhere\n  - button \"Выйти из аккаунта\"\n- main:\n  - article:\n    - paragraph: Приглашение на встречу\n    - heading \"Cutoff 5884bc\" [level=1]\n    - text: Приглашает\n    - strong: Саша\n    - term: Когда\n    - definition: 6 ноября в 20:18 GMT+00:00\n    - term: Где\n    - definition: Место пока не выбрано\n    - region \"Ответ на приглашение\":\n      - button \"Приду\"\n      - button \"Возможно\"\n      - button \"Не смогу\"\n      - paragraph: После ответа «Приду» откроется общий чат.\n  - link \"К приглашениям\":\n    - /url: /invitations"
+    },
+    {
+      "name": "former-after-cutoff",
+      "at": "2026-11-06T19:09:48.633Z",
+      "case": "TC-INV-82AE12A5",
+      "response": {
+        "status": 409,
+        "method": "put",
+        "path": "/api/v1/invitations/3slN_B63IVEeXb_qbYc4iQ/rsvp",
+        "key": "40de3105-4f04-4a4c-a87c-3eae4bf6fe3e",
+        "body": {
+          "error": {
+            "code": "join_closed",
+            "field_errors": {},
+            "request_id": "fd7108e5-a8f4-416b-9e13-efcb63c12e84"
+          }
+        }
+      },
+      "clock": "2026-11-06T19:18:14.274Z"
+    },
+    {
+      "name": "stale-submit-denied",
+      "at": "2026-11-06T19:09:48.781Z",
+      "case": "TC-INV-13F9DCAB",
+      "publicTitlePreserved": 1,
+      "privateFeedStatus": 403,
+      "clock": "2026-11-06T19:18:14.274Z",
+      "url": "https://127.0.0.1:9153/i/4jkBwrAUtoAl4aOCm1LAQA",
+      "ax": "- link \"К содержимому\":\n  - /url: \"#main\"\n- text: Демостенд · данные хранятся до перезапуска\n- banner:\n  - link \"Somewhere — на главную\":\n    - /url: /\n    - text: somewhere\n  - button \"Выйти из аккаунта\"\n- main:\n  - article:\n    - paragraph: Приглашение на встречу\n    - heading \"Cutoff 5884bc\" [level=1]\n    - text: Приглашает\n    - strong: Саша\n    - status:\n      - strong: Участие закрыто\n      - paragraph: Новых участников больше не принимают.\n    - term: Когда\n    - definition: 6 ноября в 20:18 GMT+00:00\n    - term: Где\n    - definition: Место пока не выбрано\n  - link \"К приглашениям\":\n    - /url: /invitations"
+    },
+    {
+      "name": "legacy-client-cutoff",
+      "at": "2026-11-06T19:09:48.783Z",
+      "case": "TC-INV-DEC030F5",
+      "note": "Real legacy request DTO transport, not old native binary acceptance",
+      "response": {
+        "status": 409,
+        "method": "put",
+        "path": "/api/v1/invitations/4jkBwrAUtoAl4aOCm1LAQA/rsvp",
+        "key": "4c13bdf1-6e6d-4db0-b9ed-26b3614adb1c",
+        "body": {
+          "error": {
+            "code": "join_closed",
+            "field_errors": {},
+            "request_id": "c6925f5d-e85f-476b-9151-396f7a007e69"
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "clockRestore": {
+    "status": 200,
+    "clock": {
+      "automatic_transitions": false,
+      "now": "2026-11-06T18:18:14.274Z"
+    }
+  },
+  "kind": "Fresh independent actual observations, not merged into frozen priority run"
+}
