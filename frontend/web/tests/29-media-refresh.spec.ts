@@ -168,7 +168,7 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   await page.goto(`/meetings/${id}`);
   await page.getByLabel('Сообщение', { exact: true }).fill('Черновик перед альбомом');
   await page.getByRole('link', { name: 'Как всё прошло? Добавить фото' }).click();
-  const preview = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  const preview = page.getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ });
   await expect(preview).toBeVisible();
   await preview.getByRole('button', { name: 'Закрыть', exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/meetings/${id}$`));
@@ -252,13 +252,17 @@ test('past meeting album stays separate from chat and supports grid, keyboard an
   ]) {
     await page.setViewportSize(viewport);
     const viewer = page.getByRole('dialog', { name: 'Фото встречи', exact: true });
-    const image = viewer.locator('img');
+    const image = viewer.getByRole('img');
     await expect(image).toBeVisible();
     await expect(image).toHaveCSS('object-fit', 'contain');
     await expect
       .poll(async () =>
         viewer.evaluate((element) => {
-          const image = element.querySelector('img')?.getBoundingClientRect();
+          const image = (
+            element.querySelector('[aria-hidden="false"] img') ??
+            element.querySelector('img')
+          )?.getBoundingClientRect();
+
           const heading = element.querySelector('header')?.getBoundingClientRect();
           const bounds = element.getBoundingClientRect();
 

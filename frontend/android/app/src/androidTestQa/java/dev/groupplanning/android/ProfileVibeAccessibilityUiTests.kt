@@ -115,7 +115,7 @@ class ProfileVibeAccessibilityUiTests {
         compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
         fixture.waitText("Открыть вайб")
         compose.onNodeWithText("Открыть вайб").performClick()
-        fixture.waitText("1 / 3")
+        fixture.waitGalleryCounter(1, 3)
     }
 
     private fun largeText(block: () -> Unit) {

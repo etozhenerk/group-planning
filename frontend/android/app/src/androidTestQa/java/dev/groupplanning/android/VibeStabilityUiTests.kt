@@ -4,6 +4,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -54,7 +55,7 @@ class VibeStabilityUiTests {
                     compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
                     fixture.waitText("Открыть вайб")
                     compose.onNodeWithText("Открыть вайб").performClick()
-                    fixture.waitText("1 / 3")
+                    fixture.waitGalleryCounter(1, 3)
                     compose.waitUntil(15_000) { QaResponseGate.mediaEntered }
                     compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
                     fixture.screenshot("vibe-delayed-${if (reduced) "reduced" else "normal"}")
@@ -62,20 +63,20 @@ class VibeStabilityUiTests {
                     compose.waitUntil(15_000) { photoExists(1) }
                     sampleSettled(1, reduced)
                     compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
-                    fixture.waitText("2 / 3")
+                    fixture.waitGalleryCounter(2, 3)
                     sampleSettled(2, reduced)
                     compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
-                    fixture.waitText("3 / 3")
+                    fixture.waitGalleryCounter(3, 3)
                     sampleSettled(3, reduced)
                     compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
-                    fixture.waitText("1 / 3")
+                    fixture.waitGalleryCounter(1, 3)
                     sampleSettled(1, reduced)
                     compose.onNodeWithTag("photo-stack").performTouchInput { click() }
                     fixture.waitTag("memory-fullscreen")
                     fixture.device.pressBack()
                     fixture.waitAbsent("memory-fullscreen")
-                    fixture.waitText("1 / 3")
-                    compose.onNodeWithText("Назад").performClick()
+                    fixture.waitGalleryCounter(1, 3)
+                    compose.onNodeWithContentDescription("Назад").performClick()
                     fixture.waitTag("message-composer")
                 }
             }

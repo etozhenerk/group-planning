@@ -37,11 +37,11 @@ final class AlbumPreloadUITests: XCTestCase {
         let last = app.buttons["Открыть фото 103"]
         ChatSheetTestSupport.reveal(last, in: app.scrollViews["memories-scroll"], app: app)
         last.tap()
-        XCTAssertTrue(app.staticTexts["103 из 103"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["Закрыть"].isHittable)
+        XCTAssertTrue(app.staticTexts["103 / 103"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Закрыть просмотр"].isHittable)
         XCTAssertFalse(app.buttons["Повторить загрузку"].exists)
         ExperienceScreenshot.save("album-preload-103-offline", test: self)
-        app.buttons["Закрыть"].tap()
+        app.buttons["Закрыть просмотр"].tap()
         let stack = app.buttons["Показать стопкой"]
         ChatSheetTestSupport.reveal(stack, in: app.scrollViews["memories-scroll"], app: app)
         stack.tap()

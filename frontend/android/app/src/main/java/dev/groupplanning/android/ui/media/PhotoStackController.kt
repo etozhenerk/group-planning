@@ -2,6 +2,7 @@ package dev.groupplanning.android.ui.media
 
 import android.graphics.Bitmap
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -14,6 +15,7 @@ import dev.groupplanning.android.state.media.MediaViewModel
 import dev.groupplanning.android.ui.theme.DesignTokens
 import java.io.IOException
 import java.util.UUID
+import kotlin.math.abs
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -24,6 +26,8 @@ internal class PhotoStackController(
 ) {
     val offset = Animatable(0f)
     val assembly = Animatable(1f)
+    var vertical by mutableStateOf(0f)
+        private set
     val images = mutableStateMapOf<UUID, Bitmap>()
     var busy by mutableStateOf(false)
         private set
@@ -32,7 +36,8 @@ internal class PhotoStackController(
     private var repeat: (() -> Unit)? = null
 
     suspend fun loadVisible(photos: List<MeetingMedia>, index: Int) {
-        val visible = photos.drop(index).take(3)
+        val positions = listOf(index - 1, index, index + 1, index + 2)
+        val visible = positions.map { photos[Math.floorMod(it, photos.size)] }.distinctBy { it.id }
         images.keys.retainAll(visible.map { it.id }.toSet())
         failed = false
         repeat = { scope.launch { loadVisible(photos, index) } }
@@ -53,12 +58,24 @@ internal class PhotoStackController(
         repeat?.invoke()
     }
 
-    fun drag(delta: Float) {
-        if (!busy) scope.launch { offset.snapTo(offset.value + delta) }
+    fun drag(delta: Float, dy: Float) {
+        if (!busy) {
+            vertical += dy
+            scope.launch { offset.snapTo(offset.value + delta) }
+        }
     }
 
     fun settle(motion: Boolean) {
-        if (!busy) scope.launch { restore(motion) }
+        if (!busy) {
+            busy = true
+            scope.launch {
+                try {
+                    restore(motion)
+                } finally {
+                    busy = false
+                }
+            }
+        }
     }
 
     fun move(
@@ -70,6 +87,8 @@ internal class PhotoStackController(
         motion: Boolean,
         fromSwipe: Boolean,
         select: (Int) -> Unit,
+        velocity: Float = 0f,
+        density: Float = 1f,
     ) {
         if (busy || photos.size < 2) return
         val target = PhotoStackNavigation.target(index, direction, photos.size, fromSwipe && !full)
@@ -88,17 +107,40 @@ internal class PhotoStackController(
                     }
                 }
                 if (motion) {
-                    offset.animateTo(-direction * width, tween(DesignTokens.motionDurationPhoto))
+                    val destination = -direction * width * if (full) {
+                        1f
+                    } else {
+                        (1f + DesignTokens.componentMobileVibeCardWidthRatio)
+                    }
+                    val duration = if (full) {
+                        DesignTokens.motionDurationVibeViewer
+                    } else {
+                        (
+                            abs(destination - offset.value) / density /
+                                (
+                                    abs(velocity) / density / 1000 +
+                                        DesignTokens.componentMobileVibeFlightSpeedBias
+                                    )
+                            ).toInt().coerceIn(
+                            DesignTokens.motionDurationVibeFlightMinimum,
+                            DesignTokens.motionDurationVibeFlightMaximum,
+                        )
+                    }
+                    offset.animateTo(destination, tween(duration, easing = easing))
                 }
                 if (restart && motion) assembly.snapTo(0f)
+                vertical = 0f
                 offset.snapTo(0f)
                 select(target)
                 withFrameNanos { }
                 if (restart && motion) {
-                    assembly.animateTo(1f, tween(DesignTokens.motionDurationPhoto))
+                    assembly.animateTo(
+                        1f,
+                        tween(DesignTokens.motionDurationVibeAssembly, easing = easing),
+                    )
                 } else if (motion && !full) {
                     // Keep input locked until the surviving keyed card finishes promotion.
-                    kotlinx.coroutines.delay(DesignTokens.motionDurationPhoto.toLong())
+                    kotlinx.coroutines.delay(DesignTokens.motionDurationVibeFade.toLong())
                 }
             } catch (cancelled: CancellationException) {
                 throw cancelled
@@ -114,7 +156,15 @@ internal class PhotoStackController(
         }
     }
 
+    private val easing = DesignTokens.motionEasingVibeGesture.let {
+        CubicBezierEasing(it[0], it[1], it[2], it[3])
+    }
+
     private suspend fun restore(motion: Boolean) {
-        offset.animateTo(0f, tween(if (motion) DesignTokens.motionDurationNavigation else 0))
+        vertical = 0f
+        offset.animateTo(
+            0f,
+            tween(if (motion) DesignTokens.motionDurationVibeReturn else 0, easing = easing),
+        )
     }
 }

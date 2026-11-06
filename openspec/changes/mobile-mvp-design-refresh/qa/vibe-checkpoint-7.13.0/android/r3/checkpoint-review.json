@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "kind": "targeted independent upload checkpoint, not full gate report",
+  "reviewer": "/root/vibe_android_review_resume",
+  "reviewedAt": "2026-11-06T07:35:50.697234+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/vibe-android.json",
+  "inputHash": "07687fb0cfe27bf0b858da04a553565ac1e5656db1279743b85e8f5962936e12",
+  "sourceHash": "a2a627b4fec0ad9ab39c7107fc5e8883172de39e59d03246ba2dad90c28c1a9e",
+  "artifactHash": "959c3d71f0d159d2c842128ce55d2d7318267337237b31b727cf0c6230b994c9",
+  "summary": "needs-fixes",
+  "checks": [
+    {
+      "scope": "own form/picker cancellation/partial remaining item and copy",
+      "status": "observed-pass",
+      "observations": "Own form precedes picker; cancel preserves it. After first success/second lost reply, one retained item, label Не добавлено фото:1 and approved partial explanation visible.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/device-evidence/vibe713-r3-upload/checkpoint-actions.json",
+          "sha256": "288072fb8f875753cb5b243544f6b0229daf88d98e4e188c192a2df56dc11612"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/device-evidence/vibe713-r3-upload/upload-partial.png",
+          "sha256": "2cf538ee4e66bb2fd059fdd1d82d91c5422a2d1b97f1136db675008edc2153d4"
+        }
+      ]
+    },
+    {
+      "scope": "retry completion and sheet close",
+      "status": "failed",
+      "observations": "Existing driver timed out15000ms at waitAbsent(upload-sheet) after retry. Actual sheet remains open in empty state with disabled Добавить в альбом; this is a working-product behavior failure, not a setup locator problem.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/upload.log",
+          "sha256": "acf81b18b1ead1ed84222e696fcf4e738a14fb8d223be0020c8f9028c6497572"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/device-evidence/vibe713-r3-upload/live-failure.png",
+          "sha256": "ff1406be73dcf910ff487ec9e80394935fe351541533b2ca1015b863c5e9201e"
+        }
+      ]
+    },
+    {
+      "scope": "persisted server outcome",
+      "status": "observed-pass for count only",
+      "observations": "Independent read after failure returns5 unique photo IDs (original3+2). Publish-count assertions occur after failed close wait and were NOT reached; do not claim their pass.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/server-after.json",
+          "sha256": "fd09cc3c2ded93187265992181a7f2bb8f589594faa3dcd865f7ecfbe3db27a4"
+        }
+      ]
+    },
+    {
+      "scope": "partial notice composition",
+      "status": "needs-fixes",
+      "observations": "Actual notice is entirely error-colored text without triangle. Approved raw uses error triangle18 plus muted body12. Text now matches.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/device-evidence/vibe713-r3-upload/upload-partial.png",
+          "sha256": "2cf538ee4e66bb2fd059fdd1d82d91c5422a2d1b97f1136db675008edc2153d4"
+        }
+      ]
+    }
+  ],
+  "binding": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/source-artifact-before.json",
+      "sha256": "372dd0c6b1fed4a3691ac56a7e550670d666aef9b68f0695667e125e39c8bbcb"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r3/source-artifact-after.json",
+      "sha256": "d344e09eacfa26d3702ed61073471db77683b4bc95a0810be4da7f1d4c296885"
+    }
+  ],
+  "limitations": [
+    "Upload-only R3; deck/layout not rerun or copied into this pass.",
+    "Not full62-state design:ready/qa:ready or product closure.",
+    "Runtime stopped and source/device released after matching after-binding."
+  ]
+}

@@ -33,45 +33,66 @@ internal fun StackPhotoCard(
     motion: Boolean,
     open: () -> Unit,
     modifier: Modifier = Modifier,
+    viewportWidth: Float = 1f,
+    vertical: Float = 0f,
 ) {
-    val opacity by animateFloatAsState(
-        if (rank == 0) {
-            1f
-        } else if (rank == 1) {
-            .85f
-        } else {
-            .75f
-        },
-        tween(if (motion) DesignTokens.motionDurationPhoto else 0),
-        label = "photo-promotion-opacity",
-    )
+    val progress = (
+        kotlin.math.abs(offset) /
+            (viewportWidth * DesignTokens.componentMobileVibeProgressViewportRatio)
+        ).coerceIn(0f, 1f)
     val angle by animateFloatAsState(
         if (full) {
             0f
         } else {
-            when (rank) {
-                0 -> -1.5f
-                1 -> 7f
-                else -> -9f
-            }
+            DesignTokens.componentMobileVibeStackInitialAngle +
+                rank * DesignTokens.componentMobileVibeStackAngleStep
         },
-        tween(if (motion) DesignTokens.motionDurationPhoto else 0),
+        tween(if (motion) DesignTokens.motionDurationVibeFade else 0),
         label = "photo-promotion",
     )
-    val radius = if (full) DesignTokens.spaceS0 else DesignTokens.radiusControl
+    val radius = if (full) DesignTokens.spaceS0 else DesignTokens.componentMobileVibePhotoRadius
     Box(
         modifier.graphicsLayer {
-            translationX = if (rank == 0) offset else 0f
-            rotationZ = angle * assembly + if (motion && !full && rank == 0) offset / 40 else 0f
-            alpha = assembly * opacity
+            translationX =
+                if (full) {
+                    rank * viewportWidth + offset
+                } else if (rank == 0) {
+                    offset
+                } else {
+                    0f
+                }
+            translationY = if (!full && rank == 0) {
+                (
+                    vertical *
+                        DesignTokens.componentMobileVibeVerticalDriftRatio
+                    ).coerceIn(
+                    -DesignTokens.componentMobileVibeVerticalDriftMaximum.toPx(),
+                    DesignTokens.componentMobileVibeVerticalDriftMaximum.toPx(),
+                )
+            } else {
+                0f
+            }
+            rotationZ = if (full) {
+                0f
+            } else if (rank == 0) {
+                angle * assembly +
+                    (offset / density / DesignTokens.componentMobileVibeDragAngleDivisor).coerceIn(
+                        -DesignTokens.componentMobileVibeDragAngleMaximum,
+                        DesignTokens.componentMobileVibeDragAngleMaximum,
+                    )
+            } else {
+                (angle - progress * DesignTokens.componentMobileVibeStackAngleStep) *
+                    assembly
+            }
+            alpha = if (full) 1f else assembly
         }.shadow(
-            if (full) DesignTokens.spaceS0 else DesignTokens.spaceS20,
+            if (full) DesignTokens.spaceS0 else DesignTokens.componentMobileVibeCardShadowDown,
             RoundedCornerShape(radius),
         )
             .clip(RoundedCornerShape(radius))
             .background(if (full) Color.Transparent else DesignTokens.colorPhotoFrame)
             .padding(
-                if (full) DesignTokens.spaceS0 else DesignTokens.spaceS4 + DesignTokens.spaceS1,
+                if (full) DesignTokens.spaceS0 else DesignTokens.componentMobileVibePhotoBorder,
             )
             .then(if (rank == 0 && !full) Modifier.clickable(onClick = open) else Modifier),
     ) {
@@ -84,8 +105,8 @@ internal fun StackPhotoCard(
                         if (full) {
                             DesignTokens.spaceS0
                         } else {
-                            DesignTokens.spaceS6 +
-                                DesignTokens.spaceS1
+                            DesignTokens.componentMobileVibePhotoRadius -
+                                DesignTokens.componentMobileVibePhotoBorder
                         },
                     ),
                 ),

@@ -1,0 +1,278 @@
+{
+  "scope": "mobile-mvp-design-refresh vibe checkpoint; root implementation and independent QA only",
+  "trackedChanges": [
+    "design-system/legacy-literals.json",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumDownloadUiTests.kt",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/AlbumPreloadFailureUiTests.kt",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ExperienceUiTests.kt",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/InvitationUiFixture.kt",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/NativeVibeUploadUiTests.kt",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ProfileVibeAccessibilityUiTests.kt",
+    "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/VibeStabilityUiTests.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/state/media/MediaViewModel.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/ActionSheet.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/components/ChatSymbol.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/feed/FeedScreen.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/AlbumActionButton.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/GalleryCounter.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/MemoriesGallery.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/MemoryViewer.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/PhotoStack.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/PhotoStackController.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/StackPhotoCard.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/UploadPhotoPreview.kt",
+    "frontend/android/app/src/main/res/values/strings.xml",
+    "frontend/ios/Somewhere/Features/Media/MediaPhotoSelection.swift",
+    "frontend/ios/Somewhere/Features/Media/MemoriesScreen.swift",
+    "frontend/ios/Somewhere/Features/Media/MemoryAlbumUploadPanel.swift",
+    "frontend/ios/Somewhere/Features/Media/MemoryFullscreen.swift",
+    "frontend/ios/SomewhereUITests/AlbumPreloadFailureUITests.swift",
+    "frontend/ios/SomewhereUITests/AlbumPreloadUITests.swift",
+    "frontend/ios/SomewhereUITests/CrossPlatformUITests.swift",
+    "frontend/ios/SomewhereUITests/DesignExperienceUITests.swift",
+    "frontend/ios/SomewhereUITests/ExperienceUITests.swift",
+    "frontend/ios/SomewhereUITests/NativeVibeUploadUITests.swift",
+    "frontend/web/src/pages/memories/ui/AlbumHeading/AlbumHeading.module.css",
+    "frontend/web/src/pages/memories/ui/AlbumNavigation/AlbumNavigation.module.css",
+    "frontend/web/src/pages/memories/ui/AlbumPhotos/AlbumPhotos.module.css",
+    "frontend/web/src/pages/memories/ui/MemoriesView/MemoriesView.module.css",
+    "frontend/web/src/pages/memories/ui/MemoriesView/MemoriesView.tsx",
+    "frontend/web/tests/08-cross-platform.spec.ts",
+    "frontend/web/tests/29-media-refresh.spec.ts",
+    "frontend/web/tests/48-media-batch.spec.ts",
+    "frontend/web/tests/51-album-stack-cycle.spec.ts",
+    "frontend/web/tests/52-album-touch.spec.ts",
+    "frontend/web/tests/53-pointer-focus.spec.ts",
+    "frontend/web/tests/59-album-download.spec.ts",
+    "frontend/web/tests/60-album-download-access.spec.ts",
+    "openspec/changes/mobile-mvp-design-refresh/design/vibe-android.json",
+    "openspec/changes/mobile-mvp-design-refresh/design/vibe-ios.json",
+    "openspec/changes/mobile-mvp-design-refresh/design/vibe-web.json",
+    "openspec/changes/mobile-mvp-design-refresh/tasks.md",
+    "openspec/changes/mobile-mvp-design-refresh/testing-manifest.json"
+  ],
+  "newSource": [
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/MemoryAlbumUpload.kt",
+    "frontend/android/app/src/main/java/dev/groupplanning/android/ui/media/VibeAlbumState.kt",
+    "frontend/web/src/pages/memories/model/createDeckMotion.test.ts"
+  ],
+  "localLargeOriginals": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/web/r1/remaining-observations.json",
+      "bytes": 11839321,
+      "sha256": "200bcff4bfd33d0f471984cc83b61b5e92f5a3029c0001f66b85182f3b427718",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/web/r1/actual-album.zip",
+      "bytes": 12089441,
+      "sha256": "0237deb7902ae148b6b88ac9933bba12f9ad7f238abcfb4240d43887adc9e8fa",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/5BB92B43-49D8-48EF-AB0E-142FE16FD375",
+      "bytes": 82406,
+      "sha256": "742304945404380ab70963264c9ef8c3a084c2b1690c584cdae56b1adc3572b8",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/4AA36FD8-2EA2-4B11-BAD2-DAAF624E6560",
+      "bytes": 60894,
+      "sha256": "9f74dd862ac67937f7afa9e19d4f37fa12fdc6bbc49ac61cddd7f14fa1489376",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/F0F46130-3A7F-4FA2-B3C2-14E86BC83C12.png",
+      "bytes": 807410,
+      "sha256": "9ae31c24a353256fe75bb280d2c87bc8b38e6c392f9ea84152eb880513f644c9",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/67B8F787-25A3-4F1E-B5E9-638B6561AF9C",
+      "bytes": 1903,
+      "sha256": "4d35330efd4c3aca3369301199ab0df88df5a04fd1191c880f915d4fa228b09c",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/58578BE3-DEFB-4A44-97A7-E31F8E0CE23B.png",
+      "bytes": 2435358,
+      "sha256": "e1c035d87f59ae33331aec158498262b0c613f41174569f31f7184fc00f29461",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/A3DA1D40-B4A0-4ECA-A1A1-0D1242C169A2.txt",
+      "bytes": 3460,
+      "sha256": "e176bf06da8144c8da4cd7d42f9315117074edc5c85d8772ae9aa17963168bf4",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/C18A8666-F31E-4452-A18A-D6155A2AA308.txt",
+      "bytes": 3460,
+      "sha256": "780c1b829912af1dd5ddbf9e71b2ecd9c29f8d0e39ccdab9d23e632b2d4ff9e8",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/BB7440FE-6E94-48D2-B05F-F7139DC68ADF",
+      "bytes": 1630,
+      "sha256": "94ccc0054736b2777b4319cb5f3276c2d74982b59b203b8f156d2047590b3424",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/C1459C43-87DB-4469-B92D-419D8CB93488",
+      "bytes": 1879,
+      "sha256": "d13c18a67b2d3d15c5f4afa0ea91a9fba8c6d9faf5d48f38e0bca8bfaff101ce",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/3180A28D-B771-43F8-A0C4-D7B7A63DEC5A",
+      "bytes": 1211,
+      "sha256": "040673c8444cd005400269e2bd23162a204c1dc22f9f2ece8bc031db60a1f335",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/BE366E50-6BC5-4EB7-996C-5BF74C2E8222",
+      "bytes": 2244,
+      "sha256": "aad2a2dca988c097696f49c95715a04c4dccf7e4967562f455ac5f14a9432959",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/065BBCF1-347B-4C84-82E9-ADAFFF24A785",
+      "bytes": 1879,
+      "sha256": "2eca771d3e6273ca9de16715202acaf8e47b940ec970a03bc177d6ba9be55095",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/DF6E0D82-6E33-4816-B898-B90B01B1EF4B.txt",
+      "bytes": 3460,
+      "sha256": "ce210fed0c8f1b6ad1fb8916c23ca05b58bfe616bcd6bfc1590af033a6c2e9ac",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/6FA4D51E-1607-4355-827D-4313182F4768.mp4",
+      "bytes": 42465128,
+      "sha256": "b92f6dcaf233ad96bb7af45a31988b3fbefc0792fb1053daca907a5206955bf4",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/F2E492E8-8ADD-4DC3-ADDD-D1EBF0264BC1",
+      "bytes": 68135,
+      "sha256": "d35ffd7d8654b8a6ca42e9268d63f2b741dd60d9bbd670e241af2e0c6b115836",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/F8E8EFFC-651C-4746-9DE3-2D00E1F54FE2",
+      "bytes": 1630,
+      "sha256": "94ccc0054736b2777b4319cb5f3276c2d74982b59b203b8f156d2047590b3424",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/A59CC25A-C955-4BA7-886D-5A4F24338F34.txt",
+      "bytes": 3460,
+      "sha256": "a20730fe7cbe0e1da0fb3b3605891b4a88476d177bcbc15c13d61a054e57a313",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/F073972E-F177-4C49-AA92-E4C7A1A078F9",
+      "bytes": 1630,
+      "sha256": "94ccc0054736b2777b4319cb5f3276c2d74982b59b203b8f156d2047590b3424",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/9976D98B-F087-4709-8C59-97E5FF2F343C",
+      "bytes": 60894,
+      "sha256": "9f74dd862ac67937f7afa9e19d4f37fa12fdc6bbc49ac61cddd7f14fa1489376",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/1313E8F8-2C85-4FD5-AC80-0E62A265DF2F.png",
+      "bytes": 2938634,
+      "sha256": "6122627af5fdc766162810be6e14ce570f94171b4e005cf112a9dc5efc671914",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/D29DE8BA-86D4-48C4-A6D2-CD8C8944FA47",
+      "bytes": 1630,
+      "sha256": "94ccc0054736b2777b4319cb5f3276c2d74982b59b203b8f156d2047590b3424",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/4F6BD62A-B607-4591-991D-6140473CAFB4.png",
+      "bytes": 2605721,
+      "sha256": "5ca352b54a359cba455fb8f438a12604f982efdf5a0ab36cd9a62f671febe887",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/84678C33-191D-49D8-BC7C-F49A72036FDC",
+      "bytes": 1630,
+      "sha256": "94ccc0054736b2777b4319cb5f3276c2d74982b59b203b8f156d2047590b3424",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/1CB83D80-9AC2-44DA-BAC5-3130FF27965D",
+      "bytes": 1891,
+      "sha256": "cb526649ec8daf3d1f722ac856798319e9d2ecb468a4d305564320ecc939b02a",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/3C578FC8-7DC5-4E43-AC62-0298AC93CF69",
+      "bytes": 2131,
+      "sha256": "e3cff60f9b81130e237169b478aeda64cf07ce67ae07e0706e57a8e5d747c6f2",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/C857A91B-0444-4603-A2C5-EB07BFB365C9",
+      "bytes": 1879,
+      "sha256": "67d157984db329c6991aecff5ebed0c9b55e4405615fc0e3276004d8016aa1cd",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/EA045252-9623-4057-BA99-587AD6832DAB",
+      "bytes": 82524,
+      "sha256": "da67697d46000f054ddaaf07bd16dcbd5a7ac8f56a86c4b2efc783930dc0b8f6",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/C7DE062A-3395-4229-9CCF-C47B4EFAE2A2",
+      "bytes": 1302,
+      "sha256": "7d761387849056e0ee5e0f621c9d7baf98c1ae357438b543348ccc5a2f8f5310",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/manifest.json",
+      "bytes": 14110,
+      "sha256": "649e8d4e4956d4eaf610b2ac488c9fc946cef97a021e41a51364118b5575bd29",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/2910722F-1ADF-4553-97F7-E01B69C34684",
+      "bytes": 1630,
+      "sha256": "94ccc0054736b2777b4319cb5f3276c2d74982b59b203b8f156d2047590b3424",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/3131CFF8-F236-4A24-82BC-D8AA852A7DF2.txt",
+      "bytes": 3460,
+      "sha256": "de738414977b2d4c800ca9cb1d929f3da55f50c20653fc5f01ee1b46939784ed",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/60AE03CE-8448-4B62-81C3-6253C9060B26.png",
+      "bytes": 2435353,
+      "sha256": "e4f735d69c60e86274d6b7153cdc90bfcd2d1e74f942ef0014d2747991e8f6ab",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/3F8F37FE-B5BC-4AF0-B4C9-EC1EE808DA0E.txt",
+      "bytes": 3460,
+      "sha256": "690dd34c23631ca27581f99e5976e8573ffb6b5c28684a24d1efec02c5bb1ec6",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/ios/r2/failure-attachments/F4C21EB1-0FB7-4656-9C15-C0EC232D8388.txt",
+      "bytes": 20049,
+      "sha256": "2d1c5f299ca08967bc79f5d76a880c8228d5b75d3967d2e00c1c9a86bd4a881e",
+      "retained": "local original; portable report/screenshot/log selected separately"
+    }
+  ],
+  "productCheckboxesClosed": false
+}

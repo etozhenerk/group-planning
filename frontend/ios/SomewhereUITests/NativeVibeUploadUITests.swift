@@ -30,7 +30,8 @@ final class NativeVibeUploadUITests: XCTestCase {
         album.tap()
         XCTAssertTrue(app.staticTexts["1 из 3"].waitForExistence(timeout: 10))
         app.buttons["album-add"].tap()
-        XCTAssertFalse(app.staticTexts["media-picker-header"].exists)
+        XCTAssertTrue(app.staticTexts["media-picker-header"].waitForExistence(timeout: 5))
+        app.buttons["Выбрать фото"].tap()
         let photo = app.images.matching(identifier: "PXGGridLayout-Info").firstMatch
         XCTAssertTrue(photo.waitForExistence(timeout: 10))
         photo.tap()
@@ -48,7 +49,7 @@ final class NativeVibeUploadUITests: XCTestCase {
             XCTAssertEqual(reached, .completed)
             XCTAssertTrue(preview.exists)
             XCTAssertFalse(app.buttons["media-batch-send"].isEnabled)
-            XCTAssertTrue(app.descendants(matching: .any)["media-batch-progress"].firstMatch.exists)
+            XCTAssertEqual(app.buttons["media-batch-send"].value as? String, "Выполняется")
             let committed = try await photoIDs(api, meeting: id)
             XCTAssertEqual(committed.count, 4)
             ExperienceScreenshot.save("native-vibe-publish-held-after-commit", test: self)

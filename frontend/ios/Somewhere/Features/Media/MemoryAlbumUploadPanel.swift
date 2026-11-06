@@ -5,9 +5,19 @@ struct MemoryAlbumUploadPanel: View {
     @State private var picker: MediaPickerKind?
     @Environment(\.dismiss) private var dismiss
     private var selected: [PendingMedia] { owner.pending.filter { $0.stage != .published } }
+    private var problem: String? {
+        if let problem = owner.problem { return problem }
+        guard !owner.busy, selected.contains(where: { $0.transferFailure != nil }) else {
+            return nil
+        }
+        if owner.pending.contains(where: { $0.stage == .published }) {
+            return "Остальные снимки уже в альбоме. Повтор добавит только оставшиеся."
+        }
+        return "Не удалось добавить фото. Выбранные снимки остались в форме."
+    }
     var body: some View {
         ActionFormSheet(
-            title: "Добавить фото в альбом", dismissDisabled: owner.busy,
+            title: "Добавить фото", dismissDisabled: owner.busy,
             scrollIdentifier: "media-picker-scroll", headerIdentifier: "media-picker-header"
         ) {
             VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
@@ -38,7 +48,7 @@ struct MemoryAlbumUploadPanel: View {
                         owner: owner, width: DesignTokens.componentMobileVibeUploadPhotoWidth,
                         height: DesignTokens.componentMobileVibeUploadPhotoHeight,
                         cornerRadius: DesignTokens.componentMobileVibePhotoRadius,
-                        outset: DesignTokens.spaceS10
+                        outset: DesignTokens.spaceS10, showsTransferErrors: false
                     )
                     .padding(.top, DesignTokens.spaceS2).padding(.bottom, DesignTokens.spaceS4)
                 }
@@ -69,7 +79,7 @@ struct MemoryAlbumUploadPanel: View {
                             .top, DesignTokens.spaceS16)
                 }
                 VStack(alignment: .leading, spacing: DesignTokens.componentMobileVibeNavBottomGap) {
-                    if let problem = owner.problem {
+                    if let problem {
                         HStack(alignment: .top, spacing: DesignTokens.spaceS10) {
                             Image(systemName: "exclamationmark.triangle").foregroundStyle(
                                 DesignTokens.colorError)
@@ -82,7 +92,7 @@ struct MemoryAlbumUploadPanel: View {
                         }
                     }
                     ActionFormButton(
-                        title: owner.problem != nil ? "Повторить отправку" : "Добавить в альбом",
+                        title: problem != nil ? "Повторить отправку" : "Добавить в альбом",
                         busy: owner.busy,
                         minimumHeight: DesignTokens.componentMobileVibeActionMinimumHeight,
                         cornerRadius: DesignTokens.componentMobileVibeActionRadius,

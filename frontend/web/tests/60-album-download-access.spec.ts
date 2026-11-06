@@ -53,7 +53,7 @@ test('a real RSVP revocation during preparation closes access without downloadin
       await route.fulfill({ response, json: { ...status, state: 'preparing' } });
     });
     await guest.goto(`/meetings/${id}/memories`);
-    await guest.getByRole('button', { name: 'Скачать все фото' }).click();
+    await guest.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }).click();
     await expect.poll(() => observed).toBe(true);
     const revoked = await guest.request.put(`/api/v1/meetings/${id}/rsvp`, {
       headers: await writeHeaders(guest),
@@ -62,7 +62,9 @@ test('a real RSVP revocation during preparation closes access without downloadin
 
     expect(revoked.ok()).toBe(true);
     await expect(guest.getByText('Доступ к фото закрыт', { exact: true })).toBeVisible();
-    await expect(guest.getByRole('button', { name: 'Скачать все фото' })).toHaveCount(0);
+    await expect(
+      guest.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }),
+    ).toHaveCount(0);
     expect(downloads).toBe(0);
   } finally {
     await context.close();
@@ -97,7 +99,7 @@ test('a real expired session stops polling and returns to sign-in instead of sta
     await route.fulfill({ response, json: { ...status, state: 'preparing' } });
   });
   await page.goto(`/meetings/${id}/memories`);
-  await page.getByRole('button', { name: 'Скачать все фото' }).click();
+  await page.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }).click();
   await expect.poll(() => observed).toBe(true);
   const logout = await page.request.post('/api/v1/auth/logout', {
     headers: await writeHeaders(page),

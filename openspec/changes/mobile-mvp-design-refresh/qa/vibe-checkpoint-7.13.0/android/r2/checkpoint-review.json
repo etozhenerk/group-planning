@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "kind": "targeted independent screen checkpoint; not full gate report",
+  "reviewer": "/root/vibe_android_review_resume",
+  "reviewedAt": "2026-11-06T07:30:45.790996+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/vibe-android.json",
+  "inputHash": "00dd3dc7e165395b1eeb2e9d4333559283f45c5a4ce5c5a3d35cfdfac0497ef8",
+  "sourceHash": "eb4b7586a2dc296caea193edd3ccd64c65d813cc90852e842d9ba7c69bcdf70e",
+  "artifactHash": "81ff2ba5a9b5b5fd3a83ad48be76067a834ead27f5c43db74b34ffd19d572359",
+  "summary": "observed-pass for requested R2 delta; full acceptance pending",
+  "checks": [
+    {
+      "scope": "ready360 native safe-area/header/flex-height deck",
+      "status": "observed-pass",
+      "observations": "Raw normalized only in isolated browser: fake62 status hidden, viewport360x708 equals actual useful Android area; deck flex:1 resolves469px. Actual fills corresponding useful area with original card proportions. Existing Roboto/native targets differ from web reference as platform adaptation.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/device-evidence/vibe713-r2-deck/ready.png",
+          "sha256": "34a5af99c29aa5fa7c5deca63075d8bb0fddb49929101a20c3de3246447d0cdc"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/device-evidence/vibe713-r2-deck/ready.capture.json",
+          "sha256": "d6c56d837a685645f6459a8267a4acb38f4e0efb50b2198ec670d1b6a3fab8ea"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/reference-ready-usable708-normalized.png",
+          "sha256": "2770153d4b4479a40c38e2616c4e067b58a18f505d73be40d5105719ed1199ab"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/reference-normalization.json",
+          "sha256": "b301e26cdcbe6925cb478148d7b1018efa8b9ca9f26598df498ae62fb9d805e2"
+        }
+      ]
+    },
+    {
+      "scope": "deck both directions/cycle/rollback/flick/grid/viewer/Back at360x800 and320x568",
+      "status": "observed-pass",
+      "observations": "Existing driver reused on same frozen APK, 9.807s and9.834s, OK. Short screen remains usable, controls and cards reachable.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/deck.log",
+          "sha256": "c0920699ef2e374f929a7c760c1d6c9cbed12008d4c7947a16e25dd25e3c039d"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/short.log",
+          "sha256": "3d16e1530ab6fc681b651c6ace556454d8c6ff50fba38fc597e2e58810e4c63c"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/device-evidence/vibe713-r2-short/ready.png",
+          "sha256": "c6cadae42f6f28dc95506ede20856f488e6368bdc5996eb41cf2fddfdc148870"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/device-evidence/vibe713-r2-deck/checkpoint-actions.json",
+          "sha256": "86597eed95b5eed503a951cc12e234184876525b26325173b070d3adaf592613"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/device-evidence/vibe713-r2-short/checkpoint-actions.json",
+          "sha256": "ea572b48330f396ddcc158f20601a8352d9854f81bff8cfad2c09ee18bce8c3b"
+        }
+      ]
+    },
+    {
+      "scope": "fullscreen close surface/r14 and contain presentation",
+      "status": "observed-pass",
+      "observations": "Visible background/radius restored; viewer retains selected photo and system Back returns grid/deck.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/device-evidence/vibe713-r2-deck/viewer.png",
+          "sha256": "eca160ad4d1b54297a4d4c17f2951d8f617ff3c9186e07ac30232ab0865219c6"
+        }
+      ]
+    },
+    {
+      "scope": "manual pointer-follow and settled promotion",
+      "status": "observed-pass",
+      "observations": "One real ADB swipe, animator1.0; mid shows translated/tilted current and following layer, settled selected photo2. Video retained; no claim of exhaustive animation continuity matrix.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/motion-mid.png",
+          "sha256": "8dc799c908ed8090a3040d3eba4d9d7fc90e8840e135b288d316a4812c370ffa"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/motion-settled.png",
+          "sha256": "cb43e6640b5ab4c58a6df4f6730e1f0da0fd282b0366d15a2dafaba874802ff3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/motion.mp4",
+          "sha256": "0d24a71bed29a5408c75ea6759f95c72f4436461468b50e795910886061dfaa5"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/actions.json",
+          "sha256": "ab8be0b05d0615bc0399b49f8b52b544bbc382878b9d0ac227c8f1830cb6679a"
+        }
+      ]
+    }
+  ],
+  "binding": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/source-artifact-before.json",
+      "sha256": "6381eabe0c7c29d94cca0ca2fee09a07b15e346e19e49325f393754c1c7e6758"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r2/source-artifact-after.json",
+      "sha256": "edf58e257260b37b6bde19a2082a3a5ffa22ac5eee4c0f92c6f2dae6158a60c5"
+    }
+  ],
+  "limitations": [
+    "Not the full62-state manifest or final design:ready/qa:ready.",
+    "R1 save/privacy/partial results are prior scoped evidence, not rerun or copied into R2 pass.",
+    "Partial copy discrepancy from R1 remains for implementer R3; this R2 delta does not accept it.",
+    "Full large-font/reduced-motion/error/0-and-1-photo/fullscreen intermediate-motion matrix remains for final candidate.",
+    "One manual attempt first saw startup splash; bounded wait completed normally before interaction.",
+    "ffmpeg unavailable; no supplementary extracted promotion frames claimed. Mid/settled screenshots and original recording retained."
+  ],
+  "cleanup": {
+    "app": "force-stopped",
+    "wmSize": "reset to physical720x1600",
+    "animator_duration_scale": "restored original absent/null",
+    "fixture": "own reused binary, port61731 stays running for expected R3",
+    "reference": "narrow temp directory only; frame+3 approved non-sensitive photo assets; port60842"
+  }
+}

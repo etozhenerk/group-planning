@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "kind": "targeted independent upload checkpoint, not full gate report",
+  "reviewer": "/root/vibe_android_review_resume",
+  "reviewedAt": "2026-11-06T07:44:57.306516+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/vibe-android.json",
+  "inputHash": "23a58b63ba17f60a0e4c2ef42196e2cab152e1ba2bdd0b83d301391c30110c48",
+  "sourceHash": "cc12a2378f6489e386aa0b2ecba56d4db48984b0f8207e2cbcbd4771b4c680c4",
+  "artifactHash": "bc3b0a96349a837696fdc54e5c438c5e839461e474a2ac68c1c79eff11523a3b",
+  "summary": "needs-fixes",
+  "checks": [
+    {
+      "scope": "partial caption/notice composition",
+      "status": "observed-pass",
+      "observations": "Не добавлено фото:1, approved partial explanation, error triangle and muted body now visible; retained item persists for retry.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r4/device-evidence/vibe713-r4-upload/upload-partial.png",
+          "sha256": "57c72cc108c54c36010eea3cbce124cd9f2dd49496c5167baf70e052d24bdd66"
+        }
+      ]
+    },
+    {
+      "scope": "retry completion closes sheet",
+      "status": "failed",
+      "observations": "Existing upload-only driver again times out at waitAbsent(upload-sheet) after retry. Actual open sheet retains last carousel (rather than empty hero) and shows Добавить в альбом; it remains visible after15s. Source/runtime setup preconditions passed.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r4/upload.log",
+          "sha256": "230e771c8228335035953d70dde781fef7c3ad7fb7ce0b91ef8d39128df48560"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r4/device-evidence/vibe713-r4-upload/live-failure.png",
+          "sha256": "ee54d59972aad1f317b5963c0c75664f883b584dddb0d14509a4e99e2f3ebbb6"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r4/device-evidence/vibe713-r4-upload/checkpoint-actions.json",
+          "sha256": "90068d60e6cea0fea510c1d0c9e0a42a58e9c272335ab2b507948d9f3a150296"
+        }
+      ]
+    }
+  ],
+  "binding": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r4/source-artifact-before.json",
+      "sha256": "6ee8b2a424eea5bcd54a9ff9ab7e4b057e7908f7c72154e56ca1493eb73fe6b9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r4/source-artifact-after.json",
+      "sha256": "baedc3dad0c54da7a8ee267e385473fe6bbf07740fb7b1529aa6b1106989df86"
+    }
+  ],
+  "limitations": [
+    "Publish-count assertions after failed close wait were not reached, no pass claimed.",
+    "Only upload targeted delta; no deck/layout/save/privacy repeats.",
+    "Fresh same memory fixture reset to3 initial photos before run.",
+    "Source/device released, test app force-stop. Not full design:ready/qa:ready."
+  ]
+}

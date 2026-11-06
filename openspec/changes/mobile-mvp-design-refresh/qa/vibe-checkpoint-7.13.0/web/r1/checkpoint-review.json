@@ -1,0 +1,62 @@
+{
+  "kind": "short independent checkpoint; not final gate",
+  "platform": "web",
+  "browsers": [
+    "Chromium",
+    "WebKit"
+  ],
+  "viewports": [
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      760
+    ],
+    [
+      1100,
+      900
+    ]
+  ],
+  "candidate": "candidate.json",
+  "sourceHash": "66cfbc807d92104464728c76a47d9ba8a4c9a2e39d9e20c7b90dde172fb05889",
+  "artifactHash": "2519f4540f6e5ab08aded85f505cbb8d6aca143b5eb8d1eed220a9b4ff9ad56a",
+  "findings": [
+    {
+      "id": "V1-mobile-brand",
+      "severity": "P2",
+      "summary": "Mobile album retains Workspace brand absent from approved nav-vibe",
+      "evidence": [
+        "deck-loaded-actual.png",
+        "deck-loaded-reference.png",
+        "flex-layout-actual.png",
+        "flex-layout-reference.png"
+      ]
+    },
+    {
+      "id": "V2-deck-layout",
+      "severity": "P2",
+      "summary": "Mobile deck uses clamp height as fixed block instead of raw flex-growing basis",
+      "evidence": [
+        "remaining-observations.json",
+        "spot-observations.json",
+        "flex-layout-actual.png",
+        "flex-layout-reference.png"
+      ]
+    }
+  ],
+  "observations": {
+    "initial": 9,
+    "remaining": 17,
+    "spot": 5
+  },
+  "limitations": [
+    "Initial label selector mismatch and loading screenshots retained; replaced only tooling",
+    "No full manifest/case gate",
+    "OS picker cancellation not directly controlled; empty chooser selection observed",
+    "No physical IME/VO/200%",
+    "Reference R1 uses rawfake62; R2 normalized by explicit root instruction"
+  ],
+  "sourceReleased": true
+}

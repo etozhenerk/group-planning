@@ -19,6 +19,7 @@ internal enum class ChatSymbol(val path: String, val fillPath: String? = null) {
     Alert(
         "m21.73,18 -8,-14 a2,2 0,0 0,-3.48,0 l-8,14 A2,2 0,0 0,4,21 h16 a2,2 0,0 0,1.73,-3 M12,9 v4 M12,17 h0.01",
     ),
+    Layers("M12,3 L3,8 L12,13 L21,8 Z M3,12 L12,17 L21,12 M3,16 L12,21 L21,16"),
     Plus("M12,5v14 M5,12h14"),
     Check("M5,12l4,4L19,6"),
     Minus("M5,12h14"),

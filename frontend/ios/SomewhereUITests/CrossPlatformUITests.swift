@@ -67,9 +67,9 @@ final class CrossPlatformUITests: XCTestCase {
         album.tap()
         XCTAssertTrue(app.staticTexts["1 из 1"].waitForExistence(timeout: 10))
         app.buttons["Открыть фото 1"].tap()
-        XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Закрыть просмотр"].waitForExistence(timeout: 5))
         ExperienceScreenshot.save("cross-ios-web-memory", test: self)
-        app.buttons["Закрыть"].tap()
+        app.buttons["Закрыть просмотр"].tap()
     }
 
     func testReceiveAndroidAndWithdraw() throws {

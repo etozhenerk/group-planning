@@ -23,5 +23,12 @@
 @media (width < design-token(breakpoint.mobile)) {
   .page {
     padding: 0 0 var(--ds-space-s32);
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
   }
 }

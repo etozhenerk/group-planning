@@ -32,7 +32,9 @@ test('downloads every original in one native ZIP while later album pages are una
     }
   });
   const downloaded = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Скачать все фото', exact: true }).click();
+  await page
+    .getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/, exact: true })
+    .click();
   const download = await downloaded;
   expect(await download.failure()).toBeNull();
   const file = await download.path();
@@ -83,7 +85,11 @@ test('keeps album actions on one row across widths and photo geometry during pre
   });
   await page.goto(`/meetings/${id}/memories`);
   const add = page.getByRole('button', { name: 'Добавить фото', exact: true });
-  const start = page.getByRole('button', { name: 'Скачать все фото', exact: true });
+  const start = page.getByRole('button', {
+    name: /^(?:Скачать|Сохранить) все фото$/,
+    exact: true,
+  });
+
   await expect(start).toBeVisible();
   const actions = page.getByRole('group', { name: 'Действия с альбомом' });
 
@@ -152,7 +158,9 @@ test('empty album has no download and leaving preparation deletes its export wit
   const empty = await seedExportAlbum(page, 0);
   await page.goto(`/meetings/${empty.id}/memories`);
   await expect(page.getByText('Как всё прошло?', { exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Скачать все фото' })).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }),
+  ).toHaveCount(0);
   const { id } = await seedExportAlbum(page, 1);
   const base = `/api/v1/meetings/${id}/memories/exports`;
   let exportId = '';
@@ -171,7 +179,7 @@ test('empty album has no download and leaving preparation deletes its export wit
     await route.fulfill({ response, json: { ...status, state: 'preparing' } });
   });
   await page.goto(`/meetings/${id}/memories`);
-  await page.getByRole('button', { name: 'Скачать все фото' }).click();
+  await page.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }).click();
   await expect.poll(() => exportId).not.toBe('');
   await page.getByRole('link', { name: /Прошедшие встречи/ }).click();
   await expect
@@ -179,7 +187,9 @@ test('empty album has no download and leaving preparation deletes its export wit
     .toBe(404);
   expect(downloads).toBe(0);
   await page.goto(`/meetings/${id}/memories`);
-  await expect(page.getByRole('button', { name: 'Скачать все фото' })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }),
+  ).toBeVisible();
   await expect(page.getByText('Скачивание началось', { exact: true })).toHaveCount(0);
 });
 
@@ -197,7 +207,7 @@ test('leaving after browser hand-off does not delete the archive or abort the br
   });
   await page.goto(`/meetings/${id}/memories`);
   const downloaded = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Скачать все фото' }).click();
+  await page.getByRole('button', { name: /^(?:Скачать|Сохранить) все фото$/ }).click();
   await expect(page.getByText('Скачивание началось', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: /Прошедшие встречи/ }).click();
   await expect(page).toHaveURL(/\/meetings\?view=list&period=past$/);

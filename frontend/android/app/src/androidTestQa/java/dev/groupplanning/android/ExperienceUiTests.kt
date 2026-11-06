@@ -49,27 +49,27 @@ class ExperienceUiTests {
             compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
             fixture.waitText("Открыть вайб")
             compose.onNodeWithText("Открыть вайб").performClick()
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             fixture.screenshot("refresh-memory-stack")
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
-            fixture.waitText("3 / 3")
+            fixture.waitGalleryCounter(3, 3)
             compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
             fixture.screenshot("refresh-memory-last")
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()
             fixture.screenshot("refresh-memory-restarted")
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             activity.recreate()
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             compose.onNodeWithContentDescription("Все фото").performClick()
             fixture.screenshot("refresh-memory-grid")
             fixture.device.pressBack()
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             verifyAccessibleGallery(activity)
         }
     }
@@ -101,7 +101,7 @@ class ExperienceUiTests {
                 }
                 ready
             }
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             val actions = compose.onNodeWithTag("photo-stack").fetchSemanticsNode()
                 .config[SemanticsActions.CustomActions]
             compose.runOnIdle {
@@ -111,9 +111,9 @@ class ExperienceUiTests {
                     }.action(),
                 )
             }
-            fixture.waitText("3 / 3")
+            fixture.waitGalleryCounter(3, 3)
             revealGalleryControl(compose.onNodeWithContentDescription("Все фото"))
-            compose.onNodeWithText("3 / 3").assertIsDisplayed()
+            fixture.waitGalleryCounter(3, 3, displayed = true)
             fixture.screenshot("refresh-memory-landscape-large-no-motion")
             compose.onNodeWithContentDescription("Все фото").performClick()
             val firstPhoto = fixture.context.getString(R.string.memories_count, 1, 3)
@@ -154,7 +154,7 @@ class ExperienceUiTests {
             compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
             fixture.waitText("Открыть вайб")
             compose.onNodeWithText("Открыть вайб").performClick()
-            fixture.waitText("1 / 1")
+            fixture.waitGalleryCounter(1, 1)
             val stack = compose.onNodeWithTag("photo-stack")
             stack.performTouchInput { swipeLeft() }
             compose.onNodeWithTag("memory-fullscreen").assertDoesNotExist()

@@ -33,6 +33,7 @@ internal data class MediaState(
     val sending: Boolean = false,
     val completedBatch: Int = 0,
     val completedPurpose: String? = null,
+    val partialMemory: Boolean = false,
     val selectionError: Boolean = false,
     val photos: List<MeetingMedia> = emptyList(),
     val next: String? = null,
@@ -110,7 +111,15 @@ internal class MediaViewModel(
     fun choose(uris: List<Uri>, purpose: String, photo: Boolean) {
         if (uris.isEmpty() || state.value.selecting || state.value.sending) return
         mutable.value =
-            state.value.copy(selecting = true, selectionError = false, purpose = purpose)
+            state.value.copy(
+                selecting = true,
+                selectionError = false,
+                purpose = purpose,
+                partialMemory = state.value.partialMemory &&
+                    state.value.items.any {
+                        it.value.purpose == "memory" && !it.value.published
+                    },
+            )
         viewModelScope.launch {
             var selectedAccess: MeetingAccess? = null
             try {
@@ -274,6 +283,19 @@ internal class MediaViewModel(
                 sending = false,
                 completedBatch = state.value.completedBatch + if (completed) 1 else 0,
                 completedPurpose = purpose.takeIf { completed },
+                partialMemory = if (purpose == "memory") {
+                    !completed &&
+                        (
+                            state.value.partialMemory ||
+                                rows.any { row ->
+                                    state.value.items.any {
+                                        it.value.key == row.value.key && it.value.published
+                                    }
+                                }
+                            )
+                } else {
+                    state.value.partialMemory
+                },
             )
             dismissCompleted(purpose)
             if (purpose == "memory") loadMemories()

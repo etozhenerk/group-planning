@@ -1,0 +1,41 @@
+{
+  "kind": "targeted layout checkpoint; not final gate",
+  "sourceHash": "5ecc82cebda02633dd740892517d7963aa28d23068974248c83610a68a12ab57",
+  "artifactHash": "bbb23e84556206cc07ef1f03e5df3fb2cbbbe74a860bcc566b03a22a0169b87e",
+  "designInputHash": "071edf6676d6b9e391ed67030e55d0595b710a330d2d850749e223755d38a25f",
+  "resolved": [
+    "V1-mobile-brand",
+    "V2-deck-layout"
+  ],
+  "findings": [
+    {
+      "id": "V3-nav-inset",
+      "severity": "P3",
+      "summary": "Artificial mobile navigation top12 remains after demo32/safearea0 normalization; raw has no extra inset",
+      "evidence": [
+        "layout-observations.json",
+        "layout-390x844-actual.png",
+        "layout-390x844-reference.png",
+        "matched-observations.json"
+      ]
+    }
+  ],
+  "referenceNormalization": {
+    "normative": {
+      "rawFake": 62,
+      "physicalSafearea": 0,
+      "demo": 32,
+      "normalized": 32
+    },
+    "diagnosticOnly": {
+      "normalized": 44,
+      "reason": "Isolate unintended CSSnavtop12; never baseline approval"
+    }
+  },
+  "observations": {
+    "layout": 7,
+    "matchedDiagnostic": 2
+  },
+  "errors": [],
+  "sourceReleased": true
+}

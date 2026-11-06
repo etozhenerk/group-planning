@@ -76,7 +76,7 @@ class AlbumDownloadUiTests {
             fixture.device.pressBack()
             fixture.waitTag("photo-stack")
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
-            fixture.waitText("1 / 103")
+            fixture.waitGalleryCounter(1, 103)
             assertEquals(beforeContent, QaChatProbe.requests.filter { it.endsWith("/content") })
             fixture.screenshot("album-preload-offline-cycle")
             QaResponseGate.unavailableMediaPrefix = null
@@ -90,7 +90,7 @@ class AlbumDownloadUiTests {
     @Test fun adjacentActionSavesAllOriginalsAndKeepsSelectedPhoto() {
         openAlbum().use {
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             val add = compose.onNodeWithTag("album-add").fetchSemanticsNode().boundsInRoot
             val save = compose.onNodeWithTag("album-save").fetchSemanticsNode().boundsInRoot
             assertEquals(add.top, save.top, 1f)
@@ -102,7 +102,7 @@ class AlbumDownloadUiTests {
             fixture.screenshot("album-download-ready")
             compose.onNodeWithTag("album-save").performClick()
             fixture.waitText("Фотографии сохранены")
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             verifySavedOriginals()
             fixture.screenshot("album-download-saved")
         }
@@ -111,7 +111,7 @@ class AlbumDownloadUiTests {
     @Test fun cancellationAndLeavingDuringPreparationDoNotPublishPhotos() {
         openAlbum().use {
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             val stack = compose.onNodeWithTag("photo-stack").fetchSemanticsNode().boundsInRoot
             val button = compose.onNodeWithTag("album-save").fetchSemanticsNode().boundsInRoot
             QaAlbumDownloadProbe.holdSnapshot()
@@ -132,7 +132,7 @@ class AlbumDownloadUiTests {
             QaAlbumDownloadProbe.release()
             compose.onNodeWithTag("album-save")
                 .assertContentDescriptionEquals("Сохранить все фото")
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             assertEquals(before, ownRows().keys)
             fixture.screenshot("album-download-cancelled")
             QaAlbumDownloadProbe.holdSnapshot()
@@ -151,7 +151,7 @@ class AlbumDownloadUiTests {
             QaAlbumDownloadProbe.rejectSnapshot = true
             compose.onNodeWithTag("album-save").performClick()
             fixture.waitText("Не удалось подготовить фотографии. Попробуйте ещё раз.")
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             assertEquals(before, ownRows().keys)
             fixture.screenshot("album-download-error")
             QaAlbumDownloadProbe.rejectSnapshot = false
@@ -192,7 +192,7 @@ class AlbumDownloadUiTests {
         compose.onNodeWithText("Суббота у озера").performScrollTo().performClick()
         fixture.waitText("Открыть вайб")
         compose.onNodeWithText("Открыть вайб").performClick()
-        fixture.waitText("1 / $count")
+        fixture.waitGalleryCounter(1, count)
         fixture.waitTag("album-save")
         return activity
     }

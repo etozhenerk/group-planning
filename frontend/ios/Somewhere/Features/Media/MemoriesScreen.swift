@@ -7,6 +7,7 @@ struct MemoriesScreen: View {
     @State private var adding = false
     @State private var fullscreen = false
     @State private var reloadID = UUID()
+    @State private var headerHeight: CGFloat = 0
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     var body: some View {
@@ -52,6 +53,11 @@ struct MemoriesScreen: View {
                             }
                         }
                     }.padding(.horizontal, DesignTokens.spaceS20)
+                        .onGeometryChange(for: CGFloat.self) {
+                            $0.size.height
+                        } action: {
+                            headerHeight = $0
+                        }
                     if !owner.current {
                         VibeAlbumState(kind: .denied)
                     } else if owner.failed && owner.photos.isEmpty {
@@ -85,7 +91,8 @@ struct MemoriesScreen: View {
                             MemoryPhotoStack(owner: owner, selection: $selection) {
                                 fullscreen = true
                             }
-                            .frame(height: deckHeight(height)).padding(
+                            .frame(height: deckHeight(height, available: viewport.size.height))
+                            .padding(
                                 .horizontal, DesignTokens.spaceS12
                             ).padding(.top, DesignTokens.spaceS12)
                         }
@@ -125,15 +132,12 @@ struct MemoriesScreen: View {
             if phase == .active { owner.albumSave.permissionMayHaveChanged() }
         }
     }
-    private func deckHeight(_ height: CGFloat) -> CGFloat {
-        height < DesignTokens.componentMobileVibeCompactHeightBoundary
-            ? DesignTokens.componentMobileVibeCompactDeckHeight
-            : max(
-                DesignTokens.componentMobileVibeDeckMinimumHeight,
-                min(
-                    DesignTokens.componentMobileVibeDeckHeightMaximum,
-                    max(
-                        DesignTokens.componentMobileVibeDeckHeightMinimum,
-                        height * CGFloat(DesignTokens.componentMobileVibeDeckViewportRatio))))
+    private func deckHeight(_ height: CGFloat, available: CGFloat) -> CGFloat {
+        if height < DesignTokens.componentMobileVibeCompactHeightBoundary {
+            return DesignTokens.componentMobileVibeCompactDeckHeight
+        }
+        return max(
+            DesignTokens.componentMobileVibeDeckMinimumHeight,
+            available - headerHeight - DesignTokens.spaceS12 - DesignTokens.spaceS32)
     }
 }

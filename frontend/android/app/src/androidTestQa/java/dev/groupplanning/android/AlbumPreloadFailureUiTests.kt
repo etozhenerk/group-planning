@@ -51,13 +51,13 @@ class AlbumPreloadFailureUiTests {
             compose.onNodeWithText("Суббота без спешки").performScrollTo().performClick()
             fixture.waitText("Открыть вайб")
             compose.onNodeWithText("Открыть вайб").performClick()
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             compose.waitUntil(15_000) {
                 QaChatProbe.requests.filter { it.endsWith("/content") }.toSet().size == 3
             }
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
             fixture.waitText("Не удалось загрузить. Повторить")
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             fixture.screenshot("preload-failed-next-keeps-first")
             QaResponseGate.unavailableMediaPrefix = "/api/v1/meetings/"
             val before = cachedRequests(failedId)
@@ -75,7 +75,7 @@ class AlbumPreloadFailureUiTests {
             fixture.device.pressBack()
             fixture.waitTag("photo-stack")
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeRight() }
-            fixture.waitText("1 / 3")
+            fixture.waitGalleryCounter(1, 3)
             compose.onNodeWithTag("photo-stack").performTouchInput { swipeLeft() }
             fixture.waitText("Не удалось загрузить. Повторить")
             QaResponseGate.unavailableGetPath = null
@@ -84,7 +84,7 @@ class AlbumPreloadFailureUiTests {
                 hasText("Не удалось загрузить. Повторить") and
                     hasAnyAncestor(hasTestTag("photo-stack")),
             ).performClick()
-            fixture.waitText("2 / 3")
+            fixture.waitGalleryCounter(2, 3)
             compose.onNode(
                 hasTestTag("media-image-$failedId") and
                     hasAnyAncestor(hasTestTag("photo-stack")),

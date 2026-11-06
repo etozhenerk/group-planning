@@ -6,6 +6,7 @@ struct MediaPhotoSelection: View {
     var height = DesignTokens.componentPhotoPreviewHeight
     var cornerRadius = DesignTokens.componentButtonRadius
     var outset: CGFloat? = nil
+    var showsTransferErrors = true
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -53,7 +54,7 @@ struct MediaPhotoSelection: View {
                                         .offset(x: removeOffset, y: -removeOffset)
                                 }
                         }
-                        if file.stage == .failed {
+                        if file.stage == .failed && (file.problem != nil || showsTransferErrors) {
                             Text(file.problem ?? "Не удалось отправить фото.")
                                 .designFont(DesignTokens.typographySizeCaption)
                                 .foregroundStyle(DesignTokens.colorError)

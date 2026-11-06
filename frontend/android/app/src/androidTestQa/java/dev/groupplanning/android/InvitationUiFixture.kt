@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.Settings
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -92,6 +94,17 @@ internal class InvitationUiFixture(private val compose: ComposeTestRule) {
             device.pressBack()
             compose.waitForIdle()
         }
+    }
+
+    fun waitGalleryCounter(index: Int, count: Int, displayed: Boolean = false) {
+        val split = hasText(index.toString(), substring = false) and
+            hasAnySibling(hasText("/ $count", substring = false))
+        val combined = hasText("$index / $count", substring = false)
+        compose.waitUntil(15_000) {
+            compose.onAllNodes(split or combined).fetchSemanticsNodes().isNotEmpty()
+        }
+        if (displayed) compose.onNode(split or combined).assertIsDisplayed()
+        compose.waitForIdle()
     }
 
     fun waitText(text: String) {

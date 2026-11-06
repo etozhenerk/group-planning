@@ -19,7 +19,7 @@ test('photo carousel removes one selection, retries one batch and preloads swipe
 
   expect(changed.ok()).toBe(true);
   await page.goto(`/meetings/${id}/memories?action=upload`);
-  const dialog = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  const dialog = page.getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ });
   const photos = await page.evaluate(() =>
     [
       [320, 1200],
@@ -42,13 +42,15 @@ test('photo carousel removes one selection, retries one batch and preloads swipe
     }),
   );
 
-  await dialog.getByLabel('Выбрать фото', { exact: true }).setInputFiles(
-    photos.map((data, index) => ({
-      name: `${index}.png`,
-      mimeType: 'image/png',
-      buffer: Buffer.from(data, 'base64'),
-    })),
-  );
+  await dialog
+    .getByLabel(/^(?:Файлы для альбома|Выбрать фото)$/, { exact: true })
+    .setInputFiles(
+      photos.map((data, index) => ({
+        name: `${index}.png`,
+        mimeType: 'image/png',
+        buffer: Buffer.from(data, 'base64'),
+      })),
+    );
   await expect(dialog.locator('img')).toHaveCount(3);
   const geometry = await dialog.locator('ul').evaluate((element) => ({
     scroll: element.scrollWidth,
@@ -106,7 +108,7 @@ test('photo carousel removes one selection, retries one batch and preloads swipe
   await stack.getByRole('button', { name: /Открыть фото/ }).click();
   const viewer = page.getByRole('dialog', { name: 'Фото встречи', exact: true });
   await expect(viewer).toBeVisible();
-  await expect(viewer.locator('img')).toHaveCSS('object-fit', 'contain');
+  await expect(viewer.getByRole('img')).toHaveCSS('object-fit', 'contain');
   await viewer.getByRole('button', { name: 'Закрыть просмотр' }).click();
   await expect(viewer).not.toBeVisible();
   const box = await stack.boundingBox();

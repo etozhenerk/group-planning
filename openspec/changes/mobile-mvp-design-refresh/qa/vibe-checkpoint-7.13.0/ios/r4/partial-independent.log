@@ -1,0 +1,208 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project Somewhere.xcodeproj -scheme SomewhereUI -configuration Debug -sdk iphonesimulator27.1 -destination "platform=iOS Simulator,id=31262733-50DC-46A5-938E-4C462D70F109" -derivedDataPath .build/IndependentDerivedData ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual -resultBundlePath /private/tmp/vibe713-independent-r4-partial.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never test-without-building "-only-testing:SomewhereUITests/VibeCheckpoint713Tests/testBPartialUploadNoticeAndExactRetry"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    CODE_SIGNING_ALLOWED = YES
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator27.1
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf @ 1.35.0
+  SwiftCentrifuge: https://github.com/centrifugal/centrifuge-swift.git @ 0.11.0
+  YandexLoginSDK: https://github.com/yandexmobile/yandex-login-sdk-ios.git @ 3.2.0
+
+Writing result bundle at path:
+	/private/tmp/vibe713-independent-r4-partial.xcresult
+
+2026-11-06 10:42:21.858 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 10:42:23.132888+0300 SomewhereUITests-Runner[51429:21775143] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-06 10:42:26.248.
+Test Suite 'SomewhereUITests.xctest' started at 2026-11-06 10:42:26.248.
+Test Suite 'VibeCheckpoint713Tests' started at 2026-11-06 10:42:26.249.
+Test Case '-[SomewhereUITests.VibeCheckpoint713Tests testBPartialUploadNoticeAndExactRetry]' started.
+    t =     0.00s Start Test at 2026-11-06 10:42:26.250
+    t =     0.02s Set Up
+    t =     0.16s Open dev.groupplanning.ios.uitesthost
+    t =     0.16s     Launch dev.groupplanning.ios.uitesthost
+2026-11-06 10:42:26.467 xcodebuild[51396:21774864] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-06 10:42:26.467 xcodebuild[51396:21774864] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-11-06 10:42:26.497 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =     0.64s         Setting up automation session
+objc[51429]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x105978398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.BCjw8s/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105ab0310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.94s         Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     4.30s Waiting 15.0s for "meeting-card-deb00000-0000-4000-8000-000000000002" Button to exist
+    t =     5.38s     Checking `Expect predicate `existsNoRetry == 1` for object "meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.38s         Checking existence of `"meeting-card-deb00000-0000-4000-8000-000000000002" Button`
+    t =     5.50s Tap "period-past" Button
+    t =     5.50s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.50s     Find the "period-past" Button
+    t =     5.52s     Check for interrupting elements affecting "period-past" Button
+    t =     5.55s     Synthesize event
+    t =     5.88s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     5.88s Checking existence of `"home-tab-calendar" Button`
+    t =     5.90s Find the "home-tab-calendar" Button
+    t =     5.93s Checking existence of `"meeting-memories-deb00000-0000-4000-8000-000000000004" Button`
+    t =     5.95s Find the "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     5.97s Find the "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     5.99s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =     6.01s Find the "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     6.03s Find the "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     6.05s Tap "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     6.05s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.06s     Find the "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     6.07s     Check for interrupting elements affecting "meeting-memories-deb00000-0000-4000-8000-000000000004" Button
+    t =     6.09s     Synthesize event
+    t =     6.39s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     6.80s Waiting 10.0s for "album-add" Button to exist
+    t =     7.87s     Checking `Expect predicate `existsNoRetry == 1` for object "album-add" Button`
+    t =     7.87s         Checking existence of `"album-add" Button`
+    t =     7.92s Tap "album-add" Button
+    t =     7.92s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     7.92s     Find the "album-add" Button
+    t =     7.95s     Check for interrupting elements affecting "album-add" Button
+    t =     7.98s     Synthesize event
+    t =     8.27s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     8.74s Waiting 6.0s for "media-picker-header" StaticText to exist
+    t =     9.81s     Checking `Expect predicate `existsNoRetry == 1` for object "media-picker-header" StaticText`
+    t =     9.81s         Checking existence of `"media-picker-header" StaticText`
+    t =     9.87s Tap "Выбрать фото" Button
+    t =     9.87s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =     9.87s     Find the "Выбрать фото" Button
+    t =     9.90s     Check for interrupting elements affecting "Выбрать фото" Button
+    t =     9.93s     Synthesize event
+    t =    10.23s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    10.66s Waiting 10.0s for "PXGGridLayout-Info" Image to exist
+    t =    11.72s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    11.72s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    11.79s         Capturing element debug description
+    t =    12.75s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    12.75s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    12.82s         Capturing element debug description
+    t =    13.68s     Checking `Expect predicate `existsNoRetry == 1` for object "PXGGridLayout-Info" Image`
+    t =    13.68s         Checking existence of `"PXGGridLayout-Info" Image`
+    t =    13.83s Get number of matches for: Elements matching predicate '"PXGGridLayout-Info" IN identifiers'
+    t =    13.89s Tap "PXGGridLayout-Info" Image
+    t =    13.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    13.89s     Find the "PXGGridLayout-Info" Image
+    t =    13.94s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    14.00s     Synthesize event
+    t =    14.29s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.30s Tap "PXGGridLayout-Info" Image
+    t =    14.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.30s     Find the "PXGGridLayout-Info" Image
+    t =    14.37s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    14.43s     Synthesize event
+    t =    14.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    14.72s Waiting 6.0s for "Add" Button to exist
+    t =    15.79s     Checking `Expect predicate `existsNoRetry == 1` for object "Add" Button`
+    t =    15.79s         Checking existence of `"Add" Button`
+    t =    15.89s Tap "Add" Button
+    t =    15.89s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    15.89s     Find the "Add" Button
+    t =    15.95s     Check for interrupting elements affecting "Add" Button
+    t =    16.01s     Synthesize event
+    t =    16.30s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    16.79s Waiting 10.0s for "media-batch-send" Button to exist
+    t =    17.85s     Checking `Expect predicate `existsNoRetry == 1` for object "media-batch-send" Button`
+    t =    17.85s         Checking existence of `"media-batch-send" Button`
+    t =    17.90s Get number of matches for: Elements matching predicate '"Выбранное фото" IN identifiers'
+    t =    17.93s Requesting snapshot of accessibility hierarchy for app with pid 51448
+    t =    18.14s Requesting snapshot of accessibility hierarchy for app with pid 51448
+    t =    19.19s Find the Window (First Match)
+    t =    19.34s Added attachment named 'vibe713r3-two-selected'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/F098C743-F08B-4882-A696-C9B5C657F2B1/tmp/somewhere-design-verification/vibe713r3-two-selected.png
+    t =    19.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    19.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/F098C743-F08B-4882-A696-C9B5C657F2B1/tmp/somewhere-design-verification/vibe713r3-two-selected.json
+    t =    19.45s Tap "media-batch-send" Button
+    t =    19.45s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    19.46s     Find the "media-batch-send" Button
+    t =    19.49s     Check for interrupting elements affecting "media-batch-send" Button
+    t =    19.52s     Synthesize event
+    t =    19.82s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    21.96s Get number of matches for: Elements matching predicate '"Выбранное фото" IN identifiers'
+    t =    22.00s Find the "media-batch-send" Button
+    t =    22.03s Find the "media-batch-send" Button
+    t =    22.06s Find the Window (First Match)
+    t =    22.07s Checking existence of `"media-upload-error" Any`
+    t =    22.19s Find the "media-upload-error" Any
+    t =    22.42s Find the Window (First Match)
+    t =    22.42s Checking existence of `"media-upload-error" Image`
+    t =    22.54s Find the "media-upload-error" Image
+    t =    22.77s Find the Window (First Match)
+    t =    22.78s Checking existence of `"media-upload-error" Image`
+    t =    22.90s Find the "media-upload-error" Image
+    t =    23.14s Find the Window (First Match)
+    t =    23.14s Checking existence of `"media-upload-error" Image`
+    t =    23.26s Find the "media-upload-error" Image
+    t =    23.49s Find the Window (First Match)
+    t =    23.50s Checking existence of `"media-upload-error" Image`
+    t =    23.61s Find the "media-upload-error" Image
+    t =    23.74s Checking existence of `"media-upload-error" Image`
+    t =    23.86s Find the "media-upload-error" Image
+    t =    23.98s Requesting snapshot of accessibility hierarchy for app with pid 51448
+    t =    24.17s Requesting snapshot of accessibility hierarchy for app with pid 51448
+    t =    25.22s Find the Window (First Match)
+    t =    25.34s Added attachment named 'vibe713r3-partial-notice-before-assert'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/F098C743-F08B-4882-A696-C9B5C657F2B1/tmp/somewhere-design-verification/vibe713r3-partial-notice-before-assert.png
+    t =    25.35s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.37s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.39s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    25.41s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/F098C743-F08B-4882-A696-C9B5C657F2B1/tmp/somewhere-design-verification/vibe713r3-partial-notice-before-assert.json
+    t =    25.43s Checking existence of `"media-upload-error" Image`
+    t =    25.54s Find the "media-upload-error" Image
+    t =    25.66s Checking existence of `"Остальные снимки уже в альбоме. Повтор добавит только оставшиеся." StaticText`
+    t =    25.69s Get number of matches for: Elements matching predicate '"Выбранное фото" IN identifiers'
+    t =    25.72s Tap "media-batch-send" Button
+    t =    25.72s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    25.73s     Find the "media-batch-send" Button
+    t =    25.76s     Check for interrupting elements affecting "media-batch-send" Button
+    t =    25.78s     Synthesize event
+    t =    26.08s     Wait for dev.groupplanning.ios.uitesthost to idle
+    t =    26.49s Waiting 20.0s for "media-picker-header" StaticText to not exist
+    t =    27.56s     Checking `Expect predicate `existsNoRetry == 0` for object "media-picker-header" StaticText`
+    t =    27.56s         Checking existence of `"media-picker-header" StaticText`
+    t =    27.58s Requesting snapshot of accessibility hierarchy for app with pid 51448
+    t =    27.72s Requesting snapshot of accessibility hierarchy for app with pid 51448
+    t =    28.76s Find the Window (First Match)
+    t =    28.91s Added attachment named 'vibe713r3-retry-result-before-assert'
+SOMEWHERE_SCREENSHOT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/F098C743-F08B-4882-A696-C9B5C657F2B1/tmp/somewhere-design-verification/vibe713r3-retry-result-before-assert.png
+    t =    28.92s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.93s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.95s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+    t =    28.97s Find the Target Application 'dev.groupplanning.ios.uitesthost'
+SOMEWHERE_CAPTURE_CONTEXT=/Users/misha/Library/Developer/CoreSimulator/Devices/31262733-50DC-46A5-938E-4C462D70F109/data/Containers/Data/Application/F098C743-F08B-4882-A696-C9B5C657F2B1/tmp/somewhere-design-verification/vibe713r3-retry-result-before-assert.json
+    t =    28.99s Terminate dev.groupplanning.ios.uitesthost:51448
+2026-11-06 10:42:55.248 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 10:42:55.248 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 10:42:55.249 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+    t =    30.07s Tear Down
+Test Case '-[SomewhereUITests.VibeCheckpoint713Tests testBPartialUploadNoticeAndExactRetry]' passed (30.174 seconds).
+Test Suite 'VibeCheckpoint713Tests' passed at 2026-11-06 10:42:56.425.
+	 Executed 1 test, with 0 failures (0 unexpected) in 30.174 (30.176) seconds
+Test Suite 'SomewhereUITests.xctest' passed at 2026-11-06 10:42:56.425.
+	 Executed 1 test, with 0 failures (0 unexpected) in 30.174 (30.176) seconds
+Test Suite 'Selected tests' passed at 2026-11-06 10:42:56.425.
+	 Executed 1 test, with 0 failures (0 unexpected) in 30.174 (30.177) seconds
+2026-11-06 10:42:56.475 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 10:42:56.475 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 10:42:56.476 xcodebuild[51396:21774864] [MT] IDESchemeActionSDKRecord: operatingSystemBuild = <DVTBuildVersion 24A94232>, error = invalidDigitCount(94232).
+2026-11-06 10:42:56.751 xcodebuild[51396:21774864] [MT] IDETestOperationsObserverDebug: 34.929 elapsed -- Testing started completed.
+2026-11-06 10:42:56.751 xcodebuild[51396:21774864] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-06 10:42:56.751 xcodebuild[51396:21774864] [MT] IDETestOperationsObserverDebug: 34.929 sec, +34.929 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/vibe713-independent-r4-partial.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

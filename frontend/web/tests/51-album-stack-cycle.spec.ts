@@ -18,7 +18,7 @@ test('both stack swipe directions advance and the last photo reassembles without
 
   expect(changed.ok()).toBe(true);
   await page.goto(`/meetings/${meeting.id}/memories?action=upload`);
-  const dialog = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  const dialog = page.getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ });
   const photos = await page.evaluate(() =>
     ['#aa7766', '#669977', '#7766aa'].map((color) => {
       const canvas = document.createElement('canvas');
@@ -37,13 +37,15 @@ test('both stack swipe directions advance and the last photo reassembles without
     }),
   );
 
-  await dialog.getByLabel('Выбрать фото', { exact: true }).setInputFiles(
-    photos.map((data, index) => ({
-      name: `${index}.png`,
-      mimeType: 'image/png',
-      buffer: Buffer.from(data, 'base64'),
-    })),
-  );
+  await dialog
+    .getByLabel(/^(?:Файлы для альбома|Выбрать фото)$/, { exact: true })
+    .setInputFiles(
+      photos.map((data, index) => ({
+        name: `${index}.png`,
+        mimeType: 'image/png',
+        buffer: Buffer.from(data, 'base64'),
+      })),
+    );
   await dialog.getByRole('button', { name: 'Добавить в альбом' }).click();
   await expect(dialog).not.toBeVisible();
   const stack = page.getByRole('group', {
@@ -167,9 +169,9 @@ test('a single photo separates every drag from a deliberate tap', async ({ page 
 
   expect(changed.ok()).toBe(true);
   await page.goto(`/meetings/${meeting.id}/memories?action=upload`);
-  const dialog = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  const dialog = page.getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ });
   await dialog
-    .getByLabel('Выбрать фото', { exact: true })
+    .getByLabel(/^(?:Файлы для альбома|Выбрать фото)$/, { exact: true })
     .setInputFiles('public/share-card.png');
   await dialog.getByRole('button', { name: 'Добавить в альбом' }).click();
   await expect(dialog).not.toBeVisible();

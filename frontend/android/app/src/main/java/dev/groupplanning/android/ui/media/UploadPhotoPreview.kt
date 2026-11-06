@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import dev.groupplanning.android.R
 import dev.groupplanning.android.state.media.UploadItem
 import dev.groupplanning.android.ui.components.ChatIcon
@@ -29,6 +30,8 @@ internal fun UploadPhotoPreview(
     remove: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    height: Dp = DesignTokens.componentPhotoPreviewHeight,
+    radius: Dp = DesignTokens.radiusCover,
 ) {
     val removeLabel = stringResource(R.string.experience_remove) + " " + row.value.fileName
     val removeTarget = DesignTokens.targetAndroid
@@ -36,14 +39,14 @@ internal fun UploadPhotoPreview(
         DesignTokens.componentPhotoPreviewRemoveOutset
     Box(
         modifier.height(
-            DesignTokens.componentPhotoPreviewHeight,
+            height,
         ).testTag("upload-photo-${row.value.key}"),
     ) {
         PrivateImage(
             row.value.key,
             stringResource(R.string.photo_preview),
             load,
-            Modifier.matchParentSize().clip(RoundedCornerShape(DesignTokens.radiusCover)),
+            Modifier.matchParentSize().clip(RoundedCornerShape(radius)),
         )
         IconButton(
             remove,

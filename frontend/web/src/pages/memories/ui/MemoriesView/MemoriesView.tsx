@@ -21,7 +21,11 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
   const mobile = useMobileLayout();
 
   return (
-    <Workspace navigation={<Navigation session={session} />}>
+    <Workspace
+      navigation={mobile ? null : <Navigation session={session} />}
+      mobileBrand={false}
+      screen
+    >
       <main id="main" className={styles.page}>
         <AlbumNavigation id={id} view={view} />
         <AlbumHeading
@@ -59,7 +63,7 @@ export const MemoriesView = ({ id, session }: MemoriesViewProps) => {
       </main>
       <Dialog
         open={view.uploading}
-        title="Добавить фото в альбом"
+        title={mobile ? 'Добавить фото' : 'Добавить фото в альбом'}
         onClose={view.close}
         chatAction
         formLayout

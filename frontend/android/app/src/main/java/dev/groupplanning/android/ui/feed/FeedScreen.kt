@@ -37,6 +37,7 @@ import dev.groupplanning.android.ui.datepoll.CreateDatePollSheet
 import dev.groupplanning.android.ui.datepoll.DatePollRoute
 import dev.groupplanning.android.ui.invitation.InviteFriends
 import dev.groupplanning.android.ui.media.MemoriesGallery
+import dev.groupplanning.android.ui.media.MemoryAlbumUpload
 import dev.groupplanning.android.ui.media.MemoryBanner
 import dev.groupplanning.android.ui.media.MessageAttachment
 import dev.groupplanning.android.ui.media.UploadSheet
@@ -161,27 +162,13 @@ internal fun FeedScreen(
             media?.loadMemories()
         }
     }
-    upload?.let { kind ->
-        media?.let {
-            UploadSheet(it, kind, { upload = null }, more = {
-                if (mediaState?.items?.any { row ->
-                        !row.value.contentType.startsWith("image/")
-                    } == true
-                ) {
-                    files.launch(arrayOf("application/pdf", "text/plain", "application/zip"))
-                } else {
-                    pickPhotos(kind)
-                }
-            })
-        }
-    }
     if (gallery) {
         media?.let {
             MemoriesGallery(
                 meeting?.title.orEmpty(),
                 it,
                 {
-                    pickPhotos("memory")
+                    upload = "memory"
                 },
                 {
                     gallery =
@@ -199,6 +186,24 @@ internal fun FeedScreen(
                 ).joinToString(" · "),
                 download = model.albumDownload,
             )
+        }
+    }
+    upload?.let { kind ->
+        media?.let {
+            if (kind == "memory") {
+                MemoryAlbumUpload(it, { upload = null }, { pickPhotos("memory") })
+            } else {
+                UploadSheet(it, kind, { upload = null }, more = {
+                    if (mediaState?.items?.any { row ->
+                            !row.value.contentType.startsWith("image/")
+                        } == true
+                    ) {
+                        files.launch(arrayOf("application/pdf", "text/plain", "application/zip"))
+                    } else {
+                        pickPhotos(kind)
+                    }
+                })
+            }
         }
     }
     creation?.let { CreateDatePollSheet(it, model::closePollCreation) }
@@ -219,7 +224,7 @@ internal fun FeedScreen(
                 media != null
             ) {
                 MemoryBanner(mediaState?.photos.orEmpty(), media) {
-                    if (mediaState?.photos.isNullOrEmpty()) pickPhotos("memory") else gallery = true
+                    gallery = true
                 }
             }
             FeedTimeline(

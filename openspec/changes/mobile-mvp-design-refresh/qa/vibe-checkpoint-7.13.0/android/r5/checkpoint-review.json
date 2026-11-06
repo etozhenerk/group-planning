@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "kind": "targeted independent upload checkpoint; not full gate report",
+  "reviewer": "/root/vibe_android_review_resume",
+  "reviewedAt": "2026-11-06T07:51:20.729805+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/vibe-android.json",
+  "inputHash": "e70fb1b217562ebfa2fcf4dc412c19709ef50f2540ba9eca9adb208bf3daba31",
+  "sourceHash": "23832e10ec299391f7a0e3f7988998e9bba5821acacf08a1e51ca26fa8e06c73",
+  "artifactHash": "8cfb2a2b7162dd5453ce8397e6e2640a5460afe02ae3810a6cc211e1289eb4da",
+  "summary": "observed-pass for requested R5 upload/animated-close delta",
+  "environment": {
+    "device": "emulator-5554, Android16/API36",
+    "display": "720x1600 density320,360x800dp",
+    "fontScale": 1,
+    "motion": "explicit animator_duration_scale1.0; actual capture animatorsEnabled=true",
+    "fixtureBinarySha256": "140b015239bf1a35bce274171ef113add3e9cd0b4b7147986a6494c9cfbd41d7",
+    "fixtureReset": "same own memory fixture, original3 photos before partial run",
+    "locale": "ru-RU",
+    "timezone": "Europe/Moscow"
+  },
+  "checks": [
+    {
+      "scope": "own form→picker/cancel→partial retained item→exact retry→animated close",
+      "status": "observed-pass",
+      "observations": "Existing independent driver passed15.853s. After partial, one retained item, exact approved caption/triangle+muted notice. Retry closes upload-sheet; publishCounts1/2 and exactly2 new unique IDs assertions reached (total5).",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/upload.log",
+          "sha256": "4d0771b23bcc4468c27091093e706ca753df86c26eaa30305a88247cec8eaa0f"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-evidence/vibe713-r5-upload/checkpoint-actions.json",
+          "sha256": "1144b73f77cf281bb47082b9421384eeea8cce0845c302d4ac6b0b20ff1b91ad"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-evidence/vibe713-r5-upload/upload-partial.png",
+          "sha256": "99d3954c157a425b9d35d92aa951211fd472d6f4d9796d6b27606ea92438fc7b"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-evidence/vibe713-r5-upload/upload-partial.capture.json",
+          "sha256": "398f1128e1538103058b195f6600ad49ce2f5dda85572d797b133f7116c9b45c"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-evidence/vibe713-r5-upload/upload-confirmed-once.png",
+          "sha256": "5ed71ac699153e236a204b6f1567eb1b355322857266d04d1c36f1a036022d52"
+        }
+      ]
+    },
+    {
+      "scope": "canonical delayed confirmation retains preview/busyguard then animated close after release",
+      "status": "observed-pass",
+      "observations": "Fresh canonical test APK NativeVibeUploadUiTests#delayedConfirmationKeepsVibePreviewUntilReleased passed8.241s on same frozen app. Preview remains and submit disabled while publication ACK held after server commit; release closes sheet, returns gallery counter1/4, preserves original3 plus exactly1 new photo.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/delayed.log",
+          "sha256": "19095936f50a3c2af2c51d349e5880d5007d71b9ebe9339186959bc6a0f428af"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-evidence/vibe713-r5-delayed/native-vibe-publish-held-after-commit.png",
+          "sha256": "04efebcf204bf655ecebb41befbe08f65e37c5d6cd7c78c2018fe5c7441e7d22"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-evidence/vibe713-r5-delayed/native-vibe-photo-confirmed-once.png",
+          "sha256": "6123e12d94440f74ddf8c681e7b1835b8d5a096812c4b1e3a15ac65cf5a9d9ab"
+        }
+      ]
+    }
+  ],
+  "binding": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/source-artifact-before.json",
+      "sha256": "aa408de66940ba9bb790a68112e57f175edbcd857a256e738c2067eea8d4a135"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/source-artifact-after.json",
+      "sha256": "f4bbb4dc12231bbea9d2c779c391b1f7134c9efe95036d3d7b89b8fdc33e1e76"
+    }
+  ],
+  "cleanup": {
+    "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r5/device-after.json",
+    "sha256": "7bafb1a894095208f6e218930db529bec4ffe6035ae732ccdf5763dad63301ee"
+  },
+  "limitations": [
+    "This is only requested R5 upload delta; deck/layout/save/privacy prior scopes not copied as R5 pass.",
+    "Full62-state manifest, remaining large text/reduced-motion/0-and-1/error/fullscreen-motion matrix and design:ready/qa:ready remain for final candidate.",
+    "R1/R3/R4 original negative reports and evidence preserved. R5 actual animated1.0 confirms fixed observed close path; no speculative internal cause used as acceptance proof.",
+    "Product/fixtures source/cases/manifests/tasks unchanged by reviewer."
+  ],
+  "testDrivers": [
+    {
+      "scope": "partial",
+      "path": "/private/tmp/android-vibe713-review-BsYKx1/frontend/android/app/build/outputs/apk/androidTest/qa/app-qa-androidTest.apk",
+      "sha256": "1bb37bbf4d496d1b1a0f5bfbc1b9c436f203784868b6eacbbe40c412d3760f34"
+    },
+    {
+      "scope": "delayed",
+      "path": "frontend/android/app/build/outputs/apk/androidTest/qa/app-qa-androidTest.apk",
+      "sha256": "fd917a3431da72c3c54db29613cc74591455e4ebd55c916bdfe9ce13d53ad087"
+    }
+  ]
+}

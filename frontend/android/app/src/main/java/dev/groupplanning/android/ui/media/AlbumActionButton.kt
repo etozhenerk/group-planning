@@ -19,6 +19,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
@@ -44,19 +45,18 @@ internal fun AlbumActionButton(
             contentDescription = label
         },
         enabled = enabled,
-        shape = RoundedCornerShape(DesignTokens.componentButtonRadius),
-        color = if (primary) Palette.action else Color.Transparent,
+        shape = RoundedCornerShape(DesignTokens.componentMobileVibeActionRadius),
+        color = if (primary) Palette.action else Palette.surface,
         contentColor = foreground,
         border = BorderStroke(
             DesignTokens.componentButtonBorderWidth,
-            if (primary) Color.Transparent else DesignTokens.colorSubtleBorder,
+            if (primary) Color.Transparent else DesignTokens.colorBorderStrong,
         ),
     ) {
         Row(
             Modifier.padding(
-                horizontal = DesignTokens.spaceS12 + DesignTokens.componentButtonBorderWidth,
-                vertical = DesignTokens.componentButtonPaddingBlock +
-                    DesignTokens.componentButtonBorderWidth,
+                horizontal = DesignTokens.componentMobileVibeActionInsetInline,
+                vertical = DesignTokens.componentMobileVibeActionInsetBlock,
             ),
             horizontalArrangement = Arrangement.spacedBy(
                 DesignTokens.componentButtonIconGap,
@@ -78,7 +78,7 @@ internal fun AlbumActionButton(
                 Modifier.clearAndSetSemantics {},
                 fontSize = DesignTokens.typographySizeSmall,
                 lineHeight =
-                DesignTokens.typographySizeSmall * DesignTokens.typographyLineHeightBody,
+                DesignTokens.componentMobileVibeActionLineHeight.value.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
                 color = foreground,

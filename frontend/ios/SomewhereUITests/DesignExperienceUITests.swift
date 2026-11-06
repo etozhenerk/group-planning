@@ -249,9 +249,9 @@ final class DesignExperienceUITests: XCTestCase {
         XCTAssertTrue(first.waitForExistence(timeout: 10))
         capture("album")
         first.tap()
-        XCTAssertTrue(app.buttons["Закрыть"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Закрыть просмотр"].waitForExistence(timeout: 5))
         capture("photo")
-        app.buttons["Закрыть"].tap()
+        app.buttons["Закрыть просмотр"].tap()
         app.buttons["Показать сеткой"].tap()
         capture("album-grid")
     }

@@ -94,7 +94,7 @@ test('one meeting shared by web, iOS and Android', async ({ page, playwright }) 
   expect(albumId).toBeTruthy();
   const memoryChooser = page.waitForEvent('filechooser');
   await page
-    .getByRole('dialog', { name: 'Добавить фото в альбом' })
+    .getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ })
     .getByRole('button', { name: 'Выбрать фото', exact: true })
     .click();
   await (

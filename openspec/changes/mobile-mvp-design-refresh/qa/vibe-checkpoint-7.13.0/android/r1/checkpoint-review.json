@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent screen checkpoint, not full gate report",
+  "reviewer": "/root/vibe_android_review_resume",
+  "previousRuntimeReviewer": "/root/rsvp_web_design_7_2_r1",
+  "reviewedAt": "2026-11-06T07:23:19.827961+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/vibe-android.json",
+  "inputHash": "8dd44165a8b7b055006ddcc7918a8d07d8072772b3bc433591fc404905bb443f",
+  "sourceHash": "5b7162165b4071d3f9a243cd7b9a1cbeb349dc5753e03f13b46683157c30cb44",
+  "artifactHash": "b65ffd4d636c79a283a3f996cdeac573092a4f96568d020e863621e822b44e70",
+  "summary": "needs-fixes",
+  "runtimeProvenance": "Recovered original logs/evidence after reviewer service failure; no application rerun by recovering reviewer. Images and assertions reviewed directly. Source/device released to implementer after R1 runtime.",
+  "checks": [
+    {
+      "scope": "deck/viewer navigation, rollback, flick, cycle",
+      "status": "observed-pass",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/deck-rerun.log",
+          "sha256": "e4c90fa00a6864fe910d2e7eab33cb3390b38fc348463e7d71484eda830e60ea"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/motion-left-mid.png",
+          "sha256": "8f2851edeeee1bed160ad72fe1dd2cd1c65a367b52f1ac821a83948494537f1f"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/motion-left-settled.png",
+          "sha256": "3b600d953b223e2bfe5178e173322b24591173b27af888f3154891e2322d06eb"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/motion-right-mid.png",
+          "sha256": "aed373e1622e6d6d892cc9f7821f744bb6acfb357d3aa6038b54ab652e021707"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/motion-right-settled.png",
+          "sha256": "d2306cd7a404bc16e7d01b9227e8feed3738d14c8f3fdabcbd1a9d8cf7161884"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/device-evidence/vibe713-deck-rerun/checkpoint-actions.json",
+          "sha256": "ce91d399aa672359ac6ccd51b8edae158113142e5e1f0f438ad8bdc20354a4aa"
+        }
+      ]
+    },
+    {
+      "scope": "save originals, privacy revoke, own upload form/picker cancel/partial exact retry",
+      "status": "observed-pass",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/save.log",
+          "sha256": "df5cde4c0d2061c63ab4af55f94a54e1231ad9fc697ea867cd0e21ee7ef9ac17"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/privacy.log",
+          "sha256": "bec439a40a1faf7ab2bc03c2184cec6139cfae9254d227f62f704008580fb506"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/upload.log",
+          "sha256": "ce5b9c572a81994446c307067336376f7a4b04f8465e4dbb3e6b88359c376c44"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/tail-results.json",
+          "sha256": "e33602e160d882c3021aa69d0e727861e0344456dbb7aef0d860d45d2b67c4ed"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/device-evidence/vibe713-upload/upload-own-empty.png",
+          "sha256": "be06ec99c98c371084b5ba6c2bca1a49ce7c68ffe57ea089af325ac871ef324c"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/device-evidence/vibe713-upload/upload-partial.png",
+          "sha256": "468a333351497d3026e59c3ea3e5e4b6f7296cb147c05df0fb2936bad48b7f55"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/device-evidence/vibe713-upload/checkpoint-actions.json",
+          "sha256": "363c72ef62bb4bc40d1a53707f437b0878a0bf2b4b413170b4cc2eaf867b630f"
+        }
+      ]
+    },
+    {
+      "scope": "ready composition/deck geometry",
+      "status": "needs-fixes",
+      "observations": "Actual stack leaves substantially more empty lower viewport than raw flex:1; title begins lower after safe-area adaptation. Raw geometry photo-deck407px at usable360x708; actual frame visibly shorter. Compare exact fixtures/content separately; native targets preserved.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/actual-ready360.png",
+          "sha256": "acd2726afc8a2211b762923b8c6adcde8ca4624c43087412903757375e1d4812"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/reference-ready-usable708.png",
+          "sha256": "6c314a9b02ab559961ed9619d619c9e31116d7549051a8514b5bbb3073bcfc45"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/raw-geometry.json",
+          "sha256": "70efc22f8ebe6be312d259727c200cd6e89c5f3eaa0e9886a9765942a8fdc4bb"
+        }
+      ]
+    },
+    {
+      "scope": "fullscreen close control",
+      "status": "needs-fixes",
+      "observations": "Actual close has no surface/r14 tile from approved viewer.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/device-evidence/vibe713-deck-rerun/viewer.png",
+          "sha256": "c47ad18fe46ebe8048d0c5ab37c110f0c3f046219955708827f17650f6d4387e"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/reference-viewer360.png",
+          "sha256": "3e13c86d18188fb3068bfc9d678f518abc1db612de0c963aafcced28b19d71f9"
+        }
+      ]
+    },
+    {
+      "scope": "upload partial copy",
+      "status": "needs-fixes",
+      "observations": "Actual says Выбрано фото:1 plus generic error; approved partial says Не добавлено фото:1 and explains previously added photos. Retry data/publish-count behavior passed.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/device-evidence/vibe713-upload/upload-partial.png",
+          "sha256": "468a333351497d3026e59c3ea3e5e4b6f7296cb147c05df0fb2936bad48b7f55"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/vibe-checkpoint-7.13.0/android/r1/reference-partial360.png",
+          "sha256": "8842278f96ccbfa97a69f5a759fe9700fd016192695d07684fc731346059e18f"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "62-state manifest not fully covered, no design:ready/qa:ready or product checkbox claimed.",
+    "R1 device capture reports animatorsEnabled=false with animator_duration_scale=null. Mid-drag proves direct manual tracking; ordinary finishing-animation fidelity remains for R2/final.",
+    "320/large font/fullscreen intermediate motion/0-and-1 photo/remaining error-state matrix not covered by this short checkpoint.",
+    "Upload raw screenshot is clipped at bottom in preserved reference; no pixel pass for full panel.",
+    "Card continuity through rank promotion not proven by still counter/settled captures."
+  ]
+}

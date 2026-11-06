@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -67,16 +68,23 @@ internal fun ActionSheet(
     } else {
         DesignTokens.componentMobileSheetTopReserve
     }
-    val sheet = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-        confirmValueChange = {
-            if (it == SheetValue.Hidden && !canDismiss) {
-                if (canClose) close()
+    val dismissAllowed = rememberUpdatedState(canDismiss)
+    val closeAllowed = rememberUpdatedState(canClose)
+    val onClose = rememberUpdatedState(close)
+    // Material keys SheetState by this callback: a busy change must not recreate the sheet.
+    val confirmChange: (SheetValue) -> Boolean = remember {
+        { value ->
+            if (value == SheetValue.Hidden && !dismissAllowed.value) {
+                if (closeAllowed.value) onClose.value.invoke()
                 false
             } else {
                 true
             }
-        },
+        }
+    }
+    val sheet = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = confirmChange,
     )
     val closeScope = rememberCoroutineScope()
     val motion = LocalMotionEnabled.current
@@ -94,7 +102,7 @@ internal fun ActionSheet(
             }
         }
     }
-    LaunchedEffect(closeRequested) {
+    LaunchedEffect(closeRequested, canClose) {
         if (closeRequested) requestClose()
     }
     CompositionLocalProvider(LocalMobileSheet provides true) {

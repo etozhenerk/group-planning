@@ -3,7 +3,6 @@ package dev.groupplanning.android.ui.media
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.size
@@ -27,6 +26,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -39,6 +39,8 @@ import androidx.compose.ui.semantics.semantics
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.MeetingMedia
 import dev.groupplanning.android.state.media.MediaViewModel
+import dev.groupplanning.android.ui.theme.DesignTokens
+import kotlin.math.abs
 
 @Composable
 internal fun PhotoStack(
@@ -68,8 +70,12 @@ internal fun PhotoStack(
         val availableWidth = maxWidth
         val availableHeight = maxHeight
         val width = with(LocalDensity.current) { maxWidth.toPx() }
-        val advance: (Int, Boolean) -> Unit = { direction, swipe ->
-            controller.move(photos, currentIndex, direction, width, full, motion, swipe, select)
+        val density = LocalDensity.current.density
+        val advance: (Int, Boolean, Float) -> Unit = { direction, swipe, velocity ->
+            controller.move(
+                photos, currentIndex, direction, width, full, motion, swipe, select,
+                velocity, density,
+            )
         }
         androidx.compose.foundation.layout.Box(
             Modifier.matchParentSize().testTag("photo-stack").onKeyEvent {
@@ -78,11 +84,11 @@ internal fun PhotoStack(
                 } else {
                     when (it.key) {
                         Key.DirectionRight -> {
-                            advance(1, false)
+                            advance(1, false, 0f)
                             true
                         }
                         Key.DirectionLeft -> {
-                            advance(-1, false)
+                            advance(-1, false, 0f)
                             true
                         }
                         else -> false
@@ -93,11 +99,11 @@ internal fun PhotoStack(
                 liveRegion = LiveRegionMode.Polite
                 customActions = listOf(
                     CustomAccessibilityAction(nextLabel) {
-                        advance(1, false)
+                        advance(1, false, 0f)
                         true
                     },
                     CustomAccessibilityAction(previousLabel) {
-                        advance(-1, false)
+                        advance(-1, false, 0f)
                         true
                     },
                 )
@@ -108,22 +114,98 @@ internal fun PhotoStack(
                     waitForUpOrCancellation()
                 }
             }.pointerInput(current.id, photos.size, motion) {
-                detectHorizontalDragGestures(
-                    onDragStart = { dragged = true },
-                    onDragCancel = { controller.settle(motion) },
-                    onDragEnd = {
-                        if (kotlin.math.abs(controller.offset.value) > 56 * density &&
-                            photos.size > 1
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
+                    val tracker = VelocityTracker()
+                    tracker.addPosition(down.uptimeMillis, down.position)
+                    var horizontal = false
+                    var cancelled = false
+                    var finished = false
+                    var lastSample = down.uptimeMillis
+                    var releaseTime = down.uptimeMillis
+                    while (!finished && !cancelled) {
+                        val event = awaitPointerEvent()
+                        val change = event.changes.firstOrNull { it.id == down.id }
+                        if (event.changes.count { it.pressed } > 1 || change == null) {
+                            cancelled = true
+                        } else if (!change.pressed) {
+                            finished = true
+                            releaseTime = change.uptimeMillis
+                        } else {
+                            val distance = change.position - down.position
+                            if (!horizontal &&
+                                distance.getDistance() >
+                                DesignTokens.componentMobileVibeDragSlop.toPx()
+                            ) {
+                                if (abs(distance.y) > abs(distance.x) *
+                                    DesignTokens.componentMobileVibeAxisBias
+                                ) {
+                                    cancelled = true
+                                } else if (!controller.busy && photos.size > 1) {
+                                    horizontal = true
+                                    dragged = true
+                                    controller.drag(distance.x, distance.y)
+                                }
+                            } else if (horizontal) {
+                                val delta = change.position - change.previousPosition
+                                controller.drag(delta.x, delta.y)
+                            }
+                            if (horizontal) {
+                                tracker.addPosition(change.uptimeMillis, change.position)
+                                lastSample = change.uptimeMillis
+                                change.consume()
+                            }
+                        }
+                    }
+                    if (cancelled) {
+                        if (horizontal) controller.settle(motion)
+                    } else if (horizontal) {
+                        val distance = abs(controller.offset.value) / density
+                        val velocity = if (releaseTime - lastSample >
+                            DesignTokens.motionDurationVibeVelocityExpiry
                         ) {
-                            advance(if (controller.offset.value < 0) 1 else -1, true)
+                            0f
+                        } else {
+                            tracker.calculateVelocity().x
+                        }
+                        val ratio = if (full) {
+                            DesignTokens.componentMobileVibeViewerDistanceRatio
+                        } else {
+                            DesignTokens.componentMobileVibeDistanceRatio
+                        }
+                        val threshold = (
+                            width / density * (
+                                if (full) {
+                                    1f
+                                } else {
+                                    DesignTokens.componentMobileVibeCardWidthRatio
+                                }
+                                ) * ratio
+                            )
+                            .coerceAtLeast(DesignTokens.componentMobileVibeDistanceMinimum.value)
+                            .coerceAtMost(
+                                if (full) {
+                                    Float.MAX_VALUE
+                                } else {
+                                    DesignTokens.componentMobileVibeDistanceMaximum.value
+                                },
+                            )
+                        val flick = if (full) {
+                            DesignTokens.componentMobileVibeViewerFlickDistance
+                        } else {
+                            DesignTokens.componentMobileVibeFlickDistance
+                        }
+                        if (distance > threshold ||
+                            (
+                                distance > flick.value &&
+                                    abs(velocity) / density >
+                                    DesignTokens.componentMobileVibeFlickVelocityPerSecond
+                                )
+                        ) {
+                            advance(if (controller.offset.value < 0) 1 else -1, true, velocity)
                         } else {
                             controller.settle(motion)
                         }
-                    },
-                ) { event, delta ->
-                    if (photos.size > 1 && !controller.busy) {
-                        event.consume()
-                        controller.drag(delta)
                     }
                 }
             },
@@ -136,29 +218,44 @@ internal fun PhotoStack(
                     CircularProgressIndicator(Modifier.testTag("photo-stack-loading"))
                 }
             } else {
-                val visible = if (full) listOf(current) else photos.drop(currentIndex).take(3)
-                visible.withIndex().toList().asReversed().forEach { (rank, photo) ->
-                    key(photo.id) {
+                val ranks = if (full) {
+                    (-1..1).toList()
+                } else {
+                    (
+                        0 until minOf(
+                            3,
+                            photos.size,
+                        )
+                        ).toList().asReversed()
+                }
+                ranks.forEach { rank ->
+                    val photo = photos[Math.floorMod(currentIndex + rank, photos.size)]
+                    key(if (full) "${photo.id}-$rank" else photo.id.toString()) {
                         controller.images[photo.id]?.let { bitmap ->
-                            val portrait = bitmap.width < bitmap.height
                             val cardWidth = if (full) {
                                 availableWidth
-                            } else if (portrait) {
-                                minOf(availableWidth * .78f, availableHeight * .88f * 2 / 3)
                             } else {
-                                availableWidth * .88f
+                                availableWidth * DesignTokens.componentMobileVibeCardWidthRatio
                             }
                             val cardHeight = if (full) {
                                 availableHeight
                             } else {
                                 availableHeight *
-                                    if (portrait) .88f else .77f
+                                    if (availableHeight <=
+                                        DesignTokens.componentMobileVibeCompactDeckHeight
+                                    ) {
+                                        DesignTokens.componentMobileVibeCompactCardHeightRatio
+                                    } else {
+                                        DesignTokens.componentMobileVibeCardHeightRatio
+                                    }
                             }
                             StackPhotoCard(
                                 bitmap, photo.id.toString(), rank, if (rank == 0) count else null,
                                 controller.offset.value, controller.assembly.value, full, motion,
                                 { if (!dragged && !controller.busy) open() },
                                 Modifier.size(cardWidth, cardHeight),
+                                viewportWidth = width,
+                                vertical = controller.vertical,
                             )
                         }
                     }

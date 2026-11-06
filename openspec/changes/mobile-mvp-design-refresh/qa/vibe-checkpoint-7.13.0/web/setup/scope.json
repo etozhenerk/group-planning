@@ -1,0 +1,94 @@
+{
+  "kind": "prepared tooling and short checkpoint plan; never final matrix/gate",
+  "currentDesignVersion": "7.13.0",
+  "screenCounts": {
+    "vibe": [
+      {
+        "id": "vibe",
+        "states": 91
+      }
+    ],
+    "accountService": [
+      {
+        "id": "profile",
+        "states": 37
+      },
+      {
+        "id": "help",
+        "states": 70
+      },
+      {
+        "id": "about",
+        "states": 34
+      },
+      {
+        "id": "documents",
+        "states": 25
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "deck",
+      "cases": [
+        "TC-MOBILE-VIBE-GESTURE",
+        "TC-VIBE-C82FDBE2",
+        "TC-VIBE-DAC4D8E1"
+      ],
+      "actions": "real3photos; intermediate pointer position; slow24px rollback; swipe both directions;3cycle; no synthetic tap afterswipe; standalone tapviewer; vertical/cancel +RM spot"
+    },
+    {
+      "id": "grid-viewer",
+      "cases": [
+        "TC-MOBILE-VIBE-STABILITY",
+        "TC-VIBE-WEB-FULLSCREEN-CONTAIN"
+      ],
+      "actions": "counter/view toggle coordinates stable; gridphoto2→viewer; contain portrait/wide; Escape/Backfocus; preserve context"
+    },
+    {
+      "id": "upload",
+      "cases": [
+        "TC-VIBE-WEB-DIRECT-UPLOAD",
+        "TC-VIBE-WEB-UPLOAD-CANCEL",
+        "TC-VIBE-3E0FC811"
+      ],
+      "actions": "realfilechooser; selection/reopen cancel preserves; partial1success/1transportknownfailure; retryfailedonly; confirmedcount"
+    },
+    {
+      "id": "save-privacy",
+      "cases": [
+        "TC-VIBE-EXPORT-ZIP",
+        "TC-VIBE-EXPORT-ACCESS"
+      ],
+      "actions": "nativebrowserdownload; ZIPnames/CRC/SHA originals; isolated outsider GETmemory/content/export forbidden; noexternalstorage"
+    },
+    {
+      "id": "desktop",
+      "cases": [
+        "TC-MOBILE-WEB-SCOPE"
+      ],
+      "actions": "1100spot retains historicalcomposition; no mobile redesign expectation"
+    },
+    {
+      "id": "account-service-next",
+      "cases": [
+        "TC-PROFILE-YANDEX-FIELDS",
+        "TC-PROFILE-ACTIONS-ORDER",
+        "TC-MOBILE-SUPPORT-SECTION",
+        "TC-MOBILE-ABOUT-METADATA",
+        "TC-MOBILE-DOCUMENT-READER"
+      ],
+      "actions": "newfrozenrequired; full/missingprofile; noedit/deletevisible; logoutlast;FAQretain;supportsection/back;docs/Aboutmetadata; noactualsupportsendwithoutauthorization"
+    },
+    {
+      "id": "final-candidate",
+      "actions": "newexactcandidate/source/artifact allbindings; cross entry/list/Maybe/chat/vibe/profile/documentreturn; finalmatrixseparatecontract; none ofthischeckpoint impliesfinalpass"
+    }
+  ],
+  "limits": [
+    "Physicaldevice IME/touch/VO not supplied",
+    "WebKit noCDP; trustedmouse+tapandexplicitlimit",
+    "Livefaults only ownfixture; noresponsemock as privacy proof",
+    "No pass before frozen; stoponinputchange"
+  ]
+}

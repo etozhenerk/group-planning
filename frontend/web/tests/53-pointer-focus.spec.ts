@@ -80,9 +80,9 @@ for (const width of [390, 1440]) {
 
     expect(changed.ok()).toBe(true);
     await page.goto(`/meetings/${meeting.id}/memories?action=upload`);
-    const upload = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+    const upload = page.getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ });
     await upload
-      .getByLabel('Выбрать фото', { exact: true })
+      .getByLabel(/^(?:Файлы для альбома|Выбрать фото)$/, { exact: true })
       .setInputFiles('public/share-card.png');
     await upload.getByRole('button', { name: 'Добавить в альбом' }).click();
     await expect(upload).not.toBeVisible();

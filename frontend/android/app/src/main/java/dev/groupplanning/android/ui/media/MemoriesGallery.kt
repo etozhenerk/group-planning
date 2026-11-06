@@ -5,10 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,7 +18,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -27,11 +27,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -82,59 +84,83 @@ internal fun MemoriesGallery(
     Dialog(back, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(
             Modifier.fillMaxSize().testTag(if (full) "memory-fullscreen" else "memory-gallery"),
-            color = if (full) Color(0xff141518) else Palette.background,
+            color = if (full) DesignTokens.colorPhotoBackdrop else Palette.background,
         ) {
             if (full) {
                 androidx.compose.foundation.layout.Box(
                     Modifier.fillMaxSize().safeDrawingPadding(),
                 ) {
-                    MemoryViewer(title, subtitle, state.photos, index, { index = it }, model, back)
+                    MemoryViewer(title, state.photos, index, { index = it }, model, back)
                 }
             } else {
                 BoxWithConstraints(Modifier.fillMaxSize().safeDrawingPadding()) {
-                    val stackHeight = (maxHeight * .51f).coerceIn(340.dp, 500.dp)
+                    var headerHeight by remember { mutableIntStateOf(0) }
+                    val density = LocalDensity.current
+                    val compact = maxHeight < DesignTokens.componentMobileVibeCompactHeightBoundary
+                    val stackHeight = if (compact) {
+                        DesignTokens.componentMobileVibeCompactDeckHeight
+                    } else {
+                        maxOf(
+                            DesignTokens.componentMobileVibeDeckMinimumHeight,
+                            maxHeight - with(density) { headerHeight.toDp() } -
+                                DesignTokens.spaceS12 - DesignTokens.spaceS32,
+                        )
+                    }
                     val scrollState = rememberScrollState()
                     Column(
-                        Modifier.fillMaxSize().verticalScroll(scrollState).padding(bottom = 24.dp),
+                        Modifier.fillMaxSize().verticalScroll(
+                            scrollState,
+                        ).padding(bottom = DesignTokens.spaceS32),
                         verticalArrangement = Arrangement.spacedBy(0.dp),
                     ) {
-                        Row(
-                            Modifier.padding(
-                                horizontal = DesignTokens.spaceS20,
-                                vertical = DesignTokens.spaceS12,
-                            ),
-                        ) {
-                            PageBack(close = back)
-                        }
-                        run {
-                            Column(Modifier.padding(horizontal = 20.dp).padding(top = 16.dp)) {
-                                if (subtitle.isNotEmpty()) {
+                        Column(Modifier.onSizeChanged { headerHeight = it.height }) {
+                            Row(
+                                Modifier.padding(
+                                    horizontal = DesignTokens.spaceS20,
+
+                                ).padding(bottom = DesignTokens.componentMobileVibeNavBottomGap),
+                            ) {
+                                PageBack(close = back)
+                                Spacer(Modifier.weight(1f))
+                                GalleryCounter(index, state.photos.size, grid = grid, toggle = {
+                                    grid =
+                                        !grid
+                                })
+                            }
+                            run {
+                                Column(Modifier.padding(horizontal = DesignTokens.spaceS20)) {
                                     Text(
-                                        subtitle,
-                                        fontSize = 13.sp,
-                                        color = Palette.muted,
+                                        title,
+                                        fontSize = DesignTokens.typographySizeHeading,
+                                        lineHeight =
+                                        DesignTokens.componentMobileVibeTitleLineHeight.value.sp,
+                                        letterSpacing =
+                                        -DesignTokens.componentMobileVibeTitleTracking.value.sp,
+                                        fontWeight = FontWeight(
+                                            DesignTokens.componentMobileVibeTitleWeight.toInt(),
+                                        ),
+                                    )
+                                    if (subtitle.isNotEmpty()) {
+                                        Text(
+                                            subtitle,
+                                            Modifier.padding(top = DesignTokens.spaceS8),
+                                            fontSize = DesignTokens.typographySizeSmall,
+                                            lineHeight =
+                                            DesignTokens.componentMobileVibeBodyLineHeight.value.sp,
+                                            color = Palette.muted,
+                                        )
+                                    }
+                                    AlbumDownloadControls(
+                                        download,
+                                        state.photos.isNotEmpty(),
+                                        add,
+                                        Modifier.padding(top = DesignTokens.spaceS24),
                                     )
                                 }
-                                Text(
-                                    title,
-                                    fontSize = 29.sp,
-                                    lineHeight = 33.35.sp,
-                                    letterSpacing = (-.9).sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(top = 8.dp),
-                                )
-                                AlbumDownloadControls(
-                                    download,
-                                    state.photos.isNotEmpty(),
-                                    add,
-                                    Modifier.padding(top = DesignTokens.spaceS16),
-                                )
                             }
                         }
-                        if (state.photos.isEmpty() &&
-                            !state.loading
-                        ) {
-                            Text(stringResource(R.string.memories_empty))
+                        if (state.photos.isEmpty()) {
+                            VibeAlbumState(state.loading, state.loadError) { model.loadMemories() }
                         }
                         if (grid) {
                             LazyVerticalGrid(
@@ -154,8 +180,8 @@ internal fun MemoriesGallery(
                                             state.photos.size,
                                         ),
                                         { model.content(photo) },
-                                        Modifier.height(
-                                            220.dp,
+                                        Modifier.aspectRatio(
+                                            1f,
                                         ).clip(RoundedCornerShape(14.dp)).clickable {
                                             index =
                                                 itemIndex
@@ -182,15 +208,8 @@ internal fun MemoriesGallery(
                                     stackHeight,
                                 ).padding(horizontal = 12.dp),
                             )
-                            GalleryCounter(
-                                index,
-                                state.photos.size,
-                                modifier = Modifier.offset(y = (-6).dp),
-                                grid = { grid = true },
-                            )
                         }
-                        if (state.loading && state.photos.isEmpty()) CircularProgressIndicator()
-                        if (state.loadError) {
+                        if (state.loadError && state.photos.isNotEmpty()) {
                             TextButton({
                                 model.loadMemories()
                             }) { Text(stringResource(R.string.media_error)) }

@@ -23,7 +23,7 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
 
   expect(changed.ok()).toBe(true);
   await page.goto(`/meetings/${meeting.id}/memories?action=upload`);
-  const dialog = page.getByRole('dialog', { name: 'Добавить фото в альбом' });
+  const dialog = page.getByRole('dialog', { name: /^Добавить фото(?: в альбом)?$/ });
   const photos = await page.evaluate(() =>
     ['#aa7766', '#669977', '#7766aa'].map((color) => {
       const canvas = document.createElement('canvas');
@@ -42,13 +42,15 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
     }),
   );
 
-  await dialog.getByLabel('Выбрать фото', { exact: true }).setInputFiles(
-    photos.map((data, index) => ({
-      name: `${index}.png`,
-      mimeType: 'image/png',
-      buffer: Buffer.from(data, 'base64'),
-    })),
-  );
+  await dialog
+    .getByLabel(/^(?:Файлы для альбома|Выбрать фото)$/, { exact: true })
+    .setInputFiles(
+      photos.map((data, index) => ({
+        name: `${index}.png`,
+        mimeType: 'image/png',
+        buffer: Buffer.from(data, 'base64'),
+      })),
+    );
   await dialog.getByRole('button', { name: 'Добавить в альбом' }).click();
   await expect(dialog).not.toBeVisible();
   const stack = page.getByRole('group', {
@@ -165,9 +167,9 @@ test('trusted touch can swipe the photo button in both directions and cycle the 
     const close = viewer.getByRole('button', { name: 'Закрыть просмотр', exact: true });
     await expect(close).toBeFocused();
     await expect(close).toHaveCSS('outline-style', 'none');
-    await gesture(viewer.locator('img'), -120);
+    await gesture(viewer.getByTestId('full-photo'), -120);
     await expect(viewer.getByText(/2 \/ 3$/)).toBeVisible();
-    await gesture(viewer.locator('img'), 120);
+    await gesture(viewer.getByTestId('full-photo'), 120);
     await expect(viewer.getByText(/1 \/ 3$/)).toBeVisible();
     await close.tap();
     await expect(viewer).not.toBeVisible();
