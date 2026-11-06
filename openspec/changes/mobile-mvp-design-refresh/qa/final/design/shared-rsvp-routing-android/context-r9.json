@@ -1,0 +1,168 @@
+{
+  "path": "openspec/changes/mobile-mvp-design-refresh/design/rsvp-routing-android.json",
+  "manifest": {
+    "schemaVersion": 1,
+    "id": "shared-rsvp-routing-android",
+    "designVersion": "7.15.0",
+    "phase": "checkpoint",
+    "approval": "05.11.2026: прямое решение пользователя для всех поверхностей, затем «окаю дизайн». На сегодня пользователь остановил дальнейшую работу.",
+    "implementer": "codex-mobile-apply-2026-11-05",
+    "report": "openspec/changes/mobile-mvp-design-refresh/qa/final/design/shared-rsvp-routing-android/design-review.json",
+    "screens": [
+      {
+        "id": "response-route",
+        "states": [
+          "going-chat",
+          "maybe-invitations",
+          "declined-confirmation",
+          "busy-stays",
+          "error-stays",
+          "unknown-stays",
+          "member-chat",
+          "organizer-chat",
+          "closed-no-response",
+          "auth-no-rsvp",
+          "repeat-no-duplicate",
+          "large-text",
+          "reduced-motion",
+          "safe-area-return"
+        ],
+        "references": [
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invitations/frame.html",
+          "docs/design/desktop-mvp/invite-r2/preview.html",
+          "docs/design/desktop-mvp/invitations-r2/preview.html"
+        ],
+        "platforms": [
+          "android"
+        ],
+        "inputs": [
+          "frontend/android",
+          "contracts/fixtures",
+          "backend/internal/httpapi",
+          "package-lock.json"
+        ],
+        "contracts": [
+          "docs/design/components/invitation-response.md",
+          "docs/design/platforms.md"
+        ],
+        "tasks": {
+          "android": [
+            "15.4",
+            "15.7"
+          ]
+        }
+      },
+      {
+        "id": "declined-result",
+        "states": [
+          "confirmed",
+          "long-title",
+          "meetings-action",
+          "large-text",
+          "reduced-motion",
+          "safe-area-return"
+        ],
+        "references": [
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/declined/frame.html",
+          "docs/design/desktop-mvp/invite-r2/preview.html"
+        ],
+        "platforms": [
+          "android"
+        ],
+        "inputs": [
+          "frontend/android",
+          "contracts/fixtures",
+          "backend/internal/httpapi",
+          "package-lock.json"
+        ],
+        "contracts": [
+          "docs/design/components/invitation-response.md",
+          "docs/design/platforms.md"
+        ],
+        "tasks": {
+          "android": [
+            "15.4",
+            "15.7"
+          ]
+        }
+      },
+      {
+        "id": "rsvp-system-event",
+        "states": [
+          "going",
+          "maybe",
+          "not-going",
+          "retry-dedup",
+          "reopen-no-event",
+          "no-access-after-change",
+          "large-text",
+          "reduced-motion",
+          "safe-area-return"
+        ],
+        "references": [
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+          "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/chat/frame.html",
+          "docs/design/desktop-mvp/chat-r4/preview.html"
+        ],
+        "platforms": [
+          "android"
+        ],
+        "inputs": [
+          "frontend/android",
+          "contracts/fixtures",
+          "backend/internal/httpapi",
+          "package-lock.json"
+        ],
+        "contracts": [
+          "docs/design/components/invitation-response.md",
+          "docs/design/platforms.md"
+        ],
+        "tasks": {
+          "android": [
+            "15.4",
+            "15.7"
+          ]
+        }
+      }
+    ]
+  },
+  "expected": [
+    "response-route/android/going-chat",
+    "response-route/android/maybe-invitations",
+    "response-route/android/declined-confirmation",
+    "response-route/android/busy-stays",
+    "response-route/android/error-stays",
+    "response-route/android/unknown-stays",
+    "response-route/android/member-chat",
+    "response-route/android/organizer-chat",
+    "response-route/android/closed-no-response",
+    "response-route/android/auth-no-rsvp",
+    "response-route/android/repeat-no-duplicate",
+    "response-route/android/large-text",
+    "response-route/android/reduced-motion",
+    "response-route/android/safe-area-return",
+    "declined-result/android/confirmed",
+    "declined-result/android/long-title",
+    "declined-result/android/meetings-action",
+    "declined-result/android/large-text",
+    "declined-result/android/reduced-motion",
+    "declined-result/android/safe-area-return",
+    "rsvp-system-event/android/going",
+    "rsvp-system-event/android/maybe",
+    "rsvp-system-event/android/not-going",
+    "rsvp-system-event/android/retry-dedup",
+    "rsvp-system-event/android/reopen-no-event",
+    "rsvp-system-event/android/no-access-after-change",
+    "rsvp-system-event/android/large-text",
+    "rsvp-system-event/android/reduced-motion",
+    "rsvp-system-event/android/safe-area-return"
+  ],
+  "inputHash": "a7ceda1655cc284fd7d09c99b042f0cd6b324aad5258e40168814fa22e1925f5",
+  "closedKeys": []
+}

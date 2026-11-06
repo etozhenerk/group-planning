@@ -453,6 +453,380 @@
           "sha256": "48bb5c6cfd2cdeae8de31b005bf9c25d576d706398f44f3ac2f9578e95f7da85"
         }
       ]
+    },
+    {
+      "id": "TC-RSVP-ROUTE-GOING/android-phone/manual",
+      "status": "passed",
+      "defect": "",
+      "executor": {
+        "kind": "agent",
+        "id": "android-independent-vibe-review-resume"
+      },
+      "startedAt": "2026-11-06T18:56:13.180255Z",
+      "finishedAt": "2026-11-06T19:07:32.082Z",
+      "actual": "Реальное подтверждение Going по ссылке открыло чат именно созданной встречи. Дополнительно выполнены saved invitation→Going→chat и Information→Going→chat; промежуточной кнопки «Открыть встречу» нет.",
+      "evidence": [
+        {
+          "path": "rsvp-review/actual/route--going-chat.png",
+          "kind": "screenshot",
+          "sha256": "675f2637a287209a8863d1bc5bb9718cf1e0787ba729c77d1f81a9158cdfef37"
+        },
+        {
+          "path": "rsvp-review/actual/route--going-chat.interaction.json",
+          "kind": "interaction",
+          "sha256": "00076b3316575fe66fb6d4cb1bce281fe52180756c867ef871d7d1adc9b24ddc"
+        },
+        {
+          "path": "rsvp-review/list-info/route--going-from-invitations.png",
+          "kind": "screenshot",
+          "sha256": "66f00d74e4709ea4f6a91298a0133612fce1e4cdc57def3a1d19356e8b201054"
+        },
+        {
+          "path": "rsvp-review/list-info/route--going-from-invitations.interaction.json",
+          "kind": "interaction",
+          "sha256": "cdd447b5ae9e21db23156c1654ddb83846a3153b67dce41f0a7d0b98f1a2f5fe"
+        },
+        {
+          "path": "rsvp-review/list-info/route--going-from-information.png",
+          "kind": "screenshot",
+          "sha256": "66f00d74e4709ea4f6a91298a0133612fce1e4cdc57def3a1d19356e8b201054"
+        },
+        {
+          "path": "rsvp-review/list-info/route--going-from-information.interaction.json",
+          "kind": "interaction",
+          "sha256": "b1033aacc7cd68cdcb794b3a5135336938a5ff345b57aaf20cae565ab6de29bd"
+        },
+        {
+          "path": "case-interactions/TC-RSVP-ROUTE-GOING.json",
+          "kind": "interaction",
+          "sha256": "a6aa83c2bfb3591115a336bde17c90010f77a9044d03ed0b82570b8f4e77d000"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-ROUTE-MAYBE/android-phone/manual",
+      "status": "passed",
+      "defect": "",
+      "executor": {
+        "kind": "agent",
+        "id": "android-independent-vibe-review-resume"
+      },
+      "startedAt": "2026-11-06T18:56:21.588735Z",
+      "finishedAt": "2026-11-06T19:07:32.084Z",
+      "actual": "Сохранение/reconfirm Maybe из public invitation открыло Invitations с конкретной встречей и без приватного чата. Information→Maybe также закрыло форму и вернуло существующую карточку в Invitations.",
+      "evidence": [
+        {
+          "path": "rsvp-review/actual/route--maybe-invitations.png",
+          "kind": "screenshot",
+          "sha256": "805a0ef7366df3c22f6d2e33add36fbe779b9cd314c3d10fb3bd4bc81293054c"
+        },
+        {
+          "path": "rsvp-review/actual/route--maybe-invitations.interaction.json",
+          "kind": "interaction",
+          "sha256": "5f0f17a1a56bb2b1fc86641760e9d9a982c4d6ec58699895f21e3a4a4bb19c6e"
+        },
+        {
+          "path": "rsvp-review/list-info/route--maybe-from-information.png",
+          "kind": "screenshot",
+          "sha256": "75e2edaefff1c6aa7885a5bb7f5718d9df3cd85f07fb1e9341aa366228fc742c"
+        },
+        {
+          "path": "rsvp-review/list-info/route--maybe-from-information.interaction.json",
+          "kind": "interaction",
+          "sha256": "44e12cbe888d2a8c93a40bfb95f4015bc6b336e09cdc72d395d3e9e057b7659e"
+        },
+        {
+          "path": "case-interactions/TC-RSVP-ROUTE-MAYBE.json",
+          "kind": "interaction",
+          "sha256": "a7a00ae213cba0f0e1384bfd065fc1662086f329c4a64fd38e149af6cdf6b9f6"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-ROUTE-DECLINED/android-phone/manual",
+      "status": "passed",
+      "defect": "",
+      "executor": {
+        "kind": "agent",
+        "id": "android-independent-vibe-review-resume"
+      },
+      "startedAt": "2026-11-06T18:56:42.122007Z",
+      "finishedAt": "2026-11-06T19:07:32.086Z",
+      "actual": "Первый NotGoing по ссылке и смена ответа из Information/list показали отдельное подтверждение с реальным title и единственной основной кнопкой. К моим встречам открыло список; конкретный meeting ID отсутствует в обеих вкладках, GET invitation подтверждает not_going, private chat отсутствует.",
+      "evidence": [
+        {
+          "path": "rsvp-review/actual/declined--confirmed.png",
+          "kind": "screenshot",
+          "sha256": "3898506270a99e7e48e8b1af046c7fa53a1a745c23df329885fc4f6e12a14c5e"
+        },
+        {
+          "path": "rsvp-review/actual/declined--confirmed.interaction.json",
+          "kind": "interaction",
+          "sha256": "58e7d931cf84970d615a6a7f2f4b05e5b40a7ca48610e721b95815b55ddf6105"
+        },
+        {
+          "path": "rsvp-review/actual/declined--meetings-action.png",
+          "kind": "screenshot",
+          "sha256": "636f4235c037a4ece39a9443b13aae2fd59a508bc2b82a6efc8287acf4f3b53e"
+        },
+        {
+          "path": "rsvp-review/actual/declined--meetings-action.interaction.json",
+          "kind": "interaction",
+          "sha256": "bfb8ae5c5cbaf276f65e827a9d95bcd173726dd12b7e9e06434b9ecc7043100c"
+        },
+        {
+          "path": "rsvp-review/list-info/route--declined-from-invitations.png",
+          "kind": "screenshot",
+          "sha256": "da51b47643e5a23e32bd69061a27a9e840892970f46ed74319eb4732aaa5fff6"
+        },
+        {
+          "path": "rsvp-review/list-info/route--declined-from-invitations.interaction.json",
+          "kind": "interaction",
+          "sha256": "570ce8efb5ca7ce24a3cfc4bb60a378fb56e315ebfdb720c45c0c535f39f10d8"
+        },
+        {
+          "path": "rsvp-review/list-info/declined--absent-from-both-lists.png",
+          "kind": "screenshot",
+          "sha256": "f68891928dc719da16489db433fd5be7c14cd73036a24f610e3816757f16225c"
+        },
+        {
+          "path": "rsvp-review/list-info/declined--absent-from-both-lists.interaction.json",
+          "kind": "interaction",
+          "sha256": "b331176e6cec1b6929925342ccfd149f00b57d5fcc1b68675edc0297784ecd37"
+        },
+        {
+          "path": "case-interactions/TC-RSVP-ROUTE-DECLINED.json",
+          "kind": "interaction",
+          "sha256": "b17469a65e953b91a4d1403a9258a636eb59f53ac3e3ef01c32cb68f1128b8ec"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-UNCONFIRMED/android-phone/manual",
+      "status": "passed",
+      "defect": "",
+      "executor": {
+        "kind": "agent",
+        "id": "android-independent-vibe-review-resume"
+      },
+      "startedAt": "2026-11-06T18:56:33.959666Z",
+      "finishedAt": "2026-11-06T19:07:32.092Z",
+      "actual": "Ошибка409 получена до изменения этим UI request после конкурирующей server revision: подтверждённый Maybe не перезаписан. Затем реальный lost ACK после Info NotGoing при realtime/read_state1: AccessRevoked убрал chat/private state до ACK, публичные факты/ошибка/исходный pending key+body остались. Повтор того же key/input подтвердил Declined, owner feed без нового события. Отдельно после реального commit/revoke и held response выполнен вход другим SDK-fixture аккаунтом через настоящий HTTP: новый profileId отличается, запоздалый старый ответ не открыл старый маршрут и не применил completion.",
+      "evidence": [
+        {
+          "path": "rsvp-review/actual/invite--response-error-standard-phone.png",
+          "kind": "screenshot",
+          "sha256": "f3d796ed04efd2e028ee5fa3ff699b45ece53acc5c5cc8a9e4f459b5acdf67f1"
+        },
+        {
+          "path": "rsvp-review/actual/invite--response-error-standard-phone.interaction.json",
+          "kind": "interaction",
+          "sha256": "6dd6f233be74f0f309fee53940c06ca748f232147124ee6c5326d38329e2b8cd"
+        },
+        {
+          "path": "rsvp-review/actual/route--early-revoked-original-intent.png",
+          "kind": "screenshot",
+          "sha256": "38ef5cee7e196e8eace6353c7137306473ec82c9168ae6a102504867fb782522"
+        },
+        {
+          "path": "rsvp-review/actual/route--early-revoked-original-intent.interaction.json",
+          "kind": "interaction",
+          "sha256": "f567066952e31d6e0c49eb80aea1cbb3d528ea3d849c50817fdf1619ca8d075a"
+        },
+        {
+          "path": "rsvp-review/actual/route--unknown-stays.png",
+          "kind": "screenshot",
+          "sha256": "4bf7e2b0b7c227b12ec3630c6ec111703f4fc9d4fc6b07271fa06946074f7367"
+        },
+        {
+          "path": "rsvp-review/actual/route--unknown-stays.interaction.json",
+          "kind": "interaction",
+          "sha256": "e0c56b5bc2f08f642a00a33766c5e7649e32df8204115cf8321c7fe5c83fa8fc"
+        },
+        {
+          "path": "rsvp-review/actual/route--repeat-no-duplicate-early-revoked.png",
+          "kind": "screenshot",
+          "sha256": "bd4fd867d9c0b32274683ae38d50e774588e29c071ed1acedaafa67245bff38d"
+        },
+        {
+          "path": "rsvp-review/actual/route--repeat-no-duplicate-early-revoked.interaction.json",
+          "kind": "interaction",
+          "sha256": "9117f449e00b035ac13360ca6e6a4a5c65311a1970cd05f2485898a483327712"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--old-session-response-ignored.png",
+          "kind": "screenshot",
+          "sha256": "b140c4e99ee551c52abdbcff3aeae4577d965ceb713df7d0f21e4275f8130ccc"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--old-session-response-ignored.interaction.json",
+          "kind": "interaction",
+          "sha256": "9db59be58781e26b6222d03f38df867b01c4074f8ee2afb280c6f88ef54b6428"
+        },
+        {
+          "path": "rsvp-review/error409-authority.json",
+          "kind": "log",
+          "sha256": "3c23d5a9f6d48ea105f6b913debf912033bf19449a68ae54e1f6a9f1fbd1496a"
+        },
+        {
+          "path": "rsvp-review/early-revoke.log",
+          "kind": "log",
+          "sha256": "43ecbc3597ebfed2b2f1bb0979def44a6bd36fcb6799584931e58c08a8283c1f"
+        },
+        {
+          "path": "rsvp-review/boundaries.log",
+          "kind": "log",
+          "sha256": "a92a1678c85ff996471820d16a4df539f26c1416a735d9cef9c03d6275e9ab6c"
+        },
+        {
+          "path": "case-interactions/TC-RSVP-UNCONFIRMED.json",
+          "kind": "interaction",
+          "sha256": "01bf76418aaf48df7fde203105cca4336f6bcfab4280f6cf58d0ba18026feca3"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-EXISTING-ACCESS/android-phone/manual",
+      "status": "passed",
+      "defect": "",
+      "executor": {
+        "kind": "agent",
+        "id": "android-independent-vibe-review-resume"
+      },
+      "startedAt": "2026-11-06T18:56:26.575326Z",
+      "finishedAt": "2026-11-06T19:07:32.095Z",
+      "actual": "Уже подтвердивший Going участник и организатор немедленно открыли chat по той же ссылке. Отдельно каждому actor сорван private role GET существующим QA network gate: роль не угадана, private chat отсутствует, доступна загрузка повторно. После release/retry правильный chat восстановлен; реальные server feed entries до/после открытия одинаковы, нового RSVP/event нет.",
+      "evidence": [
+        {
+          "path": "rsvp-review/actual/invite--member-standard-phone.png",
+          "kind": "screenshot",
+          "sha256": "675f2637a287209a8863d1bc5bb9718cf1e0787ba729c77d1f81a9158cdfef37"
+        },
+        {
+          "path": "rsvp-review/actual/invite--member-standard-phone.interaction.json",
+          "kind": "interaction",
+          "sha256": "4754e3dc4a64db01abfbc7bef24e4cdb1e3a60d6d3fe5b87df2e716e39475108"
+        },
+        {
+          "path": "rsvp-review/actual/invite--organizer-standard-phone.png",
+          "kind": "screenshot",
+          "sha256": "f465a323a6ef71774d7b906ca00bcc4c881a4c838b3b37007448f0490ef006e7"
+        },
+        {
+          "path": "rsvp-review/actual/invite--organizer-standard-phone.interaction.json",
+          "kind": "interaction",
+          "sha256": "b037cef5b869619493164ac47f2e94896b151da481e288138ea399d46efdc2bc"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--role-error-invite-rsvp.png",
+          "kind": "screenshot",
+          "sha256": "0f0c82c1006a5ac52fd9aa1a47048dbe575c4804479f574e54bf831f9f5df4b7"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--role-error-invite-rsvp.interaction.json",
+          "kind": "interaction",
+          "sha256": "aa956846f3eca04ea74d3aca2aaaa65f1d8088f43c04367c3561b07cc0f9aa83"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--role-error-invite-owner.png",
+          "kind": "screenshot",
+          "sha256": "0f0c82c1006a5ac52fd9aa1a47048dbe575c4804479f574e54bf831f9f5df4b7"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--role-error-invite-owner.interaction.json",
+          "kind": "interaction",
+          "sha256": "4b7e894b5eb5c20f9f45a7711704c420fd854711a823f09f34334b7d1ed46a9d"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--role-retry-invite-owner.png",
+          "kind": "screenshot",
+          "sha256": "8c3ec2939ffda3088b81b644000430b48340e63bd33777298d81feba5a06c4b1"
+        },
+        {
+          "path": "rsvp-review/boundaries/route--role-retry-invite-owner.interaction.json",
+          "kind": "interaction",
+          "sha256": "d6b773df461d2979d968b1e72638c6523e3bcc5f6587ad53680e93183b025560"
+        },
+        {
+          "path": "case-interactions/TC-RSVP-EXISTING-ACCESS.json",
+          "kind": "interaction",
+          "sha256": "8c84decd2f4f5152de890be3f5b016994297578a2868671696692bc07bf724fd"
+        }
+      ]
+    },
+    {
+      "id": "TC-RSVP-SYSTEM-EVENT/android-phone/manual",
+      "status": "passed",
+      "defect": "",
+      "executor": {
+        "kind": "agent",
+        "id": "android-independent-vibe-review-resume"
+      },
+      "startedAt": "2026-11-06T18:57:32.443861Z",
+      "finishedAt": "2026-11-06T19:07:32.097Z",
+      "actual": "Второй actor открыл ownerchat и дождался SDKSubscribed до3изменений; первый actor последовательно сохранил Going/Maybe/NotGoing, каждое событие наблюдалось вживую. Owner UI показывает имя API Лена, точный ответ и время отдельными системными строками без bubbles/ticks/reactions. У server feed ровно3 различных event IDs/три ответа; тот же request key повторён, owner reopen/reload не изменил entries. Отдельный первый отказ имеет только rsvp_changed/not_going, без participant_joined. После снятия участия private conversation отсутствует, настоящий guest feed GET получает403.",
+      "evidence": [
+        {
+          "path": "rsvp-review/events/event--three-answers.png",
+          "kind": "screenshot",
+          "sha256": "20e28017dbc0f146a13325dcbae21320a2b8e72ac904a15368a7e17658ad7c84"
+        },
+        {
+          "path": "rsvp-review/events/event--three-answers.interaction.json",
+          "kind": "interaction",
+          "sha256": "d67026218bbb418e8351260dc9a4f939ed570691fa0a17749fe5ee3fb6f8ca87"
+        },
+        {
+          "path": "rsvp-review/events/event--retry-dedup.png",
+          "kind": "screenshot",
+          "sha256": "20e28017dbc0f146a13325dcbae21320a2b8e72ac904a15368a7e17658ad7c84"
+        },
+        {
+          "path": "rsvp-review/events/event--retry-dedup.interaction.json",
+          "kind": "interaction",
+          "sha256": "8c13f887a70324869ae39f1fee02052059d40678b771c2cc5489be399d19c082"
+        },
+        {
+          "path": "rsvp-review/events/event--reopen-no-event.png",
+          "kind": "screenshot",
+          "sha256": "20e28017dbc0f146a13325dcbae21320a2b8e72ac904a15368a7e17658ad7c84"
+        },
+        {
+          "path": "rsvp-review/events/event--reopen-no-event.interaction.json",
+          "kind": "interaction",
+          "sha256": "a66649b054bf25ad405f1838a17507f29a38c20450d9454e2ef52aa2ff28b83b"
+        },
+        {
+          "path": "rsvp-review/events/event--no-access-after-change.png",
+          "kind": "screenshot",
+          "sha256": "35448675968f53bd5a89975f4390d9ef2befca8cb1eeb3b47c9ba3ea1886870f"
+        },
+        {
+          "path": "rsvp-review/events/event--no-access-after-change.interaction.json",
+          "kind": "interaction",
+          "sha256": "e126b8856ee922c638a586e77b3e720e4781d827d330665685b49f651f5b4f78"
+        },
+        {
+          "path": "rsvp-review/system-event-verification.json",
+          "kind": "log",
+          "sha256": "5cfebb14816da3ec65ba794f022f10dbc58ef37d0d03e349d3708cbae2969919"
+        },
+        {
+          "path": "rsvp-review/first-decline-feed.json",
+          "kind": "log",
+          "sha256": "c678c9371364052eea50350e7abc64095e73c8f939b27981e0dc3744f2c79918"
+        },
+        {
+          "path": "rsvp-review/events.log",
+          "kind": "log",
+          "sha256": "bab01c9347f7828fb62f2dd576e74f2a5f7ef4b024c320b4f7f75a56086dc4cd"
+        },
+        {
+          "path": "case-interactions/TC-RSVP-SYSTEM-EVENT.json",
+          "kind": "interaction",
+          "sha256": "f5ac0a30b6b4002828b02dc886a677bf359f95f8f81a99dd0c561af7e24bafe0"
+        }
+      ]
     }
   ],
   "suites": [

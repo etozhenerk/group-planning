@@ -1,0 +1,31 @@
+{
+  "caseId": "TC-RSVP-UNCONFIRMED",
+  "planId": "mobile-refresh-final-android-r9-2026-11-06",
+  "sourceHash": "7f4f7abb9edff2c89b179dd4c6ac48de0c104fdf3fe47b17e91c86b00fade9fe",
+  "artifact": "a0dd600cd4cc48d69b85cb9e5b4a2c41985ceed7104eecb46466953305376c4e",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "На своём fixture воспроизвести ошибку до сохранения, затем потерю ACK после сохранения; выполнить повтор/сверку.",
+      "expected": "Нет преждевременного успеха или расширения доступа; ранний revoke убирает приватный чат/состав, но сохраняет публичные факты, ошибку и повтор того же intent. ACK ведёт к новому результату, повтор не дублирует RSVP/событие; старый ответ после смены сессии не применяется.",
+      "actual": "Ошибка409 получена до изменения этим UI request после конкурирующей server revision: подтверждённый Maybe не перезаписан. Затем реальный lost ACK после Info NotGoing при realtime/read_state1: AccessRevoked убрал chat/private state до ACK, публичные факты/ошибка/исходный pending key+body остались. Повтор того же key/input подтвердил Declined, owner feed без нового события. Отдельно после реального commit/revoke и held response выполнен вход другим SDK-fixture аккаунтом через настоящий HTTP: новый profileId отличается, запоздалый старый ответ не открыл старый маршрут и не применил completion.",
+      "evidence": [
+        "rsvp-review/actual/invite--response-error-standard-phone.png",
+        "rsvp-review/actual/invite--response-error-standard-phone.interaction.json",
+        "rsvp-review/actual/route--early-revoked-original-intent.png",
+        "rsvp-review/actual/route--early-revoked-original-intent.interaction.json",
+        "rsvp-review/actual/route--unknown-stays.png",
+        "rsvp-review/actual/route--unknown-stays.interaction.json",
+        "rsvp-review/actual/route--repeat-no-duplicate-early-revoked.png",
+        "rsvp-review/actual/route--repeat-no-duplicate-early-revoked.interaction.json",
+        "rsvp-review/boundaries/route--old-session-response-ignored.png",
+        "rsvp-review/boundaries/route--old-session-response-ignored.interaction.json",
+        "rsvp-review/error409-authority.json",
+        "rsvp-review/early-revoke.log",
+        "rsvp-review/boundaries.log"
+      ]
+    }
+  ],
+  "scope": "Actual independent runtime; required suites remain separate and must pass before checkbox. Synthetic SDK boundary explicit; no real users/providers or OS association claimed."
+}

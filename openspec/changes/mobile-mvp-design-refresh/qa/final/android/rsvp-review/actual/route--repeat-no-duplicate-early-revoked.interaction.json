@@ -1,0 +1,52 @@
+{
+  "state": "route--repeat-no-duplicate-early-revoked",
+  "status": "captured",
+  "note": "",
+  "actions": [
+    {
+      "action": "Real API create 6e06d342-f27b-45c7-8531-98bf7fd3655b for no-cover",
+      "at": "2026-11-06T18:57:01.103808Z"
+    },
+    {
+      "action": "Real API RSVP going actor=invite-error",
+      "at": "2026-11-06T18:57:01.112589Z"
+    },
+    {
+      "action": "Observed invitation-conversation",
+      "at": "2026-11-06T18:57:02.376488Z"
+    },
+    {
+      "action": "Real information NotGoing; existing QA RTT6s holds delivery after actual HTTP",
+      "at": "2026-11-06T18:57:02.930735Z"
+    },
+    {
+      "action": "Pending key 5f1f8f95-91d6-4120-b2fd-fc67290e1c9c; body RsvpRequest(answer=NotGoing, expectedRevision=ServerCounter(value=1))",
+      "at": "2026-11-06T18:57:02.930794Z"
+    },
+    {
+      "action": "Actual realtime AccessRevoked before retry; events 566700112 HTTP PUT \/api\/v1\/meetings\/6e06d342-f27b-45c7-8531-98bf7fd3655b\/rsvp cursor=false | 566703230 meeting:AccessRevoked | 566703231 meeting:PersonalChanged",
+      "at": "2026-11-06T18:57:06.147111Z"
+    },
+    {
+      "action": "Private conversation absent",
+      "at": "2026-11-06T18:57:06.160768Z"
+    },
+    {
+      "action": "Owner feed after lost ACK {\"entries\":[{\"id\":\"197a9ff4-2560-4f00-9c15-d9592cb8c63d\",\"meeting_id\":\"6e06d342-f27b-45c7-8531-98bf7fd3655b\",\"sequence\":\"1\",\"kind\":\"meeting_created\",\"payload_version\":1,\"actor\":{\"id\":\"bb5f75d8-cf5d-4884-81e2-fbb4a36be2b2\",\"display_name\":\"Саша\"},\"occurred_at\":\"2026-11-06T18:57:02.013275Z\",\"payload\":{\"title\":\"Ужин в пятницу\",\"description\":\"Соберёмся после работы: поужинаем и поболтаем. Столик на шестерых уже забронирован.\",\"starts_on\":\"2026-11-07\",\"starts_at\":\"2026-11-07T18:57:01.030505Z\",\"timezone\":\"Europe\\\/Moscow\",\"place\":\"Кафе «Соседи», Покровка, 8\"},\"client_request_id\":null},{\"id\":\"9f059b1f-a0c0-42ce-b885-c933370a3b99\",\"meeting_id\":\"6e06d342-f27b-45c7-8531-98bf7fd3655b\",\"sequence\":\"2\",\"kind\":\"participant_joined\",\"payload_version\":1,\"actor\":{\"id\":\"32409dad-2d10-42c1-bdb1-a8a5d86bf92a\",\"display_name\":\"Лена\"},\"occurred_at\":\"2026-11-06T18:57:02.02351Z\",\"payload\":{\"previous_answer\":null,\"answer\":\"going\"},\"client_request_id\":null},{\"id\":\"76afc30e-de69-4d51-909a-f300adebaa30\",\"meeting_id\":\"6e06d342-f27b-45c7-8531-98bf7fd3655b\",\"sequence\":\"3\",\"kind\":\"participant_left\",\"payload_version\":1,\"actor\":{\"id\":\"32409dad-2d10-42c1-bdb1-a8a5d86bf92a\",\"display_name\":\"Лена\"},\"occurred_at\":\"2026-11-06T18:57:06.848273Z\",\"payload\":{\"previous_answer\":\"going\",\"answer\":\"not_going\"},\"client_request_id\":null}],\"has_more\":false,\"meeting_revision\":\"3\",\"participant_count\":1,\"my_rsvp\":null,\"my_rsvp_revision\":\"0\",\"latest_sequence\":\"3\"}",
+      "at": "2026-11-06T18:57:09.637024Z"
+    },
+    {
+      "action": "Observed rsvp-declined",
+      "at": "2026-11-06T18:57:09.793112Z"
+    },
+    {
+      "action": "Same key\/body retry confirmed; real owner feed identical after retry {\"entries\":[{\"id\":\"197a9ff4-2560-4f00-9c15-d9592cb8c63d\",\"meeting_id\":\"6e06d342-f27b-45c7-8531-98bf7fd3655b\",\"sequence\":\"1\",\"kind\":\"meeting_created\",\"payload_version\":1,\"actor\":{\"id\":\"bb5f75d8-cf5d-4884-81e2-fbb4a36be2b2\",\"display_name\":\"Саша\"},\"occurred_at\":\"2026-11-06T18:57:02.013275Z\",\"payload\":{\"title\":\"Ужин в пятницу\",\"description\":\"Соберёмся после работы: поужинаем и поболтаем. Столик на шестерых уже забронирован.\",\"starts_on\":\"2026-11-07\",\"starts_at\":\"2026-11-07T18:57:01.030505Z\",\"timezone\":\"Europe\\\/Moscow\",\"place\":\"Кафе «Соседи», Покровка, 8\"},\"client_request_id\":null},{\"id\":\"9f059b1f-a0c0-42ce-b885-c933370a3b99\",\"meeting_id\":\"6e06d342-f27b-45c7-8531-98bf7fd3655b\",\"sequence\":\"2\",\"kind\":\"participant_joined\",\"payload_version\":1,\"actor\":{\"id\":\"32409dad-2d10-42c1-bdb1-a8a5d86bf92a\",\"display_name\":\"Лена\"},\"occurred_at\":\"2026-11-06T18:57:02.02351Z\",\"payload\":{\"previous_answer\":null,\"answer\":\"going\"},\"client_request_id\":null},{\"id\":\"76afc30e-de69-4d51-909a-f300adebaa30\",\"meeting_id\":\"6e06d342-f27b-45c7-8531-98bf7fd3655b\",\"sequence\":\"3\",\"kind\":\"participant_left\",\"payload_version\":1,\"actor\":{\"id\":\"32409dad-2d10-42c1-bdb1-a8a5d86bf92a\",\"display_name\":\"Лена\"},\"occurred_at\":\"2026-11-06T18:57:06.848273Z\",\"payload\":{\"previous_answer\":\"going\",\"answer\":\"not_going\"},\"client_request_id\":null}],\"has_more\":false,\"meeting_revision\":\"3\",\"participant_count\":1,\"my_rsvp\":null,\"my_rsvp_revision\":\"0\",\"latest_sequence\":\"3\"}",
+      "at": "2026-11-06T18:57:09.796194Z"
+    }
+  ],
+  "capturedAt": "2026-11-06T18:57:10.821258Z",
+  "meeting": {
+    "id": "6e06d342-f27b-45c7-8531-98bf7fd3655b",
+    "title": "Ужин в пятницу"
+  }
+}
