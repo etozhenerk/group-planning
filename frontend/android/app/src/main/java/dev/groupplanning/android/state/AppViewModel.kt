@@ -35,6 +35,10 @@ internal class AppViewModel(
     val support = runtime.service?.let { SupportViewModel(it, saved, childScope()) }
     private val mutableHomeTab = MutableStateFlow(saved.get<Int>("home-tab") ?: 0)
     val homeTab = mutableHomeTab.asStateFlow()
+    private val mutableLogoutBusy = MutableStateFlow(false)
+    val logoutBusy = mutableLogoutBusy.asStateFlow()
+    private val mutableLogoutFailed = MutableStateFlow(false)
+    val logoutFailed = mutableLogoutFailed.asStateFlow()
     fun selectHomeTab(value: Int) {
         mutableHomeTab.value = value
         savedHome["home-tab"] = value
@@ -341,12 +345,17 @@ internal class AppViewModel(
     }
 
     fun logout() {
+        if (mutableLogoutBusy.value) return
+        mutableLogoutBusy.value = true
+        mutableLogoutFailed.value = false
         viewModelScope.launch {
             try {
                 runtime.sessions?.logout()
-            } catch (
-                _: ClientFailure,
-            ) { /* Local sign-out is authoritative. */ }
+            } catch (_: ClientFailure) {
+                mutableLogoutFailed.value = snapshot.value.session is SessionState.Authenticated
+            } finally {
+                mutableLogoutBusy.value = false
+            }
         }
     }
 

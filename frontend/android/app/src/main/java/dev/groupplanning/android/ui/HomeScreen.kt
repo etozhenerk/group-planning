@@ -25,6 +25,8 @@ import dev.groupplanning.android.ui.theme.Palette
 internal fun HomeScreen(model: AppViewModel, snapshot: ClientSnapshot, service: (String) -> Unit) {
     val holder = rememberSaveableStateHolder()
     val selected by model.homeTab.collectAsStateWithLifecycle()
+    val logoutBusy by model.logoutBusy.collectAsStateWithLifecycle()
+    val logoutFailed by model.logoutFailed.collectAsStateWithLifecycle()
     Scaffold(
         containerColor = Palette.background,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -43,7 +45,7 @@ internal fun HomeScreen(model: AppViewModel, snapshot: ClientSnapshot, service: 
                                 if (page == "idea") model.support?.edit { it.copy(kind = "idea") }
                             }
                             service(if (page == "idea") "support" else page)
-                        }, model::logout)
+                        }, model::logout, logoutBusy = logoutBusy, logoutFailed = logoutFailed)
                     }
                 } else {
                     HomeMeetings(model, snapshot)

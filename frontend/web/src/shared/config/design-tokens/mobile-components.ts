@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.13.0. Do not edit.
+// Generated from design-system/tokens.json · 7.14.0. Do not edit.
 export const mobileComponentTokens = {
   componentMobileAvatarFallbackOpacity: '0.7',
   componentMobileAvatarFallbackRatio: '0.72',

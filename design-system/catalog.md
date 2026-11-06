@@ -1,4 +1,4 @@
-# Токены somewhere · 7.13.0
+# Токены somewhere · 7.14.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -235,6 +235,21 @@
 | component.meetingSettings.coverSize | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .cover-preview |
 | component.messageDelivery.indicatorSize | dimension | 12px | Постоянный слот спиннера отправки в строке metadata без изменения высоты сообщения. |
 | component.messageDelivery.pendingDelay | duration | 2000ms | Прямое решение пользователя: индикатор только после двух секунд отправки. |
+| component.mobileAbout.brandDescriptionLineHeight | dimension | 22px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.brandDescriptionMaximumWidth | dimension | 280px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.brandMarkSize | dimension | 44px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.brandWordLineHeight | dimension | 44px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.brandWordSize | dimension | 36px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.brandWordTracking | dimension | 1.7px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.creditTop | dimension | 34px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.documentTitleLineHeight | dimension | 32px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.documentTitleSize | dimension | 26px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.documentTitleTracking | dimension | 0.6px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.indexRowHeight | dimension | 52px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.indexRowLineHeight | dimension | 22px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.metadataInsetInline | dimension | 18px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.metadataRadius | dimension | 18px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileAbout.statusLineHeight | dimension | 19px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileAbout. Декоративный status bar не переносится; реальные safe area и target native. |
 | component.mobileAvatar.fallbackOpacity | number | 0.7 | Публикационная привязка уже нормализованного нейтрального силуэта по позднему общему решению; normalize.css [data-mobile-silhouette], source/hash в identity-token-bindings-6.2.json. |
 | component.mobileAvatar.fallbackRatio | number | 0.72 | Публикационная привязка уже нормализованного нейтрального силуэта по позднему общему решению; normalize.css [data-mobile-silhouette], source/hash в identity-token-bindings-6.2.json. |
 | component.mobileAvatar.normalSize | dimension | 40px | сохранённая геометрия Avatar, новый fallback по info-r2 |
@@ -476,6 +491,30 @@
 | component.mobilePreparation.recipientRadius | dimension | 14px | Неизменённые approved preparation-r1/nav-preparation: действия формы, карточки и подробностей. |
 | component.mobilePreparation.statusIconSize | dimension | 19px | Неизменённые approved preparation-r1/nav-preparation: действия формы, карточки и подробностей. |
 | component.mobilePreparation.titleFieldMinimumHeight | dimension | 86px | Неизменённый approved nav-preparation/preparation-r1: форма, выбор получателя, карточка и сведения. |
+| component.mobileProfile.accessHintLineHeight | dimension | 16px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.accessRadius | dimension | 18px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.accessTitleLineHeight | dimension | 21px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.accessTitleSize | dimension | 15px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.avatarRadius | dimension | 28px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.avatarSize | dimension | 88px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.dataLabelWidth | dimension | 100px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.dataLineHeight | dimension | 21px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.dataRowInsetBlock | dimension | 15px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.errorBodyMaximumWidth | dimension | 240px | Привязка неизменённого approved profile-r2/help-r2: root padding68 минус декоративный status62, error/contact заголовок20/26, profile error glyph26/textmax240. |
+| component.mobileProfile.errorIcon | dimension | 26px | Привязка неизменённого approved profile-r2/help-r2: root padding68 минус декоративный status62, error/contact заголовок20/26, profile error glyph26/textmax240. |
+| component.mobileProfile.identityBottom | dimension | 26px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.identityTop | dimension | 30px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.insetTop | dimension | 6px | Привязка неизменённого approved profile-r2/help-r2: root padding68 минус декоративный status62, error/contact заголовок20/26, profile error glyph26/textmax240. |
+| component.mobileProfile.logoutGap | dimension | 22px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.logoutLineHeight | dimension | 19px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.menuChevron | dimension | 16px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.menuGap | dimension | 28px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.menuIcon | dimension | 22px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.menuRowHeight | dimension | 58px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.nameLineHeight | dimension | 32.2px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.nameSize | dimension | 28px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.nameTracking | dimension | 0.7px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileProfile. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileProfile.pressedOpacity | number | 0.65 | Approved profile-r2: opacity нажатой сервисной ссылки. |
 | component.mobileRequired.fontSize | dimension | 18px | Заметная звёздочка обязательного поля: settings-r3/source/ui/SettingsForm и help-r2/src/pages/help/ui/FeedbackFields, .required/.legend span. |
 | component.mobileRequired.fontWeight | fontWeight | 650 | Вес звёздочки в согласованных settings-r3/help-r2:650. |
 | component.mobileRoster.actionHeight | dimension | 52px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .list-action |
@@ -483,6 +522,22 @@
 | component.mobileRoster.avatarSize | dimension | 32px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row .avatar |
 | component.mobileRoster.rowGap | dimension | 11px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row |
 | component.mobileRoster.rowHeight | dimension | 55px | Принятая mobile-ревизия 2026-10-27-telegram-chat, panels.css .person-row |
+| component.mobileService.actionHeight | dimension | 48px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.actionRadius | dimension | 14px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.bodyLineHeight | dimension | 20px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.fieldHeight | dimension | 48px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.fieldLineHeight | dimension | 22px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.fieldRadius | dimension | 14px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.headerBottom | dimension | 28px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.headingGap | dimension | 14px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.hintLineHeight | dimension | 17px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.labelLineHeight | dimension | 20px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.sectionTitleLineHeight | dimension | 26px | Привязка неизменённого approved profile-r2/help-r2: root padding68 минус декоративный status62, error/contact заголовок20/26, profile error glyph26/textmax240. |
+| component.mobileService.sectionTitleSize | dimension | 20px | Привязка неизменённого approved profile-r2/help-r2: root padding68 минус декоративный status62, error/contact заголовок20/26, profile error glyph26/textmax240. |
+| component.mobileService.titleLineHeight | dimension | 34px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.titleSize | dimension | 28px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.titleTracking | dimension | 0.8px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileService. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileService.titleWeight | fontWeight | 650 | Заголовки approved profile-r2/help-r2/about-r2. |
 | component.mobileSettings.reviewBodyLineHeight | dimension | 22px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
 | component.mobileSettings.reviewBodySize | dimension | 14px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
 | component.mobileSettings.reviewTitleLineHeight | dimension | 30px | Неизменённый approved nav-settings/settings-r3 ConflictReview: отдельная сверка без обложки. |
@@ -536,6 +591,23 @@
 | component.mobileSticky.shadowBlur | dimension | 28px | create-r5/source/CreateMeetingForm.module.css |
 | component.mobileSticky.shadowOpacity | number | 0.3333333333333333 | create-r5: #0005, чёрный с alpha 5/15 |
 | component.mobileSticky.shadowUpOffset | dimension | 8px | create-r5: отрицательное направление Y в адаптере |
+| component.mobileSupport.attachmentHeight | dimension | 72px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.attachmentPreviewHeight | dimension | 68px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.attachmentWidth | dimension | 56px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.receiptIconTile | dimension | 52px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.receiptNumberLineHeight | dimension | 26px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.receiptNumberSize | dimension | 20px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.receiptTitleLineHeight | dimension | 30px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.receiptTitleSize | dimension | 24px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.sectionOptionHeight | dimension | 52px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.sectionOptionLineHeight | dimension | 22px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.sectionOptionSize | dimension | 15px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.switchHeight | dimension | 26px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.switchRowHeight | dimension | 60px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.switchThumb | dimension | 20px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.switchTravel | dimension | 16px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.switchWidth | dimension | 42px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
+| component.mobileSupport.textareaMinimumHeight | dimension | 144px | Привязки неизменённых approved profile-r2/help-r2/about-r2: mobileSupport. Декоративный status bar не переносится; реальные safe area и target native. |
 | component.mobileUnread.gap | dimension | 5px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
 | component.mobileUnread.iconSize | dimension | 14px | Принятые list-r3/calendar-r7: общий мобильный список/календарь; source/hash в meetings-token-bindings-6.2.json. Desktop без изменений. |
 | component.mobileUnread.iconStrokeWidth | number | 1.6 | Принятый мобильный header/unread, source/hash в meetings-token-bindings-6.2.json. |

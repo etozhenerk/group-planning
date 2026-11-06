@@ -73,9 +73,9 @@ class AccountDeletionUiTests {
         fixture.launch("account").use {
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             compose.onNodeWithText("Удалить аккаунт").assertDoesNotExist()
-            compose.onNodeWithText("Выйти").performScrollTo().assertIsDisplayed()
+            compose.onNodeWithText("Выйти из аккаунта").performScrollTo().assertIsDisplayed()
             fixture.screenshot("profile-logout-without-delete")
         }
     }
@@ -84,7 +84,7 @@ class AccountDeletionUiTests {
         fixture.launch("account-large").use {
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             val cookies = compose.onNodeWithText(fixture.context.getString(R.string.cookies_title))
             cookies.performScrollTo()
             check(
@@ -105,7 +105,7 @@ class AccountDeletionUiTests {
         fixture.launch("calendar").use { activity ->
             fixture.waitTag("meetings-list")
             compose.onNodeWithTag("home-profile").performClick()
-            fixture.waitText("Яндекс ID")
+            fixture.waitText("Вход через Яндекс ID")
             compose.onNodeWithText(fixture.context.getString(R.string.help_title))
                 .performScrollTo().performClick()
             fixture.waitTag("service-page")

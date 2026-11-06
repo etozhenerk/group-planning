@@ -14,6 +14,8 @@ final class MeetingListOwner {
     var calendarCache: [(filter: CalendarFilter, page: CalendarPage, pages: Int)] = []
     var loadedPages = 1
     var loadingMore = false
+    var loggingOut = false
+    var logoutFailure: ClientFailure?
     var moreError: ClientFailure?
     var generation = UUID()
     var failures = 0
@@ -128,16 +130,20 @@ final class MeetingListOwner {
     }
 
     func logout() {
+        guard !loggingOut else { return }
+        loggingOut = true
+        logoutFailure = nil
         cancel()
         calendarCache = []
         counts = nil
         page = ResourceState()
         month = ResourceState()
         actionTask = Task {
+            defer { loggingOut = false }
             do {
                 try await session.logout()
             } catch {
-                // SessionStore exposes a failed logout.
+                if session.status == .authenticated { logoutFailure = .sanitized(error) }
             }
             actionTask = nil
         }

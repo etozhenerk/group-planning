@@ -1,0 +1,55 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: calc(env(safe-area-inset-top) + var(--ds-component-mobile-profile-inset-top))
+    var(--ds-space-s20) var(--ds-space-s24);
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.page h1 {
+  margin: 0;
+  font-size: var(--ds-component-mobile-service-title-size);
+  line-height: var(--ds-component-mobile-service-title-line-height);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-service-title-tracking));
+  font-weight: var(--ds-component-mobile-service-title-weight);
+}
+
+.logout {
+  margin-top: var(--ds-component-mobile-profile-logout-gap);
+}
+
+.skeleton {
+  display: flex;
+  gap: var(--ds-space-s20);
+  padding: var(--ds-component-mobile-profile-identity-top) 0
+    var(--ds-component-mobile-profile-identity-bottom);
+}
+
+.skeleton > span {
+  width: var(--ds-component-mobile-profile-avatar-size);
+  height: var(--ds-component-mobile-profile-avatar-size);
+  flex: none;
+  border-radius: var(--ds-component-mobile-profile-avatar-radius);
+  background: var(--ds-color-surface);
+}
+
+.skeleton > div {
+  flex: 1;
+  padding-top: var(--ds-space-s20);
+}
+
+.skeleton i {
+  display: block;
+  height: calc(var(--ds-space-s16) + var(--ds-space-s2));
+  margin-bottom: var(--ds-space-s12);
+  border-radius: var(--ds-space-s6);
+  background: var(--ds-color-surface);
+}
+
+.skeleton i:last-child {
+  width: 75%;
+  height: var(--ds-space-s12);
+}

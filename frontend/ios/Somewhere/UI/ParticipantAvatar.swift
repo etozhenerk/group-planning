@@ -5,6 +5,7 @@ struct ParticipantAvatar: View {
     var size: CGFloat = 32
     var color: Color?
     var foregroundColor: Color = AppPalette.actionText
+    var cornerRadius: CGFloat? = nil
     private let colors: [Color] = [
         Color(red: 197 / 255, green: 177 / 255, blue: 161 / 255),
         Color(red: 187 / 255, green: 176 / 255, blue: 208 / 255),
@@ -17,7 +18,8 @@ struct ParticipantAvatar: View {
             if let url = user.avatarURL, url.scheme == "https", url.user == nil, url.password == nil
             {
                 AvatarPhoto(url: url)
-                    .frame(width: size, height: size).clipShape(Circle())
+                    .frame(width: size, height: size).clipShape(
+                        RoundedRectangle(cornerRadius: cornerRadius ?? size / 2))
             }
         }.accessibilityHidden(true)
     }
@@ -35,7 +37,7 @@ struct ParticipantAvatar: View {
                         ? Color(designHex: 0xc2af9f)
                         : colors[
                             user.id.uuidString.utf8.reduce(0) { ($0 + Int($1)) % colors.count }]),
-                in: Circle()
+                in: RoundedRectangle(cornerRadius: cornerRadius ?? size / 2)
             )
             .accessibilityHidden(true)
     }

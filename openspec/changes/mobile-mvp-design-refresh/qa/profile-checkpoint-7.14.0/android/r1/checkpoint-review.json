@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "kind": "profile-only independent screen checkpoint; not full account-service gate",
+  "reviewer": "/root/vibe_android_review_resume",
+  "reviewedAt": "2026-11-06T08:36:02.523010+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/account-service-android.json",
+  "inputHash": "066e7fa3a5fc84a3829a987838dc2f7e837e47b3f568857d51f7d22384327df4",
+  "sourceHash": "6bc68a86064daf94d2bd1112249f1a12529c1a22a62b8f73a5d6fe52a7a7acfc",
+  "artifactHash": "a5f81ffa2274a5e780ab048ac33190ae2deb927d4e0bc51ed4f230aa8e49f6db",
+  "summary": "needs-fixes",
+  "checks": [
+    {
+      "scope": "three UI logins/full-partial-clear fields, readonly sheet and Back/logout between sessions",
+      "status": "observed-pass",
+      "observations": "Canonical ProfileFieldsUiTests passed12.045s. Full date1990-12-23→partial23декабря without year/unknown sex→clear birthday/phone, omitted first/login preserved. Real UI start/exchange with synthetic SDK result, not real OAuth. Actual fields screenshots reviewed.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/fields.log",
+          "sha256": "8ab9437e88cf8dcbd35bbe167d215e7c3b31c5ed1daa53256e9cfcd6a332e638"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/device-evidence/profile714-fields-r1/profile-fields-full-personal.png",
+          "sha256": "25c1b2ca47eacacf040b2383150594bec6ada8c3f4f257aa9a31a858e9a01733"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/device-evidence/profile714-fields-r1/profile-fields-partial-personal.png",
+          "sha256": "a6cdf06d2e00aab6cafa5b46aa9d7e6dd859d74ab4d2cfb28c40072134365216"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/device-evidence/profile714-fields-r1/profile-fields-clear-personal.png",
+          "sha256": "c45209d3c3b2d7e4065c3964901ebcb731e701bcdc9931f408977142b91764d6"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/device-evidence/profile714-fields-r1/profile-fields-clear-contacts.png",
+          "sha256": "bce55dc028bcc7c2f0598d0a6dbf52ac9e2fb14f7c2c69f3ef158f54730d974d"
+        }
+      ]
+    },
+    {
+      "scope": "exact full server displayName at360/320 and readonly panel Back",
+      "status": "observed-pass",
+      "observations": "Additional existing full provider HTTP login supplies profile header credential; exact Александр Тестов is visible/wrapped at360/320. Manual sheet has no EditText and system Back returns trigger. No app/provider source changed.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/full-login-summary.json",
+          "sha256": "3a49f4047e67f7b9f771e95227842cac9de2fcc620067ae5346bff7f7a8abb16"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/full-ready360.png",
+          "sha256": "ec96ca759a8a7aae129f1b59a6a5f8d5f246e85ee0e48b2b12c2809c0bd898e0"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/full-ready320.png",
+          "sha256": "fca9cce2b2cd00513b4ed4945495681f59c210add9972bdffb736eacd9611020"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/full-private320.png",
+          "sha256": "1ddd48bbeaeb0e3fbb32bea7d6345de0391bcc35477f75b04cdf89ad106fe044"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/full-back320.png",
+          "sha256": "fca9cce2b2cd00513b4ed4945495681f59c210add9972bdffb736eacd9611020"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/actions.json",
+          "sha256": "c088ae6ac2e37c0db3064e157b197fa107009b706a7fdfc0de4b7ed96d07386d"
+        }
+      ]
+    },
+    {
+      "scope": "real avatar URL bitmap",
+      "status": "observed-pass for existing standard-avatar opt-in",
+      "observations": "Existing native-avatar opt-in design actor APIURL https://avatars.yandex.net/get-yapic/0/0-0/islands-200 yields visible white bitmap on dark background in rounded88/r28 container, distinct from local glyph fallback. No real account/photo or OAuth used.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/avatar-api.json",
+          "sha256": "68a5ef1f182bba089af98bbaacf4a960014873ef5208975559d737319e04b241"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/profile-ready-360.png",
+          "sha256": "97e4f14f473505ca2d397aca81c85d3a46fc31f79f3c24dbbb32200485b9b3c1"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/profile-back-360.png",
+          "sha256": "97e4f14f473505ca2d397aca81c85d3a46fc31f79f3c24dbbb32200485b9b3c1"
+        }
+      ]
+    },
+    {
+      "scope": "document links composition",
+      "status": "needs-fixes",
+      "observations": "Actual text starts x32dp rather than raw x20, from native TextButton inset; medium weight differs from raw400. Cookie starts203.5dp vs raw167.265625. Native hit target can grow without shifting label.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/profile-ready-360.png",
+          "sha256": "97e4f14f473505ca2d397aca81c85d3a46fc31f79f3c24dbbb32200485b9b3c1"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/profile-ready-360.xml",
+          "sha256": "87dfff5897bd9c6b2db72c52770b05ba822057de9645f9a443c5afa2bd203d33"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/reference-ready-360.png",
+          "sha256": "5c4ea16b15c2c954aadf4ee42c768be5e8f831d849bea2e59b8bb4514a2705ff"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/reference-geometry.json",
+          "sha256": "649f65ba429a1fe2fd28eca1f08ad0a32d4ee01c650f3d0ffb9cea06c4f75ff0"
+        }
+      ]
+    },
+    {
+      "scope": "support menu glyph",
+      "status": "needs-fixes",
+      "observations": "Actual plain MessageCircle lacks warning mark from approved MessageCircleWarning.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/profile-ready-360.png",
+          "sha256": "97e4f14f473505ca2d397aca81c85d3a46fc31f79f3c24dbbb32200485b9b3c1"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/reference-ready-360.png",
+          "sha256": "5c4ea16b15c2c954aadf4ee42c768be5e8f831d849bea2e59b8bb4514a2705ff"
+        }
+      ]
+    }
+  ],
+  "binding": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/source-artifact-before.json",
+      "sha256": "348a9390806adc8af76eae372cfb95478e909a04cc7e86639049f5e7bea280e9"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/source-artifact-after.json",
+      "sha256": "c09c8aa7576a25ff0c8bc15d8ee605926ee974201f3f45969c80d425ed7c6ac1"
+    }
+  ],
+  "limitations": [
+    "Only profile short checkpoint; Help/About/Documents not accepted or exercised.",
+    "UI dump contains no account deletion entry/editor; noDELETE HTTP assertion/log absent in current canonical driver, so zero network attempt not claimed.",
+    "HTTP logout-error raw expectation is pending product clarification per parent; not executed or accepted. Successful logout between canonical stages observed.",
+    "Missing-avatar mapping exists in clear stage but background missing-avatar header not separately captured; local fallback rendering remains scoped gap for targeted follow-up/final.",
+    "Not full account-service states/large text/landscape/error/privacy second-actor matrix or design:ready/qa:ready.",
+    "Source/device released with app force-stop, wm reset, original null animator restored."
+  ]
+}

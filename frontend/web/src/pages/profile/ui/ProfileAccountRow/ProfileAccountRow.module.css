@@ -1,0 +1,29 @@
+.row {
+  display: grid;
+  grid-template-columns: var(--ds-component-mobile-profile-data-label-width) minmax(
+      0,
+      1fr
+    );
+  gap: var(--ds-space-s16);
+  padding: var(--ds-component-mobile-profile-data-row-inset-block) 0;
+  border-bottom: var(--ds-space-s1) solid var(--ds-color-line);
+  font-size: var(--ds-typography-size-button);
+  line-height: var(--ds-component-mobile-profile-data-line-height);
+}
+
+.row:last-child {
+  border: 0;
+}
+
+.row dt {
+  color: var(--ds-color-muted);
+}
+
+.row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.row dd[data-missing='true'] {
+  color: var(--ds-color-muted);
+}

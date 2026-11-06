@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "kind": "targeted profile-only independent checkpoint; not full gate report",
+  "reviewer": "/root/vibe_android_review_resume",
+  "reviewedAt": "2026-11-06T08:41:49.553932+00:00",
+  "manifest": "openspec/changes/mobile-mvp-design-refresh/design/account-service-android.json",
+  "inputHash": "61df13798a321597f429d976f74a99e20de397c31507de1863ee107ca8c96a61",
+  "sourceHash": "c829e7132914a9e967e2363d31be552fdbb61a1aab64a4d45dca65514f679ac6",
+  "artifactHash": "db67894576117a81df57d5293f2094fa65c81bd92de15f1bfe955aeb8fe5d7d1",
+  "summary": "observed-pass for requested profile R2 delta",
+  "checks": [
+    {
+      "scope": "three real HTTP/UI logins, readonly account data/Back/logout and noDELETE",
+      "status": "observed-pass",
+      "observations": "Fresh canonical ProfileFieldsUiTests passed11.94s. Full→partial→clear field assertions unchanged, new QaChatProbe asserts real GET /api/v1/me/profile was observed and DELETE /api/v1/me absent. No empty-probe false pass. Logout between stages successful; HTTP-failure behavior not accepted.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/fields.log",
+          "sha256": "1c21984c8e15d9f79c5bd994c390accba5d89afbfd936318f7741bedadd6b2ec"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/device-evidence/profile714-fields-r2/profile-fields-full-personal.png",
+          "sha256": "aab4f3073d42667a79b28a2c64cac41a8d07780b71c2a90964e6afe835425ea3"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/device-evidence/profile714-fields-r2/profile-fields-partial-personal.png",
+          "sha256": "5947188341fc228e20d73f8d79ba6ace27022ca9f88e37c6c3626dc1ad2cea60"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/device-evidence/profile714-fields-r2/profile-fields-clear-personal.png",
+          "sha256": "26a716570ab22bc2f661a5833b3b77ab97f0c2069d927fd5e61939e8873677da"
+        }
+      ],
+      "testSource": {
+        "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ProfileFieldsUiTests.kt",
+        "sha256": "619d92100991c5c1e052b9c8f80610f1486670a1480fd9a3fa3a0d3a4b230ba8"
+      }
+    },
+    {
+      "scope": "ready360 documents/glyph and absent-avatar fallback",
+      "status": "observed-pass",
+      "observations": "Observed document labels start x20 with normal12; support warning mark present. Isolated account API avatar_url=null corresponds to neutral local silhouette, no letter or substitute photo. No deletion entry in actual dump. Native safe-area/target/font adaptation retained.",
+      "evidence": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/account-ready360.png",
+          "sha256": "b5db46b92c915d79021c1ab8c181c2774d707e16099ee4fd6fdc66d989b3ad1a"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/account-ready360.xml",
+          "sha256": "f898d954ddaf6755448a59c29b8771ab2551fc05b1abcf36f21a2913bcd284bd"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/account-api.json",
+          "sha256": "9ea25f71533c4aef955f165870f994dcd67843ecf0fa61b69fbdfb27e2e35853"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/actions.json",
+          "sha256": "e3b3a3b888a5202f542191d40851b474b9bff4f42a40fd42a1d37360d54ef8bb"
+        }
+      ],
+      "references": [
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/reference-ready-360.png",
+          "sha256": "5c4ea16b15c2c954aadf4ee42c768be5e8f831d849bea2e59b8bb4514a2705ff"
+        },
+        {
+          "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r1/reference-missing-360.png",
+          "sha256": "522578421a6968463e9b35b36cdecc95488835c46ccced3bbe619971d2767567"
+        }
+      ]
+    }
+  ],
+  "binding": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/source-artifact-before.json",
+      "sha256": "fd3cf42cb1363b5bd6a0d3e60ece0afbc4e840fef9d5e838b39bd68a0b73a39f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/qa/profile-checkpoint-7.14.0/android/r2/source-artifact-after.json",
+      "sha256": "6ba3674f3f39580d403bb3bdf20056d9010188f2e015feeaffaf67c19a35e796"
+    }
+  ],
+  "limitations": [
+    "Only requested profile checkpoint; no Help/About/Documents reader acceptance.",
+    "R1 standard-bitmap/fullname320/other scoped results not copied as fresh R2 pass; positive avatar/full matrix not repeated by explicit parent scope.",
+    "HTTP logout-error expectation pending product clarification, not exercised or passed.",
+    "Full account-service state/large text/landscape/error/peer-projection matrix and final design:ready/qa:ready remain for common candidate."
+  ],
+  "cleanup": {
+    "app": "force-stopped",
+    "device": "wm physical720x1600/density320/font1 unchanged; original animatornull restored",
+    "source": "released after matching after-binding"
+  }
+}

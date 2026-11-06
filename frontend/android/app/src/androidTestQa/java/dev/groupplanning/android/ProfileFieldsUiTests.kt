@@ -1,7 +1,6 @@
 package dev.groupplanning.android
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
@@ -11,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,6 +41,9 @@ class ProfileFieldsUiTests {
                     fixture.waitTag("home-profile")
                 }
                 compose.onNodeWithTag("home-profile").performClick()
+                fixture.waitTag("profile-account-data")
+                compose.onNodeWithTag("profile-account-data").performScrollTo().performClick()
+                fixture.waitTag("profile-account-sheet")
                 fixture.waitText("profile_fixture")
                 compose.onNodeWithText("Александр").performScrollTo().assertIsDisplayed()
                 compose.onNodeWithText("Тестов").performScrollTo().assertIsDisplayed()
@@ -56,13 +59,13 @@ class ProfileFieldsUiTests {
                         compose.onNodeWithText("23 декабря 1990").assertDoesNotExist()
                         compose.onNode(
                             hasText("Не указано") and
-                                hasAnyAncestor(hasTestTag("profile-field-profile_sex")),
+                                hasTestTag("profile-field-profile_sex"),
                         ).performScrollTo().assertIsDisplayed()
                     }
                     else -> {
                         compose.onNode(
                             hasText("Не указано") and
-                                hasAnyAncestor(hasTestTag("profile-field-profile_birthday")),
+                                hasTestTag("profile-field-profile_birthday"),
                         ).performScrollTo().assertIsDisplayed()
                         compose.onNodeWithText("23 декабря").assertDoesNotExist()
                     }
@@ -72,8 +75,12 @@ class ProfileFieldsUiTests {
                 compose.onNodeWithText(if (stage == "clear") "Не указан" else "+79990000000")
                     .performScrollTo().assertIsDisplayed()
                 fixture.screenshot("profile-fields-$stage-contacts")
+                assertTrue(QaChatProbe.requests.any { it == "GET /api/v1/me/profile" })
+                assertTrue(QaChatProbe.requests.none { it == "DELETE /api/v1/me" })
                 if (stage != "clear") {
-                    compose.onNodeWithText("Выйти").performScrollTo().performClick()
+                    fixture.device.pressBack()
+                    fixture.waitAbsent("profile-account-sheet")
+                    compose.onNodeWithText("Выйти из аккаунта").performScrollTo().performClick()
                 }
             }
         }

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.contentDescription
@@ -34,6 +35,7 @@ internal fun UserAvatar(
     size: Dp = 32.dp,
     avatarColor: Color = Color(0xffc2af9f),
     foregroundColor: Color = DesignTokens.colorRosterText,
+    shape: Shape = CircleShape,
 ) {
     val fallback = remember { AvatarImages() }
     val images = LocalAvatarImages.current ?: fallback
@@ -47,7 +49,7 @@ internal fun UserAvatar(
     val bitmap = imageState?.bitmap
     LaunchedEffect(image) { image?.load() }
     Box(
-        modifier.size(size).clip(CircleShape).background(avatarColor).semantics {
+        modifier.size(size).clip(shape).background(avatarColor).semantics {
             contentDescription =
                 name
         },

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "id": "shared-rsvp-routing-ios",
+  "designVersion": "7.13.0",
+  "phase": "paused",
+  "approval": "05.11.2026: прямое решение пользователя для всех поверхностей, затем «окаю дизайн». На сегодня пользователь остановил дальнейшую работу.",
+  "implementer": "codex-mobile-apply-2026-11-05",
+  "report": "openspec/changes/mobile-mvp-design-refresh/qa/design-7.12.0/rsvp-ios-final/design-review.json",
+  "screens": [
+    {
+      "id": "response-route",
+      "states": [
+        "going-chat",
+        "maybe-invitations",
+        "declined-confirmation",
+        "busy-stays",
+        "error-stays",
+        "unknown-stays",
+        "member-chat",
+        "organizer-chat",
+        "closed-no-response",
+        "auth-no-rsvp",
+        "repeat-no-duplicate",
+        "large-text",
+        "reduced-motion",
+        "safe-area-return"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invite/frame.html",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/invitations/frame.html",
+        "docs/design/desktop-mvp/invite-r2/preview.html",
+        "docs/design/desktop-mvp/invitations-r2/preview.html"
+      ],
+      "platforms": [
+        "ios"
+      ],
+      "inputs": [
+        "frontend/ios",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "ios": [
+          "15.3",
+          "15.6"
+        ]
+      }
+    },
+    {
+      "id": "declined-result",
+      "states": [
+        "confirmed",
+        "long-title",
+        "meetings-action",
+        "large-text",
+        "reduced-motion",
+        "safe-area-return"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/declined/frame.html",
+        "docs/design/desktop-mvp/invite-r2/preview.html"
+      ],
+      "platforms": [
+        "ios"
+      ],
+      "inputs": [
+        "frontend/ios",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "ios": [
+          "15.3",
+          "15.6"
+        ]
+      }
+    },
+    {
+      "id": "rsvp-system-event",
+      "states": [
+        "going",
+        "maybe",
+        "not-going",
+        "retry-dedup",
+        "reopen-no-event",
+        "no-access-after-change",
+        "large-text",
+        "reduced-motion",
+        "safe-area-return"
+      ],
+      "references": [
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/decision.md",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/source",
+        "openspec/changes/mobile-mvp-design-refresh/assets/response-routing-r1/mobile/chat/frame.html",
+        "docs/design/desktop-mvp/chat-r4/preview.html"
+      ],
+      "platforms": [
+        "ios"
+      ],
+      "inputs": [
+        "frontend/ios",
+        "contracts/fixtures",
+        "backend/internal/httpapi",
+        "package-lock.json"
+      ],
+      "contracts": [
+        "docs/design/components/invitation-response.md",
+        "docs/design/platforms.md"
+      ],
+      "tasks": {
+        "ios": [
+          "15.3",
+          "15.6"
+        ]
+      }
+    }
+  ]
+}

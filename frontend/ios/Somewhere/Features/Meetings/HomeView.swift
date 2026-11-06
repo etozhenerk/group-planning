@@ -34,7 +34,8 @@ struct HomeView: View {
             ZStack {
                 if section == .profile {
                     ProfileScreen(
-                        session: session, logout: owner.logout, deleteAccount: deleteAccount)
+                        session: session, logoutBusy: owner.loggingOut,
+                        logoutFailure: owner.logoutFailure, logout: owner.logout)
                 } else if section == .invitations {
                     SavedInvitationsView(
                         owner: savedInvitations, invitations: invitations)
@@ -48,11 +49,13 @@ struct HomeView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .top, spacing: 0) {
-                HStack {
-                    BrandWordmark(compact: true).dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-                    Spacer()
-                }.padding(.horizontal, 20).padding(.top, 17)
-                    .background(AppPalette.background)
+                if section != .profile {
+                    HStack {
+                        BrandWordmark(compact: true).dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+                        Spacer()
+                    }.padding(.horizontal, 20).padding(.top, 17)
+                        .background(AppPalette.background)
+                }
             }
             .safeAreaInset(edge: .bottom, spacing: DesignTokens.spaceS0) {
                 HomeNavigation(selection: $section)

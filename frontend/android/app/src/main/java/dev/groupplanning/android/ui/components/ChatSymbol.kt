@@ -9,6 +9,10 @@ internal enum class ChatSymbol(val path: String, val fillPath: String? = null) {
         "M2.992,16.342 a2,2 0,0 1,.094,1.167 l-1.065,3.29 a1,1 0,0 0,1.236,1.168 l3.413,-.998 a2,2 0,0 1,1.099,.092 a10,10 0,1 0,-4.777,-4.719",
     ),
 
+    MessageWarning(
+        "M2.992,16.342 a2,2 0,0 1,.094,1.167 l-1.065,3.29 a1,1 0,0 0,1.236,1.168 l3.413,-.998 a2,2 0,0 1,1.099,.092 a10,10 0,1 0,-4.777,-4.719 M12,8v4 M12,16h.01",
+    ),
+
     // Lucide CloudOff and RotateCw, ISC; assets/licenses/lucide-react/LICENSE.txt.
     CloudOff(
         "M10.94,5.274 A7,7 0,0 1,15.71,10 h1.79 a4.5,4.5 0,0 1,4.222,6.057 M18.796,18.81 A4.5,4.5 0,0 1,17.5,19 H9 A7,7 0,0 1,5.79,5.78 M2,2 L22,22",
@@ -19,6 +23,8 @@ internal enum class ChatSymbol(val path: String, val fillPath: String? = null) {
     Alert(
         "m21.73,18 -8,-14 a2,2 0,0 0,-3.48,0 l-8,14 A2,2 0,0 0,4,21 h16 a2,2 0,0 0,1.73,-3 M12,9 v4 M12,17 h0.01",
     ),
+    Help("M12,3a9,9 0,1 0,0 18a9,9 0,0 0,0 -18 M9.1,9a3,3 0,0 1,5.8 1c0,2 -3,3 -3,3 M12,17h.01"),
+    Logout("M9,21H5a2,2 0,0 1,-2 -2V5a2,2 0,0 1,2 -2h4 M16,17l5,-5 -5,-5 M21,12H9"),
     Layers("M12,3 L3,8 L12,13 L21,8 Z M3,12 L12,17 L21,12 M3,16 L12,21 L21,16"),
     Plus("M12,5v14 M5,12h14"),
     Check("M5,12l4,4L19,6"),

@@ -2,69 +2,120 @@ import SwiftUI
 
 struct ProfileScreen: View {
     let logout: () -> Void
-    let deleteAccount: () -> Void
+    let logoutBusy: Bool
+    let logoutFailure: ClientFailure?
     @State private var owner: ProfileOwner
     @State private var retry = UUID()
-    @ScaledMetric(relativeTo: .title) private var titleSize = 28.0
-    init(session: SessionStore, logout: @escaping () -> Void, deleteAccount: @escaping () -> Void) {
+    @State private var account = false
+    init(
+        session: SessionStore, logoutBusy: Bool = false, logoutFailure: ClientFailure? = nil,
+        logout: @escaping () -> Void
+    ) {
         self.logout = logout
-        self.deleteAccount = deleteAccount
+        self.logoutBusy = logoutBusy
+        self.logoutFailure = logoutFailure
         _owner = State(initialValue: ProfileOwner(session: session))
     }
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Мой профиль").font(.system(size: titleSize, weight: .bold)).tracking(-0.9)
-                    .accessibilityAddTraits(.isHeader).padding(.bottom, 24)
+            VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+                Text("Профиль").designTokenFont(
+                    DesignTokens.componentMobileServiceTitleSize,
+                    weight: DesignTokens.componentMobileServiceTitleWeight, relativeTo: .title
+                )
+                .tracking(-DesignTokens.componentMobileServiceTitleTracking)
+                .accessibilityAddTraits(.isHeader)
                 if owner.current {
                     if owner.failed {
-                        StatusView(title: "Не удалось загрузить профиль", retry: { retry = UUID() })
+                        ProfileLoadState(loading: false, retry: { retry = UUID() })
                     } else if let profile = owner.profile {
                         ProfileIdentityPanel(profile: profile)
-                        Text("ЛИЧНЫЕ ДАННЫЕ").designFont(12, weight: .semibold)
-                            .tracking(0.9).foregroundStyle(AppPalette.muted)
-                            .padding(.top, 22).padding(.bottom, 16)
-                        ProfilePersonalPanel(profile: profile)
-                        Text("КОНТАКТНЫЕ ДАННЫЕ").designFont(12, weight: .semibold)
-                            .tracking(0.9).foregroundStyle(AppPalette.muted)
-                            .padding(.top, 22).padding(.bottom, 16)
-                        VStack(alignment: .leading, spacing: 18) {
-                            ProfileField(title: "Почта", value: profile.email ?? "Не указана")
-                            ProfileField(title: "Телефон", value: profile.phone ?? "Не указан")
-                            HStack(spacing: 4) {
-                                ExperienceIcon(kind: .lock, size: 13)
-                                Text("Видны только вам. Получены из Яндекс ID.").fixedSize(
-                                    horizontal: false, vertical: true)
-                            }.designFont(12).foregroundStyle(AppPalette.muted)
-                        }.padding(20).background(
-                            AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
+                        Button {
+                            account = true
+                        } label: {
+                            HStack(spacing: DesignTokens.spaceS12 + DesignTokens.spaceS2) {
+                                ExperienceIcon(
+                                    kind: .lock, size: DesignTokens.componentMobileProfileMenuIcon
+                                )
+                                .foregroundStyle(DesignTokens.colorAccent)
+                                VStack(alignment: .leading, spacing: DesignTokens.spaceS4) {
+                                    Text("Данные аккаунта").designFont(
+                                        DesignTokens.componentMobileProfileAccessTitleSize,
+                                        weight: .semibold)
+                                    Text("Личные данные и контакты · только вам").designFont(
+                                        DesignTokens.typographySizeLabel
+                                    )
+                                    .foregroundStyle(DesignTokens.colorMuted)
+                                }
+                                Spacer(minLength: DesignTokens.spaceS8)
+                                Image(systemName: "chevron.down").font(
+                                    .system(
+                                        size: DesignTokens.componentMobileFieldIconSize,
+                                        weight: .light)
+                                )
+                                .foregroundStyle(DesignTokens.colorMuted)
+                            }.padding(.horizontal, DesignTokens.spaceS16).padding(
+                                .vertical, DesignTokens.spaceS20
+                            )
+                            .background(
+                                DesignTokens.colorSurface,
+                                in: RoundedRectangle(
+                                    cornerRadius: DesignTokens.componentMobileProfileAccessRadius))
+                        }.buttonStyle(.plain).accessibilityIdentifier("profile-account-data")
                     } else {
-                        DeferredPlaceholder {
-                            VStack(spacing: 22) {
-                                RoundedRectangle(cornerRadius: 22).frame(height: 245)
-                                RoundedRectangle(cornerRadius: 22).frame(height: 314.5)
-                                RoundedRectangle(cornerRadius: 22).frame(height: 182)
-                            }.foregroundStyle(AppPalette.surface).accessibilityLabel(
-                                "Загрузка профиля")
-                        }
+                        ProfileLoadState(loading: true, retry: { retry = UUID() })
                     }
-                    ServiceLinks(api: owner.session.api, screen: "profile").padding(.top, 40)
-                    HStack {
-                        Spacer()
-                        Button("Выйти", action: logout).designFont(14, weight: .semibold)
-                            .padding(.horizontal, 18).frame(minHeight: 47)
+                    ProfileServiceMenu(api: owner.session.api).padding(
+                        .top, DesignTokens.componentMobileProfileMenuGap)
+                    VStack(alignment: .leading, spacing: DesignTokens.spaceS12) {
+                        if logoutFailure != nil {
+                            Label(
+                                "Не удалось выйти. Попробуйте ещё раз.",
+                                systemImage: "exclamationmark.triangle"
+                            )
+                            .designFont(DesignTokens.typographySizeCaption).foregroundStyle(
+                                DesignTokens.colorMuted
+                            )
+                            .padding(DesignTokens.spaceS12).background(
+                                DesignTokens.colorSurface,
+                                in: RoundedRectangle(cornerRadius: DesignTokens.radiusControl))
+                        }
+                        Button(action: logout) {
+                            HStack(spacing: DesignTokens.spaceS10) {
+                                if logoutBusy {
+                                    ProgressView()
+                                } else {
+                                    Image(systemName: "rectangle.portrait.and.arrow.right").font(
+                                        .system(size: DesignTokens.spaceS20))
+                                }
+                                Text(logoutBusy ? "Выходим…" : "Выйти из аккаунта")
+                            }.designFont(DesignTokens.typographySizeSmall).foregroundStyle(
+                                DesignTokens.colorMuted
+                            )
+                            .frame(
+                                maxWidth: .infinity,
+                                minHeight: DesignTokens.componentMobileServiceActionHeight
+                            )
                             .overlay {
-                                RoundedRectangle(cornerRadius: 13).stroke(
-                                    .white.opacity(0.125), lineWidth: 1)
+                                RoundedRectangle(
+                                    cornerRadius: DesignTokens.componentMobileServiceActionRadius
+                                )
+                                .stroke(
+                                    DesignTokens.colorBorderStrong, lineWidth: DesignTokens.spaceS1)
                             }
-                            .accessibilityLabel("Выйти из аккаунта")
-                    }.padding(.top, 20)
-
+                        }.buttonStyle(.plain).disabled(logoutBusy)
+                    }.padding(.top, DesignTokens.componentMobileProfileLogoutGap)
                 }
-
-            }.padding(.horizontal, 20).padding(.top, 28).padding(.bottom, DesignTokens.spaceS20)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }.background(AppPalette.background).task(id: retry) { await owner.load() }
+            }.padding(.horizontal, DesignTokens.spaceS20).padding(
+                .top, DesignTokens.componentMobileProfileInsetTop
+            )
+            .padding(.bottom, DesignTokens.spaceS24).frame(maxWidth: .infinity, alignment: .leading)
+        }.background(DesignTokens.colorBackground).task(id: retry) { await owner.load() }
             .accessibilityIdentifier("profile-screen")
+            .sheet(isPresented: $account) {
+                if owner.current, let profile = owner.profile {
+                    ProfileAccountPanel(profile: profile)
+                }
+            }.onChange(of: owner.current) { _, current in if !current { account = false } }
     }
 }

@@ -1,4 +1,6 @@
 import { Link } from 'react-router';
+import { useMobileLayout } from '@/shared/lib/media';
+import { MobileProfileView } from '@/pages/profile/ui/MobileProfileView';
 import { useProfile } from '@/entities/session';
 import type { Session } from '@/entities/session';
 import { Navigation } from '@/widgets/navigation';
@@ -13,6 +15,11 @@ export type ProfileViewProps = { session: Session };
 
 export const ProfileView = ({ session }: ProfileViewProps) => {
   const query = useProfile(session.user.id);
+  const mobile = useMobileLayout();
+
+  if (mobile) {
+    return <MobileProfileView session={session} query={query} />;
+  }
 
   return (
     <Workspace navigation={<Navigation session={session} />}>

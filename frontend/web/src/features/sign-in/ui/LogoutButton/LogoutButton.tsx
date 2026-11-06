@@ -1,39 +1,61 @@
 import styles from '@/features/sign-in/ui/LogoutButton/LogoutButton.module.css';
-import { LogOut, LoaderCircle } from 'lucide-react';
+import { LogOut, LoaderCircle, TriangleAlert } from 'lucide-react';
 import type { Session } from '@/entities/session';
 import { useLogout } from '@/features/sign-in/model/useLogout';
 import { errorText } from '@/shared/api';
+import { designTokens } from '@/shared/config/design-tokens';
 
-export type LogoutButtonProps = { session: Session; showLabel?: boolean };
+export type LogoutButtonProps = {
+  session: Session;
+  showLabel?: boolean;
+  profile?: boolean;
+};
 
-export const LogoutButton = ({ session, showLabel = false }: LogoutButtonProps) => {
+export const LogoutButton = ({
+  session,
+  showLabel = false,
+  profile = false,
+}: LogoutButtonProps) => {
   const action = useLogout(session);
+  const feedback = action.error && (
+    <p role="alert" className={styles.error}>
+      {profile && <TriangleAlert size={designTokens.componentMobileFieldIconSize} />}
+      {profile ? 'Не удалось выйти. Попробуйте ещё раз.' : errorText(action.error)}
+    </p>
+  );
 
   return (
-    <div>
+    <div className={profile ? styles.profile : undefined}>
+      {profile && feedback}
       <button
         type="button"
-        className={[showLabel ? styles.labelled : styles['icon'], styles['ghost']].join(
-          ' ',
-        )}
+        className={[
+          profile ? styles.profileButton : showLabel ? styles.labelled : styles.icon,
+          styles.ghost,
+        ].join(' ')}
         aria-label="Выйти из аккаунта"
         onClick={() => action.mutate()}
         disabled={action.isPending}
         aria-busy={action.isPending}
       >
         {action.isPending ? (
-          <LoaderCircle size={20} aria-hidden="true" className={styles.spinner} />
-        ) : !showLabel ? (
-          <LogOut size={20} aria-hidden="true" />
+          <LoaderCircle
+            size={designTokens.spaceS20}
+            aria-hidden="true"
+            className={styles.spinner}
+          />
         ) : (
-          'Выйти'
+          (profile || !showLabel) && (
+            <LogOut size={designTokens.spaceS20} aria-hidden="true" />
+          )
         )}
+        {profile ? (
+          <span>{action.isPending ? 'Выходим…' : 'Выйти из аккаунта'}</span>
+        ) : showLabel && !action.isPending ? (
+          'Выйти'
+        ) : null}
       </button>
-      {action.error && (
-        <p role="alert" className={styles['error']}>
-          {errorText(action.error)}
-        </p>
-      )}
+      {!profile && feedback}
     </div>
   );
 };

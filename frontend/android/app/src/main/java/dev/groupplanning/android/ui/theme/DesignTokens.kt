@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.13.0. Do not edit.
+// Generated from design-system/tokens.json · 7.14.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -233,6 +233,21 @@ internal object DesignTokens {
     val componentMeetingSettingsCoverSize = 52.dp
     val componentMessageDeliveryIndicatorSize = 12.dp
     val componentMessageDeliveryPendingDelay = 2000
+    val componentMobileAboutBrandDescriptionLineHeight = 22.dp
+    val componentMobileAboutBrandDescriptionMaximumWidth = 280.dp
+    val componentMobileAboutBrandMarkSize = 44.dp
+    val componentMobileAboutBrandWordLineHeight = 44.dp
+    val componentMobileAboutBrandWordSize = 36.dp
+    val componentMobileAboutBrandWordTracking = 1.7.dp
+    val componentMobileAboutCreditTop = 34.dp
+    val componentMobileAboutDocumentTitleLineHeight = 32.dp
+    val componentMobileAboutDocumentTitleSize = 26.dp
+    val componentMobileAboutDocumentTitleTracking = 0.6.dp
+    val componentMobileAboutIndexRowHeight = 52.dp
+    val componentMobileAboutIndexRowLineHeight = 22.dp
+    val componentMobileAboutMetadataInsetInline = 18.dp
+    val componentMobileAboutMetadataRadius = 18.dp
+    val componentMobileAboutStatusLineHeight = 19.dp
     val componentMobileAvatarFallbackOpacity = 0.7f
     val componentMobileAvatarFallbackRatio = 0.72f
     val componentMobileAvatarNormalSize = 40.dp
@@ -474,6 +489,30 @@ internal object DesignTokens {
     val componentMobilePreparationRecipientRadius = 14.dp
     val componentMobilePreparationStatusIconSize = 19.dp
     val componentMobilePreparationTitleFieldMinimumHeight = 86.dp
+    val componentMobileProfileAccessHintLineHeight = 16.dp
+    val componentMobileProfileAccessRadius = 18.dp
+    val componentMobileProfileAccessTitleLineHeight = 21.dp
+    val componentMobileProfileAccessTitleSize = 15.dp
+    val componentMobileProfileAvatarRadius = 28.dp
+    val componentMobileProfileAvatarSize = 88.dp
+    val componentMobileProfileDataLabelWidth = 100.dp
+    val componentMobileProfileDataLineHeight = 21.dp
+    val componentMobileProfileDataRowInsetBlock = 15.dp
+    val componentMobileProfileErrorBodyMaximumWidth = 240.dp
+    val componentMobileProfileErrorIcon = 26.dp
+    val componentMobileProfileIdentityBottom = 26.dp
+    val componentMobileProfileIdentityTop = 30.dp
+    val componentMobileProfileInsetTop = 6.dp
+    val componentMobileProfileLogoutGap = 22.dp
+    val componentMobileProfileLogoutLineHeight = 19.dp
+    val componentMobileProfileMenuChevron = 16.dp
+    val componentMobileProfileMenuGap = 28.dp
+    val componentMobileProfileMenuIcon = 22.dp
+    val componentMobileProfileMenuRowHeight = 58.dp
+    val componentMobileProfileNameLineHeight = 32.2.dp
+    val componentMobileProfileNameSize = 28.dp
+    val componentMobileProfileNameTracking = 0.7.dp
+    val componentMobileProfilePressedOpacity = 0.65f
     val componentMobileRequiredFontSize = 18.dp
     val componentMobileRequiredFontWeight = 650f
     val componentMobileRosterActionHeight = 52.dp
@@ -481,6 +520,22 @@ internal object DesignTokens {
     val componentMobileRosterAvatarSize = 32.dp
     val componentMobileRosterRowGap = 11.dp
     val componentMobileRosterRowHeight = 55.dp
+    val componentMobileServiceActionHeight = 48.dp
+    val componentMobileServiceActionRadius = 14.dp
+    val componentMobileServiceBodyLineHeight = 20.dp
+    val componentMobileServiceFieldHeight = 48.dp
+    val componentMobileServiceFieldLineHeight = 22.dp
+    val componentMobileServiceFieldRadius = 14.dp
+    val componentMobileServiceHeaderBottom = 28.dp
+    val componentMobileServiceHeadingGap = 14.dp
+    val componentMobileServiceHintLineHeight = 17.dp
+    val componentMobileServiceLabelLineHeight = 20.dp
+    val componentMobileServiceSectionTitleLineHeight = 26.dp
+    val componentMobileServiceSectionTitleSize = 20.dp
+    val componentMobileServiceTitleLineHeight = 34.dp
+    val componentMobileServiceTitleSize = 28.dp
+    val componentMobileServiceTitleTracking = 0.8.dp
+    val componentMobileServiceTitleWeight = 650f
     val componentMobileSettingsReviewBodyLineHeight = 22.dp
     val componentMobileSettingsReviewBodySize = 14.dp
     val componentMobileSettingsReviewTitleLineHeight = 30.dp
@@ -534,6 +589,23 @@ internal object DesignTokens {
     val componentMobileStickyShadowBlur = 28.dp
     val componentMobileStickyShadowOpacity = 0.3333333333333333f
     val componentMobileStickyShadowUpOffset = 8.dp
+    val componentMobileSupportAttachmentHeight = 72.dp
+    val componentMobileSupportAttachmentPreviewHeight = 68.dp
+    val componentMobileSupportAttachmentWidth = 56.dp
+    val componentMobileSupportReceiptIconTile = 52.dp
+    val componentMobileSupportReceiptNumberLineHeight = 26.dp
+    val componentMobileSupportReceiptNumberSize = 20.dp
+    val componentMobileSupportReceiptTitleLineHeight = 30.dp
+    val componentMobileSupportReceiptTitleSize = 24.dp
+    val componentMobileSupportSectionOptionHeight = 52.dp
+    val componentMobileSupportSectionOptionLineHeight = 22.dp
+    val componentMobileSupportSectionOptionSize = 15.dp
+    val componentMobileSupportSwitchHeight = 26.dp
+    val componentMobileSupportSwitchRowHeight = 60.dp
+    val componentMobileSupportSwitchThumb = 20.dp
+    val componentMobileSupportSwitchTravel = 16.dp
+    val componentMobileSupportSwitchWidth = 42.dp
+    val componentMobileSupportTextareaMinimumHeight = 144.dp
     val componentMobileUnreadGap = 5.dp
     val componentMobileUnreadIconSize = 14.dp
     val componentMobileUnreadIconStrokeWidth = 1.6f

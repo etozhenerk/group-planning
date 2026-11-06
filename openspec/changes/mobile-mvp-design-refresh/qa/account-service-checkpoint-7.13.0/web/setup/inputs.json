@@ -1,0 +1,247 @@
+{
+  "kind": "preparation snapshot; not runtime acceptance",
+  "files": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/design/account-service-web.json",
+      "sha256": "55fd8b34949e145f647cf0c00ec75904c072c3a188aede1e5ac22b6aa35572ae"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/approved-designs.json",
+      "sha256": "bc3914c3e6528624d82595de0def5341a660e47b6dc7aba673cf3fb3ec911c69"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/ux.md",
+      "sha256": "0961aa42fdc7229f5cb1a556f39b1729b3b67b18737ab10049030872eb30413f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/account-service.json",
+      "sha256": "0cde9d9f03df02ceff512d3d1416a4e6bc5ca7cb42b354a83187990db8f4665f"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/assets/profile-r2/frame.html",
+      "sha256": "7d6741895de63fcdab672549d4e7cd8ac1bcce19e2794e2df1aaa1199bb12d86"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/preparation/references/profile/frame.html",
+      "sha256": "3f97c402215ac2e798f05d1370eef6ae139b6ac3068a1b48314544779ab5d543"
+    },
+    {
+      "path": "testing/cases/user-profile.yaml",
+      "sha256": "5da9205bfc8238712d94c8e1dfa3f66073b7a0ee138fe468998cd34316c6ec0b"
+    },
+    {
+      "path": "testing/cases/mobile-interface.yaml",
+      "sha256": "938ec38e959b5f3a314622e37f82c3f3d663a6248d973ad1a98bdcae3be0b6ce"
+    },
+    {
+      "path": "backend/internal/httpapi/profile_fields_fixture_test.go",
+      "sha256": "9132b2d5ab5cb2a8f9c363e4e654b691a4bbc48f757879d2a3e0af220642aa49"
+    },
+    {
+      "path": "backend/internal/httpapi/profile_fields_fixture_http_test.go",
+      "sha256": "a3f060f8261f846cb55d26888fbb25e8fcae08d18f41b3c8870d8296274b7a27"
+    },
+    {
+      "path": "backend/internal/httpapi/browser_fixture_test.go",
+      "sha256": "30131cdb3551542dde004dffbe50332bbe14e61bb7b3c617163fb74f15467c43"
+    },
+    {
+      "path": "backend/internal/httpapi/browser_design_fixture_test.go",
+      "sha256": "5eb41bd9b86985d88612890d2eefd7ae93b596c7976c1be2571990aae49d567e"
+    },
+    {
+      "path": "backend/internal/httpapi/native_avatar_fixture_test.go",
+      "sha256": "85da88db49368731fcf9997c74fc6a1a7d2f9ab476f8beff0ae804889ab92a13"
+    },
+    {
+      "path": "backend/internal/httpapi/public_profile.go",
+      "sha256": "f4d24a34d9bd3a9a8d2d063932c45e4e796db02824ea11e8b9a0b693ce394e47"
+    },
+    {
+      "path": "frontend/web/tests/helpers.ts",
+      "sha256": "ff05de44220989a2219914aa650d2b69746b552c267f529a8f496871122ff035"
+    },
+    {
+      "path": "frontend/web/tests/loading-helpers.ts",
+      "sha256": "0cc0fae5974d2e163eeacc1a7da73a3f8ef74ba76c5bc9dfca6e474d732a3f77"
+    },
+    {
+      "path": "frontend/web/tests/18-loading-logout.spec.ts",
+      "sha256": "b228af59e8a6d2b366603f3a836348b3e37ef449ef8740c25981d5c67c3dfcc1"
+    },
+    {
+      "path": "frontend/web/tests/19-shared-session.spec.ts",
+      "sha256": "87657a23d2c71c31da7ab520ea80c55094a25f75ea6b1222cb7f097a934abb7d"
+    },
+    {
+      "path": "frontend/web/tests/26-account-deletion.spec.ts",
+      "sha256": "3c4bb970624ca487574b0babad104de7de9abc707c05371d4125a5ec74510f31"
+    },
+    {
+      "path": "frontend/web/tests/49-service-navigation.spec.ts",
+      "sha256": "b9be6b6e7a6322c2b91bde3358b91ea06ff202cd2c774167289cb35b18618fcc"
+    }
+  ],
+  "cases": [
+    {
+      "id": "TC-PROFILE-CC2372B4",
+      "title": "Просмотр собственного профиля: Профиль без телефона",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Просмотр собственного профиля",
+        "scenario": "Профиль без телефона",
+        "sha256": "23545cd104d25185a681d1bcf35df79f520e165dcff2a0858e77ccab51ead3e7"
+      },
+      "steps": [
+        {
+          "action": "Яндекс не передал телефон",
+          "expected": "в поле видно «Не указан», а остальные сведения доступны"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-EBBA2EA5",
+      "title": "Просмотр собственного профиля: Не удалось загрузить профиль",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Просмотр собственного профиля",
+        "scenario": "Не удалось загрузить профиль",
+        "sha256": "00e6c63f077904606b8599237fb7004780b8af16a59077de6d4347a361118147"
+      },
+      "steps": [
+        {
+          "action": "запрос профиля завершился ошибкой",
+          "expected": "показаны ошибка и повтор, отсутствие ответа не выдаётся за пустые поля"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-842701DD",
+      "title": "Приватность контактов: Просмотр участника",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Приватность контактов",
+        "scenario": "Просмотр участника",
+        "sha256": "cc16a90e6b4646d09b2dafab877193b680c053cc5a634dced038e4407e3e143d"
+      },
+      "steps": [
+        {
+          "action": "другой участник получает состав встречи или авторов сообщений",
+          "expected": "личные поля отсутствуют в ответе API и в интерфейсе"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-C6FA6B4C",
+      "title": "Приватность контактов: Недостаточно прав Яндекс ID",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Приватность контактов",
+        "scenario": "Недостаточно прав Яндекс ID",
+        "sha256": "a29fb50df7e333b3461e56dd4db8c545c2b3ce43a82b68e49f9faf087f229848"
+      },
+      "steps": [
+        {
+          "action": "действующий токен не предоставляет контакты",
+          "expected": "вход остаётся возможным, клиент показывает доступные данные дополнительное разрешение не считается уже предоставленным"
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-YANDEX-FIELDS",
+      "title": "Профиль: реальные поля Яндекс ID, неполные данные и повторный вход",
+      "source": {
+        "path": "openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md",
+        "requirement": "Приватный профиль",
+        "scenario": "Данные Яндекс ID и повторный вход",
+        "sha256": "02c3a37fe23953db1c0b02eebb0f059654e63dfcc3cd5ca511800439a3c3c6ce"
+      },
+      "steps": [
+        {
+          "action": "Войти с полным набором полей и открыть собственный профиль.",
+          "expected": "Отображены полученные сервером имя, аватар, Яндекс ID, логин, имя/фамилия, дата рождения, пол и контакты; нет редактора и демонстрационных подстановок."
+        },
+        {
+          "action": "Повторить вход с неполной датой и неизвестным полом, открыть профиль после обновления.",
+          "expected": "Показаны «23 декабря» и «Не указано» без выдуманного года/возраста/пола; прежняя сессия остаётся действительной."
+        },
+        {
+          "action": "Войти с явным очищением birthday при отсутствующем first_name; затем проверить профиль без аватара/телефона.",
+          "expected": "Дата очищена, известное имя сохранено; нейтральный силуэт/«Не указан» заменяют только реально отсутствующие значения."
+        },
+        {
+          "action": "Другим участником открыть состав/автора сообщения.",
+          "expected": "Личные поля владельца не раскрываются; доступны только публичные имя/аватар/ID."
+        }
+      ]
+    },
+    {
+      "id": "TC-PROFILE-ACTIONS-ORDER",
+      "title": "Выход расположен последним",
+      "source": {
+        "path": "openspec/changes/meeting-experience-refresh/specs/user-profile/spec.md",
+        "requirement": "Упрощённые действия профиля",
+        "scenario": "Выход расположен последним",
+        "sha256": "daf6c9c0e2c231bd8f9c8e1490d9734a837a11046659d1ba52f6146a5fcf5ce4"
+      },
+      "steps": [
+        {
+          "action": "Открыть профиль, прокрутить весь экран и прочитать доступные действия.",
+          "expected": "Выход ниже сервисных ссылок, входа в удаление аккаунта и версии нет."
+        },
+        {
+          "action": "Открыть О приложении и вернуться в профиль.",
+          "expected": "Версия доступна в отдельном экране, видимое имя приложения не повторяется трижды; возврат ведёт в профиль."
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-AVATAR-MAPPING",
+      "title": "Фото идентичности: Фото от API до интерфейса",
+      "source": {
+        "path": "openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md",
+        "requirement": "Фото идентичности",
+        "scenario": "Фото от API до интерфейса",
+        "sha256": "690579f1b0207bca42bc8038421942bb324833585699dc567f9771dc20b82495"
+      },
+      "steps": [
+        {
+          "action": "текущий пользователь, участник, автор сообщения, читатель или исполнитель имеет публичный avatar_url",
+          "expected": "его фото показано после загрузки и обновления данных, API-to-client mapping не теряет URL, а личные контакты отсутствуют в моделях других участников"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-AVATAR-FALLBACK",
+      "title": "Фото идентичности: Фото отсутствует или не загрузилось",
+      "source": {
+        "path": "openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md",
+        "requirement": "Фото идентичности",
+        "scenario": "Фото отсутствует или не загрузилось",
+        "sha256": "236802ba856a1935a35a249e3adf302e5307d121221639d8ab0772590ad90391"
+      },
+      "steps": [
+        {
+          "action": "avatar_url отсутствует или изображение недоступно",
+          "expected": "виден согласованный силуэт того же размера без скачка строки, буквы имени и выдуманной фотографии"
+        }
+      ]
+    },
+    {
+      "id": "TC-MOBILE-PROFILE-SIMPLE",
+      "title": "Приватный профиль: Профиль и скрытое удаление",
+      "source": {
+        "path": "openspec/changes/mobile-mvp-design-refresh/specs/mobile-interface/spec.md",
+        "requirement": "Приватный профиль",
+        "scenario": "Профиль и скрытое удаление",
+        "sha256": "b09ac76c71b64ffbd5aad756e361bdb67e2af811907f78c742b98037cc970f29"
+      },
+      "steps": [
+        {
+          "action": "пользователь открывает профиль и сервисные страницы, затем возвращается или выходит",
+          "expected": "нет лишней подписи под фото/названия приложения над меню, выход последний, удаления нет в UI/accessibility tree и просмотр не вызывает DELETE /me; ошибка выхода сохраняет доступный профиль"
+        }
+      ]
+    }
+  ]
+}

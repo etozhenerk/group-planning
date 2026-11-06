@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "phase": "prepared",
+  "runtimeExecuted": false,
+  "verdict": null,
+  "preparedAt": "2026-11-06T07:59:58.552275+00:00",
+  "scope": "profile only, short checkpoint; not full account-service acceptance",
+  "plannedPublication": "7.14.0",
+  "manifestAtPreparation": "7.14.0",
+  "artifact": null,
+  "caseIds": [
+    "TC-PROFILE-YANDEX-FIELDS",
+    "TC-PROFILE-CC2372B4",
+    "TC-PROFILE-EBBA2EA5",
+    "TC-PROFILE-842701DD",
+    "TC-PROFILE-ACTIONS-ORDER",
+    "TC-MOBILE-PROFILE-SIMPLE",
+    "TC-MOBILE-AVATAR-FALLBACK"
+  ],
+  "taskIds": [
+    "12.3",
+    "12.6"
+  ],
+  "canonicalSelectors": [
+    "dev.groupplanning.android.ProfileFieldsUiTests#profileFieldsAcrossThreeUiLogins",
+    "dev.groupplanning.android.AccountDeletionUiTests#profileKeepsLogoutAndHidesDeletionEntry"
+  ],
+  "sources": [
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/design/account-service-android.json",
+      "sha256": "2fac794486661704854e092b4fe207fd2de9cb6a5e04ddc95d93111a056b6d26"
+    },
+    {
+      "path": "openspec/changes/mobile-mvp-design-refresh/approved-designs.json",
+      "sha256": "891abab426fb309d4690b04ff055208a41cd980ed344c72d88036ff1a97f72a0"
+    },
+    {
+      "path": "testing/cases/user-profile.yaml",
+      "sha256": "5da9205bfc8238712d94c8e1dfa3f66073b7a0ee138fe468998cd34316c6ec0b"
+    },
+    {
+      "path": "testing/cases/mobile-interface.yaml",
+      "sha256": "938ec38e959b5f3a314622e37f82c3f3d663a6248d973ad1a98bdcae3be0b6ce"
+    },
+    {
+      "path": "backend/internal/httpapi/profile_fields_fixture_test.go",
+      "sha256": "9132b2d5ab5cb2a8f9c363e4e654b691a4bbc48f757879d2a3e0af220642aa49"
+    },
+    {
+      "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ProfileFieldsUiTests.kt",
+      "sha256": "f8553745589797ed6023deb495a7fcb14734b2600c9949060a5ac4f83702aa66"
+    },
+    {
+      "path": "frontend/android/app/src/androidTestQa/java/dev/groupplanning/android/ProfileFieldsLoginSupport.kt",
+      "sha256": "b635f474a023dbc3b3ff5bc2f28c1c91d3cd80defd88f35c82116f4dfbef3766"
+    }
+  ],
+  "limits": [
+    "No frozen candidate supplied yet; current manifest version at preparation may precede7.14.",
+    "Existing canonical selectors require new account-sheet opening/Back before fields/logout.",
+    "Provider fixtures prove synchronized values, not real OAuth/avatar bitmap.",
+    "Second participant projection and full error/large text/landscape matrix remain separate final scope.",
+    "No final design:ready/qa:ready or checkbox implied."
+  ]
+}
