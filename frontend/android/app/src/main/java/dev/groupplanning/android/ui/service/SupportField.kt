@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.ui.components.RequiredFieldLabel
 import dev.groupplanning.android.ui.theme.DesignTokens
@@ -44,6 +45,7 @@ internal fun SupportField(
             required,
             fontSize = DesignTokens.typographySizeSmall,
             lineHeight = DesignTokens.componentMobileServiceLabelLineHeight.value.sp,
+            fontWeight = FontWeight.SemiBold,
         )
         BasicTextField(
             value,

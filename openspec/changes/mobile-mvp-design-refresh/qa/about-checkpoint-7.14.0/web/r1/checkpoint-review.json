@@ -1,0 +1,137 @@
+{
+  "kind": "independent short design-review + feature-smoke checkpoint; not final gate",
+  "status": "needs-fixes",
+  "platform": "web",
+  "runtime": "https://127.0.0.1:9140",
+  "candidate": {
+    "sourceBefore": "bc1904421600196a53244bb5fff863cfb2ec854a93fa5994a2d6139d97206a88",
+    "sourceAfter": "bc1904421600196a53244bb5fff863cfb2ec854a93fa5994a2d6139d97206a88",
+    "artifactHash": "afe8699aafc6414a7b298a6e85aa38edf3aeb5180093254a3bbb2028e91d986c",
+    "candidateSha256": "f43f1515c94b08362e8c07bf5ece3cc86960568edec0316b10c3390ade2b5251",
+    "designInputHash": "9d15f31afecc8ebbd04984b0bdb2295371e5522f05ec883395e148643831e2eb",
+    "freshDesignContextMatches": true
+  },
+  "binding": {
+    "stable": true,
+    "diskFiles": 268,
+    "liveEntries": 39,
+    "files": [
+      "binding.json",
+      "position-binding/binding.json"
+    ]
+  },
+  "findings": [
+    {
+      "id": "A1",
+      "priority": "P2",
+      "type": "feature",
+      "title": "Перекрёстный переход теряет позицию Privacy",
+      "actual": "Privacy1377→Cookie(max931)→Privacy931; browserBack повторно Privacy931 вместо1377. Cookie позиция сохраняется.",
+      "expected": "UX reader/history и TC-MOBILE-DOCUMENT-READER: восстанавливается место чтения каждого типа.",
+      "rawObservation": "Published raw preview также теряет1283→909; это не pixel-transfer mismatch, а невыполненный функциональный критерий. Эталон не менялся подactual.",
+      "causeEvidence": "useDocumentPosition cleanup читаеттотжеDOM после сменыконтента/kind; прежнийscroll ужеclamped максимальнойвысотой нового документа.",
+      "source": "frontend/web/src/pages/service/model/useDocumentPosition.ts",
+      "evidence": [
+        "privacy-before-crosslink-actual.png",
+        "privacy-after-crosslink-actual.png",
+        "position-proof.json",
+        "observations.json"
+      ]
+    },
+    {
+      "id": "A2",
+      "priority": "P3",
+      "type": "design",
+      "title": "Основной текст/dd читателя15 вместоraw14",
+      "actual": "Computed p15/24 иdd15/22; family system-ui/weight400/width350 совпадают.",
+      "expected": "PrivacyDocument.module.css: p14/24, dd14/22; Cookie intro/copy14 иAbout description14.",
+      "impact": "Country dd переноситсянадвестроки, меняются переносы и ритм всего текста. Aboutdescription используеттотжеобщийbodybinding15 вместоraw14 поsource.",
+      "source": [
+        "frontend/web/src/pages/service/ui/MobilePrivacyDocument/MobilePrivacyDocument.module.css",
+        "frontend/web/src/pages/service/ui/MobileCookieDocument/MobileCookieDocument.module.css",
+        "frontend/web/src/pages/service/ui/MobileAboutBrand/MobileAboutBrand.module.css"
+      ],
+      "evidence": [
+        "privacy-computed-actual.png",
+        "privacy-computed-reference.png",
+        "position-proof.json",
+        "about390-actual.png",
+        "local-reference.png"
+      ]
+    },
+    {
+      "id": "A3",
+      "priority": "P3",
+      "type": "design",
+      "title": "List icon stroke2 вместоraw1.6",
+      "actual": "Содержание: List20×20 stroke2.",
+      "expected": "Raw DocumentPage.tsx: List20 stroke1.6.",
+      "source": "frontend/web/src/pages/service/ui/MobileDocument/MobileDocument.tsx",
+      "evidence": [
+        "privacy390-actual.png",
+        "privacy-reference.png",
+        "observations.json",
+        "position-proof.json"
+      ]
+    },
+    {
+      "id": "A4",
+      "priority": "P3",
+      "type": "semantics",
+      "title": "Accessible Back имя не соответствует переходу поистории",
+      "actual": "ПослеCookie→Privacy label «Вернуться к встречам», click возвращаетвCookie.",
+      "expected": "ИмяBack описываетфактическийвозврат; raw label «К предыдущему экрану». History destination работает, contextuallabel обещаетдругойэкран.",
+      "source": [
+        "frontend/web/src/pages/service/model/useDocumentBack.ts",
+        "frontend/web/src/pages/service/ui/MobileDocument/MobileDocument.tsx"
+      ],
+      "evidence": [
+        "observations.json (crosslink-privacy-position/backLabel, history-cookie-position)"
+      ]
+    }
+  ],
+  "checked": [
+    "about-real-demo-identity",
+    "about-no-duplicate-service-links",
+    "single-credit",
+    "privacy-full-current-copy",
+    "fixed-bar-separate-scroll",
+    "privacy-toc7",
+    "toc-cancel-scroll-focus",
+    "toc-select-heading-motion",
+    "cookies-full-current-copy",
+    "cookie-toc5",
+    "history-cookie-position",
+    "reader-support-draft-file-scroll-return",
+    "reduced-motion-select-focus",
+    "public-direct-policy",
+    "webkit-cancel-focus",
+    "desktop-preserved"
+  ],
+  "observedFailures": [
+    {
+      "name": "crosslink-privacy-position",
+      "pass": false,
+      "expected": 1377,
+      "actual": 931,
+      "backLabel": "Вернуться к встречам"
+    },
+    {
+      "name": "browserback-privacy-position",
+      "pass": false,
+      "expected": 1377,
+      "actual": 931
+    }
+  ],
+  "functionalLimits": [
+    "Only actual demo build identity accepted. Release/local/unavailable modes not runtime covered; raw example0.1.0-rc.2/42 not substituted",
+    "About320 + reader320,390, one WebKit320 cancel spot and desktop1100 composition; not entire manifest",
+    "CSSzoom200 synthetic stress only; no OStextsize/physicalIME/VO gate",
+    "No support POST or real delivery; supportdraftPNG preservation used real FileReader cache",
+    "Public policy direct access/fallback exercised without auth; full current text vsraw exact, no new legal claims",
+    "Stable TOC screenshots captured after450ms; earlier primary screenshot may show entrymotion only, not a defect",
+    "Raw local reference metadata differs from honest actualДемо; no pixelidentity equivalence claimed"
+  ],
+  "referenceNormalization": "Reference-only main>header fake status62→demo32/safearea0; original authority files unchanged",
+  "sourceReleased": true
+}

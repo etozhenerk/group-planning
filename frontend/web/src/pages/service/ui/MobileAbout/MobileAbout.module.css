@@ -1,0 +1,38 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.content {
+  padding: 0 var(--ds-space-s20) var(--ds-space-s40);
+}
+
+.credit {
+  font-size: var(--ds-typography-size-caption);
+  line-height: var(--ds-component-mobile-about-metadata-inset-inline);
+  margin: var(--ds-component-mobile-about-credit-top) 0 0;
+  color: var(--ds-color-muted);
+}
+
+.credit strong {
+  font-weight: 600;
+  color: var(--ds-color-text);
+}
+
+.header {
+  padding: env(safe-area-inset-top) var(--ds-space-s20)
+    calc(var(--ds-space-s24) + var(--ds-space-s4));
+}
+
+.header h1 {
+  font-size: calc(var(--ds-space-s24) + var(--ds-space-s4));
+  line-height: var(--ds-component-mobile-about-credit-top);
+  font-weight: 650;
+  letter-spacing: calc(-1 * var(--ds-component-mobile-service-title-tracking));
+  margin: var(--ds-component-mobile-service-field-radius) 0 0;
+}

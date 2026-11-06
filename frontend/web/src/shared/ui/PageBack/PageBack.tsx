@@ -11,6 +11,7 @@ export type PageBackProps = {
   label: string;
   variant?: 'service' | 'create';
   children?: ReactNode;
+  onClick?: LinkProps['onClick'];
 };
 
 export const PageBack = ({
@@ -19,6 +20,7 @@ export const PageBack = ({
   label,
   variant = 'service',
   children,
+  onClick,
 }: PageBackProps) => {
   const mobile = useMobileLayout();
 
@@ -27,6 +29,7 @@ export const PageBack = ({
       className={styles.back}
       to={to}
       state={state}
+      onClick={onClick}
       aria-label={mobile ? label : undefined}
       data-mobile={mobile}
       data-variant={variant}

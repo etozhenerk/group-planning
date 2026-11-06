@@ -1,3 +1,5 @@
+import { MobileAbout } from '@/pages/service/ui/MobileAbout';
+import { MobileDocument } from '@/pages/service/ui/MobileDocument';
 import { useMobileLayout } from '@/shared/lib/media';
 import { MobileHelp } from '@/pages/service/ui/MobileHelp/MobileHelp';
 import { PageBack } from '@/shared/ui/PageBack';
@@ -21,10 +23,16 @@ export const ServicePage = () => {
   const content = serviceContent[kind] ?? serviceContent.about;
   const back = readReturnLocation(location.state);
 
-  if (mobile && kind === 'help') {
+  if (mobile) {
     return (
       <Workspace navigation={null} screen mobileBrand={false}>
-        <MobileHelp />
+        {kind === 'help' ? (
+          <MobileHelp />
+        ) : kind === 'about' ? (
+          <MobileAbout />
+        ) : (
+          <MobileDocument kind={kind === 'cookies' ? 'cookies' : 'privacy'} />
+        )}
       </Workspace>
     );
   }

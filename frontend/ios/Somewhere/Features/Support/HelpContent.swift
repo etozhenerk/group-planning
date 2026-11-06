@@ -23,7 +23,7 @@ struct HelpContent: View {
                     HStack(spacing: DesignTokens.spaceS10) {
                         Text("Написать в поддержку")
                         Image(systemName: "arrow.up.right")
-                    }.designFont(DesignTokens.typographySizeBody, weight: .semibold)
+                    }.designFont(DesignTokens.typographySizeButton, weight: .semibold)
                         .frame(
                             maxWidth: .infinity,
                             minHeight: DesignTokens.componentMobileServiceActionHeight

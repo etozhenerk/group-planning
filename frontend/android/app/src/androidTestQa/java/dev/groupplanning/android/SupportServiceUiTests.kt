@@ -176,7 +176,7 @@ class SupportServiceUiTests {
                 .performScrollTo().assertIsDisplayed()
             fixture.screenshot("support-actual-build")
             backToProfile()
-            for (label in listOf(R.string.privacy_short, R.string.cookies_title)) {
+            for (label in listOf(R.string.privacy_short, R.string.profile_cookie_short)) {
                 compose.onNodeWithText(fixture.context.getString(label))
                     .performScrollTo().performClick()
                 fixture.waitTag("service-page")

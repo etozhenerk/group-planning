@@ -9,14 +9,23 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import dev.groupplanning.android.ui.components.ChatIcon
 import dev.groupplanning.android.ui.components.ChatSymbol
+import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
-internal fun ServiceIcon(symbol: ChatSymbol, size: Dp, tint: Color, description: String? = null) {
+internal fun ServiceIcon(
+    symbol: ChatSymbol,
+    size: Dp,
+    tint: Color,
+    description: String? =
+        null,
+    strokeWidth: Float = DesignTokens.componentIconStrokeWidth,
+) {
     ChatIcon(
         symbol,
         Modifier.size(size).semantics {
             description?.let { contentDescription = it }
         },
         tint,
+        strokeWidth,
     )
 }

@@ -31,7 +31,7 @@ struct SupportSuccess: View {
                 DesignTokens.componentMobileSupportReceiptNumberSize, weight: .medium
             ).monospacedDigit()
             Button(action: close) {
-                Text("К помощи").designFont(DesignTokens.typographySizeBody, weight: .semibold)
+                Text("К помощи").designFont(DesignTokens.typographySizeButton, weight: .semibold)
                     .frame(
                         maxWidth: .infinity,
                         minHeight: DesignTokens.componentMobileServiceActionHeight

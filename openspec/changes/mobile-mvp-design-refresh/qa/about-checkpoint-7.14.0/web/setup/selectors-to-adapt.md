@@ -1,0 +1,16 @@
+# Селекторы и сохраняемые business assertions
+
+Read-only notes; продукт и canonical tests не изменялись. Ниже raw/current anchors для будущего небольшого patch основного агента.
+
+| Источник | Текущий selector/assertion | После mobile About/reader | Что сохранить |
+| --- | --- | --- | --- |
+| frontend/web/tests/49-service-navigation.spec.ts:43–53 | About→«Сообщить о проблеме ↗»→About | Только mobile ветку: на About такого link нет; support/docs открываются из профиля. Desktop ветка остаётся прежней. | Реальный profile→About→Back, oneh1, profile privateDELETE guard; supportReturn отдельно от profile/help |
+| frontend/web/tests/31-release-identity.spec.ts:109–132 | `main a`, crosslinks «Cookie и данные браузера →»/«Политика конфиденциальности →» | Mobile raw без trailing→; TOC — button «Содержание»→dialog→nav «Разделы документа»→button title. Desktop anchors/titles сохранить. | Public документ доступен, contentinfo отсутствует, настоящие links≥44, cookie срок30дней, crosslinkdestination |
+| frontend/web/tests/31-release-identity.spec.ts:16–36 | dl показывает Демо, нет termСборка | По metadata данным сохраняется. Не заменять Демо примерным release/local. | Фактическая identity артефакта, nullbuild не0, desktop footer/navigation composition |
+| Raw DocumentPage.tsx | `getByRole('button',{name:'Содержание',exact:true})`, `getByRole('dialog',{name:'Содержание',exact:true})` | Raw доступные имена подходят mobile. Нативный Dialog имеет exit animation: ждать hidden. | Отмена без сменыscroll, возвратfocus; select закрывает и прокручивает правильный section |
+| Raw DocumentIndex.tsx | dialog nav «Разделы документа», buttons fullsectiontitle | Privacy7buttons, Cookie5buttons; scoped dialog/nav исключает совпадение сh2 вbody. | Строки52/font14/22; keyboard Tab/Enter; rawне задаётradio/Arrowкакsupportselector, не придумывать такиеassertions |
+| Raw DocumentPage/PrivacyDocument | `[data-testid=document-scroll]`, `#privacy-operator/data/purposes/sharing/support/retention/rights` | Только этотscroll-container измерять/scroll, bar отдельно. | Независимые позиции privacy/cookies; после движения sectionheading/фокус, чтение нерастягивается |
+| Raw CookieDocument | `#cookies-purpose/storage/analytics/control/consent` | Полные5сегментов; `getByRole('heading',{name:'…',exact:true})` scoping послеTOC. | Полные raw legalcopy/storage rows; purposeh2 вrawне имеетtabIndex, фокусоценивать понаблюдаемомуконтракту, не создаватьradioсемантику |
+| Current shared returnLocation | contextualBacklabel «Вернуться в профиль/к обращению/…» | Raw label «К предыдущему экрану»/«К профилю» — preview navigation. Actual contextualname можетсохраняться; проверятьdestination/history, не требоватьновуюкопибезпубликации. | Nested support returnURLquery, draft/file/scroll; publicdirectfallback достижим |
+
+Profile entry selectors уже существуют: links «О приложении», «Конфиденциальность», «Cookie». About h1 «О приложении»; brand section raw aria-label=somewhere; metadata dl/dt/dd; Developed by MintyDev ровно одна подпись. Reader h1 «Политика конфиденциальности» / «Cookie и данные браузера», aside «Проект документа». Не кликать контактный email/внешниеURL и не отправлять обращение для reader smoke.

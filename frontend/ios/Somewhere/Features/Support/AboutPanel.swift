@@ -1,37 +1,69 @@
 import SwiftUI
 
 struct AboutPanel: View {
-    let support: () -> Void
-    var body: some View {
-        VStack(spacing: 16) {
-            Image("RefreshBrand").resizable().frame(width: 76, height: 76)
-                .accessibilityHidden(true)
-            Text("somewhere").designFont(31, weight: .bold).tracking(-1.2)
-            Text("Договориться о встрече, обсудить детали и сохранить её вайб.")
-                .designFont(13).lineSpacing(7).foregroundStyle(AppPalette.muted)
-                .multilineTextAlignment(.center)
-            Rectangle().fill(AppPalette.border).frame(height: 1).padding(.vertical, 16)
-            row("Приложение", value: "iOS")
-            row("Версия", value: AppVersion.version)
-            row("Сборка", value: AppVersion.build)
-            row("Разработчик", value: "MintyDev")
-            Rectangle().fill(AppPalette.border).frame(height: 1).padding(.vertical, 16)
-            Button("Сообщить о проблеме", action: support).font(
-                .system(size: 13, weight: .semibold)
-            )
-            .padding(.horizontal, 18).frame(minHeight: 47)
-            .overlay {
-                RoundedRectangle(cornerRadius: 13).stroke(.white.opacity(0.125), lineWidth: 1)
-            }
-            Text("Developed by MintyDev").designFont(11).foregroundStyle(AppPalette.muted)
-        }.padding(.horizontal, 20).padding(.vertical, 25).frame(maxWidth: .infinity).background(
-            AppPalette.surface, in: RoundedRectangle(cornerRadius: 22))
+    @ScaledMetric private var descriptionSize = DesignTokens.typographySizeButton
+    @ScaledMetric private var descriptionLine = DesignTokens
+        .componentMobileAboutBrandDescriptionLineHeight
+    @ScaledMetric private var metadataLine = DesignTokens.componentMobileServiceBodyLineHeight
+    private var descriptionGap: CGFloat {
+        max(0, descriptionLine - UIFont.systemFont(ofSize: descriptionSize).lineHeight)
     }
-    private func row(_ title: String, value: String) -> some View {
-        HStack {
-            Text(title).foregroundStyle(AppPalette.muted)
-            Spacer()
-            Text(value)
-        }.designFont(13)
+    var body: some View {
+        VStack(alignment: .leading, spacing: DesignTokens.spaceS0) {
+            HStack(spacing: DesignTokens.spaceS12) {
+                Image("RefreshBrand").resizable()
+                    .frame(
+                        width: DesignTokens.componentMobileAboutBrandMarkSize,
+                        height: DesignTokens.componentMobileAboutBrandMarkSize
+                    )
+                    .accessibilityHidden(true)
+                Text("somewhere").designTokenFont(
+                    DesignTokens.componentMobileAboutBrandWordSize,
+                    weight: DesignTokens.componentRsvpResultBrandWeight, relativeTo: .largeTitle
+                )
+                .tracking(-DesignTokens.componentMobileAboutBrandWordTracking)
+            }.padding(.top, DesignTokens.spaceS10)
+            Text("Договориться о встрече, обсудить детали и сохранить её вайб.")
+                .font(.system(size: descriptionSize)).lineSpacing(descriptionGap)
+                .padding(.vertical, descriptionGap / 2).foregroundStyle(
+                    DesignTokens.colorMuted
+                )
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(
+                    maxWidth: DesignTokens.componentMobileAboutBrandDescriptionMaximumWidth,
+                    alignment: .leading
+                )
+                .padding(.top, DesignTokens.spaceS16 + DesignTokens.spaceS2)
+                .padding(.bottom, DesignTokens.spaceS24 + DesignTokens.spaceS6)
+            VStack(spacing: DesignTokens.spaceS0) {
+                row("Приложение", value: "iOS")
+                row(
+                    "Версия", value: AppVersion.version == "—" ? "Недоступна" : AppVersion.version,
+                    last: AppVersion.build == "—")
+                if AppVersion.build != "—" { row("Сборка", value: AppVersion.build, last: true) }
+            }.padding(.horizontal, DesignTokens.componentMobileAboutMetadataInsetInline)
+                .padding(.vertical, DesignTokens.spaceS4)
+                .background(
+                    DesignTokens.colorSurface,
+                    in: RoundedRectangle(
+                        cornerRadius: DesignTokens.componentMobileAboutMetadataRadius))
+            (Text("Developed by ").foregroundColor(DesignTokens.colorMuted)
+                + Text("MintyDev").fontWeight(.semibold))
+                .designFont(DesignTokens.typographySizeCaption).padding(
+                    .top, DesignTokens.componentMobileAboutCreditTop)
+        }.padding(.horizontal, DesignTokens.spaceS20).padding(.bottom, DesignTokens.spaceS40)
+    }
+    private func row(_ title: String, value: String, last: Bool = false) -> some View {
+        VStack(spacing: DesignTokens.spaceS0) {
+            HStack(alignment: .firstTextBaseline, spacing: DesignTokens.spaceS20) {
+                Text(title).foregroundStyle(DesignTokens.colorMuted)
+                Spacer(minLength: DesignTokens.spaceS0)
+                Text(value).multilineTextAlignment(.trailing).monospacedDigit()
+            }.designFont(DesignTokens.typographySizeSmall).frame(minHeight: metadataLine)
+                .padding(.vertical, DesignTokens.spaceS16)
+            if !last {
+                Rectangle().fill(DesignTokens.colorLine).frame(height: DesignTokens.spaceS1)
+            }
+        }
     }
 }

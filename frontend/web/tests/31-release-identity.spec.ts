@@ -112,10 +112,19 @@ for (const width of [320, 390, 768, 1440]) {
       expect((await link.boundingBox())?.height).toBeGreaterThanOrEqual(44);
     }
 
-    await page.getByRole('link', { name: 'Cookie и данные браузера →' }).click();
+    await page
+      .getByRole('link', {
+        name: width < 740 ? 'Cookie и данные браузера' : 'Cookie и данные браузера →',
+      })
+      .click();
     await expect(page.getByText('До 30 дней', { exact: true })).toBeVisible();
     await expect(page.locator('footer')).toHaveCount(0);
-    await page.getByRole('link', { name: 'Политика конфиденциальности →' }).click();
+    await page
+      .getByRole('link', {
+        name:
+          width < 740 ? 'Политика конфиденциальности' : 'Политика конфиденциальности →',
+      })
+      .click();
     await expect(page).toHaveURL(/\/privacy$/);
   });
 }

@@ -37,15 +37,26 @@ for (const width of [390, 1440]) {
       page.getByRole('button', { name: 'Удалить аккаунт', exact: true }),
     ).toHaveCount(0);
     await page.getByRole('link', { name: 'Cookie', exact: true }).click();
-    await backTo('Вернуться в профиль').click();
+    await backTo('К предыдущему экрану').click();
     await expect(page).toHaveURL(/\/profile$/);
     await page.getByRole('link', { name: 'О приложении', exact: true }).click();
     await expect(
       page.getByRole('heading', { name: 'О приложении', exact: true }),
     ).toHaveCount(1);
-    await page.getByRole('link', { name: 'Сообщить о проблеме ↗', exact: true }).click();
-    await backTo('Вернуться к информации о приложении').click();
-    await expect(page).toHaveURL(/\/about$/);
+
+    if (width >= 740) {
+      await page
+        .getByRole('link', { name: 'Сообщить о проблеме ↗', exact: true })
+        .click();
+      await backTo('Вернуться к информации о приложении').click();
+      await expect(page).toHaveURL(/\/about$/);
+    } else {
+      await expect(page.getByRole('link', { name: /Сообщить о проблеме/ })).toHaveCount(
+        0,
+      );
+      await expect(page.getByText('MintyDev', { exact: true })).toHaveCount(1);
+    }
+
     await backTo('Вернуться в профиль').click();
     await expect(page).toHaveURL(/\/profile$/);
   });

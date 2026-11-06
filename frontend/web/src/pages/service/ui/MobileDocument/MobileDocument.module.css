@@ -1,0 +1,58 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ds-color-background);
+  color: var(--ds-color-text);
+  font-family: var(--ds-typography-family-mobile-chat);
+}
+
+.bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: env(safe-area-inset-top) var(--ds-space-s20) var(--ds-space-s12);
+  gap: var(--ds-space-s16);
+}
+
+.contents {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-s8);
+  min-height: var(--ds-component-mobile-about-brand-mark-size);
+  padding: var(--ds-space-s8) 0;
+  background: transparent;
+  color: var(--ds-color-muted);
+  font-size: var(--ds-typography-size-small);
+  line-height: var(--ds-space-s20);
+}
+
+.contents svg {
+  flex: none;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+  padding: var(--ds-component-mobile-service-field-radius) var(--ds-space-s20)
+    var(--ds-space-s40);
+}
+
+.body h1 {
+  font-size: var(--ds-component-mobile-about-document-title-size);
+  line-height: var(--ds-space-s32);
+  letter-spacing: calc(-1 * var(--ds-component-mobile-about-document-title-tracking));
+  font-weight: 650;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.contents svg {
+  width: var(--ds-space-s20);
+  height: var(--ds-space-s20);
+}

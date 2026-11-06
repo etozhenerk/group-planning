@@ -1,71 +1,119 @@
 package dev.groupplanning.android.ui.service
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import dev.groupplanning.android.BuildConfig
 import dev.groupplanning.android.R
-import dev.groupplanning.android.ui.components.CompactButton
+import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
-internal fun AboutContent(support: () -> Unit) {
+internal fun AboutContent() {
     Column(
-        Modifier.fillMaxWidth().background(Palette.surface, RoundedCornerShape(22.dp))
-            .padding(horizontal = 20.dp, vertical = 25.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        Modifier.fillMaxWidth().padding(horizontal = DesignTokens.spaceS20)
+            .padding(bottom = DesignTokens.spaceS40),
     ) {
-        Icon(
-            painterResource(R.drawable.ic_brand_compact),
-            null,
-            Modifier.size(76.dp),
-            tint = Palette.text,
-        )
+        Row(
+            Modifier.padding(top = DesignTokens.spaceS10),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS12),
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_brand_compact),
+                null,
+                Modifier.size(DesignTokens.componentMobileAboutBrandMarkSize),
+                tint = Palette.text,
+            )
+            Text(
+                "somewhere",
+                fontSize = DesignTokens.componentMobileAboutBrandWordSize.value.sp,
+                lineHeight = DesignTokens.componentMobileAboutBrandWordLineHeight.value.sp,
+                fontWeight = FontWeight(DesignTokens.componentRsvpResultBrandWeight.toInt()),
+                letterSpacing = -DesignTokens.componentMobileAboutBrandWordTracking.value.sp,
+            )
+        }
         Text(
             stringResource(R.string.about_intro),
-            fontSize = 13.sp,
-            lineHeight = 23.4.sp,
-            textAlign = TextAlign.Center,
+            Modifier.widthIn(max = DesignTokens.componentMobileAboutBrandDescriptionMaximumWidth)
+                .padding(
+                    top = DesignTokens.spaceS16 + DesignTokens.spaceS2,
+                    bottom = DesignTokens.spaceS24 + DesignTokens.spaceS6,
+                ),
+            fontSize = DesignTokens.typographySizeButton,
+            lineHeight = DesignTokens.componentMobileAboutBrandDescriptionLineHeight.value.sp,
             color = Palette.muted,
         )
-        HorizontalDivider(Modifier.padding(top = 16.dp), color = Color(0x12ffffff))
-        Column(
-            Modifier.fillMaxWidth().padding(vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+        Surface(
+            color = Palette.surface,
+            shape = RoundedCornerShape(DesignTokens.componentMobileAboutMetadataRadius),
         ) {
-            listOf(
-                R.string.about_platform to "Android",
-                R.string.about_version to
-                    BuildConfig.VERSION_NAME,
-                R.string.about_build to BuildConfig.VERSION_CODE.toString(),
-                R.string.about_developer to "MintyDev",
-            ).forEach { (label, value) ->
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(stringResource(label), fontSize = 13.sp, color = Palette.muted)
-                    Text(value, fontSize = 13.sp)
-                }
+            Column(
+                Modifier.fillMaxWidth()
+                    .padding(horizontal = DesignTokens.componentMobileAboutMetadataInsetInline)
+                    .padding(vertical = DesignTokens.spaceS4),
+            ) {
+                listOf(
+                    R.string.about_platform to "Android",
+                    R.string.about_version to BuildConfig.VERSION_NAME,
+                    R.string.about_build to BuildConfig.VERSION_CODE.toString(),
+                )
+                    .forEachIndexed { index, (label, value) ->
+                        Row(
+                            Modifier.fillMaxWidth().padding(vertical = DesignTokens.spaceS16),
+                            horizontalArrangement = Arrangement.spacedBy(DesignTokens.spaceS20),
+                            verticalAlignment = Alignment.Top,
+                        ) {
+                            Text(
+                                stringResource(label),
+                                Modifier.weight(1f),
+                                fontSize = DesignTokens.typographySizeSmall,
+                                lineHeight =
+                                DesignTokens.componentMobileServiceBodyLineHeight.value.sp,
+                                color = Palette.muted,
+                            )
+                            Text(
+                                value.ifBlank { stringResource(R.string.about_unavailable) },
+                                fontSize = DesignTokens.typographySizeSmall,
+                                lineHeight =
+                                DesignTokens.componentMobileServiceBodyLineHeight.value.sp,
+                            )
+                        }
+                        if (index < 2) HorizontalDivider(color = DesignTokens.colorLine)
+                    }
             }
         }
-        HorizontalDivider(Modifier.padding(bottom = 16.dp), color = Color(0x12ffffff))
-        CompactButton(stringResource(R.string.support_title), click = support)
-        Text(stringResource(R.string.developer_credit), fontSize = 11.sp, color = Palette.muted)
+        val credit = buildAnnotatedString {
+            append("Developed by ")
+            withStyle(SpanStyle(color = Palette.text, fontWeight = FontWeight.SemiBold)) {
+                append("MintyDev")
+            }
+        }
+        Text(
+            credit,
+            Modifier.padding(top = DesignTokens.componentMobileAboutCreditTop),
+            fontSize = DesignTokens.typographySizeCaption,
+            lineHeight = (DesignTokens.spaceS16 + DesignTokens.spaceS2).value.sp,
+            color = Palette.muted,
+        )
     }
 }

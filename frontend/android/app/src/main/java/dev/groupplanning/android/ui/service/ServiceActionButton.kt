@@ -56,7 +56,7 @@ internal fun ServiceActionButton(
             }
             Text(
                 title,
-                fontSize = DesignTokens.typographySizeBody,
+                fontSize = DesignTokens.typographySizeButton,
                 lineHeight = DesignTokens.componentMobileServiceBodyLineHeight.value.sp,
                 fontWeight = FontWeight.SemiBold,
             )

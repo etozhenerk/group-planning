@@ -35,7 +35,7 @@ struct SupportSubmissionFooter: View {
                         owner.sending
                             ? "Отправляем…"
                             : owner.problem == nil ? "Отправить обращение" : "Повторить отправку")
-                }.designFont(DesignTokens.typographySizeBody, weight: .semibold)
+                }.designFont(DesignTokens.typographySizeButton, weight: .semibold)
                     .frame(
                         maxWidth: .infinity,
                         minHeight: DesignTokens.componentMobileServiceActionHeight

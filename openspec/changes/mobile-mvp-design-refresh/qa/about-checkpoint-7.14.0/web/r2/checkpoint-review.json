@@ -1,0 +1,81 @@
+{
+  "kind": "independent targeted design-review + feature delta; not final gate",
+  "status": "no-remaining-findings-in-A1-A4-delta",
+  "runtime": "https://127.0.0.1:9141",
+  "candidate": {
+    "sourceBefore": "c54b1a1862453601aea6c179a2f00d3b9c24e76911231ec3f975e08bf0d0ccea",
+    "sourceAfter": "c54b1a1862453601aea6c179a2f00d3b9c24e76911231ec3f975e08bf0d0ccea",
+    "artifactHash": "361814655ebf9d939d09d64f4ceda8f6f5fe1300ef2721fd87c98b47aed43d7b",
+    "candidateSha256": "6aaea655ab8f294da263a6bc9f89026b3366d44bbecf65ca5e6b597d5cf0c60c",
+    "designInputHash": "ecf0f0ca54b5fd37c8788cd5657e4acb5a8eb20de60ccc9de73063fa8ac8f04b",
+    "designContextMatches": true
+  },
+  "binding": {
+    "valid": true,
+    "diskFiles": 268,
+    "liveEntries": 39
+  },
+  "findings": [],
+  "resolved": [
+    {
+      "id": "A1",
+      "actual": {
+        "name": "crosslink-positions-actual",
+        "before": 1283,
+        "cookie": {
+          "top": 909,
+          "max": 909
+        },
+        "after": 1283,
+        "backLabel": "К предыдущему экрану"
+      },
+      "browserBack": {
+        "name": "browser-back-restore",
+        "cookieExpected": 909,
+        "cookieBack": 909,
+        "privacyExpected": 1283,
+        "privacyBack": 1283
+      },
+      "rawObservation": {
+        "name": "crosslink-positions-reference",
+        "before": 1283,
+        "cookie": {
+          "top": 909,
+          "max": 909
+        },
+        "after": 909,
+        "backLabel": "К предыдущему экрану"
+      },
+      "note": "Unchanged preview still loses reading position; actual now follows UX/TC-MOBILE-DOCUMENT-READER restoration criterion."
+    },
+    {
+      "id": "A2",
+      "actual": "Reader p14/24, dd14/22, family/weight/width matchraw, confirmedcomputed."
+    },
+    {
+      "id": "A3",
+      "actual": "List20x20/stroke1.6 matchesraw."
+    },
+    {
+      "id": "A4",
+      "actual": "К предыдущему экрану"
+    }
+  ],
+  "evidence": [
+    "privacy-computed-actual.png",
+    "privacy-computed-reference.png",
+    "privacy-before-crosslink-actual.png",
+    "privacy-after-crosslink-actual.png",
+    "privacy-after-browserback-actual.png",
+    "position-proof.json",
+    "position-binding/binding.json"
+  ],
+  "limits": [
+    "Only requestedA1–A4; no broad API/support/desktop/styles/TOC matrix repeat",
+    "Aboutdescription/Help14 common binding not separately accepted here; only readerp/dd actual/ref spot",
+    "No new acceptance of R1 flows or final manifest/case gates",
+    "One QA selector timeout onrawBackbuttonvsactualanchor fixed with elementinspection; no productfinding",
+    "Reference-only fake status62→demo32/safearea0; raw original unchanged"
+  ],
+  "sourceReleased": true
+}
