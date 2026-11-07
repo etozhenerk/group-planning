@@ -1,0 +1,26 @@
+{
+  "caseId": "TC-MOBILE-ENTRY-INVITATION",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Открыть действующее приглашение без сессии, войти, проверить адрес/ID приглашения и ответ участия.",
+      "expected": "Обязательное знакомство не перехватывает путь; после входа открывается исходное приглашение, Приду не сохраняется автоматически.",
+      "actual": "Прямая QA custom-scheme ссылка без сессии открыла исходное приглашение, не обязательное знакомство. Через synthetic SDK+реальные HTTP start/exchange/me/preview/private-roleGET на отдельно bound QA memory.Store overlay вернулся ровно seedmeeting2222. Приду осталось явным, PUT RSVP отсутствует. На360x800 и320x568. Original standardfixture422 сохраняется как неверная environment-wiring, не product failure/pass. Verified Universal/AppLinks и настоящий provider не входят в этот QA route proof.",
+      "evidence": [
+        "entry-review/probe-captures/files/entry-final-r11-invitation-settled-success/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r11-invitation-settled-success/invitation-guest-bypass.png",
+        "entry-review/probe-captures/files/entry-final-r11-invitation-settled-success/invitation-return.png",
+        "entry-review/probe-captures/files/entry-final-r11-invitation-settled-success-small/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r11-invitation-settled-success-small/invitation-guest-bypass.png",
+        "entry-review/probe-captures/files/entry-final-r11-invitation-settled-success-small/invitation-return.png",
+        "entry-review/auth-overlay-binding.json",
+        "entry-review/invitation-settled-success.log",
+        "entry-review/invitation-settled-success-small.log"
+      ]
+    }
+  ],
+  "boundary": "SyntheticSDK;realHTTP;isolated memory fixtures. Full suites separate, not blanket acceptance."
+}

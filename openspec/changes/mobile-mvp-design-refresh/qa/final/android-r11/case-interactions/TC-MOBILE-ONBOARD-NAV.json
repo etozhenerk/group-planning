@@ -1,0 +1,27 @@
+{
+  "caseId": "TC-MOBILE-ONBOARD-NAV",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Открыть общий вход без сессии; пройти согласованную последовательность тем встреч и входа кнопками, вернуться, выбрать страницу индикатором, выполнить свайп и Пропустить.",
+      "expected": "Рассказ содержит создание/приглашения, список/календарь, чат с фото/файлами/реакциями, выбор даты и места, подготовку и фотоальбом. Профиль, помощь и управление аккаунтом не являются отдельными темами. Последний шаг ведёт к явному входу; Пропустить не авторизует, не создаёт встречу и не меняет RSVP.",
+      "actual": "Реальный общий вход без сессии: Next→range1, физический swipe→range0; indicator SetProgress0..7 с проверкой фактического RangeInfo; systemBack8→7 и Skip→8. Все8тем r4/r5 просмотрены целиком с body scroll на360x800/320x568. Нет тем профиля/сервиса. Skip/нажатия иллюстраций оставляют QaChatProbe.requests=[]; быстрый двойной Next7→8 не вызывает auth. Явный вход только settledpage8.",
+      "evidence": [
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/slide-1.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/slide-8-scrolled.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/system-back-to-7.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/skip-to-8.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-small/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-small/slide-1.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-small/slide-8-scrolled.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-small/system-back-to-7.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-small/skip-to-8.png"
+      ]
+    }
+  ],
+  "boundary": "SyntheticSDK;realHTTP;isolated memory fixtures. Full suites separate, not blanket acceptance."
+}

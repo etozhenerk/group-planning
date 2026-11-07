@@ -1,0 +1,27 @@
+{
+  "caseId": "TC-MOBILE-ONBOARD-EXAMPLES",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Просмотреть примеры опроса, задачи и календаря; попробовать элементы иллюстраций, сверить текст с реальной доступностью функций точного кандидата.",
+      "expected": "Иллюстрации не создают реальные операции; слова и состояния достоверны, доступные функции не обозначены как будущие и недоступные не обещаны как готовые.",
+      "actual": "В действующем OnboardingScreen просмотрены реальные card components: poll current-selection, offered task Взять на себя и accepted Выполняете, calendar/list. Физические taps на illustration не создали APIrequests; отдельный local calendar toggle проверен через доступную кнопку, только локальная демонстрация. В текущем full99 реальные poll/task/media workflows прошли, функции не обозначены будущими. Chat dinner photo+👍3/outgoingPDF и shared ChatReceiptAX4 соответствуют текущему common contract.",
+      "evidence": [
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/slide-4.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/slide-6.png",
+        "entry-review/probe-captures/files/entry-final-r11-navigation-standard/calendar-local.png",
+        "entry-review/probe-captures/files/entry-final-r11-talkback-small/interaction.json",
+        "entry-review/probe-captures/files/entry-final-r11-talkback-small/slide-4.png",
+        "entry-review/probe-captures/files/entry-final-r11-talkback-small/slide-6.png",
+        "entry-review/probe-captures/files/entry-final-r11-talkback-small/calendar-local.png",
+        "ui-results/TEST-Somewhere_API_36(AVD) - 16-_app-.xml",
+        "entry-review/examples-capability-mapping.json"
+      ]
+    }
+  ],
+  "boundary": "SyntheticSDK;realHTTP;isolated memory fixtures. Full suites separate, not blanket acceptance."
+}
