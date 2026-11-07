@@ -1,0 +1,107 @@
+{
+  "at": "2026-11-07T11:59:44.251547+00:00",
+  "phase": "needs-fixes",
+  "sourceHash": "e53d9f6eea0fe64b595007c086ca0cdd331f8d42e9ce5e44257a356a03670315",
+  "artifactHash": "ce429d670d6c19290d43b8a0c8342232c6c29b803d9613b38e07b7c3d71137f2",
+  "catalogHash": "13f9202784a7ce611aa00c9df611fe965f94487f92e7e3993f974be130c0636b",
+  "originalFormalRunSHA256": "0e0221522b905a75a431ed95588d6844b9150345fd3e1c8d1cd5930811d43d63",
+  "suites": [
+    {
+      "id": "web-check",
+      "status": "passed",
+      "startedAt": "2026-11-07T10:52:39.949Z",
+      "finishedAt": "2026-11-07T10:53:28.140Z",
+      "localEvidence": [
+        {
+          "path": "publication-safe/suites/web-check-1794048759950.txt",
+          "kind": "log",
+          "sha256": "6d34ad724d57f83edb2511fc3c6d77d0b1a9441554182c394b532f935454bb95"
+        }
+      ]
+    },
+    {
+      "id": "web-e2e",
+      "status": "passed",
+      "startedAt": "2026-11-07T10:54:05.165Z",
+      "finishedAt": "2026-11-07T11:09:02.019Z",
+      "localEvidence": [
+        {
+          "path": "publication-safe/suites/web-e2e-1794048845166.txt",
+          "kind": "log",
+          "sha256": "da265d025a2c5183b655070b35af60a477654b983bc54855e7c3baaf213d0b96"
+        }
+      ]
+    },
+    {
+      "id": "web-chat-e2e",
+      "status": "passed",
+      "startedAt": "2026-11-07T11:09:24.731Z",
+      "finishedAt": "2026-11-07T11:12:13.084Z",
+      "localEvidence": [
+        {
+          "path": "publication-safe/suites/web-chat-e2e-1794049764731.txt",
+          "kind": "log",
+          "sha256": "bf246d6561a932d2140a5927e822d36d86d4f0f7fbfb0d5f4c0a6d177df32342"
+        }
+      ]
+    },
+    {
+      "id": "web-read-e2e",
+      "status": "passed",
+      "startedAt": "2026-11-07T11:12:30.421Z",
+      "finishedAt": "2026-11-07T11:14:37.256Z",
+      "localEvidence": [
+        {
+          "path": "publication-safe/suites/web-read-e2e-1794049950422.txt",
+          "kind": "log",
+          "sha256": "d87a2d3baa453ee90c53369f908f6302697ece71358aa34fa29199ee09eeab46"
+        }
+      ]
+    },
+    {
+      "id": "web-rsvp-e2e",
+      "status": "passed",
+      "startedAt": "2026-11-07T11:14:55.872Z",
+      "finishedAt": "2026-11-07T11:16:30.499Z",
+      "localEvidence": [
+        {
+          "path": "publication-safe/suites/web-rsvp-e2e-1794050095873.txt",
+          "kind": "log",
+          "sha256": "1ee610fda378a7a330bdbec15aa7ff323dff9194f0f68eaa7a2865b8ffc0310e"
+        }
+      ]
+    },
+    {
+      "id": "web-window-e2e",
+      "status": "passed",
+      "startedAt": "2026-11-07T11:16:50.775Z",
+      "finishedAt": "2026-11-07T11:17:15.033Z",
+      "localEvidence": [
+        {
+          "path": "publication-safe/suites/web-window-e2e-1794050210776.txt",
+          "kind": "log",
+          "sha256": "fc5bf0f3c495e72a2a1e2a05aa5d6e3039664e877a4c9f77f91cddfdcd195d25"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "ACCESS-1",
+      "severity": "P2",
+      "proof": "manual/real-chrome-os/observations.json",
+      "source": "MobileOnboarding.surface height + header/footer flex:none + pager overflow:hidden/min-height0",
+      "geometry": "CSS180x326 / browser zoom200: header92.49+footer194.49+padding32>surface294; pager0 across8pages"
+    },
+    {
+      "id": "CHAT-ENTER-1",
+      "severity": "P2",
+      "proof": "manual/composer-enter-control3/observations.json",
+      "idbProof": "manual/composer-enter-idb/enter-facts.json",
+      "actual": "ACK201 accepted one server entry; Enter keeps consumed draft through reload, button clears; stale selection save after enqueue clear"
+    }
+  ],
+  "wholeAcceptance": false,
+  "unreviewed": "Remaining case steps/manifests require fresh full candidate; no old verdict transferred",
+  "originals": "Raw suite logs and before-report bytes remain locally, excluded from compact negative publication"
+}
