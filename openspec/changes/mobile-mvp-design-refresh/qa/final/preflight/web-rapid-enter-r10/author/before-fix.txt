@@ -1,0 +1,61 @@
+[WebServer] (node:36986) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:36987) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:37051) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 390px (6.9s)
+(node:37093) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › tests/63-rsvp-routing.spec.ts:136:3 › unconfirmed RSVP stays and retries the same intent without duplicate events at 390px (1.5s)
+
+
+  1) [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 390px 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('Сообщение', { exact: true })
+    Expected: ""
+    Received: "Сообщение сразу после ответа 390"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('Сообщение', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Сообщение', { exact: true })
+        14 × locator resolved to <textarea rows="1" maxlength="4000" aria-label="Сообщение" placeholder="Сообщение…">Сообщение сразу после ответа 390</textarea>
+           - unexpected value "Сообщение сразу после ответа 390"
+
+
+      37 |         guest.getByTestId('feed-message').filter({ hasText: firstMessage }),
+      38 |       ).toHaveAttribute('data-delivery', 'accepted');
+    > 39 |       await expect(composer).toHaveValue('');
+         |                              ^
+      40 |       await guest.goto(created.invitation_url);
+      41 |       await expect(guest).toHaveURL(`/meetings/${id}`);
+      42 |       await guest.reload();
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/63-rsvp-routing.spec.ts:39:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/63-rsvp-routing-confirmed--3eede-d-list-and-details-at-390px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/63-rsvp-routing-confirmed--3eede-d-list-and-details-at-390px-chromium/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/63-rsvp-routing-confirmed--3eede-d-list-and-details-at-390px-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/63-rsvp-routing-confirmed--3eede-d-list-and-details-at-390px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/63-rsvp-routing-confirmed--3eede-d-list-and-details-at-390px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/63-rsvp-routing.spec.ts:5:3 › confirmed RSVP routes across invitation, saved list and details at 390px 
+  1 passed (12.8s)

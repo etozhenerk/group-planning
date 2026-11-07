@@ -94,7 +94,7 @@ export const useDurableDraft = (user: string, id: string, epoch: number) => {
     });
   }, [scope, user, id, epoch, publishPresence]);
 
-  const save = (next: MessageDraft) => {
+  const save = (next: MessageDraft, selectionOnly = false) => {
     if (accessEpoch(user, id) !== epoch) {
       return;
     }
@@ -112,7 +112,11 @@ export const useDurableDraft = (user: string, id: string, epoch: number) => {
           throw new DOMException('Stale draft', 'AbortError');
         }
 
-        await updateMessageDocument(value, (document) => ({ ...document, draft: next }));
+        await updateMessageDocument(value, (document) =>
+          selectionOnly && document.draft.revision !== next.revision
+            ? document
+            : { ...document, draft: next },
+        );
       })
       .catch(() => setStorageError(true));
   };
@@ -161,7 +165,7 @@ export const useDurableDraft = (user: string, id: string, epoch: number) => {
         revision: crypto.randomUUID(),
       }),
     rememberSelection: (selection: MessageDraft['selection']) =>
-      save({ ...current.current, selection }),
+      save({ ...current.current, selection }, true),
     clear: (revision: string) => {
       if (current.current.revision === revision) {
         current.current = emptyMessageDocument().draft;

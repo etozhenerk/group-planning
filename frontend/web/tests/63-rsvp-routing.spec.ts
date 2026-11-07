@@ -27,11 +27,21 @@ for (const width of [320, 390, 739, 740, 1100, 1440]) {
       await guest.goto(created.invitation_url);
       await guest.getByRole('button', { name: 'Приду', exact: true }).click();
       await expect(guest).toHaveURL(`/meetings/${id}`);
-      await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();
+      const composer = guest.getByLabel('Сообщение', { exact: true });
+      const firstMessage = `Сообщение сразу после ответа ${width}`;
+
+      await expect(composer).toBeVisible();
+      await composer.fill(firstMessage);
+      await composer.press('Enter');
+      await expect(
+        guest.getByTestId('feed-message').filter({ hasText: firstMessage }),
+      ).toHaveAttribute('data-delivery', 'accepted');
+      await expect(composer).toHaveValue('');
       await guest.goto(created.invitation_url);
       await expect(guest).toHaveURL(`/meetings/${id}`);
       await guest.reload();
       await expect(guest.getByLabel('Сообщение', { exact: true })).toBeVisible();
+      await expect(composer).toHaveValue('');
       expect(writes).toBe(1);
       await guest
         .getByRole('button', { name: 'Информация о встрече', exact: true })
@@ -88,11 +98,16 @@ for (const width of [320, 390, 739, 740, 1100, 1440]) {
       const feed = await page.request.get(`/api/v1/meetings/${id}/feed`);
       const raw: unknown = await feed.json();
       const { feedSchema } = await import('@/shared/api');
-      const events = feedSchema
-        .parse(raw)
-        .entries.filter((entry) =>
-          ['participant_joined', 'participant_left', 'rsvp_changed'].includes(entry.kind),
-        );
+      const entries = feedSchema.parse(raw).entries;
+      const events = entries.filter((entry) =>
+        ['participant_joined', 'participant_left', 'rsvp_changed'].includes(entry.kind),
+      );
+
+      expect(
+        entries.filter(
+          (entry) => entry.kind === 'message' && entry.payload.text === firstMessage,
+        ),
+      ).toHaveLength(1);
 
       expect(events).toHaveLength(3);
       expect(events.map((entry) => entry.payload)).toEqual([
