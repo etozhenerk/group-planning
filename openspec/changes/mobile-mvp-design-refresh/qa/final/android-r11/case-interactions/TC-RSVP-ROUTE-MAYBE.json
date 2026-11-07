@@ -1,0 +1,22 @@
+{
+  "caseId": "TC-RSVP-ROUTE-MAYBE",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifact": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Сохранить «Возможно» по ссылке и из формы изменения ответа.",
+      "expected": "Открыт список приглашений с этой встречей; уже открытый список остаётся, форма закрывается; чат закрыт.",
+      "actual": "Сохранение/reconfirm Maybe из public invitation открыло Invitations с конкретной встречей и без приватного чата. Information→Maybe также закрыло форму и вернуло существующую карточку в Invitations.",
+      "evidence": [
+        "rsvp-review/evidence/matrix/route--maybe-invitations.png",
+        "rsvp-review/evidence/matrix/route--maybe-invitations.interaction.json",
+        "rsvp-review/evidence/list-info/route--maybe-from-information.png",
+        "rsvp-review/evidence/list-info/route--maybe-from-information.interaction.json"
+      ]
+    }
+  ],
+  "scope": "Actual independent runtime; required suites remain separate and must pass before checkbox. Synthetic SDK boundary explicit; no real users/providers or OS association claimed."
+}

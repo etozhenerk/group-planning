@@ -1,0 +1,28 @@
+{
+  "caseId": "TC-RSVP-EXISTING-ACCESS",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifact": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Открыть ссылку как уже ответивший «Приду» и как организатор; повторить при ошибке определения роли.",
+      "expected": "Подтверждённый доступ ведёт сразу в чат; нет записи нового ответа/события. При ошибке роль не угадывается, доступна проверка повторно.",
+      "actual": "Уже подтвердивший Going участник и организатор немедленно открыли chat по той же ссылке. Отдельно каждому actor сорван private role GET существующим QA network gate: роль не угадана, private chat отсутствует, доступна загрузка повторно. После release/retry правильный chat восстановлен; реальные server feed entries до/после открытия одинаковы, нового RSVP/event нет.",
+      "evidence": [
+        "rsvp-review/evidence/matrix/invite--member-standard-phone.png",
+        "rsvp-review/evidence/matrix/invite--member-standard-phone.interaction.json",
+        "rsvp-review/evidence/matrix/invite--organizer-standard-phone.png",
+        "rsvp-review/evidence/matrix/invite--organizer-standard-phone.interaction.json",
+        "rsvp-review/evidence/role-load/route--role-error-invite-rsvp.png",
+        "rsvp-review/evidence/role-load/route--role-error-invite-rsvp.interaction.json",
+        "rsvp-review/evidence/role-load/route--role-error-invite-owner.png",
+        "rsvp-review/evidence/role-load/route--role-error-invite-owner.interaction.json",
+        "rsvp-review/evidence/role-load/route--role-retry-invite-owner.png",
+        "rsvp-review/evidence/role-load/route--role-retry-invite-owner.interaction.json"
+      ]
+    }
+  ],
+  "scope": "Actual independent runtime; required suites remain separate and must pass before checkbox. Synthetic SDK boundary explicit; no real users/providers or OS association claimed."
+}

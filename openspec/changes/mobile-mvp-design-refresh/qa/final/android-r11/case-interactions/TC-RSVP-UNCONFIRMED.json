@@ -1,0 +1,31 @@
+{
+  "caseId": "TC-RSVP-UNCONFIRMED",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifact": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "На своём fixture воспроизвести ошибку до сохранения, затем потерю ACK после сохранения; выполнить повтор/сверку.",
+      "expected": "Нет преждевременного успеха или расширения доступа; ранний revoke убирает приватный чат/состав, но сохраняет публичные факты, ошибку и повтор того же intent. ACK ведёт к новому результату, повтор не дублирует RSVP/событие; старый ответ после смены сессии не применяется.",
+      "actual": "Ошибка после конкурирующей server revision: свежий authoritativeAPI подтверждает Maybe, Going этим UI не сохранён. КодHTTP не выдумывается из текста экрана. Затем реальный lost ACK после Info NotGoing при realtime/read_state1: AccessRevoked убрал chat/private state до ACK, публичные факты/ошибка/исходный pending key+body остались. Повтор того же key/input подтвердил Declined, owner feed без нового события. Отдельно после реального commit/revoke и held response выполнен вход другим SDK-fixture аккаунтом через настоящий HTTP: новый profileId отличается, запоздалый старый ответ не открыл старый маршрут и не применил completion.",
+      "evidence": [
+        "rsvp-review/evidence/matrix/invite--response-error-standard-phone.png",
+        "rsvp-review/evidence/matrix/invite--response-error-standard-phone.interaction.json",
+        "rsvp-review/evidence/early-revoke/route--early-revoked-original-intent.png",
+        "rsvp-review/evidence/early-revoke/route--early-revoked-original-intent.interaction.json",
+        "rsvp-review/evidence/early-revoke/route--unknown-stays.png",
+        "rsvp-review/evidence/early-revoke/route--unknown-stays.interaction.json",
+        "rsvp-review/evidence/early-revoke/route--repeat-no-duplicate-early-revoked.png",
+        "rsvp-review/evidence/early-revoke/route--repeat-no-duplicate-early-revoked.interaction.json",
+        "rsvp-review/evidence/late-session/route--old-session-response-ignored.png",
+        "rsvp-review/evidence/late-session/route--old-session-response-ignored.interaction.json",
+        "rsvp-review/error-authority.json",
+        "rsvp-review/evidence/early-revoke/runtime.log",
+        "rsvp-review/evidence/late-session/runtime.log"
+      ]
+    }
+  ],
+  "scope": "Actual independent runtime; required suites remain separate and must pass before checkbox. Synthetic SDK boundary explicit; no real users/providers or OS association claimed."
+}

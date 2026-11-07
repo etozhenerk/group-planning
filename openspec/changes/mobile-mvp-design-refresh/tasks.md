@@ -184,10 +184,10 @@ Android R11: после исправления типографики перио
 - [x] 15.1 Обновить макеты ответа и системных событий, спецификацию, кейсы, mapping и публикацию общей ревизии. Прямое одобрение пользователя: «окаю дизайн». Это готовность дизайна, не клиентов.
 - [ ] 15.2 Web на всех ширинах: после подтверждённого ответа направлять в чат/приглашения/подтверждение отказа; убрать промежуточное открытие. Обновлять доступ, списки и историю без дублей, сохранять error/unknown; не переносить fixture-адаптер в приложение. [Приёмка web R6](qa/final/web/report.md).
 - [ ] 15.3 iOS: реализовать тот же результат по ссылке, из приглашений и сведений; корректный navigation stack, отзыв доступа и серверные системные события.
-- [ ] 15.4 Android: реализовать тот же результат по ссылке, из приглашений и сведений; корректный Back, отзыв доступа и серверные системные события. [Приёмка Android R9](qa/final/android/rsvp-review/report.md).
+- [x] 15.4 Android: реализовать тот же результат по ссылке, из приглашений и сведений; корректный Back, отзыв доступа и серверные системные события. [Приёмка RSVP Android R11](qa/final/android-r11/design/shared-rsvp-routing-android/design-review.json).
 - [ ] 15.5 Независимая web-приёмка 15.2: design-review и feature-test на работающем клиенте, mobile320/390/739 и desktop740/1100/1440, role/error/unknown/retry и отсутствие дублей, затем design:ready/qa:ready по свежим manifests. [Приёмка web R6](qa/final/web/report.md).
 - [ ] 15.6 Независимая iOS-приёмка 15.3: design-review и feature-test, safe area/размер текста/системный возврат, затем design:ready/qa:ready.
-- [ ] 15.7 Независимая Android-приёмка 15.4: design-review и feature-test, safe area/размер текста/системный Back, затем design:ready/qa:ready. [Приёмка Android R9](qa/final/android/rsvp-review/report.md).
+- [x] 15.7 Независимая Android-приёмка 15.4: design-review и feature-test, safe area/размер текста/системный Back, затем design:ready/qa:ready. [Приёмка RSVP Android R11](qa/final/android-r11/design/shared-rsvp-routing-android/design-review.json).
 
 На сегодня дизайн-проработка остановлена пользователем; следующая сессия продолжает оставшиеся desktop-экраны. Продуктовые задачи15.2–15.7 открыты.
 

@@ -1,0 +1,24 @@
+{
+  "caseId": "TC-RSVP-ROUTE-GOING",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifact": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "С действующей сессией выбрать «Приду» по ссылке; затем повторить смену ответа из приглашений и сведений.",
+      "expected": "Только после API-подтверждения открыт чат нужной встречи без «Открыть встречу»; состав и доступ актуальны.",
+      "actual": "Реальное подтверждение Going по ссылке открыло чат именно созданной встречи. Дополнительно выполнены saved invitation→Going→chat и Information→Going→chat; промежуточной кнопки «Открыть встречу» нет.",
+      "evidence": [
+        "rsvp-review/evidence/matrix/route--going-chat.png",
+        "rsvp-review/evidence/matrix/route--going-chat.interaction.json",
+        "rsvp-review/evidence/list-info/route--going-from-invitations.png",
+        "rsvp-review/evidence/list-info/route--going-from-invitations.interaction.json",
+        "rsvp-review/evidence/list-info/route--going-from-information.png",
+        "rsvp-review/evidence/list-info/route--going-from-information.interaction.json"
+      ]
+    }
+  ],
+  "scope": "Actual independent runtime; required suites remain separate and must pass before checkbox. Synthetic SDK boundary explicit; no real users/providers or OS association claimed."
+}

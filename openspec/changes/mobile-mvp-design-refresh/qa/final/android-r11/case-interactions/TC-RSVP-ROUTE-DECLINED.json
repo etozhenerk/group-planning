@@ -1,0 +1,26 @@
+{
+  "caseId": "TC-RSVP-ROUTE-DECLINED",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifact": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Сохранить «Не смогу» по ссылке и при смене ответа, затем нажать «К моим встречам».",
+      "expected": "Сначала видны подтверждение отказа, название встречи и одна основная кнопка; затем личный список без отказанной встречи; ни чат, ни приглашения её не показывают.",
+      "actual": "Первый NotGoing по ссылке и смена ответа из Information/list показали отдельное подтверждение с реальным title и единственной основной кнопкой. К моим встречам открыло список; конкретный meeting ID отсутствует в обеих вкладках, GET invitation подтверждает not_going, private chat отсутствует.",
+      "evidence": [
+        "rsvp-review/evidence/matrix/declined--confirmed.png",
+        "rsvp-review/evidence/matrix/declined--confirmed.interaction.json",
+        "rsvp-review/evidence/matrix/declined--meetings-action.png",
+        "rsvp-review/evidence/matrix/declined--meetings-action.interaction.json",
+        "rsvp-review/evidence/list-info/route--declined-from-invitations.png",
+        "rsvp-review/evidence/list-info/route--declined-from-invitations.interaction.json",
+        "rsvp-review/evidence/list-info/declined--absent-from-both-lists.png",
+        "rsvp-review/evidence/list-info/declined--absent-from-both-lists.interaction.json"
+      ]
+    }
+  ],
+  "scope": "Actual independent runtime; required suites remain separate and must pass before checkbox. Synthetic SDK boundary explicit; no real users/providers or OS association claimed."
+}
