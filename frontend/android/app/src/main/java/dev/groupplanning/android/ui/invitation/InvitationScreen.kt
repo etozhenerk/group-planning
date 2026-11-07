@@ -107,6 +107,8 @@ internal fun InvitationScreen(
             model::reload,
             back,
             feed,
+            model::reloadInformation,
+            model::reloadParticipants,
         )
     } else {
         InvitationPublicSurface(

@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.15.0. Do not edit.
+// Generated from design-system/tokens.json · 7.16.0. Do not edit.
 export const conversationTokens = {
   componentDesktopMessageCornerRadius: '5px',
   componentDesktopMessageLineHeight: '1.6',
@@ -22,7 +22,20 @@ export const conversationTokens = {
   componentMobileInfoCompanyChipRadius: '12px',
   componentMobileInfoCompanyMoreMinimumWidth: '40px',
   componentMobileInfoCoverHeight: '156px',
+  componentMobileInfoErrorActionInsetBlock: '13px',
+  componentMobileInfoErrorBodyLineHeight: '22px',
+  componentMobileInfoErrorGlyphSize: '28px',
+  componentMobileInfoErrorInsetBlock: '28px',
+  componentMobileInfoErrorTitleLineHeight: '28px',
   componentMobileInfoOrganizerAvatarSize: '32px',
+  componentMobileInfoPeopleErrorLineHeight: '20px',
+  componentMobileInfoPeopleErrorRadius: '14px',
+  componentMobileInfoPeopleSkeletonGap: '17px',
+  componentMobileInfoPeopleSkeletonLineFraction: '0.48',
+  componentMobileInfoPeopleSkeletonPictureSize: '36px',
+  componentMobileInfoPeopleSkeletonShortTitleFraction: '0.6',
+  componentMobileInfoPeopleSkeletonTitleFraction: '0.78',
+  componentMobileInfoPeopleSkeletonTitleHeight: '14px',
   componentMobileInfoResponseIconSize: '36px',
   componentMobileInfoTitleLineHeight: '31px',
   componentMobileInfoTitleSize: '25px',

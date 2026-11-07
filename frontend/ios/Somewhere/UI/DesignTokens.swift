@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.15.0. Do not edit.
+// Generated from design-system/tokens.json · 7.16.0. Do not edit.
 import SwiftUI
 
 enum DesignTokens {
@@ -844,7 +844,20 @@ enum DesignTokens {
     static let componentMobileInfoCompanyChipRadius = CGFloat(12)
     static let componentMobileInfoCompanyMoreMinimumWidth = CGFloat(40)
     static let componentMobileInfoCoverHeight = CGFloat(156)
+    static let componentMobileInfoErrorActionInsetBlock = CGFloat(13)
+    static let componentMobileInfoErrorBodyLineHeight = CGFloat(22)
+    static let componentMobileInfoErrorGlyphSize = CGFloat(28)
+    static let componentMobileInfoErrorInsetBlock = CGFloat(28)
+    static let componentMobileInfoErrorTitleLineHeight = CGFloat(28)
     static let componentMobileInfoOrganizerAvatarSize = CGFloat(32)
+    static let componentMobileInfoPeopleErrorLineHeight = CGFloat(20)
+    static let componentMobileInfoPeopleErrorRadius = CGFloat(14)
+    static let componentMobileInfoPeopleSkeletonGap = CGFloat(17)
+    static let componentMobileInfoPeopleSkeletonLineFraction = 0.48
+    static let componentMobileInfoPeopleSkeletonPictureSize = CGFloat(36)
+    static let componentMobileInfoPeopleSkeletonShortTitleFraction = 0.6
+    static let componentMobileInfoPeopleSkeletonTitleFraction = 0.78
+    static let componentMobileInfoPeopleSkeletonTitleHeight = CGFloat(14)
     static let componentMobileInfoResponseIconSize = CGFloat(36)
     static let componentMobileInfoTitleLineHeight = CGFloat(31)
     static let componentMobileInfoTitleSize = CGFloat(25)

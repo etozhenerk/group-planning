@@ -7,6 +7,7 @@ import { Dialog } from '@/shared/ui/Dialog';
 import { useMobileLayout } from '@/shared/lib/media';
 import { DetailsContent } from '@/widgets/meeting-details/ui/DetailsContent';
 import { useMeetingDetailsPanel } from '@/widgets/meeting-details/ui/MeetingDetails/hooks/useMeetingDetailsPanel';
+import { useMeetingInformation } from '@/widgets/meeting-details/ui/MeetingDetails/hooks/useMeetingInformation';
 
 export type MeetingDetailsProps = {
   meeting: Meeting;
@@ -35,6 +36,11 @@ export const MeetingDetails = ({
   );
 
   const panel = surface.panel ?? (open ? 'info' : null);
+  const information = useMeetingInformation(
+    meeting.id,
+    session.user.id,
+    mobile && panel !== null,
+  );
 
   return (
     <>
@@ -67,6 +73,7 @@ export const MeetingDetails = ({
           mobile={mobile}
           panel={panel}
           surface={surface}
+          information={information}
         />
       </Dialog>
     </>

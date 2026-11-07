@@ -3,6 +3,10 @@ import SwiftUI
 struct MeetingInfoScreen: View {
     let owner: FeedOwner
     @State private var reloadID = UUID()
+    private var details: ResourceState<Meeting>? { owner.session.privateData.details[owner.id] }
+    private var ready: Bool {
+        owner.current && details?.isLoading != true && details?.error == nil && owner.meeting != nil
+    }
 
     var body: some View {
         ActionFormSheet(
@@ -10,16 +14,18 @@ struct MeetingInfoScreen: View {
             headerIdentifier: "meeting-info-header",
             scrollOffset: Binding(
                 get: { owner.informationScrollOffset }, set: { owner.informationScrollOffset = $0 }),
-            stickyFooter: true
+            stickyFooter: true, footerVisible: ready
         ) {
             if owner.current {
-                if owner.session.privateData.details[owner.id]?.error != nil {
-                    StatusView(title: "Не удалось обновить информацию") { reloadID = UUID() }
+                if details?.isLoading == true {
+                    DetailsLoadingView(label: "Загрузка встречи")
+                } else if details?.error != nil {
+                    MeetingInfoFailure { reloadID = UUID() }
                 } else if owner.meeting == nil {
-                    StatusView(title: "Загружаем информацию…", loading: true)
+                    DetailsLoadingView(label: "Загрузка встречи")
                 }
             }
-            if owner.current, let meeting = owner.meeting {
+            if ready, let meeting = owner.meeting {
                 if owner.informationSaved {
                     Text("Изменения сохранены").foregroundStyle(DesignTokens.colorAccent)
                         .accessibilityIdentifier("settings-saved")
@@ -41,7 +47,7 @@ struct MeetingInfoScreen: View {
                     }
             }
         } footer: {
-            if owner.current, owner.meeting != nil { MeetingInfoFooter(owner: owner) }
+            if ready { MeetingInfoFooter(owner: owner) }
         }
         .task(id: reloadID) {
             if owner.informationReturn != nil {

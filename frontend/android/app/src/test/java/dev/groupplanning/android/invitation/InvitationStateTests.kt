@@ -15,6 +15,7 @@ import dev.groupplanning.android.support.Fixtures
 import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -28,6 +29,48 @@ import org.junit.Test
 
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class InvitationStateTests {
+    @Test fun interruptedResponseRetainsConfirmedAnswerAndExplainsSameKeyRetry() = runTest {
+        val dispatcher = StandardTestDispatcher(testScheduler)
+        val h = InvitationHarness(dispatcher)
+        h.login()
+        h.loadDenied(RsvpAnswer.Maybe, "1")
+        val model = InvitationViewModel(
+            h.target,
+            h.repository,
+            CoroutineScope(SupervisorJob() + dispatcher),
+        )
+        try {
+            runCurrent()
+            h.transport.handle("invitations/${h.token}/rsvp") { awaitCancellation() }
+            model.respond(RsvpAnswer.Going)
+            runCurrent()
+            assertTrue(model.state.value.saving)
+            val pending = checkNotNull(model.state.value.pending)
+            model.suspend()
+            runCurrent()
+            assertFalse(model.state.value.saving)
+            assertEquals(InvitationIssue.Unconfirmed, model.state.value.issue)
+            assertEquals(RsvpAnswer.Maybe, model.state.value.answer)
+            assertEquals(pending, model.state.value.pending)
+            assertNull(model.state.value.completedResponse)
+            h.transport.enqueue("invitations/${h.token}/rsvp", status = 503)
+            model.respond(RsvpAnswer.Going)
+            runCurrent()
+            val writes = h.transport.requests.filter { it.method == "PUT" }
+            assertEquals(2, writes.size)
+            writes.forEach {
+                assertEquals(pending.key.toString(), it.header("Idempotency-Key"))
+                val body = Buffer().also { buffer -> checkNotNull(it.body).writeTo(buffer) }
+                    .readUtf8()
+                assertEquals(pending.input, apiJson.decodeFromString<RsvpRequest>(body))
+            }
+            assertEquals(RsvpAnswer.Maybe, model.state.value.answer)
+            assertEquals(InvitationIssue.Unconfirmed, model.state.value.issue)
+        } finally {
+            model.stop()
+        }
+    }
+
     @Test fun sameMaybeButtonReconfirmsServerRevisionBeforeRouting() = runTest {
         val dispatcher = StandardTestDispatcher(testScheduler)
         val h = InvitationHarness(dispatcher)

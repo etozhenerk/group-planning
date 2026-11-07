@@ -32,7 +32,8 @@ struct InvitationScreen: View {
                 !session.privateData.denied.contains(value.meetingID)
             {
                 if case .token = owner.target, completion != nil {
-                    InvitationLoadingView()
+                    DetailsLoadingView(
+                        label: "Загрузка приглашения", identifier: "invitation-loading")
                 } else {
                     MeetingFeedScreen(id: value.meetingID, session: session, invitation: owner)
                 }

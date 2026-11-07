@@ -36,6 +36,7 @@ internal class InvitationViewModel(
     val state = mutable.asStateFlow()
     val snapshot = repository.snapshot
     private var operation: Job? = null
+    private var informationOperation: Job? = null
     private var epoch = 0L
 
     init {
@@ -86,6 +87,18 @@ internal class InvitationViewModel(
         startReload(preserveChoice = false)
     }
 
+    fun reloadInformation() {
+        val id = state.value.details?.preview?.meetingId ?: return
+        informationOperation?.cancel()
+        informationOperation = viewModelScope.launch { repository.loadInformation(id) }
+    }
+
+    fun reloadParticipants() {
+        val id = state.value.details?.preview?.meetingId ?: return
+        informationOperation?.cancel()
+        informationOperation = viewModelScope.launch { repository.loadParticipants(id) }
+    }
+
     private fun startReload(preserveChoice: Boolean, recoverAccess: Boolean = true) {
         if (state.value.saving) return
         suspend()
@@ -95,6 +108,7 @@ internal class InvitationViewModel(
 
     fun refreshIfIdle(foreground: Boolean = false) {
         refreshDeadline()
+        if (informationOperation?.isActive == true) return
         val current = snapshot.value
         val identity = feedIdentity
         val owner =
@@ -304,7 +318,17 @@ internal class InvitationViewModel(
         if (operation?.isActive == true) deniedProbe = null
         operation?.cancel()
         operation = null
-        mutable.value = state.value.copy(loading = false, saving = false)
+        informationOperation?.cancel()
+        informationOperation = null
+        mutable.value = state.value.copy(
+            loading = false,
+            saving = false,
+            issue = if (state.value.saving && state.value.pending != null) {
+                InvitationIssue.Unconfirmed
+            } else {
+                state.value.issue
+            },
+        )
     }
 
     fun stop() {

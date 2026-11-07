@@ -9,10 +9,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.RsvpAnswer
 import dev.groupplanning.android.data.api.models.UserProfile
 import dev.groupplanning.android.state.InvitationIssue
 import dev.groupplanning.android.state.InvitationState
+import dev.groupplanning.android.ui.components.DetailsSkeleton
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
@@ -47,7 +50,14 @@ internal fun InvitationPublicSurface(
             } else if (!responseIssue && state.issue != InvitationIssue.JoinClosed) {
                 state.issue?.let { InvitationProblem(it, !state.loading && !state.saving, reload) }
             }
-            if (state.loading && preview == null) InvitationLoading()
+            if (state.loading &&
+                preview == null
+            ) {
+                DetailsSkeleton(
+                    stringResource(R.string.invitation_loading),
+                    "invitation-loading",
+                )
+            }
         }
         if (preview != null && (!state.joinClosed || state.pending != null)) {
             InvitationResponsePanel {

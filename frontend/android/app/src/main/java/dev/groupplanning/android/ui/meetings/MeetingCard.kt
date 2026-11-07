@@ -22,12 +22,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -67,6 +72,10 @@ internal fun MeetingCard(
     val tint = if (weekend) Color(0xff2e3938) else Color(0xff38313d)
     val own = meeting.organizerId != null && meeting.organizerId == LocalViewer.current
     val crown = stringResource(R.string.organizer_badge)
+    val density = LocalDensity.current
+    var unreadHeight by remember { mutableIntStateOf(0) }
+    val unreadReserve = with(density) { unreadHeight.toDp() } +
+        DesignTokens.componentMobileUnreadInsetBottom + DesignTokens.spaceS8
     val cover = (meeting.coverUrl != null || coverPreview != null) &&
         LocalDensity.current.fontScale <= 1.5f
     val coverReserve = if (cover) {
@@ -116,7 +125,13 @@ internal fun MeetingCard(
                     bottom = if (invitation) {
                         DesignTokens.componentMobileInvitationCardAnswerInsetBottom
                     } else {
-                        DesignTokens.spaceS24 + DesignTokens.spaceS4 + DesignTokens.spaceS1
+                        maxOf(
+                            DesignTokens.spaceS24 + DesignTokens.spaceS4 + DesignTokens.spaceS1,
+                            unreadReserve.takeIf {
+                                meeting.period != MeetingPeriod.Past &&
+                                    meeting.unreadCount?.let { it > ServerCounter.Zero } == true
+                            } ?: DesignTokens.spaceS0,
+                        )
                     },
                 ),
                 verticalArrangement = Arrangement.SpaceBetween,
@@ -220,7 +235,7 @@ internal fun MeetingCard(
                         start = DesignTokens.componentMobileUnreadInsetStart,
                         end = DesignTokens.componentMobileUnreadReserveEnd,
                         bottom = DesignTokens.componentMobileUnreadInsetBottom,
-                    ),
+                    ).onSizeChanged { unreadHeight = it.height },
                 )
             }
         }

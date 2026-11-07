@@ -24,6 +24,8 @@ export const ParticipantList = ({
   const people = useParticipants(meeting.id, user);
   const expansion = useParticipantExpansion();
   const expanded = !compact && expansion.expanded;
+  const loading = mobile ? people.isFetching : people.isPending;
+  const showPeople = !!people.data && (!mobile || (!loading && !people.error));
 
   return (
     <section
@@ -48,7 +50,7 @@ export const ParticipantList = ({
           </span>
         )}
       </h3>
-      {people.isPending && <SkeletonRows label="Загрузка участников" variant="people" />}
+      {loading && <SkeletonRows label="Загрузка участников" variant="people" />}
       {people.error && (
         <p className={styles.error} role="alert">
           Не удалось получить ответы.{' '}
@@ -57,7 +59,7 @@ export const ParticipantList = ({
           </button>
         </p>
       )}
-      {people.data && !expanded && (
+      {showPeople && people.data && !expanded && (
         <ParticipantChips
           people={people.data}
           onOpen={compact ? showAll : () => expansion.change(!expanded)}
@@ -67,7 +69,7 @@ export const ParticipantList = ({
           inset={!compact}
         />
       )}
-      {people.data && expanded && (
+      {showPeople && people.data && expanded && (
         <div id={expansion.id} className={styles.expanded}>
           <button
             className={styles.collapse}

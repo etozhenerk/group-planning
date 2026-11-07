@@ -1,4 +1,4 @@
-# Токены somewhere · 7.15.0
+# Токены somewhere · 7.16.0
 
 Генерируется из [tokens.json](tokens.json); ручные правки будут перезаписаны.
 В коде используйте смысловые роли. px → CSS px / iOS pt / Android dp;
@@ -352,7 +352,20 @@
 | component.mobileInfo.companyChipRadius | dimension | 12px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
 | component.mobileInfo.companyMoreMinimumWidth | dimension | 40px | Неизменённый approved-designs info: assets/navigation-r2/nav-info/frame.html, Компания/состав. Основа info-r2 + общая коррекция навигации. |
 | component.mobileInfo.coverHeight | dimension | 156px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.errorActionInsetBlock | dimension | 13px | Неизменённый approved info-r2/source/ui/InfoState/InfoState.module.css; точный внутренний отступ состояния ошибки, desktop сохраняется. |
+| component.mobileInfo.errorBodyLineHeight | dimension | 22px | Неизменённый approved info-r2/source/ui/InfoState/InfoState.module.css; загрузка/ошибка из navigation-r2/nav-info. Привязка до переноса состояния, desktop сохраняется. |
+| component.mobileInfo.errorGlyphSize | dimension | 28px | Неизменённый approved info-r2/source/ui/InfoState/InfoState.module.css; загрузка/ошибка из navigation-r2/nav-info. Привязка до переноса состояния, desktop сохраняется. |
+| component.mobileInfo.errorInsetBlock | dimension | 28px | Неизменённый approved info-r2/source/ui/InfoState/InfoState.module.css; точный внутренний отступ состояния ошибки, desktop сохраняется. |
+| component.mobileInfo.errorTitleLineHeight | dimension | 28px | Неизменённый approved info-r2/source/ui/InfoState/InfoState.module.css; загрузка/ошибка из navigation-r2/nav-info. Привязка до переноса состояния, desktop сохраняется. |
 | component.mobileInfo.organizerAvatarSize | dimension | 32px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
+| component.mobileInfo.peopleErrorLineHeight | dimension | 20px | Принятый info-r2/source/build.mjs mobile override ParticipantList.error; сохранён в navigation-r2/nav-info: нейтральный inset16 блок и собственный accent retry. |
+| component.mobileInfo.peopleErrorRadius | dimension | 14px | Принятый info-r2/source/build.mjs mobile override ParticipantList.error; сохранён в navigation-r2/nav-info: нейтральный inset16 блок и собственный accent retry. |
+| component.mobileInfo.peopleSkeletonGap | dimension | 17px | Неизменённый approved nav-info SkeletonRows variant=people из frozen reference: строки скелетона участников. |
+| component.mobileInfo.peopleSkeletonLineFraction | number | 0.48 | Неизменённый approved nav-info SkeletonRows variant=people: доля ширины строки скелетона участников. |
+| component.mobileInfo.peopleSkeletonPictureSize | dimension | 36px | Неизменённый approved nav-info SkeletonRows variant=people из frozen reference: строки скелетона участников. |
+| component.mobileInfo.peopleSkeletonShortTitleFraction | number | 0.6 | Неизменённый approved nav-info SkeletonRows variant=people: доля ширины строки скелетона участников. |
+| component.mobileInfo.peopleSkeletonTitleFraction | number | 0.78 | Неизменённый approved nav-info SkeletonRows variant=people: доля ширины строки скелетона участников. |
+| component.mobileInfo.peopleSkeletonTitleHeight | dimension | 14px | Неизменённый approved nav-info SkeletonRows variant=people из frozen reference: строки скелетона участников. |
 | component.mobileInfo.responseIconSize | dimension | 36px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
 | component.mobileInfo.titleLineHeight | dimension | 31px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |
 | component.mobileInfo.titleSize | dimension | 25px | Неизменённый approved info-r2/source/ui/InfoBody и InfoFooter. |

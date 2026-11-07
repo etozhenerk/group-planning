@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.15.0. Do not edit.
+// Generated from design-system/tokens.json · 7.16.0. Do not edit.
 package dev.groupplanning.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -350,7 +350,20 @@ internal object DesignTokens {
     val componentMobileInfoCompanyChipRadius = 12.dp
     val componentMobileInfoCompanyMoreMinimumWidth = 40.dp
     val componentMobileInfoCoverHeight = 156.dp
+    val componentMobileInfoErrorActionInsetBlock = 13.dp
+    val componentMobileInfoErrorBodyLineHeight = 22.dp
+    val componentMobileInfoErrorGlyphSize = 28.dp
+    val componentMobileInfoErrorInsetBlock = 28.dp
+    val componentMobileInfoErrorTitleLineHeight = 28.dp
     val componentMobileInfoOrganizerAvatarSize = 32.dp
+    val componentMobileInfoPeopleErrorLineHeight = 20.dp
+    val componentMobileInfoPeopleErrorRadius = 14.dp
+    val componentMobileInfoPeopleSkeletonGap = 17.dp
+    val componentMobileInfoPeopleSkeletonLineFraction = 0.48f
+    val componentMobileInfoPeopleSkeletonPictureSize = 36.dp
+    val componentMobileInfoPeopleSkeletonShortTitleFraction = 0.6f
+    val componentMobileInfoPeopleSkeletonTitleFraction = 0.78f
+    val componentMobileInfoPeopleSkeletonTitleHeight = 14.dp
     val componentMobileInfoResponseIconSize = 36.dp
     val componentMobileInfoTitleLineHeight = 31.dp
     val componentMobileInfoTitleSize = 25.dp

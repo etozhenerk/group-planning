@@ -128,5 +128,14 @@ internal class InvitationRepository(
         if (includeFeed) meetings.loadFeed(id)
     }
 
+    suspend fun loadInformation(id: UUID) {
+        meetings.loadMeeting(id)
+        if (snapshot.value.data.details[id]?.phase == ResourcePhase.Ready) {
+            meetings.loadParticipants(id)
+        }
+    }
+
+    suspend fun loadParticipants(id: UUID) = meetings.loadParticipants(id)
+
     suspend fun refreshList() = meetings.loadMeetings()
 }

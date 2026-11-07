@@ -3,6 +3,7 @@ import { defaultRangeExtractor, useVirtualizer } from '@tanstack/react-virtual';
 import type { RefObject } from 'react';
 import type { FeedEntry } from '@/entities/meeting';
 import { feedKey } from '@/widgets/conversation/lib/feedKey';
+import { layoutTop } from '@/widgets/conversation/lib/layoutTop';
 
 export const useVirtualFeed = (
   entries: FeedEntry[],
@@ -27,7 +28,7 @@ export const useVirtualFeed = (
     [entries, focused],
   );
 
-  const virtual = useVirtualizer({
+  const virtual = useVirtualizer<HTMLDivElement, HTMLDivElement>({
     count: entries.length,
     getScrollElement: () => ref.current,
     estimateSize: (index) => (hidden.has(entries[index]!.id) ? 0 : 128),
@@ -39,9 +40,7 @@ export const useVirtualFeed = (
     followOnAppend: following ? 'auto' : false,
     scrollEndThreshold: following ? 64 : -1,
     measureElement: (element) =>
-      element.getAttribute('data-protected') === 'true'
-        ? 0
-        : element.getBoundingClientRect().height,
+      element.getAttribute('data-protected') === 'true' ? 0 : element.offsetHeight,
   });
 
   virtual.shouldAdjustScrollPositionOnItemSizeChange = (item, _delta, instance) =>
@@ -53,9 +52,7 @@ export const useVirtualFeed = (
       if (element) {
         virtual.resizeItem(
           item.index,
-          hidden.has(entries[item.index]!.id)
-            ? 0
-            : element.getBoundingClientRect().height,
+          hidden.has(entries[item.index]!.id) ? 0 : element.offsetHeight,
         );
       }
     }
@@ -68,10 +65,8 @@ export const useVirtualFeed = (
       return;
     }
 
-    const next =
-      content.getBoundingClientRect().top -
-      view.getBoundingClientRect().top +
-      view.scrollTop;
+    // Virtual sizes and scrollTop use layout pixels, including under CSS zoom.
+    const next = layoutTop(content) - layoutTop(view);
 
     const previous = measuredMargin.current;
     measuredMargin.current = next;

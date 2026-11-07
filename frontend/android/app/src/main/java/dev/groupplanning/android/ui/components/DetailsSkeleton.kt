@@ -1,4 +1,4 @@
-package dev.groupplanning.android.ui.invitation
+package dev.groupplanning.android.ui.components
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -19,17 +19,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
-import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.motion.LocalMotionEnabled
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
-internal fun InvitationLoading() {
-    val label = stringResource(R.string.invitation_loading)
+internal fun DetailsSkeleton(label: String, tag: String = "details-loading") {
     val opacity = if (LocalMotionEnabled.current) {
         val transition = rememberInfiniteTransition(label = "invitation-loading")
         val animated by transition.animateFloat(
@@ -47,7 +44,7 @@ internal fun InvitationLoading() {
     }
     Column(
         Modifier.fillMaxWidth().padding(vertical = DesignTokens.spaceS12).alpha(opacity)
-            .testTag("invitation-loading").clearAndSetSemantics { contentDescription = label },
+            .testTag(tag).clearAndSetSemantics { contentDescription = label },
         verticalArrangement = Arrangement.spacedBy(DesignTokens.componentInvitationStateLoadingGap),
     ) {
         LoadingLine(

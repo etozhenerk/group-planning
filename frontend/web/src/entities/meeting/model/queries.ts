@@ -58,14 +58,14 @@ export const useInvitationAccess = (id: string, user: string) => {
   });
 };
 
-export const useMeeting = (id: string, user: string) => {
+export const useMeeting = (id: string, user: string, enabled = true) => {
   const client = useQueryClient();
   const access = useAccess(user, id);
   const query = useQuery({
     queryKey: privateKey(user, id, access.epoch, 'details'),
     queryFn: ({ signal }) =>
       guarded(client, user, id, access.epoch, () => getMeeting(id, signal)),
-    enabled: !!user && !access.denied,
+    enabled: !!user && !access.denied && enabled,
     retry: false,
     gcTime: 0,
   });

@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.RsvpAnswer
+import dev.groupplanning.android.data.repository.ResourcePhase
 import dev.groupplanning.android.data.repository.preview
 import dev.groupplanning.android.data.session.ClientSnapshot
 import dev.groupplanning.android.data.session.SessionState
@@ -41,6 +42,8 @@ internal fun InvitationConversation(
     reload: () -> Unit,
     back: () -> Unit,
     feed: FeedViewModel?,
+    reloadInformation: () -> Unit,
+    reloadParticipants: () -> Unit,
 ) {
     val original = state.details ?: return
     val current = snapshot.data.details[original.preview.meetingId]?.value
@@ -49,6 +52,9 @@ internal fun InvitationConversation(
     val presentation =
         rememberSaveable(id.toString(), saver = ChatPresentation.Saver) { ChatPresentation() }
     var information by rememberSaveable(id.toString()) { mutableStateOf(false) }
+    LaunchedEffect(information) {
+        if (information) reloadInformation()
+    }
     var settingsSaved by rememberSaveable(id.toString()) { mutableStateOf(false) }
     var infoChild by rememberSaveable(id.toString()) { mutableStateOf<String?>(null) }
     var sharePending by remember(id) { mutableStateOf(false) }
@@ -180,7 +186,9 @@ internal fun InvitationConversation(
                     },
                 ),
                 parentHasChild = infoChild != null,
-                parentActions = if (infoChild == null) {
+                parentActions = if (infoChild == null &&
+                    snapshot.data.details[id]?.phase == ResourcePhase.Ready
+                ) {
                     {
                         MeetingInformationFooter(state.copy(details = details), share) {
                             infoChild =
@@ -227,7 +235,11 @@ internal fun InvitationConversation(
                             state.copy(details = details),
                             people?.value,
                             people?.error != null,
-                            reload,
+                            snapshot.data.details[id]?.phase == ResourcePhase.Loading,
+                            snapshot.data.details[id]?.error != null,
+                            people?.phase == ResourcePhase.Loading,
+                            reloadInformation,
+                            reloadParticipants,
                         ) {
                             settingsSaved = false
                             details.meeting?.let { feed?.openSettings(it) }

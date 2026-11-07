@@ -7,6 +7,7 @@ struct MeetingInfoPeople: View {
     @AccessibilityFocusState private var collapseFocused: Bool
     @State private var restoreSummaryFocus = false
     @AccessibilityFocusState private var summaryFocused: Bool
+    @State private var reloadID: UUID?
 
     var body: some View {
         VStack(
@@ -15,18 +16,28 @@ struct MeetingInfoPeople: View {
                 ? DesignTokens.spaceS0
                 : DesignTokens.spaceS8
         ) {
-            if let people = session.privateData.participants[id]?.value?.participants {
-                let going = people.filter { $0.role == "organizer" || $0.rsvp == .going }
-                HStack(spacing: DesignTokens.spaceS6) {
-                    Text(expanded ? "Все ответы" : "Кто придёт")
-                        .accessibilityAddTraits(.isHeader).accessibilityIdentifier(
-                            "participant-count")
-                    Spacer(minLength: DesignTokens.spaceS8)
-                    Text(String(expanded ? people.count : going.count))
-                        .designFont(DesignTokens.typographySizeSmall, weight: .regular)
-                        .foregroundStyle(
-                            DesignTokens.colorMuted)
-                }.designFont(DesignTokens.typographySizeSectionHeading, weight: .semibold)
+            let people = session.privateData.participants[id]?.value?.participants ?? []
+            let going = people.filter { $0.role == "organizer" || $0.rsvp == .going }
+            HStack(spacing: DesignTokens.spaceS6) {
+                Text(expanded ? "Все ответы" : "Кто придёт")
+                    .accessibilityAddTraits(.isHeader).accessibilityIdentifier(
+                        "participant-count")
+                Spacer(minLength: DesignTokens.spaceS8)
+                Text(
+                    String(
+                        session.privateData.participants[id]?.value != nil
+                            ? (expanded ? people.count : going.count)
+                            : (session.privateData.details[id]?.value?.participantCount ?? 0))
+                )
+                .designFont(DesignTokens.typographySizeSmall, weight: .regular)
+                .foregroundStyle(
+                    DesignTokens.colorMuted)
+            }.designFont(DesignTokens.typographySizeSectionHeading, weight: .semibold)
+            if session.privateData.participants[id]?.isLoading == true {
+                PeopleLoadingView()
+            } else if session.privateData.participants[id]?.error != nil {
+                PeopleLoadFailure { reloadID = UUID() }
+            } else if session.privateData.participants[id]?.value != nil {
                 Button {
                     expanded.toggle()
                     if !expanded { restoreSummaryFocus = true }
@@ -70,11 +81,14 @@ struct MeetingInfoPeople: View {
                     .buttonStyle(.plain).accessibilityIdentifier("meeting-people-collapse")
                     .accessibilityFocused($collapseFocused).onAppear { collapseFocused = true }
                 }
-            } else if session.privateData.participants[id]?.error != nil {
-                Text("Не удалось загрузить участников").foregroundStyle(DesignTokens.colorError)
             } else {
-                ProgressView("Загружаем участников…")
+                PeopleLoadingView()
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
+            .task(id: reloadID) {
+                if reloadID != nil {
+                    await MeetingRepository(session: session).loadParticipants(id)
+                }
+            }
     }
 }

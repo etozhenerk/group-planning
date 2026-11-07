@@ -26,7 +26,8 @@ struct InvitationPublicSurface: View {
                 } else if owner.problem != nil {
                     InvitationUnavailableView(retry: { owner.reload() })
                 } else {
-                    InvitationLoadingView()
+                    DetailsLoadingView(
+                        label: "Загрузка приглашения", identifier: "invitation-loading")
                 }
             }.padding(.horizontal, DesignTokens.spaceS20).padding(.bottom, DesignTokens.spaceS24)
         }

@@ -6,6 +6,9 @@ import { DetailsContent } from '@/widgets/meeting-details/ui/DetailsContent';
 import { DetailsResponse } from '@/widgets/meeting-details/ui/DetailsResponse';
 import { InfoFooter } from '@/widgets/meeting-details/ui/InfoFooter';
 import { BackIcon } from '@/shared/ui/BackIcon';
+import { SkeletonDetails } from '@/shared/ui/SkeletonDetails';
+import { InformationFailure } from '@/widgets/meeting-details/ui/InformationFailure';
+import type { useMeetingInformation } from '@/widgets/meeting-details/ui/MeetingDetails/hooks/useMeetingInformation';
 import type { useMeetingDetailsPanel } from '@/widgets/meeting-details/ui/MeetingDetails/hooks/useMeetingDetailsPanel';
 import styles from '@/widgets/meeting-details/ui/DetailsPanels/DetailsPanels.module.css';
 
@@ -15,6 +18,7 @@ export type DetailsPanelsProps = {
   mobile: boolean;
   panel: string | null;
   surface: ReturnType<typeof useMeetingDetailsPanel>;
+  information: ReturnType<typeof useMeetingInformation>;
 };
 
 export const DetailsPanels = ({
@@ -23,6 +27,7 @@ export const DetailsPanels = ({
   mobile,
   panel,
   surface,
+  information,
 }: DetailsPanelsProps) => (
   <>
     {mobile && panel !== 'info' && panel !== 'settings' && (
@@ -44,14 +49,20 @@ export const DetailsPanels = ({
         tabIndex={-1}
       >
         {mobile && surface.savedNotice && <p role="status">Изменения сохранены</p>}
-        <DetailsContent
-          meeting={meeting}
-          session={session}
-          edit={surface.edit}
-          share={surface.shareAction}
-        />
+        {mobile && information.isFetching ? (
+          <SkeletonDetails label="Загрузка встречи" />
+        ) : mobile && information.isError ? (
+          <InformationFailure retry={() => void information.refetch()} />
+        ) : (
+          <DetailsContent
+            meeting={meeting}
+            session={session}
+            edit={surface.edit}
+            share={surface.shareAction}
+          />
+        )}
       </div>
-      {mobile && (
+      {mobile && !information.isFetching && !information.isError && (
         <InfoFooter
           meeting={meeting}
           session={session}

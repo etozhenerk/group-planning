@@ -1,6 +1,8 @@
 import SwiftUI
 
-struct InvitationLoadingView: View {
+struct DetailsLoadingView: View {
+    let label: String
+    var identifier = "details-loading"
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var bright = false
 
@@ -30,8 +32,8 @@ struct InvitationLoadingView: View {
                     ? DesignTokens.componentInvitationStateLoadingBrightOpacity
                     : DesignTokens.componentInvitationStateLoadingDimOpacity
         )
-        .accessibilityElement(children: .ignore).accessibilityLabel("Загрузка приглашения")
-        .accessibilityIdentifier("invitation-loading")
+        .accessibilityElement(children: .ignore).accessibilityLabel(label)
+        .accessibilityIdentifier(identifier)
         .task(id: reduceMotion) {
             guard !reduceMotion else { return }
             withAnimation(

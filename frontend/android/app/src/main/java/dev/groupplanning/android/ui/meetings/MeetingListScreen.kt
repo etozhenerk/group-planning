@@ -47,7 +47,7 @@ internal fun MeetingListScreen(
     val scroll = rememberLazyListState()
     val emptyAccount = data.counts?.total == 0
     val page = data.pageFor(selection.filter)
-    val loading = stringResource(R.string.calendar_loading)
+    val primaryState = page == null && data.counts == null
     Column(Modifier.fillMaxSize()) {
         MeetingListHeading(selection.calendar || !emptyAccount, create)
         tabs()
@@ -67,10 +67,13 @@ internal fun MeetingListScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            if (selection.calendar) {
+            if (selection.calendar && !primaryState) {
                 item(key = "calendar") { MeetingCalendar(selection, data.days, change) }
             }
-            if (selection.calendar && ((data.counts?.undated ?: 0) > 0 || selection.undated)) {
+            if (selection.calendar &&
+                !primaryState &&
+                ((data.counts?.undated ?: 0) > 0 || selection.undated)
+            ) {
                 item(key = "undated") {
                     TextButton(onClick = { change(selection.copy(undated = !selection.undated)) }) {
                         Text(
@@ -84,32 +87,30 @@ internal fun MeetingListScreen(
                     }
                 }
             }
-            if (selection.calendar) {
+            if (selection.calendar && !primaryState) {
                 item(key = "agenda") { CalendarAgenda(data, selection, more, select) }
             }
             if (data.error != null) {
                 item(key = "error") {
                     MobileStatus(
                         stringResource(
-                            if (page ==
-                                null
-                            ) {
+                            if (primaryState) {
                                 R.string.calendar_error
                             } else {
                                 R.string.meetings_refresh_error
                             },
                         ),
-                        page != null,
+                        !primaryState,
                         refresh,
                     )
                 }
             }
-            if (!selection.calendar && page == null && data.error == null) {
+            if (primaryState && data.error == null) {
                 item(key = "loading") {
                     ExperienceSkeleton()
                 }
             }
-            if (emptyAccount && !selection.calendar) {
+            if (emptyAccount && !selection.calendar && !primaryState) {
                 item(key = "empty-account") { EmptyMeetings(selection.period, create) }
             } else if (!selection.calendar && page?.meetings?.isEmpty() == true) {
                 item(key = "empty-day") {
@@ -169,7 +170,10 @@ internal fun MeetingListScreen(
                     }
                 }
             }
-            if (!selection.calendar && ((data.counts?.undated ?: 0) > 0 || selection.undated)) {
+            if (!selection.calendar &&
+                !primaryState &&
+                ((data.counts?.undated ?: 0) > 0 || selection.undated)
+            ) {
                 item(key = "undated-list") {
                     TextButton(onClick = { change(selection.copy(undated = !selection.undated)) }) {
                         Text(
@@ -203,7 +207,7 @@ internal fun MeetingListScreen(
                     )
                 }
             }
-            if (!selection.calendar && data.moreError != null) {
+            if (!selection.calendar && !primaryState && data.moreError != null) {
                 item(key = "more-error") {
                     Text(stringResource(R.string.calendar_more_error), color = Palette.error)
                 }

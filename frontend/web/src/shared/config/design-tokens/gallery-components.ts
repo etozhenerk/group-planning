@@ -1,4 +1,4 @@
-// Generated from design-system/tokens.json · 7.15.0. Do not edit.
+// Generated from design-system/tokens.json · 7.16.0. Do not edit.
 export const galleryTokens = {
   componentMobileVibeActionInsetBlock: '10px',
   componentMobileVibeActionInsetInline: '9px',

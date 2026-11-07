@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.groupplanning.android.R
 import dev.groupplanning.android.data.api.models.Participants
-import dev.groupplanning.android.state.InvitationIssue
 import dev.groupplanning.android.state.InvitationState
+import dev.groupplanning.android.ui.components.DetailsSkeleton
 import dev.groupplanning.android.ui.theme.DesignTokens
 
 @Composable
@@ -18,9 +18,21 @@ internal fun MeetingInformationContent(
     state: InvitationState,
     participants: Participants?,
     participantError: Boolean,
+    loading: Boolean,
+    error: Boolean,
+    participantLoading: Boolean,
     reload: () -> Unit,
+    reloadParticipants: () -> Unit,
     settings: () -> Unit,
 ) {
+    if (loading) {
+        DetailsSkeleton(stringResource(R.string.info_loading))
+        return
+    }
+    if (error) {
+        MeetingInformationFailure(reload)
+        return
+    }
     val details = state.details ?: return
     MeetingInformationHeading(
         details.preview,
@@ -40,25 +52,17 @@ internal fun MeetingInformationContent(
             color = DesignTokens.colorMuted,
         )
     }
-    state.issue?.takeUnless {
-        it in
-            setOf(
-                InvitationIssue.Unconfirmed,
-                InvitationIssue.Conflict,
-                InvitationIssue.Rejected,
-                InvitationIssue.Share,
-            )
-    }?.let { InvitationProblem(it, !state.loading && !state.saving, reload) }
     Column {
         HorizontalDivider(color = DesignTokens.colorLine)
         Column(Modifier.padding(top = DesignTokens.spaceS20)) {
-            participants?.let { InvitationParticipants(it, information = true) }
-            if (participantError) {
-                Text(stringResource(R.string.info_people_error), color = DesignTokens.colorError)
-                androidx.compose.material3.TextButton(reload) {
-                    Text(stringResource(R.string.info_retry))
-                }
-            }
+            InvitationParticipants(
+                participants,
+                information = true,
+                fallbackCount = details.meeting?.participantCount ?: 0,
+                loading = participantLoading || (participants == null && !participantError),
+                error = participantError,
+                retry = reloadParticipants,
+            )
         }
     }
 }

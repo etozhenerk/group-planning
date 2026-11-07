@@ -1,0 +1,99 @@
+[WebServer] (node:89432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:89433) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:89473) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › tests/66-mobile-info-loading.spec.ts:5:1 › mobile information owns loading, failure and separate participant retry (6.1s)
+(node:89502) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › tests/66-mobile-info-loading.spec.ts:62:1 › enlarged settings retain the draft without a chat layout render loop (981ms)
+(node:89510) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [mobile-webkit] › tests/66-mobile-info-loading.spec.ts:5:1 › mobile information owns loading, failure and separate participant retry (6.9s)
+(node:89556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [mobile-webkit] › tests/66-mobile-info-loading.spec.ts:62:1 › enlarged settings retain the draft without a chat layout render loop (1.5s)
+
+
+  1) [chromium] › tests/66-mobile-info-loading.spec.ts:5:1 › mobile information owns loading, failure and separate participant retry 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'О встрече', exact: true }).getByRole('status', { name: 'Загрузка встречи', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'О встрече', exact: true }).getByRole('status', { name: 'Загрузка встречи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'О встрече', exact: true }).getByRole('status', { name: 'Загрузка встречи', exact: true })
+
+
+      25 |   await expect(
+      26 |     info.getByRole('status', { name: 'Загрузка встречи', exact: true }),
+    > 27 |   ).toBeVisible();
+         |     ^
+      28 |   await expect(share).toHaveCount(0);
+      29 |   await detailsRoute.fulfill({ status: 503, body: '{}' });
+      30 |   await expect(
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/66-mobile-info-loading.spec.ts:27:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-webkit] › tests/66-mobile-info-loading.spec.ts:5:1 › mobile information owns loading, failure and separate participant retry 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'О встрече', exact: true }).getByRole('status', { name: 'Загрузка встречи', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'О встрече', exact: true }).getByRole('status', { name: 'Загрузка встречи', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'О встрече', exact: true }).getByRole('status', { name: 'Загрузка встречи', exact: true })
+
+
+      25 |   await expect(
+      26 |     info.getByRole('status', { name: 'Загрузка встречи', exact: true }),
+    > 27 |   ).toBeVisible();
+         |     ^
+      28 |   await expect(share).toHaveCount(0);
+      29 |   await detailsRoute.fulfill({ status: 503, body: '{}' });
+      30 |   await expect(
+        at /Users/misha/Documents/Codex/projects/group-planning/frontend/web/tests/66-mobile-info-loading.spec.ts:27:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-mobile-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-mobile-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-mobile-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/66-mobile-info-loading-mob-05275--separate-participant-retry-mobile-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/66-mobile-info-loading.spec.ts:5:1 › mobile information owns loading, failure and separate participant retry 
+    [mobile-webkit] › tests/66-mobile-info-loading.spec.ts:5:1 › mobile information owns loading, failure and separate participant retry 
+  2 passed (21.1s)
