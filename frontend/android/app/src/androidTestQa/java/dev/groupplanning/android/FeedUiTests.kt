@@ -1,8 +1,6 @@
 package dev.groupplanning.android
 
-import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
@@ -13,7 +11,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
-import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
 import androidx.core.view.ViewCompat
@@ -22,7 +19,6 @@ import androidx.lifecycle.Lifecycle
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -110,11 +106,7 @@ class FeedUiTests {
             fixture.screenshot("feed-retry")
             activity.recreate()
             fixture.waitTag("message-retry")
-            compose.onNodeWithTag("message-retry", useUnmergedTree = true).assertIsEnabled()
-                .performSemanticsAction(SemanticsActions.OnClick) { click ->
-                    QaResponseGate.rejectMessage = false
-                    assertTrue(click())
-                }
+            compose.retryCurrentMessage { QaResponseGate.rejectMessage = false }
             compose.waitUntil(10_000) {
                 compose.onAllNodes(hasTestTag("message-pending")).fetchSemanticsNodes().isEmpty()
             }

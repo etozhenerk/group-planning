@@ -1,17 +1,13 @@
 package dev.groupplanning.android
 
-import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
-import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import dev.groupplanning.android.qaCreateEmptyComposeRule as createEmptyComposeRule
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -60,12 +56,10 @@ class FeedPersistenceUiTests {
                 fixture.waitTag("message-retry")
                 compose.onNodeWithTag("message-composer").assertTextContains("И черновик тоже")
                 fixture.screenshot("feed-restored-after-process-death")
-                compose.onNodeWithTag("message-retry").assertIsEnabled()
-                    .performSemanticsAction(SemanticsActions.OnClick) { click ->
-                        QaResponseGate.releasePersistenceMessageAttempts()
-                        QaResponseGate.rejectMessage = false
-                        assertTrue(click())
-                    }
+                compose.retryCurrentMessage {
+                    QaResponseGate.releasePersistenceMessageAttempts()
+                    QaResponseGate.rejectMessage = false
+                }
                 compose.waitUntil(10_000) {
                     compose.onAllNodes(
                         hasTestTag("message-pending"),

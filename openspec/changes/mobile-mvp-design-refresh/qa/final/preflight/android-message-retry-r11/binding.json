@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Targeted preflight after QA helper change, not formal R11 acceptance",
+  "capturedAt": "2026-11-07T10:55:06.203797+00:00",
+  "device": "emulator-5554",
+  "productArtifact": {
+    "path": "/private/tmp/mobile-final-android-r10/app-qa.apk",
+    "sha256": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4"
+  },
+  "instrumentationSha256": "de1ac13e9e7b1d8a2036a599bcd6db06eebe7e206dd2cf6cd0a7875bd376bfd1",
+  "sourceFiles": {
+    "MessageRetryUiAction.kt": "bfff6b54ef742dec222ef408ba7cce32f830b8f307fdac443f93365763414e60",
+    "FeedUiTests.kt": "ea54958d6df824da34e254d41888781454e61d42cde3783f18879587331b60cd",
+    "FeedPersistenceUiTests.kt": "e0559bf1399622e61bcbe6a0dd7ea03a9758545dbc2d3c8596435e5b815ff8b3"
+  },
+  "fixture": {
+    "binarySha256": "aa57e56612e2b7adef5b8a1be7ddf7551fec47c1f4e126d990200beabce8fc81",
+    "configSha256": "42523c86fb387c56f18cdfd0aee260402941a0c804fd204a8d8e3164028140b7",
+    "origin": "https://127.0.0.1:53976",
+    "scope": "persistence",
+    "realHttp": true,
+    "shutdown": "PASS / exit0",
+    "assertedServerCounts": {
+      "posts": 2,
+      "nonemptyDistinctClientKeys": 1,
+      "distinctMessageIDs": 1
+    }
+  },
+  "results": {
+    "FeedUiTests": {
+      "status": "passed",
+      "seconds": 19.347
+    },
+    "prepareProcessDeath": {
+      "status": "passed",
+      "seconds": 4.095
+    },
+    "restoreAfterProcessDeath": {
+      "status": "passed",
+      "seconds": 4.306
+    },
+    "realForceStopBetweenStages": true,
+    "pidAbsent": true
+  },
+  "cleanup": {
+    "ownFixtureStopped": true,
+    "ownReverseRemoved": true,
+    "ownRemoteConfigRemoved": true,
+    "appForceStopped": true
+  },
+  "evidence": {
+    "runner.log": "458539bfd8d3cbaaf4b03163c96082f92790471be957b877f55d9872e15b8d28",
+    "restoreAfterProcessDeath.log": "0d9be1439b9862b047fa5e04e78a80ac5c66d100c733125518d62a914e876bc1",
+    "fixture.log": "05be9a1bb907f8bebe0ece9b2b43b551590bbbe359ce257b65701e2a9dd6f6fc",
+    "process-death-pid.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepareProcessDeath.log": "3d924af8f1507667d66ecf0ffb1b2249125b392c85bc310fbf913cce63a2a243",
+    "historySendRetryInformationAndSettingsFollowSharedDesign.log": "1b83b0db5f211c50030f8e6e1e3c74151a195398cca60ec3b8b798eeb8600657",
+    "actual/feed-history.png": "2ea231bc3a70adeab73183669ee50494202a42f9a0d88e9db32ecc8f936d9681",
+    "actual/feed-information.png": "9460bdb2946b81baec591f6fae6525d014e06c2d79d3e89fef03492e8fca0c78",
+    "actual/feed-retry.png": "fa06fbd897e338c4633af2132309d374031d0a5f62e8816614f22ceebd7d1b01",
+    "actual/feed-history-held.capture.json": "2bec0f3ee3666b61d59449652f0980b0bfb14709577a99785ef33097d31a8608",
+    "actual/feed-history-merged.png": "2ea231bc3a70adeab73183669ee50494202a42f9a0d88e9db32ecc8f936d9681",
+    "actual/feed-settings-conflict.capture.json": "94bf5b924e694329bdf75738c7993f3d0a7048888ad4f1a73427783c7db00ebb",
+    "actual/feed-history-held.png": "e89c5a4516785640c3510fc367f1bfc0173d1b51a43864f030cf79a87ab3c827",
+    "actual/feed-sent.capture.json": "37b87d7da22c9871c68723a8565460a77817e0f69526692299e15fc18d71e9d6",
+    "actual/feed-restored-confirmed.png": "d6a98065decac665f1be74ef344bf6e68169964af8d6360976c17f60e374071e",
+    "actual/feed-before-process-death.capture.json": "389a0e6d125d8d904e3220f78b54e16aa744a5cd0aec79d4e31433b3305a92f7",
+    "actual/feed-history.capture.json": "b2f718cb49b283ed93cb49d4581d86d889714de1af4f195e1f96ca155867ece8",
+    "actual/feed-latest.png": "7997be1c3026d9c947ce5b604995b1c6e6505c792c5354f835e7ba3406f8d60e",
+    "actual/feed-retry.capture.json": "79f87a9fefa148c98e12ff1f0cb156425d5da207852023df472943295dc86143",
+    "actual/feed-settings-saved.png": "04027b2698ca6e6d6f189dc44011338110fd2ec7e4e1ad80d17efc6348b68c78",
+    "actual/feed-sent.png": "db426ae4cd6fd3af87ffaca8fad6cd63020becf97905d33ebb569f050a4a1dee",
+    "actual/feed-settings-conflict.png": "61e90f1ba9f6b7476aa5c294acfd791e691fe5b9f9d424147ce14218eeaf7fd1",
+    "actual/feed-information.capture.json": "c3fdb2fdaea9580365e05b21fe673af017a32fe9a2c988d609a80963b1ffa2fe",
+    "actual/feed-history-merged.capture.json": "888bd1d6cc4335384591801ce7d0e15c08dfe9bed8768b0db7e4feeb99315460",
+    "actual/feed-keyboard.capture.json": "b7c1c4a9743835b9686d03a3ccf141dbce6c9c6aee393e17c2cc4329f107c4e3",
+    "actual/feed-restored-confirmed.capture.json": "479ab2ecbb4c924601fdca0825b503446e56b2a0900ead20f30fc4128ec7165d",
+    "actual/feed-latest.capture.json": "d32797c25973624c9362be94740dad424c7091bbc1b504e5eaa899db9b3eb326",
+    "actual/feed-restored-after-process-death.capture.json": "8ad2ddef77bff6d3768072c0de10abcbf5bdca01b73cfb98bec83122099d60a5",
+    "actual/feed-keyboard.png": "65b6cdf4535a07e755c6d5d39e39b30bcb24b4bb9f9902c4c7ba544668bf6ab0",
+    "actual/feed-restored-after-process-death.png": "f346b92f992067b712c563f75c40f158b0174b9dacf82116df65dcf6d97916c7",
+    "actual/feed-before-process-death.png": "c402af108eb1fb349520db2fbc650e3da8e6faa9f5e7180e909acda9da4c6bc1",
+    "actual/feed-settings-saved.capture.json": "d403ebb9069a7aafe882ec74efb2dbf25f4b6753452fdc2085c313cfb2392762"
+  }
+}
