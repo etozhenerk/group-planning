@@ -41,6 +41,7 @@ struct ReactionChip: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(ChatPressStyle())
+        .anchorPreference(key: MessageControlBoundsPreference.self, value: .bounds) { [$0] }
         .highPriorityGesture(
             LongPressGesture(
                 minimumDuration: DesignTokens.motionDurationReactionLongPress,

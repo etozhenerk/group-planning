@@ -85,7 +85,7 @@ final class MeetingInfoUITests: XCTestCase {
         let summary = app.buttons["meeting-people-summary"]
         XCTAssertEqual(summary.label, "Компания, 6 участников")
         XCTAssertFalse(MeetingInfoTestSupport.person(3, app: app).exists)
-        XCTAssertFalse(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
+        XCTAssertTrue(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
         XCTAssertTrue(app.buttons["edit-meeting"].isHittable)
         XCTAssertFalse(app.buttons["rsvp-going"].exists)
         ExperienceScreenshot.save("info-organizer-compact", test: self)
@@ -201,13 +201,21 @@ final class MeetingInfoUITests: XCTestCase {
         let summary = app.buttons["meeting-people-summary"]
         MeetingInfoTestSupport.reveal(summary, app: app)
         summary.tap()
+        let change = app.buttons["meeting-change-answer"]
+        MeetingInfoTestSupport.reveal(change, app: app)
+        change.tap()
+        let responseScroll = app.scrollViews["action-form-scroll"]
+        XCTAssertTrue(responseScroll.waitForExistence(timeout: 5))
         for answer in ["going", "maybe", "not_going"] {
             let choice = app.buttons["rsvp-" + answer]
-            MeetingInfoTestSupport.reveal(choice, app: app)
+            ChatSheetTestSupport.reveal(choice, in: responseScroll, app: app)
             XCTAssertTrue(app.frame.contains(choice.frame))
             XCTAssertGreaterThanOrEqual(choice.frame.height, 44)
         }
         XCTAssertFalse(app.buttons["edit-meeting"].exists)
+        ExperienceScreenshot.save("info-member-large-responses", test: self)
+        ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "action-form-header")
+        XCTAssertTrue(app.buttons["meeting-people-collapse"].waitForExistence(timeout: 5))
         ExperienceScreenshot.save("info-member-large-expanded", test: self)
         let collapse = app.buttons["meeting-people-collapse"]
         MeetingInfoTestSupport.reveal(collapse, app: app)

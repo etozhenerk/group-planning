@@ -22,13 +22,22 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import dev.groupplanning.android.BuildConfig
 import dev.groupplanning.android.R
 import dev.groupplanning.android.ui.theme.DesignTokens
 import dev.groupplanning.android.ui.theme.Palette
 
 @Composable
-internal fun AboutContent() {
+internal fun AboutContent(metadata: AboutMetadata = LocalAboutMetadata.current) {
+    val version = when (metadata) {
+        is AboutMetadata.Release -> metadata.version
+        AboutMetadata.Local -> stringResource(R.string.about_local)
+        AboutMetadata.Unavailable -> stringResource(R.string.about_unavailable)
+    }
+    val build = (metadata as? AboutMetadata.Release)?.build
+    val metadataRows = listOf(
+        R.string.about_platform to "Android",
+        R.string.about_version to version,
+    ) + listOfNotNull(build?.let { R.string.about_build to it })
     Column(
         Modifier.fillMaxWidth().padding(horizontal = DesignTokens.spaceS20)
             .padding(bottom = DesignTokens.spaceS40),
@@ -72,11 +81,7 @@ internal fun AboutContent() {
                     .padding(horizontal = DesignTokens.componentMobileAboutMetadataInsetInline)
                     .padding(vertical = DesignTokens.spaceS4),
             ) {
-                listOf(
-                    R.string.about_platform to "Android",
-                    R.string.about_version to BuildConfig.VERSION_NAME,
-                    R.string.about_build to BuildConfig.VERSION_CODE.toString(),
-                )
+                metadataRows
                     .forEachIndexed { index, (label, value) ->
                         Row(
                             Modifier.fillMaxWidth().padding(vertical = DesignTokens.spaceS16),
@@ -98,7 +103,11 @@ internal fun AboutContent() {
                                 DesignTokens.componentMobileServiceBodyLineHeight.value.sp,
                             )
                         }
-                        if (index < 2) HorizontalDivider(color = DesignTokens.colorLine)
+                        if (index <
+                            metadataRows.lastIndex
+                        ) {
+                            HorizontalDivider(color = DesignTokens.colorLine)
+                        }
                     }
             }
         }

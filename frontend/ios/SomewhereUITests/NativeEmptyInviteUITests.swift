@@ -3,6 +3,7 @@ import XCTest
 @MainActor
 final class NativeEmptyInviteUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+    override func tearDown() async throws { ChatSheetTestSupport.recordFailure(self) }
 
     func testSystemOnlyChatKeepsInviteUntilAnotherParticipantSendsFirstMessage() async throws {
         let owner = try NativeChatCounterpart(actor: "empty")

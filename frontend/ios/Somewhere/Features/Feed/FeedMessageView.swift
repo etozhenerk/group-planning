@@ -14,6 +14,8 @@ struct FeedMessageView: View {
     var failure: AnyView?
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var availableWidth: CGFloat = 0
+    @ScaledMetric(relativeTo: .body) private var avatarSize = DesignTokens
+        .componentMobileChatMessageAvatar
     @ScaledMetric(relativeTo: .body) private var bodySize = DesignTokens.typographySizeChatMessage
     @ScaledMetric(relativeTo: .caption) private var authorSize = DesignTokens.typographySizeCaption
     @ScaledMetric(relativeTo: .caption2) private var metadataSize = DesignTokens
@@ -48,7 +50,7 @@ struct FeedMessageView: View {
                     .componentMobileMessageInsetInline * 2, textWidth, authorWidth, footerWidth,
             ].max() ?? 0
         let reserved =
-            DesignTokens.componentMobileChatMessageAvatar
+            avatarSize
             + DesignTokens.componentMobileChatMessageGap + DesignTokens
             .componentMobileMessageInsetInline * 2 + DesignTokens.spaceS12
         return min(ceil(needed), max(0, width - reserved))

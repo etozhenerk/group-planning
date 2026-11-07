@@ -93,7 +93,7 @@ final class CoverUITests: XCTestCase {
         XCTAssertTrue(app.buttons["meeting-info-open"].waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
+        XCTAssertTrue(app.scrollViews["meeting-info"].images["meeting-cover"].exists)
         app.buttons["edit-meeting"].tap()
         XCTAssertTrue(app.staticTexts["settings-header"].waitForExistence(timeout: 5))
         assertSettingsCover(present: true, app: app)
@@ -134,8 +134,9 @@ final class CoverUITests: XCTestCase {
     private func assertSettingsCover(present: Bool, app: XCUIApplication) {
         let select = app.buttons["cover-select"]
         reveal(select, app)
-        XCTAssertEqual(select.label, present ? "Заменить обложку" : "Добавить")
-        XCTAssertTrue(app.staticTexts[present ? "Фото встречи" : "Не добавлена"].exists)
+        XCTAssertEqual(select.label, present ? "Заменить" : "Добавить фото")
+        XCTAssertTrue(app.staticTexts["Обложка"].exists)
+        XCTAssertEqual(app.scrollViews["meeting-settings"].images["meeting-cover"].exists, present)
         XCTAssertEqual(app.buttons["cover-remove"].exists, present)
         XCTAssertTrue(select.isEnabled)
     }

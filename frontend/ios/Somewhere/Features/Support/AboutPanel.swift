@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AboutPanel: View {
+    @Environment(\.aboutMetadata) private var metadata
     @ScaledMetric private var descriptionSize = DesignTokens.typographySizeButton
     @ScaledMetric private var descriptionLine = DesignTokens
         .componentMobileAboutBrandDescriptionLineHeight
@@ -38,9 +39,8 @@ struct AboutPanel: View {
             VStack(spacing: DesignTokens.spaceS0) {
                 row("Приложение", value: "iOS")
                 row(
-                    "Версия", value: AppVersion.version == "—" ? "Недоступна" : AppVersion.version,
-                    last: AppVersion.build == "—")
-                if AppVersion.build != "—" { row("Сборка", value: AppVersion.build, last: true) }
+                    "Версия", value: metadata.versionLabel, last: metadata.build == nil)
+                if let build = metadata.build { row("Сборка", value: build, last: true) }
             }.padding(.horizontal, DesignTokens.componentMobileAboutMetadataInsetInline)
                 .padding(.vertical, DesignTokens.spaceS4)
                 .background(

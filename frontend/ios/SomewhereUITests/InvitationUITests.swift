@@ -121,6 +121,19 @@ final class InvitationUITests: XCTestCase {
         }
     }
 
+    private func activeParticipants(_ control: NativeChatCounterpart) async throws -> Set<String> {
+        let response = try await control.request("meetings/" + meetingID + "/participants")
+        let participants = try XCTUnwrap(response["participants"] as? [[String: Any]])
+        let ids = try participants.map {
+            try XCTUnwrap(($0["user"] as? [String: Any])?["id"] as? String)
+        }
+        XCTAssertEqual(Set(ids).count, ids.count, "A participant must not be duplicated")
+        return Set(
+            participants.filter {
+                $0["role"] as? String == "organizer" || $0["rsvp"] as? String == "going"
+            }.compactMap { ($0["user"] as? [String: Any])?["id"] as? String })
+    }
+
     func testAnonymousColdAndWarmInvitationWithoutPrivateContent() throws {
         let app = launch("invite-anonymous")
         try open(app)
@@ -152,18 +165,27 @@ final class InvitationUITests: XCTestCase {
     func testThreeResponsesReentryAndMeetingIDWithdrawal() async throws {
         let control = try NativeChatCounterpart(actor: "invite-owner", meeting: meetingID)
         try await control.reschedule(start: Date().addingTimeInterval(86400))
+        let invitee = try NativeChatCounterpart(actor: "invite-rsvp", meeting: meetingID)
+        let profile = try await invitee.request("me")
+        let inviteeID = try XCTUnwrap((profile["user"] as? [String: Any])?["id"] as? String)
+        let before = try await activeParticipants(control)
         let app = launch("invite-rsvp")
         try open(app)
         XCTAssertFalse(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
         choose("going", confirmation: "Вы придёте", app: app)
+        let expectedParticipants = before.union([inviteeID])
+        let after = try await activeParticipants(control)
+        XCTAssertEqual(after, expectedParticipants)
         XCTAssertTrue(
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .waitForExistence(timeout: 10))
         app.buttons["meeting-info-open"].tap()
         XCTAssertTrue(app.buttons["meeting-people-summary"].waitForExistence(timeout: 10))
-        XCTAssertEqual(app.buttons["meeting-people-summary"].label, "Компания, 2 участника")
+        XCTAssertTrue(
+            app.buttons["meeting-people-summary"].label.hasPrefix(
+                "Компания, \(expectedParticipants.count) "))
         ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "meeting-info-header")
         capture("invitation-accepted", app)
         try open(app)

@@ -204,6 +204,10 @@ final class DesignExperienceUITests: XCTestCase {
             let scroll = app.scrollViews["action-form-scroll"]
             XCTAssertTrue(scroll.exists)
             XCTAssertTrue(submit.exists)
+            for _ in 0..<5 {
+                if submit.isHittable && app.frame.contains(submit.frame) { break }
+                scroll.swipeUp()
+            }
             XCTAssertTrue(submit.isHittable)
             XCTAssertTrue(app.frame.contains(submit.frame))
             XCTAssertGreaterThanOrEqual(submit.frame.minY, close.frame.maxY)

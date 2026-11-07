@@ -83,11 +83,11 @@ final class ExperienceUITests: XCTestCase {
         description.tap()
         description.typeText("Подскажите, как добавить фото встречи")
         finishSupportEditing(app)
-        let toggle = app.buttons.matching(
+        let toggle = app.switches.matching(
             NSPredicate(format: "label CONTAINS %@", "Данные об устройстве")
         ).firstMatch
         reveal(toggle, app: app)
-        XCTAssertEqual(toggle.value as? String, "Выключено")
+        XCTAssertEqual(toggle.value as? String, "0")
         capture("refresh-support")
         let helpPage = app.scrollViews["service-information-scroll"]
         let backgroundBack = helpPage.buttons["Назад"]

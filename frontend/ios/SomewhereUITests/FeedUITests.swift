@@ -164,6 +164,9 @@ final class FeedUITests: XCTestCase {
         XCTAssertGreaterThan(app.staticTexts["settings-header"].frame.minY, 45)
         capture("feed-settings-conflict", app)
         app.buttons["settings-reload"].tap()
+        let continueEditing = app.buttons["Продолжить с моими правками"]
+        XCTAssertTrue(continueEditing.waitForExistence(timeout: 5))
+        continueEditing.tap()
         for _ in 0..<5 {
             if title.isHittable { break }
             scrollSettings(settingsScroll, app: app, down: true)

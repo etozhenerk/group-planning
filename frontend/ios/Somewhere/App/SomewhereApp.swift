@@ -8,6 +8,7 @@ struct SomewhereApp: App {
                 #if SOMEWHERE_UI_TEST_HOST
                     .modifier(UITestViewport())
                     .modifier(UITestCaptureContext())
+                    .modifier(UITestAboutMetadata())
                 #endif
         }
     }
