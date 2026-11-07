@@ -5,6 +5,7 @@ import { ShareForm } from '@/features/share-invitation';
 import { DetailsContent } from '@/widgets/meeting-details/ui/DetailsContent';
 import { DetailsResponse } from '@/widgets/meeting-details/ui/DetailsResponse';
 import { InfoFooter } from '@/widgets/meeting-details/ui/InfoFooter';
+import { BackIcon } from '@/shared/ui/BackIcon';
 import type { useMeetingDetailsPanel } from '@/widgets/meeting-details/ui/MeetingDetails/hooks/useMeetingDetailsPanel';
 import styles from '@/widgets/meeting-details/ui/DetailsPanels/DetailsPanels.module.css';
 
@@ -25,8 +26,13 @@ export const DetailsPanels = ({
 }: DetailsPanelsProps) => (
   <>
     {mobile && panel !== 'info' && panel !== 'settings' && (
-      <button type="button" className={styles.back} onClick={surface.close}>
-        ← К деталям встречи
+      <button
+        type="button"
+        className={styles.back}
+        onClick={surface.close}
+        aria-label="К деталям встречи"
+      >
+        <BackIcon />
       </button>
     )}
     <div className={styles.information} data-mobile={mobile} hidden={panel !== 'info'}>
@@ -64,6 +70,7 @@ export const DetailsPanels = ({
       className={styles.content}
       data-mobile={mobile}
       hidden={panel !== 'share'}
+      data-panel="share"
       ref={surface.share}
       tabIndex={-1}
     >
