@@ -1,0 +1,71 @@
+{
+  "capturedAt": "2026-11-07T14:45:45.959275+00:00",
+  "kind": "bounded public XCTest native inner-switch and keyboard input preflight; not formal",
+  "verdict": "input path not proved; method skipped",
+  "method": "FullKeyboardAccessProbeTests/testSettingsAndPublicHardwareKeys",
+  "testResult": "skipped",
+  "durationSeconds": 32.971,
+  "runnerExitCode": 0,
+  "testsPassed": 0,
+  "testsSkipped": 1,
+  "fullKeyboardAccess": {
+    "exists": true,
+    "target": "nested actual63×28 public Switch inside FKAEnabledSwitch",
+    "before": "0",
+    "afterTap": "1",
+    "actualEnableAssertionPassed": true,
+    "restoration": {
+      "actual": "0",
+      "at": "2026-11-07T14:44:43Z",
+      "original": "0",
+      "restored": true
+    }
+  },
+  "keyboardEvents": [
+    {
+      "after": "1 из 8",
+      "at": "2026-11-07T14:44:33Z",
+      "before": "1 из 8",
+      "key": "Tab then Space"
+    },
+    {
+      "after": "1 из 8",
+      "at": "2026-11-07T14:44:36Z",
+      "before": "1 из 8",
+      "key": "Tab then Space"
+    },
+    {
+      "after": "1 из 8",
+      "at": "2026-11-07T14:44:38Z",
+      "before": "1 из 8",
+      "key": "Tab then Space"
+    }
+  ],
+  "observations": [
+    "Public XCUITest logged three XCUIKeyboardKeyTab and three XCUIKeyboardKeySpace with no modifiers",
+    "Onboarding page remains1 из8 after each pair",
+    "No visible focus ring or page transition in captured actuals"
+  ],
+  "notProved": [
+    "Simulator hardware keyboard connection",
+    "keyboard progression beyond first page",
+    "eight-page keyboard case completion"
+  ],
+  "classification": "input/tool path unproven; not somewhere app defect, no full case pass",
+  "restoreTrace": "First restoration tap saw transient system Settings presentation geometry; XCTest retried its public tap, final nested switch value0 and explicit restoration assert passed",
+  "sourceHash": "6cbe40811a050d0f78e0831f09e8cbd6012107da1613c93e83a3797c103571dc",
+  "runtimeArtifactHash": "d6358f223cd2673d429a51ac416e223dbf361ffc3473c3dc3cbe9bdd2e88d6a8",
+  "runtimeArtifact": "/private/tmp/ios-info716-independent-r3/SomewhereUITestHost.app",
+  "cleanup": {
+    "settingsAndTargetTerminated": true,
+    "fixtureAndLockReleased": true,
+    "softwareKeyboardRestored": true
+  },
+  "runtimeLogSHA256": "aaecd269e8a22bf80d85f53f5075a55e90a8ed9ce5534f7e9f5cd432e3453ca4",
+  "constraints": [
+    "No MacUI/private APIs/defaults",
+    "No VoiceOver activation investigation",
+    "Product/canonicaltests/cases/gates unchanged",
+    "Original attempts preserved separately"
+  ]
+}
