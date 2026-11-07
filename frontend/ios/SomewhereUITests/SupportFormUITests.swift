@@ -49,10 +49,13 @@ final class SupportFormUITests: XCTestCase {
             "SUPPORT_KEYBOARD_BOUNDS app=\(app.frame) keyboard=\(keyboard.frame) toolbarTop=\(toolbarTop)"
         )
         let origin = app.coordinate(withNormalizedOffset: .zero)
-        let start = origin.withOffset(
-            CGVector(dx: app.frame.midX, dy: min(toolbarTop - 40, keyboard.frame.minY - 140)))
+        let visibleScroll = scroll.frame.intersection(app.frame)
+        let startPoint = CGPoint(x: visibleScroll.maxX - 12, y: visibleScroll.maxY - 20)
+        XCTAssertTrue(visibleScroll.contains(startPoint))
+        XCTAssertLessThan(startPoint.y, toolbarTop)
+        let start = origin.withOffset(CGVector(dx: startPoint.x, dy: startPoint.y))
         let end = origin.withOffset(
-            CGVector(dx: app.frame.midX, dy: keyboard.frame.minY + 50))
+            CGVector(dx: startPoint.x, dy: keyboard.frame.maxY - 20))
         start.press(forDuration: 0.1, thenDragTo: end)
         XCTAssertTrue(keyboard.waitForNonExistence(timeout: 5))
         ChatSheetTestSupport.reveal(send, in: scroll, app: app)

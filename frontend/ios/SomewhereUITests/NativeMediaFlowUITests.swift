@@ -94,6 +94,7 @@ final class NativeMediaFlowUITests: XCTestCase {
         let counterpart = try NativeChatCounterpart()
         try await counterpart.join()
         addTeardownBlock { @MainActor in try await counterpart.leave() }
+        let previousPDFs = try await counterpart.publishedPDFIDs(fileName: "somewhere-qa-rules.pdf")
         let app = XCUIApplication()
         let gate = try ResponseGate(app, path: "/unused-pdf-control", mode: "hold")
         addTeardownBlock { @MainActor in try gate.cleanUp() }
@@ -136,9 +137,10 @@ final class NativeMediaFlowUITests: XCTestCase {
         XCTAssertEqual(try gate.receivedStatus(), "200", "The failed reply follows a real commit")
         XCTAssertTrue(app.staticTexts["media-picker-header"].exists)
         ExperienceScreenshot.save("native-pdf-committed-reply-lost", test: self)
-        try await counterpart.assertPublishedPDF(
+        let committedID = try await counterpart.assertPublishedPDF(
             fileName: "somewhere-qa-rules.pdf",
-            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306")
+            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306",
+            previousIDs: previousPDFs)
         try gate.release()
         send.tap()
         XCTAssertTrue(app.staticTexts["media-picker-header"].waitForNonExistence(timeout: 20))
@@ -146,8 +148,9 @@ final class NativeMediaFlowUITests: XCTestCase {
             app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "somewhere-qa-rules.pdf"))
                 .firstMatch.waitForExistence(timeout: 10))
         ExperienceScreenshot.save("native-pdf-published", test: self)
-        try await counterpart.assertPublishedPDF(
+        _ = try await counterpart.assertPublishedPDF(
             fileName: "somewhere-qa-rules.pdf",
-            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306")
+            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306",
+            previousIDs: previousPDFs, expectedID: committedID)
     }
 }

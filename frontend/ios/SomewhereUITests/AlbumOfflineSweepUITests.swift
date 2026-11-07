@@ -34,7 +34,7 @@ final class AlbumOfflineSweepUITests: XCTestCase {
             if number > 1 {
                 app.buttons["Открыть фото \(number - 1)"].swipeLeft(velocity: .fast)
             }
-            XCTAssertTrue(app.staticTexts["\(number) из 103"].waitForExistence(timeout: 5))
+            expectPhoto(number, app: app, trace: trace)
             await settle(seconds: 0.65)
             let value = try sample(app.buttons["Открыть фото \(number)"])
             XCTAssertTrue((135...165).contains(Int(value[1])), "Photo must replace the blank card")
@@ -48,7 +48,7 @@ final class AlbumOfflineSweepUITests: XCTestCase {
         for number in 1...103 {
             let previous = number == 1 ? 103 : number - 1
             app.buttons["Открыть фото \(previous)"].swipeRight(velocity: .fast)
-            XCTAssertTrue(app.staticTexts["\(number) из 103"].waitForExistence(timeout: 5))
+            expectPhoto(number, app: app, trace: trace)
             await settle(seconds: 0.65)
             let value = try sample(app.buttons["Открыть фото \(number)"])
             for component in 0..<3 {
@@ -64,6 +64,24 @@ final class AlbumOfflineSweepUITests: XCTestCase {
         XCTAssertFalse(gate.requested)
         XCTAssertFalse(app.staticTexts["Не удалось загрузить фото"].exists)
         print("OFFLINE_SWEEP photos=103 directions=2 extraContentRequests=0")
+    }
+
+    private func expectPhoto(_ number: Int, app: XCUIApplication, trace: URL) {
+        let visible = app.staticTexts["\(number) из 103"].waitForExistence(timeout: 5)
+        if !visible {
+            ExperienceScreenshot.save("offline-counter-failure-\(number)", test: self)
+            let hierarchy = XCTAttachment(string: app.debugDescription)
+            hierarchy.name = "offline-counter-hierarchy-\(number)"
+            hierarchy.lifetime = .keepAlways
+            add(hierarchy)
+            if let counts = try? String(contentsOf: trace, encoding: .utf8) {
+                let requests = XCTAttachment(string: counts)
+                requests.name = "offline-content-counts-\(number)"
+                requests.lifetime = .keepAlways
+                add(requests)
+            }
+        }
+        XCTAssertTrue(visible)
     }
 
     private func settle(seconds: Double) async {

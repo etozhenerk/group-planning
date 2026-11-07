@@ -37,9 +37,11 @@ extension SupportFormUITests {
         let send = app.buttons["support-submit"]
         ChatSheetTestSupport.reveal(send, in: scroll, app: app)
         send.tap()
-        let failure = app.staticTexts[
-            "Не удалось отправить обращение. Проверьте поля и повторите попытку."]
+        let failure = app.staticTexts["Отправка не подтверждена"]
         XCTAssertTrue(failure.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Текст и скриншот сохранены. Повторите отправку."].exists)
+        XCTAssertEqual(send.label, "Повторить отправку")
+        XCTAssertFalse(description.isEnabled)
         XCTAssertEqual(description.value as? String, text)
         XCTAssertFalse(app.staticTexts["Обращение принято"].exists)
         try gate.configure(path: path, mode: "unavailable", method: "POST")
@@ -111,7 +113,15 @@ extension SupportFormUITests {
                 XCTAssertTrue(semver.exists)
             }
             let back = app.buttons["Назад"]
-            ChatSheetTestSupport.reveal(back, in: page, app: app)
+            for _ in 0..<6 {
+                if back.isHittable && app.frame.contains(back.frame) { break }
+                page.swipeDown(velocity: .slow)
+            }
+            let ready = XCTNSPredicateExpectation(
+                predicate: NSPredicate { _, _ in back.isHittable && app.frame.contains(back.frame)
+                },
+                object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 5), .completed)
             ExperienceScreenshot.save("service-document-" + title, test: self)
             back.tap()
             XCTAssertTrue(page.waitForNonExistence(timeout: 5))

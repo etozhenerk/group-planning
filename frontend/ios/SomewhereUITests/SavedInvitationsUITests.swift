@@ -28,6 +28,11 @@ final class SavedInvitationsUITests: XCTestCase {
     }
 
     private func respond(_ value: String, app: XCUIApplication) {
+        let change = app.buttons["meeting-change-answer"]
+        if change.exists {
+            MeetingInfoTestSupport.reveal(change, app: app)
+            change.tap()
+        }
         let answer = app.buttons["rsvp-" + value]
         for _ in 0..<5 {
             if answer.isHittable { break }

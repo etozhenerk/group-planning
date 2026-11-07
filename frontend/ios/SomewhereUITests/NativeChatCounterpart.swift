@@ -116,17 +116,26 @@ final class NativeChatCounterpart {
         return try XCTUnwrap(result["id"] as? String)
     }
 
-    func assertPublishedPDF(fileName: String, sha256: String) async throws {
-        let page = try await request("meetings/" + meeting + "/feed")
-        let entries = try XCTUnwrap(page["entries"] as? [[String: Any]])
-        let attachments = entries.flatMap { entry in
-            (entry["payload"] as? [String: Any])?["attachments"] as? [[String: Any]] ?? []
-        }.filter { $0["file_name"] as? String == fileName }
-        XCTAssertEqual(attachments.count, 1, "The recipient must receive exactly one document")
-        let media = try XCTUnwrap(attachments.first)
+    func publishedPDFIDs(fileName: String) async throws -> Set<String> {
+        let attachments = try await publishedPDFs(fileName: fileName)
+        return Set(try attachments.map { try XCTUnwrap($0["id"] as? String) })
+    }
+
+    func assertPublishedPDF(
+        fileName: String, sha256: String, previousIDs: Set<String>, expectedID: String? = nil
+    ) async throws -> String {
+        let attachments = try await publishedPDFs(fileName: fileName)
+        let ids = try attachments.map { try XCTUnwrap($0["id"] as? String) }
+        let currentIDs = Set(ids)
+        XCTAssertEqual(ids.count, currentIDs.count, "The same document ID must not be duplicated")
+        XCTAssertTrue(previousIDs.isSubset(of: currentIDs), "Earlier documents must remain visible")
+        let newIDs = currentIDs.subtracting(previousIDs)
+        XCTAssertEqual(newIDs.count, 1, "This upload must publish exactly one new document")
+        let id = try XCTUnwrap(newIDs.first)
+        if let expectedID { XCTAssertEqual(id, expectedID, "Retry must retain the committed ID") }
+        let media = try XCTUnwrap(attachments.first { $0["id"] as? String == id })
         XCTAssertEqual(media["content_type"] as? String, "application/pdf")
         XCTAssertEqual(media["status"] as? String, "published")
-        let id = try XCTUnwrap(media["id"] as? String)
         var download = URLRequest(
             url: config.origin.appendingPathComponent(
                 "api/v1/meetings/" + meeting + "/media/" + id + "/content"))
@@ -137,7 +146,30 @@ final class NativeChatCounterpart {
         XCTAssertTrue(data.starts(with: Data("%PDF-".utf8)))
         let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
         XCTAssertEqual(digest, sha256, "The recipient must download the original PDF bytes")
-        print("SOMEWHERE_PDF_RECIPIENT bytes=\(data.count) sha256=\(digest)")
+        print("SOMEWHERE_PDF_RECIPIENT id=\(id) bytes=\(data.count) sha256=\(digest)")
+        return id
+    }
+
+    private func publishedPDFs(fileName: String) async throws -> [[String: Any]] {
+        var attachments = [[String: Any]]()
+        var cursor = "0"
+        var visited = Set([cursor])
+        while true {
+            let page = try await request(
+                "meetings/" + meeting + "/feed",
+                query: [
+                    URLQueryItem(name: "limit", value: "100"),
+                    URLQueryItem(name: "after_sequence", value: cursor),
+                ])
+            let entries = try XCTUnwrap(page["entries"] as? [[String: Any]])
+            attachments += entries.flatMap { entry in
+                (entry["payload"] as? [String: Any])?["attachments"] as? [[String: Any]] ?? []
+            }.filter { $0["file_name"] as? String == fileName }
+            if try XCTUnwrap(page["has_more"] as? Bool) == false { return attachments }
+            let next = try XCTUnwrap(entries.last?["sequence"] as? String)
+            guard visited.insert(next).inserted else { throw URLError(.cannotParseResponse) }
+            cursor = next
+        }
     }
 
     func waitForReader(of entry: String) async throws {
@@ -154,9 +186,14 @@ final class NativeChatCounterpart {
 
     func request(
         _ path: String, method: String = "GET", body: [String: Any]? = nil,
-        key: String = UUID().uuidString.lowercased()
+        key: String = UUID().uuidString.lowercased(), query: [URLQueryItem] = []
     ) async throws -> [String: Any] {
-        var request = URLRequest(url: config.origin.appendingPathComponent("api/v1/" + path))
+        var components = try XCTUnwrap(
+            URLComponents(
+                url: config.origin.appendingPathComponent("api/v1/" + path),
+                resolvingAgainstBaseURL: false))
+        if !query.isEmpty { components.queryItems = query }
+        var request = URLRequest(url: try XCTUnwrap(components.url))
         request.httpMethod = method
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         request.setValue("chat-counterpart", forHTTPHeaderField: "X-Somewhere-Test-Scenario")

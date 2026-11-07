@@ -146,9 +146,9 @@ jobs:
       - name: UI scenarios and accessibility
         id: ui
         if: ${{ !cancelled() && steps.ready.outcome == 'success' }}
-        # Прямое решение пользователя05.11.2026: сейчас VoiceOver не проверять.
+        # Пользователь07.11.2026 разрешил VoiceOver для финальной приёмки.
         env:
-          SOMEWHERE_IOS_SKIP_VOICEOVER: '1'
+          SOMEWHERE_IOS_SKIP_VOICEOVER: '0'
         run: python3 scripts/ci/run.py ui sh frontend/ios/scripts/test-ui.sh
       - name: Upload full Xcode diagnostics when requested
         if: ${{ !cancelled() && inputs.full_diagnostics == true }}

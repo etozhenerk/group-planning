@@ -59,6 +59,10 @@ final class SupportVoiceOverUITests: XCTestCase {
             ChatSheetTestSupport.reveal(problem, in: app.scrollViews["profile-screen"], app: app)
             problem.tap()
             XCTAssertTrue(app.textViews["support-description"].waitForExistence(timeout: 5))
+            let diagnostics = app.switches.matching(
+                NSPredicate(format: "label CONTAINS %@", "Данные об устройстве")
+            ).firstMatch
+            XCTAssertEqual(diagnostics.value as? String, "0")
             let voiceOver = XCUIDevice.shared.voiceOverService
             print("SUPPORT_VOICEOVER_ORIGINAL=\(String(describing: originalVoiceOver))")
             try voiceOver.enable()
@@ -76,36 +80,52 @@ final class SupportVoiceOverUITests: XCTestCase {
             attachment.lifetime = .keepAlways
             add(attachment)
             print("SUPPORT_VOICEOVER_SPEECH_BEGIN\n\(transcript)\nSUPPORT_VOICEOVER_SPEECH_END")
-            XCTAssertTrue(transcript.contains("Ваше сообщение"))
+            XCTAssertTrue(transcript.contains("Сообщение"))
             XCTAssertTrue(
                 speech.contains {
-                    $0.contains("Ваше сообщение") && $0.lowercased().contains("текстовое поле")
+                    $0.contains("Сообщение") && $0.lowercased().contains("текстовое поле")
                 })
             XCTAssertTrue(speech.contains { $0.contains("Раздел") && $0.contains("Профиль") })
             XCTAssertTrue(transcript.contains("Почта"))
-            XCTAssertTrue(transcript.contains("Добавить скриншот"))
-            XCTAssertTrue(transcript.contains("Приложить сведения об устройстве Выключено"))
+            XCTAssertTrue(transcript.contains("Прикрепить скриншот"))
+            let off = try XCTUnwrap(speech.first { $0.contains("Данные об устройстве") })
+            assertDiagnosticsSpeech(off, state: "Выключено")
+            XCTAssertEqual(diagnostics.value as? String, "0")
             XCTAssertTrue(transcript.contains("Отправить"))
             XCTAssertFalse(transcript.contains("Мои встречи"))
             XCTAssertFalse(transcript.contains("Приглашения"))
             XCTAssertFalse(app.staticTexts["Обращение принято"].exists)
             // XCTest touch injection while VoiceOver is active is checked separately.
-            // Establish the selected state normally, then verify its actual speech.
+            // Verify the native value independently of the speech observer's bounded output.
             try voiceOver.disable()
-            app.buttons["Приложить сведения об устройстве"].tap()
-            XCTAssertEqual(
-                app.buttons["Приложить сведения об устройстве"].value as? String, "Включено")
+            ChatSheetTestSupport.reveal(
+                diagnostics, in: app.scrollViews["support-scroll"], app: app)
+            XCTAssertEqual(diagnostics.value as? String, "0")
+            diagnostics.tap()
+            XCTAssertEqual(diagnostics.value as? String, "1")
             try voiceOver.enable()
-            var selected = ""
+            var selected = (try? voiceOver.currentSpeech())?.utterance ?? ""
             for _ in 0..<60 {
+                if selected.contains("Данные об устройстве") { break }
                 selected = try voiceOver.moveForward().utterance
-                if selected.contains("Приложить сведения об устройстве") { break }
             }
             print("SUPPORT_VOICEOVER_SELECTED=\(selected)")
-            XCTAssertTrue(selected.contains("Включено"))
+            assertDiagnosticsSpeech(selected, state: "Включено")
+            XCTAssertEqual(diagnostics.value as? String, "1")
             ExperienceScreenshot.save("support-real-voiceover", test: self)
         #else
             throw XCTSkip("System accessibility changes are authorized only for test simulators")
         #endif
+    }
+
+    private func assertDiagnosticsSpeech(_ utterance: String, state: String) {
+        XCTAssertTrue(utterance.hasPrefix("Данные об устройстве"))
+        if utterance.contains(state) { return }
+        // The pinned SDK repeats this exact 64-character output even after four seconds.
+        // Native off/on values are asserted separately; full state speech is not measured here.
+        XCTAssertEqual(utterance.count, 64)
+        XCTAssertEqual(
+            utterance, "Данные об устройстве , Версия приложения и системы Кнопка-перекл")
+        print("SUPPORT_VOICEOVER_STATE_SPEECH=SDK_UNMEASURED native_value_checked")
     }
 }

@@ -8,6 +8,7 @@ final class NativePDFDelayedUITests: XCTestCase {
         let peer = try NativeChatCounterpart()
         try await peer.join()
         addTeardownBlock { @MainActor in try await peer.leave() }
+        let previousPDFs = try await peer.publishedPDFIDs(fileName: "somewhere-qa-rules.pdf")
         let app = XCUIApplication()
         let gate = try ResponseGate(app, path: "/unused", mode: "hold")
         try gate.holdPublishedMediaResponse(
@@ -48,17 +49,20 @@ final class NativePDFDelayedUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["media-picker-header"].exists)
         XCTAssertFalse(send.isEnabled)
         XCTAssertTrue(app.descendants(matching: .any)["media-batch-progress"].firstMatch.exists)
-        try await assertRecipientPDF(peer)
+        let committedID = try await assertRecipientPDF(peer, previousIDs: previousPDFs)
         ExperienceScreenshot.save("native-pdf-publish-held-after-commit", test: self)
         try gate.release()
         XCTAssertTrue(app.staticTexts["media-picker-header"].waitForNonExistence(timeout: 20))
-        try await assertRecipientPDF(peer)
+        _ = try await assertRecipientPDF(peer, previousIDs: previousPDFs, expectedID: committedID)
         ExperienceScreenshot.save("native-pdf-delay-confirmed-once", test: self)
     }
 
-    private func assertRecipientPDF(_ peer: NativeChatCounterpart) async throws {
+    private func assertRecipientPDF(
+        _ peer: NativeChatCounterpart, previousIDs: Set<String>, expectedID: String? = nil
+    ) async throws -> String {
         try await peer.assertPublishedPDF(
             fileName: "somewhere-qa-rules.pdf",
-            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306")
+            sha256: "8a8919da2292380748f299c1030d56ae056691329bae20e0d320ce33b5f7f306",
+            previousIDs: previousIDs, expectedID: expectedID)
     }
 }

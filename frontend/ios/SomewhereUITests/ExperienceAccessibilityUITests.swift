@@ -46,7 +46,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["3 из 3"].waitForExistence(timeout: 5))
         app.buttons["Открыть фото 3"].swipeRight()
         XCTAssertTrue(app.staticTexts["1 из 3"].waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["Закрыть"].exists)
+        XCTAssertFalse(app.buttons["Закрыть просмотр"].exists)
         ExperienceScreenshot.save("vibe-largest-system-reduced", test: self)
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.buttons["memories-back"].isHittable)
@@ -93,6 +93,11 @@ final class ExperienceAccessibilityUITests: XCTestCase {
             let profile = app.buttons["home-tab-person.crop.circle"]
             XCTAssertTrue(profile.waitForExistence(timeout: 15))
             profile.tap()
+            let account = app.buttons["profile-account-data"]
+            XCTAssertTrue(account.waitForExistence(timeout: 10))
+            account.tap()
+            let accountScroll = app.scrollViews["profile-account-scroll"]
+            XCTAssertTrue(accountScroll.waitForExistence(timeout: 5))
             let birthday =
                 stage == "full"
                 ? "23 декабря 1990"
@@ -108,7 +113,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
                     NSPredicate(format: "label CONTAINS %@ AND label CONTAINS %@", title, value)
                 ).firstMatch
                 XCTAssertTrue(row.waitForExistence(timeout: 10))
-                ChatSheetTestSupport.reveal(row, in: app.scrollViews["profile-screen"], app: app)
+                ChatSheetTestSupport.reveal(row, in: accountScroll, app: app)
                 XCTAssertLessThanOrEqual(row.frame.maxX, app.frame.maxX)
                 if title == "Дата рождения", stage == "partial" {
                     XCTAssertFalse(row.label.contains("1990"))
@@ -119,14 +124,18 @@ final class ExperienceAccessibilityUITests: XCTestCase {
             }
             if stage == "partial" {
                 let voiceOver = XCUIDevice.shared.voiceOverService
-                app.scrollViews["profile-screen"].swipeDown()
-                app.scrollViews["profile-screen"].swipeDown()
+                accountScroll.swipeDown()
+                accountScroll.swipeDown()
                 touchedVoiceOver = true
                 try voiceOver.enable()
                 var speech: [String] = []
                 for _ in 0..<80 {
                     speech.append(try voiceOver.moveForward().utterance)
-                    if speech.last?.contains("Телефон") == true { break }
+                    if ["Дата рождения", "23 декабря", "Почта", "Телефон"].allSatisfy({ target in
+                        speech.contains { $0.contains(target) }
+                    }) {
+                        break
+                    }
                 }
                 let transcript = speech.joined(separator: "\n")
                 print("PROFILE_VOICEOVER_BEGIN\n\(transcript)\nPROFILE_VOICEOVER_END")
@@ -141,6 +150,7 @@ final class ExperienceAccessibilityUITests: XCTestCase {
             }
             XCTAssertEqual(app.textFields.count, 0)
             if stage != "clear" {
+                ChatSheetTestSupport.dismissBySwipe(app, headerIdentifier: "profile-account-header")
                 let logout = app.buttons["Выйти из аккаунта"]
                 ChatSheetTestSupport.reveal(logout, in: app.scrollViews["profile-screen"], app: app)
                 logout.tap()

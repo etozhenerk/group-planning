@@ -121,6 +121,26 @@ final class InvitationUITests: XCTestCase {
         }
     }
 
+    private func upcomingMeetingIDs(_ actor: NativeChatCounterpart) async throws -> Set<String> {
+        var ids = Set<String>()
+        var cursor: String?
+        var visited = Set<String>()
+        while true {
+            var query = [
+                URLQueryItem(name: "period", value: "upcoming"),
+                URLQueryItem(name: "limit", value: "100"),
+            ]
+            if let cursor { query.append(URLQueryItem(name: "cursor", value: cursor)) }
+            let page = try await actor.request("meetings", query: query)
+            let meetings = try XCTUnwrap(page["meetings"] as? [[String: Any]])
+            ids.formUnion(try meetings.map { try XCTUnwrap($0["id"] as? String) })
+            if page["next_cursor"] is NSNull { return ids }
+            let next = try XCTUnwrap(page["next_cursor"] as? String)
+            guard visited.insert(next).inserted else { throw URLError(.cannotParseResponse) }
+            cursor = next
+        }
+    }
+
     private func activeParticipants(_ control: NativeChatCounterpart) async throws -> Set<String> {
         let response = try await control.request("meetings/" + meetingID + "/participants")
         let participants = try XCTUnwrap(response["participants"] as? [[String: Any]])
@@ -169,6 +189,7 @@ final class InvitationUITests: XCTestCase {
         let profile = try await invitee.request("me")
         let inviteeID = try XCTUnwrap((profile["user"] as? [String: Any])?["id"] as? String)
         let before = try await activeParticipants(control)
+        let otherMeetings = try await upcomingMeetingIDs(invitee).subtracting([meetingID])
         let app = launch("invite-rsvp")
         try open(app)
         XCTAssertFalse(
@@ -239,7 +260,14 @@ final class InvitationUITests: XCTestCase {
             app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", message)).firstMatch
                 .exists)
         app.buttons["К моим встречам"].tap()
-        XCTAssertTrue(app.staticTexts["Нет предстоящих встреч"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.scrollViews["meetings-list"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["home-tab-calendar"].isSelected)
+        XCTAssertFalse(card.exists, "The withdrawn meeting must leave the current list")
+        let invitation = try await invitee.invitationAnswer(token: token)
+        XCTAssertEqual(invitation, "not_going")
+        let remainingMeetings = try await upcomingMeetingIDs(invitee)
+        XCTAssertFalse(remainingMeetings.contains(meetingID))
+        XCTAssertEqual(remainingMeetings, otherMeetings, "Other allowed meetings must remain")
     }
 
     func testLostRSVPResponseRetriesWithoutPrematureAccess() throws {

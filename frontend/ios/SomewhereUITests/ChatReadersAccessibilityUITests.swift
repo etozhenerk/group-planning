@@ -51,7 +51,7 @@ final class ChatReadersAccessibilityUITests: XCTestCase {
         addTeardownBlock { @MainActor in try gate.cleanUp() }
         _ = ChatSheetTestSupport.launch(large: true, application: app)
         ChatSheetTestSupport.openChat(app)
-        let message = app.staticTexts["chat-message-" + entry]
+        let message = ChatMessageTestSupport.row(containing: text, app: app)
         XCTAssertTrue(message.waitForExistence(timeout: 10))
         ChatSheetTestSupport.revealInConversation(message, app: app)
         let before = message.frame.minY
@@ -74,7 +74,10 @@ final class ChatReadersAccessibilityUITests: XCTestCase {
         changedVoiceOver = true
         try voiceOver.enable()
         let emptySpeech = try speech(until: ["Прочитали", "Пока никто не прочитал"])
-        try require(!emptySpeech.contains("Написать сообщение"), "Underlying composer exposed")
+        try require(
+            !emptySpeech.components(separatedBy: "\n").contains {
+                $0.lowercased().contains("сообщение") && $0.lowercased().contains("текстовое поле")
+            }, "Underlying composer exposed")
         ExperienceScreenshot.save("readers-largest-empty-voiceover", test: self)
         try voiceOver.disable()
         changedVoiceOver = false
@@ -82,14 +85,16 @@ final class ChatReadersAccessibilityUITests: XCTestCase {
         XCTAssertEqual(message.frame.minY, before, accuracy: 2)
         try await first.read(text)
         try await second.read(text)
-        let receipt = app.buttons["message-readers-" + entry]
+        let receipt = ChatMessageTestSupport.receipt(in: message)
         let counted = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label == %@", "Прочитали 2"), object: receipt)
+            predicate: NSPredicate(format: "label BEGINSWITH %@", "Прочитали 2."), object: receipt)
         let countResult = await XCTWaiter.fulfillment(of: [counted], timeout: 10)
         XCTAssertEqual(countResult, .completed)
         ChatSheetTestSupport.revealInConversation(receipt, app: app)
         let populatedBefore = message.frame.minY
         receipt.tap()
+        XCTAssertTrue(action.waitForExistence(timeout: 5))
+        action.tap()
         XCTAssertTrue(header.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Лена"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["Миша"].exists)
@@ -97,7 +102,10 @@ final class ChatReadersAccessibilityUITests: XCTestCase {
         try voiceOver.enable()
         changedVoiceOver = true
         let populatedSpeech = try speech(until: ["Прочитали", "Лена", "Миша"])
-        try require(!populatedSpeech.contains("Написать сообщение"), "Underlying composer exposed")
+        try require(
+            !populatedSpeech.components(separatedBy: "\n").contains {
+                $0.lowercased().contains("сообщение") && $0.lowercased().contains("текстовое поле")
+            }, "Underlying composer exposed")
         try require(!populatedSpeech.contains("sasha@example.com"), "Private contact exposed")
         ExperienceScreenshot.save("readers-largest-two-voiceover", test: self)
         try voiceOver.disable()
