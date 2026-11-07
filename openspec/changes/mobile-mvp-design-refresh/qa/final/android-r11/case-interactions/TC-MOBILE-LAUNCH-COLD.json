@@ -1,0 +1,30 @@
+{
+  "caseId": "TC-MOBILE-LAUNCH-COLD",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifactSha256": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "На изолированной сборке завершить приложение и открыть холодным запуском; снять системный этап и приложение.",
+      "expected": "Название 44 pt/sp, знак 53 pt/dp слева с промежутком 16 pt/dp, один оборот за 1200 ms; слово неподвижно. Переход не меняет масштаб; Android не обрезает подпись маской.",
+      "actual": "На320x568 и360x800 выполнен force-stop→coldstart точного17f. Просмотрены systemplaceholder/полная подпись/один оборот/статичный финал:44spслово,53dpзнак,16dpпромежуток. Слово неподвижно по ROI. После отпускания реальногоAPI открыт список встреч; fast-ready текущегоR11 действительно показывает Home. Точный1200ms mapping дополнительно проверен currentBrandMotion unit, без объявления frame-performance benchmark.",
+      "evidence": [
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/interactions.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/word-region-measurements.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-cold-05.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-cold-08.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-cold-14.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-cold-03.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-cold-06.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-cold-11.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-fast-ready.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-fast-ready.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-recreation-instrumentation.txt",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-recreation-instrumentation.txt"
+      ]
+    }
+  ],
+  "boundary": "Fresh independent exact-candidate native runtime. Source-suites separate; no old actual or verdict copied."
+}

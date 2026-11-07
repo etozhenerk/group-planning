@@ -1,0 +1,27 @@
+{
+  "caseId": "TC-MOBILE-LAUNCH-REDUCED",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifactSha256": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Включить уменьшение/отключение системной анимации, запустить приложение и прочитать заставку экранным диктором.",
+      "expected": "Подпись целая и статичная, знак не вращается; доступное имя сообщает загрузку.",
+      "actual": "На320x568 и360x800 фактически выставлены systemanimation scale0; логотип статичен. На320x568/font2 реально bound TalkBack: enabled=true/touchExploration=true, фокус принят на «somewhere, приложение загружается», фактический MainActivity locale ru. Все настройки восстановлены. Первая попытка собственного wrapper без требуемого флага UiAutomation сохранена отрицательной и не объявлена product дефектом.",
+      "evidence": [
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/interactions.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/word-region-measurements.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-disabled-static.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-disabled-static.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/talkback-actual/talkback-launch-reduced.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/talkback-actual/interaction.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/talkback-runtime.log",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-recreation-instrumentation.txt",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-recreation-instrumentation.txt"
+      ]
+    }
+  ],
+  "boundary": "Fresh independent exact-candidate native runtime. Source-suites separate; no old actual or verdict copied."
+}

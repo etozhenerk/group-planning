@@ -1,0 +1,30 @@
+{
+  "caseId": "TC-MOBILE-LAUNCH-RESUME",
+  "planId": "mobile-refresh-final-android-r11-2026-11-07",
+  "sourceHash": "19721ad674bde82e88fd2f570d5ea78991d3d507b698deb1c6b18ab89a1c45d9",
+  "artifactSha256": "17f03868ba131fea4d00f04fa7b8c27161617177d9c71991846bf59ec24019a4",
+  "executor": "android-independent-vibe-review-resume",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Замедлить восстановление входа тестовым fixture более чем на 1,2 с; дождаться окончания оборота, свернуть и вернуть приложение, повторить с пересозданием Activity на Android.",
+      "expected": "Второй оборот и вымышленный прогресс отсутствуют; возвращение не повторяет вступление и не теряет контекст входа.",
+      "actual": "На обоих размерах realAPI SIGSTOP держал restore дольше1.2с, после завершения оборота подпись оставалась статичной. Пока API ещё остановлен, выполнены Home/resume и настоящая configuration recreation: нет нового вступления/ложного progress. После SIGCONT показан прежний контекст личных встреч. Отдельный текущий канонический ActivityScenario.recreate/background test прошёл на обоих размерах и проверяет сохранённый ViewModel/elapsed.",
+      "evidence": [
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/interactions.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/word-region-measurements.json",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-restore-long-later.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-restore-long-later.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-pending-resume-static.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-pending-resume-static.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-pending-recreation-static.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-pending-recreation-static.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-ready.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-ready.png",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/small-phone-recreation-instrumentation.txt",
+        "openspec/changes/mobile-mvp-design-refresh/qa/final/android-r11/launch-review/standard-phone-recreation-instrumentation.txt"
+      ]
+    }
+  ],
+  "boundary": "Fresh independent exact-candidate native runtime. Source-suites separate; no old actual or verdict copied."
+}
